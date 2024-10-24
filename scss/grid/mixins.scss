@@ -114,21 +114,17 @@
 }
 
 @mixin container-fluid {
-    @each $breakpoint in map-keys(variables.$breakpoints) {
-        @if map-has-key(variables.$containers, $breakpoint) {
-            $container: map-get(variables.$containers, $breakpoint);
-            @if $container {
-                $padding: map-get($container, padding);
-                @if( $padding ) {
-                    @include media($breakpoint) {
-                        @if $breakpoint == print {
-                            padding-right: #{system.size-unit($padding, in)};
-                            padding-left: #{system.size-unit($padding, in)};
-                        } @else {
-                            padding-right: #{system.size-unit($padding)};
-                            padding-left: #{system.size-unit($padding)};
-                        }
-                    }
+    & {
+        padding-inline: var(--#{variables.$variable-prefix}container-padding, unset);
+    }
+    
+    @if map-has-key(variables.$containers, print) {
+        $container: map-get(variables.$containers, print);
+        $padding: map-get($container, padding);
+        @media print {
+            & {
+                @if $padding {
+                    padding-inline: #{system.size-unit($padding, in)};
                 }
             }
         }
@@ -136,162 +132,91 @@
 }
 
 @mixin container {
-    @each $breakpoint in map-keys(variables.$breakpoints) {
-        @if map-has-key(variables.$containers, $breakpoint) {
-            $container: map-get(variables.$containers, $breakpoint);
-            @if $container {
-                $padding: map-get($container, padding);
-                $max-width: map-get($container, max-width);
-                @if( $padding or $max-width ) {
-                    @include media($breakpoint) {
-                        @if $breakpoint == print {
-                            @if $max-width {
-                                max-width: #{system.size-unit($max-width, in)};
-                            }
-                            @if $padding {
-                                padding-right: #{system.size-unit($padding, in)};
-                                padding-left: #{system.size-unit($padding, in)};
-                            }
-                        } @else {
-                            @if $max-width {
-                                max-width: #{system.size-unit($max-width)};
-                            }
-                            @if $padding {
-                                padding-right: #{system.size-unit($padding)};
-                                padding-left: #{system.size-unit($padding)};
-                            }
-                        }
+    & {
+        max-width: var(--#{variables.$variable-prefix}container-max-width, unset);
+        padding-inline: var(--#{variables.$variable-prefix}container-padding, unset);
+    }
+
+    @if map-has-key(variables.$containers, print) {
+        $container: map-get(variables.$containers, print);
+        $padding: map-get($container, padding);
+        $max-width: map-get($container, max-width);
+
+        @media print {
+            @if $max-width {
+                max-width: #{system.size-unit($max-width, in)};
+            }
+            @if $padding {
+                padding-inline: #{system.size-unit($padding, in)};
+            }
+        }
+    }
+}
+
+@mixin row() {
+    & {
+        display: grid;
+        grid-template-columns: repeat(var(--#{variables.$variable-prefix}gutter-columns), 1fr);
+        column-gap: var(--#{variables.$variable-prefix}gutter-column-gap);
+        row-gap: var(--#{variables.$variable-prefix}gutter-row-gap);
+    }
+
+    @if map-has-key(variables.$gutter, print) {
+        @media print {
+            & {
+                $gutter: map-get(variables.$gutter, print);
+                $col: map-get($gutter, columns);
+                @if not $col {
+                    $col: 1;
+                }
+                $gap: map-get($gutter, gap);
+                $row-gap: map-get($gutter, row-gap);
+                $column-gap: map-get($gutter, column-gap);
+
+                @if $gap {
+                    $row-gap: $gap;
+                    $column-gap: $gap;
+                }
+
+                display: block;
+                box-sizing: border-box;
+                overflow: hidden;
+
+                @if $column-gap {
+                    margin-inline: system.size-unit(math.div($column-gap, -2), in);
+                }
+
+                @if $row-gap {
+                    margin-block-end: system.size-unit(-$row-gap, in);
+                }
+
+                &:after {
+                    content: "";
+                    display: block;
+                    width: 0;
+                    height: 0;
+                    overflow: hidden;
+                    clear: both;
+                }
+
+                > * {
+                    display: block;
+                    float: left;
+                    box-sizing: border-box;
+                    width: math.div(100%, variables.$column-default-span);
+                    overflow: hidden;
+
+                    @if $column-gap {
+                        padding-inline: system.size-unit(math.div($column-gap, 2), in);
+                    }
+
+                    @if $row-gap {
+                        padding-block-end: system.size-unit($row-gap, in);
                     }
                 }
             }
         }
-    }
-}
-
-@mixin _row-columns($columns) {
-    $columns-type: type-of($columns);
-    @if $columns-type == "number" {
-        grid-template-columns: repeat(system.strip-unit($columns), 1fr);
-    }
-    @else if $columns-type == "map" {
-        $col: map-get($columns, columns);
-        @if not $col {
-            $col: variables.$column-default-span;
-        }
-        grid-template-columns: repeat(system.strip-unit($col), 1fr);
-    }
-    @else if $columns-type == "string" {
-        $gutter: map-get(variables.$gutter, $columns);
-        @if type-of($gutter) == "map" {
-            $col: map-get($gutter, columns);
-            @if not $col {
-                $col: 1;
-            }
-            grid-template-columns: repeat(system.strip-unit($col), 1fr);
-        }
-        @else {
-            grid-template-columns: #{$columns};
-        }
-    }
-    @else {
-        grid-template-columns: #{$columns};
-    }
-}
-
-@mixin _row-gutter($gutter) {
-    @if type-of($gutter) == "map" {
-        $gap: map-get($gutter, gap);
-        $row-gap: map-get($gutter, row-gap);
-        $column-gap: map-get($gutter, column-gap);
-
-        @if $gap {
-            gap: system.size-unit($gap);
-        }
-        @else {
-            @if $row-gap {
-                row-gap: system.size-unit($row-gap);
-            }
-            @if $column-gap {
-                column-gap: system.size-unit($column-gap);
-            }
-        }
-    }
-}
-
-@mixin row($columns: false, $gutter: false) {
-    @if not $columns and not $gutter {
-        @each $breakpoint, $gutter in  variables.$gutter {
-            @if type-of($gutter) == "map" {
-                @include media($breakpoint) {
-                    @if $breakpoint == print {
-                        $gutter: map-get(variables.$gutter, print);
-                        $col: map-get($gutter, columns);
-                        @if not $col {
-                            $col: 1;
-                        }
-                        $gap: map-get($gutter, gap);
-                        $row-gap: map-get($gutter, row-gap);
-                        $column-gap: map-get($gutter, column-gap);
-
-                        @if $gap {
-                            $row-gap: $gap;
-                            $column-gap: $gap;
-                        }
-
-                        display: block;
-                        box-sizing: border-box;
-                        overflow: hidden;
-
-                        @if $column-gap {
-                            margin-right: system.size-unit(math.div($column-gap, -2), in);
-                            margin-left: system.size-unit(math.div($column-gap, -2), in);
-                        }
-
-                        @if $row-gap {
-                            margin-bottom: system.size-unit(-$row-gap, in);
-                        }
-
-                        &:after {
-                            content: "";
-                            display: block;
-                            width: 0;
-                            height: 0;
-                            overflow: hidden;
-                            clear: both;
-                        }
-
-                        > * {
-                            display: block;
-                            float: left;
-                            box-sizing: border-box;
-                            width: math.div(100%, variables.$column-default-span);
-                            overflow: hidden;
-
-                            @if $column-gap {
-                                padding-right: system.size-unit(math.div($column-gap, 2), in);
-                                padding-left: system.size-unit(math.div($column-gap, 2), in);
-                            }
-
-                            @if $row-gap {
-                                padding-bottom: system.size-unit($row-gap, in);
-                            }
-                        }
-                    } @else {
-                        display: grid;
-                        @include _row-columns($gutter);
-                        @include _row-gutter($gutter);
-                    }
-                }
-            }
-        }
-    }
-    @else if $columns and not $gutter {
-        @include _row-columns($columns);
-    }
-    @else if $columns and $gutter {
-        @include _row-columns($columns);
-        @include _row-gutter($gutter);
-    }
+    };
 }
 
 @mixin col($span: false, $breakpoint-start: false, $breakpoint-end: false) {
@@ -334,7 +259,7 @@
                 $columns: map-get($gutter, columns);
                 $col-width: math.div(100%, $columns);
 
-                margin-left: $offset * $col-width;
+                margin-inline-start: $offset * $col-width;
             } @else {
                 grid-column-start: ($offset + 1);
             }
@@ -363,8 +288,9 @@
     }
 
     @include system.add-root-style(
-                    #{variables.$variable-prefix}container-#{$breakpoint}-max-width,
-                    system.size-unit($container-max-width, $size-unit)
+                    #{variables.$variable-prefix}container-max-width,
+                    system.size-unit($container-max-width, $size-unit),
+                    $breakpoint
     );
 
     $container-padding: map-get($container, padding);
@@ -373,8 +299,9 @@
     }
 
     @include system.add-root-style(
-                    #{variables.$variable-prefix}container-#{$breakpoint}-padding,
-                    system.size-unit($container-padding, $size-unit)
+                    #{variables.$variable-prefix}container-padding,
+                    system.size-unit($container-padding, $size-unit),
+                    $breakpoint
     );
 
 
@@ -405,22 +332,47 @@
     }
 
     @include system.add-root-style(
-                    #{variables.$variable-prefix}gutter-#{$breakpoint}-columns,
-                    $columns
+                    #{variables.$variable-prefix}gutter-columns,
+                    $columns,
+                    $breakpoint
     );
     @include system.add-root-style(
-                    #{variables.$variable-prefix}gutter-#{$breakpoint}-row-gap,
-                    system.size-unit($row-gap, $size-unit)
+                    #{variables.$variable-prefix}gutter-row-gap,
+                    system.size-unit($row-gap, $size-unit),
+                    $breakpoint
     );
+
     @include system.add-root-style(
-                    #{variables.$variable-prefix}gutter-#{$breakpoint}-column-gap,
-                    system.size-unit($column-gap, $size-unit)
+                    #{variables.$variable-prefix}gutter-column-gap,
+                    system.size-unit($column-gap, $size-unit),
+                    $breakpoint
     );
 }
 
 
 @mixin core-styles {
     @at-root {
+        .#{variables.$class-prefix}container {
+            @include container;
+
+            &-fluid {
+                @include container-fluid;
+            }
+
+            .#{variables.$class-prefix}container,
+            .#{variables.$class-prefix}container-fluid {
+                max-width: unset;
+                padding-inline: unset;
+            }
+        }
+
+        .#{variables.$class-prefix}row {
+            @include row;
+            .#{variables.$class-prefix}row {
+                display: block;
+            }
+        }
+
         $maxCol: 0;
         @each $breakpoint, $value in variables.$gutter {
             $curCol: map-get($value, columns);
@@ -453,9 +405,6 @@
             $index : index($listBreakpoints, $breakpoint);
             @include media($breakpoint) {
                 @if $breakpoint == print {
-                    $container: map-get(variables.$containers, $breakpoint);
-                    $padding: map-get($container, padding);
-                    $max-width: map-get($container, max-width);
                     $gutter: map-get(variables.$gutter, print);
                     $cols: map-get($gutter, columns);
                     $col-width: math.div(100%, $cols);
@@ -468,78 +417,6 @@
                     }
                     @if not $column-gap and $gap {
                         $column-gap: $gap;
-                    }
-
-                    .#{variables.$class-prefix}container {
-                        @if $max-width {
-                            max-width: #{system.size-unit($max-width, in)};
-                        }
-                        @if $padding {
-                            padding-right: #{system.size-unit($padding, in)};
-                            padding-left: #{system.size-unit($padding, in)};
-                        }
-
-                        &-fluid {
-                            @if $padding {
-                                padding-right: #{system.size-unit($padding, in)};
-                                padding-left: #{system.size-unit($padding, in)};
-                            }
-
-                            .#{variables.$class-prefix}container,
-                            .#{variables.$class-prefix}container-fluid {
-                                max-width: unset;
-                                padding-right: unset;
-                                padding-left: unset;
-                            }
-                        }
-
-                        .#{variables.$class-prefix}container,
-                        .#{variables.$class-prefix}container-fluid {
-                            max-width: unset;
-                            padding-right: unset;
-                            padding-left: unset;
-                        }
-                    }
-
-                    .#{variables.$class-prefix}row {
-                        display: block;
-                        box-sizing: border-box;
-                        overflow: hidden;
-
-                        @if $column-gap {
-                            margin-right: system.size-unit(math.div($column-gap, -2), in);
-                            margin-left: system.size-unit(math.div($column-gap, -2), in);
-                        }
-
-                        @if $row-gap {
-                            margin-bottom: system.size-unit(-$row-gap, in);
-                        }
-
-                        &:after {
-                            content: "";
-                            display: block;
-                            width: 0;
-                            height: 0;
-                            overflow: hidden;
-                            clear: both;
-                        }
-
-                        > * {
-                            display: block;
-                            float: left;
-                            box-sizing: border-box;
-                            width: math.div(100%, variables.$column-default-span);
-                            overflow: hidden;
-
-                            @if $column-gap {
-                                padding-right: system.size-unit(math.div($column-gap, 2), in);
-                                padding-left: system.size-unit(math.div($column-gap, 2), in);
-                            }
-
-                            @if $row-gap {
-                                padding-bottom: system.size-unit($row-gap, in);
-                            }
-                        }
                     }
 
                     .#{variables.$class-prefix}col-#{$breakpoint} {
@@ -555,48 +432,12 @@
                         &-offset {
                             @for $offset from 1 to map-get(map-get(variables.$gutter, $breakpoint), columns) {
                                 &-#{$offset} {
-                                    margin-left: $offset * $col-width;
+                                    margin-inline-start: $offset * $col-width;
                                 }
                             }
                         }
                     }
                 } @else {
-                    .#{variables.$class-prefix}container {
-                        max-width: #{functions.get-container-max-width($breakpoint)};
-                        padding-right: #{functions.get-container-padding($breakpoint)};
-                        padding-left: #{functions.get-container-padding($breakpoint)};
-
-                        &-fluid {
-                            padding-right: #{functions.get-container-padding($breakpoint)};
-                            padding-left: #{functions.get-container-padding($breakpoint)};
-
-                            .#{variables.$class-prefix}container,
-                            .#{variables.$class-prefix}container-fluid {
-                                max-width: unset;
-                                padding-right: unset;
-                                padding-left: unset;
-                            }
-                        }
-
-                        .#{variables.$class-prefix}container,
-                        .#{variables.$class-prefix}container-fluid {
-                            max-width: unset;
-                            padding-right: unset;
-                            padding-left: unset;
-                        }
-                    }
-
-                    .#{variables.$class-prefix}row {
-                        display: grid;
-                        grid-template-columns: repeat(#{functions.get-gutter-columns($breakpoint)}, 1fr);
-                        row-gap: #{functions.get-gutter-row-gap($breakpoint)};
-                        column-gap: #{functions.get-gutter-column-gap($breakpoint)};
-
-                        .#{variables.$class-prefix}row {
-                            display: block;
-                        }
-                    }
-
                     .#{variables.$class-prefix}col-#{$breakpoint} {
                         &-span {
                             @for $col from 1 to map-get(map-get(variables.$gutter, $breakpoint), columns) {

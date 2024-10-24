@@ -22,7 +22,7 @@
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
-    "@multivisio/nswow": "^0.1.74",
+    "@multivisio/nswow": "^0.1.75",
     "@kne/color-palette": "^0.1.0",
     "@rushstack/eslint-patch": "^1.3.3",
     "@tsconfig/node20": "^20.1.2",

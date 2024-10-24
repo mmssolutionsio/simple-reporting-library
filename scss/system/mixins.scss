@@ -2,20 +2,26 @@
 @use "variables";
 
 $styles: ();
+$stylesUp: ();
+$stylesDown:();
+$stylesOnly:();
 
-@mixin add-root-style($key, $value) {
-    $styles: map.set($styles, $key, $value) !global;
+@mixin add-root-style($key, $value, $breakpoint: false, $mediaBehavior: false) {
+    @if $breakpoint {
+        @if $mediaBehavior {
+            @if $mediaBehavior == up {
+                $stylesUp: map.set($stylesUp, $breakpoint, $key, $value) !global;
+            }
+            @if $mediaBehavior == down {
+                $stylesDown: map.set($stylesDown, $breakpoint, $key, $value) !global;
+            }
+        } @else {
+            $stylesOnly: map.set($stylesOnly, $breakpoint, $key, $value) !global;
+        }
+    } @else {
+        $styles: map.set($styles, $key, $value) !global;
+    }
 }
 
 @mixin core-styles {
-    @each $key, $value in variables.$root-styles {
-        @include add-root-style($key, $value);
-    }
-    @at-root {
-        :root {
-            @each $key, $value in $styles {
-                --#{$key}: #{$value};
-            }
-        }
-    }
 }

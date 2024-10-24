@@ -1,5 +1,4 @@
 @use "variables";
-@use "mixins";
 @use "sass:map";
 @use "sass:list";
 @use "sass:math";
@@ -74,50 +73,4 @@
     }
 
     @return $number;
-}
-
-@function is-root-style($list, $map: map.merge(mixins.$styles, variables.$root-styles)) {
-    $current: false;
-    $next: ();
-
-    @each $key, $index in $list {
-        @if $current == false {
-            $current: $key;
-        } @else {
-            $next: list.append($next, $key);
-        }
-    }
-
-    @if $current and map.has-key($map, $current) {
-        @if list.length($next) > 0 {
-            @return is($next, map.get($map, $current));
-        } @else {
-            @return true;
-        }
-    } @else {
-        @return false;
-    }
-}
-
-@function get-root-style($list, $map: map.merge(mixins.$styles, variables.$root-styles)) {
-    $current: false;
-    $next: ();
-
-    @each $key, $index in $list {
-        @if $current == false {
-            $current: $key;
-        } @else {
-            $next: list.append($next, $key);
-        }
-    }
-
-    @if $current and map.has-key($map, $current) {
-        @if list.length($next) > 0 {
-            @return get($next, map.get($map, $current));
-        } @else {
-            @return map.get($map, $current);
-        }
-    } @else {
-        @return false;
-    }
 }

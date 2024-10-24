@@ -1,7 +1,17 @@
 @use "index";
+@use "system/root";
 
 @import "modern-css-reset";
 
+h5,
+h6,
+ol,
+ul
+{
+  margin: 0;
+}
+
+@include root.core-styles;
 @include index.core-styles;
 @include index.system-core-styles;
 @include index.fonts-core-styles;
