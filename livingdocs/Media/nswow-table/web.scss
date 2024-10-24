@@ -14,7 +14,12 @@ table {
   }
 }
 
-
-
+tr {
+  &:not([class*="head"]) {
+    &:hover td {
+      background-color: transparent; // TODO: please define a default hover background color
+    }
+  }
+}
 
 

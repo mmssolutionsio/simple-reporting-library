@@ -37,11 +37,11 @@ td, th {
   /*
   Font Sizes
   */
-  &.head {
+  &[class*="head"] {
     @include nswow.typography-copy2();
   }
 
-  &.head_small {
+  &[class*="head_small"] {
     @include nswow.typography-copy3();
   }
 
@@ -193,15 +193,15 @@ td, th {
   /*
   Alignments
   */
-  &.ns-horizontal-left {
+  &[class*="horizontal-left"] {
     text-align: left;
   }
 
-  &.ns-horizontal-center {
+  &[class*="horizontal-center"] {
     text-align: center;
   }
 
-  &.ns-horizontal-right {
+  &[class*="horizontal-right"] {
     text-align: right;
   }
 
@@ -253,8 +253,12 @@ td, th {
   p span {
     white-space: pre-line;
 
-    &.bold {
+    &[class*="bold"] {
       font-weight: 700;
+    }
+
+    &[class*="srl-number"] {
+      white-space: nowrap;
     }
 
     &:empty {
