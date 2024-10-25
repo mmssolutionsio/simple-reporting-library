@@ -1,9 +1,10 @@
+@use "sass:map";
 @use "variables";
 @use "../system";
 
 @function get($colorName, $media: false) {
-    @if not map-has-key(variables.$colors, $colorName) {
-        @error "Invalid color \"#{$colorName}\" specified! Choose one of #{map-keys(variables.$colors)}";
+    @if not map.has-key(variables.$colors, $colorName) {
+        @error "Invalid color \"#{$colorName}\" specified! Choose one of #{map.keys(variables.$colors)}";
     }
 
     @if $media {

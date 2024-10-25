@@ -50,15 +50,15 @@
 }
 
 @function spacer($name, $size-unit: false) {
-  @if not map-has-key(variables.$spacer, $name) {
-    @error "Invalid name for spacer specified! Choose one of #{map-keys(variables.$spacer)}";
+  @if not map.has-key(variables.$spacer, $name) {
+    @error "Invalid name for spacer specified! Choose one of #{map.keys(variables.$spacer)}";
   }
-  @return system.size-unit(map-get(variables.$spacer, $name), $size-unit);
+  @return system.size-unit(map.get(variables.$spacer, $name), $size-unit);
 }
 
 @function padding($name, $size-unit: false) {
-  @if not map-has-key(variables.$padding, $name) {
-    @error "Invalid name for padding specified! Choose one of #{map-keys(variables.$padding)}";
+  @if not map.has-key(variables.$padding, $name) {
+    @error "Invalid name for padding specified! Choose one of #{map.keys(variables.$padding)}";
   }
-  @return system.size-unit(map-get(variables.$padding, $name), $size-unit);
+  @return system.size-unit(map.get(variables.$padding, $name), $size-unit);
 }

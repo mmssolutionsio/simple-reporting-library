@@ -3,6 +3,7 @@
 @use "../system";
 @use "../grid";
 @use "sass:map";
+@use "sass:string";
 
 @mixin get($typo, $margins: false) {
     @if not map.has-key(variables.$typography, $typo) {
@@ -39,7 +40,7 @@
         @if (map.has-key($map, font-family)) {
             @include system.add-root-style(
                 #{variables.$variable-prefix}typography-#{$typo}-font-family,
-                unquote(map.get($defaults, font-family))
+                string.unquote(map.get($defaults, font-family))
             );
         }
 
@@ -55,7 +56,7 @@
 
         @include system.add-root-style(
             #{variables.$variable-prefix}typography-#{$typo}-font-style,
-            unquote(map.get($defaults, font-style))
+            string.unquote(map.get($defaults, font-style))
         );
 
         @include system.add-root-style(
@@ -84,7 +85,7 @@
         @if (map.has-key($map, font-family)) {
             @include system.add-root-style(
                 #{variables.$variable-prefix}typography-#{$typo}-font-family,
-                unquote(map.get($map, font-family)),
+                string.unquote(map.get($map, font-family)),
                 $media
             );
         }
@@ -108,7 +109,7 @@
         @if map.has-key($map, font-style) {
             @include system.add-root-style(
                 #{variables.$variable-prefix}typography-#{$typo}-font-style,
-                unquote(map.get($map, font-style)),
+                string.unquote(map.get($map, font-style)),
                 $media
             );
         }
@@ -157,7 +158,7 @@
 }
 
 @mixin set-font-family($typo, $value) {
-    --#{variables.$variable-prefix}typography-#{$typo}-font-family: #{unquote($value)};
+    --#{variables.$variable-prefix}typography-#{$typo}-font-family: #{string.unquote($value)};
 }
 
 @mixin set-font-size($typo, $value) {

@@ -2,12 +2,13 @@
 @use "sass:map";
 @use "sass:list";
 @use "sass:math";
+@use "sass:meta";
 
 @function map-get-next($map, $key, $fallback: false, $return: value) {
     // Check if map is valid
-    @if type-of($map) == map {
+    @if meta.type-of($map) == map {
         // Check if key exists in map
-        @if map-has-key($map, $key) {
+        @if map.has-key($map, $key) {
             // Init index counter variable
             $i: 0;
             // Init key index
@@ -29,7 +30,7 @@
                     }
                 }
                 // If last entry return false
-                @if $i == length($map) {
+                @if $i == list.length($map) {
                     @return $fallback;
                 }
             }
@@ -47,7 +48,7 @@
     @if not $size-unit {
         $size-unit: variables.$size-unit;
     }
-    @if type-of($size) == "number" and unitless($size) and $size != 0 {
+    @if meta.type-of($size) == "number" and math.is-unitless($size) and $size != 0 {
         @if $size-unit == "rem" {
             @return math.div($size, variables.$root-size)+rem;
         } @else if $size-unit == "in" {
@@ -68,7 +69,7 @@
 }
 
 @function strip-unit($number) {
-    @if type-of($number) == 'number' and not unitless($number) {
+    @if meta.type-of($number) == 'number' and not math.is-unitless($number) {
         @return math.div($number, ($number * 0 + 1));
     }
 

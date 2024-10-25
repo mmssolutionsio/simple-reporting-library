@@ -1,10 +1,11 @@
+@use "sass:map";
 @use "variables";
 @use "functions";
 @use "../system";
 
 @mixin set($colorName, $value, $media: false) {
-    @if not map-has-key(variables.$colors, $colorName) {
-        @error "Invalid color \"#{$colorName}\" specified! Choose one of #{map-keys(variables.$colors)}";
+    @if not map.has-key(variables.$colors, $colorName) {
+        @error "Invalid color \"#{$colorName}\" specified! Choose one of #{map.keys(variables.$colors)}";
     }
     @if $media {
         --#{variables.$variable-prefix}color-#{"" + $colorName}-#{$media}: #{$value};
@@ -16,7 +17,7 @@
 @each $colorName, $colors in variables.$colors {
     @include system.add-root-style(
                     #{variables.$variable-prefix}color-#{"" + $colorName},
-                    map-get($colors, color)
+                    map.get($colors, color)
     );
 }
 

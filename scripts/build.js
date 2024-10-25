@@ -284,6 +284,14 @@ async function build() {
 }
 
 /**
+ * Cleans up the SCSS alias by removing any characters that are not alphanumeric.
+ * @param string
+ */
+function cleanupScssAlias(string) {
+    return  string.replace(/[^a-zA-Z0-9]/g, '');
+}
+
+/**
  * Maps SCSS files and generates import statements for different output files.
  *
  * @returns {Promise<boolean>} Returns a promise that resolves to true if the SCSS mapping is successful, and false if there's an error.
@@ -308,25 +316,28 @@ async function mapScss() {
             return p.name === 'general.scss';
         });
 
+        const alias = cleanupScssAlias(f.relative());
+
         if (f) {
-            output.app.push( relativePathToRoot + f.relative() );
-            output.ldd.push( relativePathToRoot + f.relative() );
-            output.pdf.push( relativePathToRoot + f.relative() );
-            output.word.push( relativePathToRoot + f.relative() );
+            output.app.push( `"${relativePathToRoot}${f.relative()}" as ${alias}` );
+            output.ldd.push( `"${relativePathToRoot}${f.relative()}" as ${alias}` );
+            output.pdf.push( `"${relativePathToRoot}${f.relative()}" as ${alias}` );
+            output.word.push( `"${relativePathToRoot}${f.relative()}" as ${alias}` );
         }
 
         for ( let x = 0; x < mainFiles.length; x++ ) {
+            const alias = cleanupScssAlias(mainFiles[x].relative());
             if ( mainFiles[x].name === 'app.scss' ) {
-                output.app.push( relativePathToRoot + mainFiles[x].relative() );
+                output.app.push( `"${relativePathToRoot}${mainFiles[x].relative()}" as ${alias}` );
             }
             if ( mainFiles[x].name === 'ldd.scss' ) {
-                output.ldd.push( relativePathToRoot + mainFiles[x].relative() );
+                output.ldd.push( `"${relativePathToRoot}${mainFiles[x].relative()}" as ${alias}` );
             }
             if ( mainFiles[x].name === 'pdf.scss' ) {
-                output.pdf.push( relativePathToRoot + mainFiles[x].relative() );
+                output.pdf.push( `"${relativePathToRoot}${mainFiles[x].relative()}" as ${alias}` );
             }
             if ( mainFiles[x].name === 'word.scss' ) {
-                output.word.push( relativePathToRoot + mainFiles[x].relative() );
+                output.word.push( `"${relativePathToRoot}${mainFiles[x].relative()}" as ${alias}` );
             }
         }
 
@@ -347,11 +358,14 @@ async function mapScss() {
             const p = livingdocs[x];
             try {
                 const general = await statSync(p.fullpath() + '/general.scss');
-                output.app.push(relativePathToRoot + p.relative() + '/general.scss');
-                output.ldd.push(relativePathToRoot + p.relative() + '/general.scss');
-                output.pdf.push(relativePathToRoot + p.relative() + '/general.scss');
-                output.word.push(relativePathToRoot + p.relative() + '/general.scss');
+                const alias = cleanupScssAlias(`${p.relative()}/general.scss`);
+                output.app.push(`"${relativePathToRoot}${p.relative()}/general.scss" as ${alias}`);
+                output.ldd.push(`"${relativePathToRoot}${p.relative()}/general.scss" as ${alias}`);
+                output.pdf.push(`"${relativePathToRoot}${p.relative()}/general.scss" as ${alias}`);
+                output.word.push(`"${relativePathToRoot}${p.relative()}/general.scss" as ${alias}`);
             } catch (e) {}
+
+
 
             const types = ['app', 'ldd', 'pdf', 'word'];
 
@@ -359,15 +373,16 @@ async function mapScss() {
                 const type = types[i];
                 try {
                     const f = await statSync(p.fullpath() + '/' + type + '.scss');
-                    output[type].push(relativePathToRoot + p.relative() + '/' + type + '.scss');
+                    const alias = cleanupScssAlias(`${p.relative()}/${type}.scss`);
+                    output[type].push(`"${relativePathToRoot}${p.relative()}/${type}.scss" as ${alias}`);
                 } catch (e) {}
             }
         }
 
-        await writeFileSync(`${CWD}/.nswow/app.scss`, `@import "nswow/core-styles";\n@import "` + output.app.join(`";\n@import "`) + '";');
-        await writeFileSync(`${CWD}/.nswow/ldd.scss`, `@import "nswow/core-styles";\n@import "` + output.ldd.join(`";\n@import "`) + '";');
-        await writeFileSync(`${CWD}/.nswow/pdf.scss`, `@import "nswow/core-styles";\n@import "` + output.pdf.join(`";\n@import "`) + '";');
-        await writeFileSync(`${CWD}/.nswow/word.scss`, `@import "nswow/core-styles";\n@import "` + output.word.join(`";\n@import "`) + '";');
+        await writeFileSync(`${CWD}/.nswow/app.scss`, `@use "nswow/core-styles" as nswowcorestyles;\n@use ` + output.app.join(";\n@use ") + ";\n");
+        await writeFileSync(`${CWD}/.nswow/ldd.scss`, `@use "nswow/core-styles" as nswowcorestyles;\n@use ` + output.ldd.join(";\n@use ") + ";\n");
+        await writeFileSync(`${CWD}/.nswow/pdf.scss`, `@use "nswow/core-styles" as nswowcorestyles;\n@use ` + output.pdf.join(";\n@use ") + ";\n");
+        await writeFileSync(`${CWD}/.nswow/word.scss`, `@use "nswow/core-styles" as nswowcorestyles;\n@use ` + output.word.join(";\n@use ") + ";\n");
 
         return true;
     } catch (e) {
