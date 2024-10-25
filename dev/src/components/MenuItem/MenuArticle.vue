@@ -2,13 +2,14 @@
 import { RouterLink } from 'vue-router'
 
 const props = defineProps<{
-  label: string,
-  page: string,
+  label: string
+  page: string
   anchor?: string
 }>()
 </script>
 
 <template>
   <span>
-    <router-link :to="{ path: props.page }">{{ props.label }}</router-link></span>
+    <router-link :to="{ path: props.page }">{{ props.label }}</router-link></span
+  >
 </template>

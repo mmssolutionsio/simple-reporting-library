@@ -1,6 +1,6 @@
-@use "nswow";
+@use 'nswow';
 
-.srl-image{
+.srl-image {
   &__image-container--mobile {
     display: none;
   }

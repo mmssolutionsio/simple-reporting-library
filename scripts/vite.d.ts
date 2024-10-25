@@ -5,6 +5,6 @@
  * @param {Object} server - The server object.
  */
 export function nswowWatcher(): {
-    name: string;
-    configureServer(server: any): void;
+  name: string;
+  configureServer(server: any): void;
 };

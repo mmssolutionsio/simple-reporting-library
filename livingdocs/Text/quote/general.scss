@@ -1,7 +1,6 @@
-@use "nswow";
+@use 'nswow';
 
 .srl-quote {
-
   break-before: auto;
   break-inside: avoid;
   break-after: auto;
@@ -12,17 +11,17 @@
   }
 
   &__text {
-    color: nswow.colors-gray-800();
+    color: nswow.colors-shade-800();
     @include nswow.typography-blockquote();
   }
 
   &:not(.hide-quote-characters) {
     .srl-quote__text {
       &:before {
-        content: "\301E";
+        content: '\301E';
       }
       &:after {
-        content: "\301D";
+        content: '\301D';
       }
     }
   }
@@ -33,13 +32,12 @@
 
   &__author {
     font-weight: 700;
-    color: nswow.colors-gray-800();
+    color: nswow.colors-shade-800();
     @include nswow.typography-copy3(true);
   }
 
   &__function {
-    color: nswow.colors-gray-800();
+    color: nswow.colors-shade-800();
     @include nswow.typography-copy3(true);
   }
-
 }

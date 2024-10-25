@@ -1,26 +1,26 @@
-@use "sass:map";
-@use "variables";
+@use 'sass:map';
+@use 'variables';
 
 $styles: ();
 $stylesUp: ();
-$stylesDown:();
-$stylesOnly:();
+$stylesDown: ();
+$stylesOnly: ();
 
 @mixin add-root-style($key, $value, $breakpoint: false, $mediaBehavior: false) {
-    @if $breakpoint {
-        @if $mediaBehavior {
-            @if $mediaBehavior == up {
-                $stylesUp: map.set($stylesUp, $breakpoint, $key, $value) !global;
-            }
-            @if $mediaBehavior == down {
-                $stylesDown: map.set($stylesDown, $breakpoint, $key, $value) !global;
-            }
-        } @else {
-            $stylesOnly: map.set($stylesOnly, $breakpoint, $key, $value) !global;
-        }
+  @if $breakpoint {
+    @if $mediaBehavior {
+      @if $mediaBehavior == up {
+        $stylesUp: map.set($stylesUp, $breakpoint, $key, $value) !global;
+      }
+      @if $mediaBehavior == down {
+        $stylesDown: map.set($stylesDown, $breakpoint, $key, $value) !global;
+      }
     } @else {
-        $styles: map.set($styles, $key, $value) !global;
+      $stylesOnly: map.set($stylesOnly, $breakpoint, $key, $value) !global;
     }
+  } @else {
+    $styles: map.set($styles, $key, $value) !global;
+  }
 }
 
 @mixin core-styles {

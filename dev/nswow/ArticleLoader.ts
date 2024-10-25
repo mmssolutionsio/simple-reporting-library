@@ -30,8 +30,8 @@ abstract class ArticleLoader {
    * @return {void} - No return value.
    */
   protected _initializeNodeList(selector: string | NodeList, options: unknown) {
-    const nodeList = (typeof selector === 'string') ? document.querySelectorAll(selector) : selector
-    Array.from(nodeList).forEach(node => new this.constructor(node, options))
+    const nodeList = typeof selector === 'string' ? document.querySelectorAll(selector) : selector
+    Array.from(nodeList).forEach((node) => new this.constructor(node, options))
   }
 
   /**
@@ -56,9 +56,7 @@ abstract class ArticleLoader {
    */
   protected _assignOptions(options: unknown) {
     if (options !== undefined) {
-      this.options = (typeof options === 'string')
-        ? JSON.parse(options)
-        : options
+      this.options = typeof options === 'string' ? JSON.parse(options) : options
     } else {
       this.options = {}
     }
@@ -73,7 +71,5 @@ abstract class ArticleLoader {
   abstract _create(): void
 }
 
-export default ArticleLoader;
-export {
-  ArticleLoader
-}
+export default ArticleLoader
+export { ArticleLoader }

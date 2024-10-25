@@ -1,8 +1,8 @@
-@use "web";
+@use 'web';
 
-@use "nswow";
+@use 'nswow';
 
-.srl-image{
+.srl-image {
   &:not(.show-mobile-image) {
     @include nswow.grid-media(phone) {
       .srl-image__image-container--desktop {
@@ -22,5 +22,4 @@
       display: none;
     }
   }
-
 }

@@ -1,7 +1,7 @@
-@use "sass:map";
-@use "variables";
-@use "../grid";
-@use "../system";
+@use 'sass:map';
+@use 'variables';
+@use '../grid';
+@use '../system';
 
 @mixin margin($spacer) {
   @if not map.has-key(variables.$spacer, $spacer) {
@@ -124,21 +124,41 @@
 
 @each $spacer, $spacerValue in variables.$spacer {
   $varName: #{variables.$variable-prefix}spacer-#{$spacer};
-  @include system.add-root-style($varName, system.size-unit(map.get($spacerValue, size)));
+  @include system.add-root-style(
+    $varName,
+    system.size-unit(map.get($spacerValue, size))
+  );
   @if map.has-key($spacerValue, media) {
     @each $breakpoint, $breakpointValue in map.get($spacerValue, media) {
       @if $breakpoint == print {
-        @include system.add-root-style($varName, system.size-unit(map.get($spacerValue, size), in));
+        @include system.add-root-style(
+          $varName,
+          system.size-unit(map.get($spacerValue, size), in)
+        );
       } @else if $breakpoint == up {
         @each $upBreakpoint, $upBreakpointValue in $breakpointValue {
-          @include system.add-root-style($varName, system.size-unit($upBreakpointValue), $upBreakpoint, up);
+          @include system.add-root-style(
+            $varName,
+            system.size-unit($upBreakpointValue),
+            $upBreakpoint,
+            up
+          );
         }
       } @else if $breakpoint == down {
         @each $downBreakpoint, $downBreakpointValue in $breakpointValue {
-          @include system.add-root-style($varName, system.size-unit($downBreakpointValue), $downBreakpoint, down);
+          @include system.add-root-style(
+            $varName,
+            system.size-unit($downBreakpointValue),
+            $downBreakpoint,
+            down
+          );
         }
       } @else {
-        @include system.add-root-style($varName, system.size-unit($breakpointValue), $breakpoint);
+        @include system.add-root-style(
+          $varName,
+          system.size-unit($breakpointValue),
+          $breakpoint
+        );
       }
     }
   }
@@ -168,25 +188,25 @@
       .#{variables.$class-prefix}ml-none {
         margin-inline-start: 0;
       }
-      .#{variables.$class-prefix}ma-#{"" + $spacer} {
+      .#{variables.$class-prefix}ma-#{'' + $spacer} {
         @include margin($spacer);
       }
-      .#{variables.$class-prefix}my-#{"" + $spacer} {
+      .#{variables.$class-prefix}my-#{'' + $spacer} {
         @include margin-block($spacer);
       }
-      .#{variables.$class-prefix}mx-#{"" + $spacer} {
+      .#{variables.$class-prefix}mx-#{'' + $spacer} {
         @include margin-inline($spacer);
       }
-      .#{variables.$class-prefix}mt-#{"" + $spacer} {
+      .#{variables.$class-prefix}mt-#{'' + $spacer} {
         @include margin-top($spacer);
       }
-      .#{variables.$class-prefix}mr-#{"" + $spacer} {
+      .#{variables.$class-prefix}mr-#{'' + $spacer} {
         @include margin-right($spacer);
       }
-      .#{variables.$class-prefix}mb-#{"" + $spacer} {
+      .#{variables.$class-prefix}mb-#{'' + $spacer} {
         @include margin-bottom($spacer);
       }
-      .#{variables.$class-prefix}ml-#{"" + $spacer} {
+      .#{variables.$class-prefix}ml-#{'' + $spacer} {
         @include margin-left($spacer);
       }
 
@@ -211,47 +231,46 @@
       .#{variables.$class-prefix}pl-none {
         padding-inline-start: 0;
       }
-      .#{variables.$class-prefix}pa-#{"" + $spacer} {
+      .#{variables.$class-prefix}pa-#{'' + $spacer} {
         @include padding($spacer);
       }
-      .#{variables.$class-prefix}py-#{"" + $spacer} {
+      .#{variables.$class-prefix}py-#{'' + $spacer} {
         @include padding-block($spacer);
       }
-      .#{variables.$class-prefix}px-#{"" + $spacer} {
+      .#{variables.$class-prefix}px-#{'' + $spacer} {
         @include padding-inline($spacer);
       }
-      .#{variables.$class-prefix}pt-#{"" + $spacer} {
+      .#{variables.$class-prefix}pt-#{'' + $spacer} {
         @include padding-top($spacer);
       }
-      .#{variables.$class-prefix}pr-#{"" + $spacer} {
+      .#{variables.$class-prefix}pr-#{'' + $spacer} {
         @include padding-right($spacer);
       }
-      .#{variables.$class-prefix}pb-#{"" + $spacer} {
+      .#{variables.$class-prefix}pb-#{'' + $spacer} {
         @include padding-bottom($spacer);
       }
-      .#{variables.$class-prefix}pl-#{"" + $spacer} {
+      .#{variables.$class-prefix}pl-#{'' + $spacer} {
         @include padding-left($spacer);
       }
 
       .#{variables.$class-prefix}gap-none {
         gap: 0;
       }
-      .#{variables.$class-prefix}gap-#{"" + $spacer} {
+      .#{variables.$class-prefix}gap-#{'' + $spacer} {
         @include gap($spacer);
       }
       .#{variables.$class-prefix}row-gap-none {
         row-gap: 0;
       }
-      .#{variables.$class-prefix}row-gap-#{"" + $spacer} {
+      .#{variables.$class-prefix}row-gap-#{'' + $spacer} {
         @include row-gap($spacer);
       }
       .#{variables.$class-prefix}column-gap-none {
         column-gap: 0;
       }
-      .#{variables.$class-prefix}column-gap-#{"" + $spacer} {
+      .#{variables.$class-prefix}column-gap-#{'' + $spacer} {
         @include column-gap($spacer);
       }
-
     }
   }
 }

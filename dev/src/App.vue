@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref } from 'vue'
 import PageHeader from '@/components/PageHeader.vue'
 import PageFooter from '@/components/PageFooter.vue'
 import MainNavigation from '@/components/MainNavigation.vue'
@@ -21,27 +21,24 @@ defineExpose({
   modalContent
 })
 
-watch(
-  route,
-  () => {
-    const paramLocale = ArrayToString(route.params.locale)
-    if (paramLocale !== locale.value) {
-      locale.value = paramLocale
-    }
+watch(route, () => {
+  const paramLocale = ArrayToString(route.params.locale)
+  if (paramLocale !== locale.value) {
+    locale.value = paramLocale
   }
-)
+})
 </script>
 
 <template>
-  <PageHeader/>
+  <PageHeader />
   <suspense>
-    <MainNavigation/>
+    <MainNavigation />
   </suspense>
   <suspense>
-    <RouterView/>
+    <RouterView />
   </suspense>
   <suspense>
-    <PageFooter/>
+    <PageFooter />
   </suspense>
   <PageModal ref="modal" />
 </template>

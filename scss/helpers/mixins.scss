@@ -1,6 +1,6 @@
-@use "../system";
-@use "../typography";
-@use "variables";
+@use '../system';
+@use '../typography';
+@use 'variables';
 
 @mixin trim-margins {
   > * {
@@ -68,7 +68,7 @@
 
 @mixin clearfix {
   &:after {
-    content: "";
+    content: '';
     font-size: 0;
     line-height: 0;
     width: 0;

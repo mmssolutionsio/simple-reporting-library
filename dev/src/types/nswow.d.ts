@@ -1,76 +1,78 @@
-export {};
+export {}
 declare global {
-  export interface Window { baseUrl?: string; }
-
-  export type NsWowSettings = {
-    languages:string[];
-    defaultLanguage:string;
-    shortBreadcrumb:boolean;
-    search:{
-      boldTheWord:boolean;
-    },
-    categories:string[];
+  export interface Window {
+    baseUrl?: string
   }
 
-  export interface NsWowArticle     {
-    uuid: string;
-    name: string;
-    translatedTitle: string;
-    slug: string;
-    index: boolean;
-    seo_keywords: string[];
-    ignoreInSearch: boolean;
-    excerpt: string;
-    originalLanguageOfArticle: string;
-    status: string;
+  export type NsWowSettings = {
+    languages: string[]
+    defaultLanguage: string
+    shortBreadcrumb: boolean
+    search: {
+      boldTheWord: boolean
+    }
+    categories: string[]
+  }
+
+  export interface NsWowArticle {
+    uuid: string
+    name: string
+    translatedTitle: string
+    slug: string
+    index: boolean
+    seo_keywords: string[]
+    ignoreInSearch: boolean
+    excerpt: string
+    originalLanguageOfArticle: string
+    status: string
   }
 
   export interface NsWowArticles {
-    [locale: string]: NsWowArticle[];
+    [locale: string]: NsWowArticle[]
   }
 
   export type NsWowConfig = {
-    loaded: boolean;
-    baseUrl: string;
-    settings: NsWowSettings;
-    articles: NsWowArticles;
-    menus: NsWowMenus;
+    loaded: boolean
+    baseUrl: string
+    settings: NsWowSettings
+    articles: NsWowArticles
+    menus: NsWowMenus
   }
 
   export interface NsWowMenu {
-    label: string;
-    type: string;
-    page?: string;
-    url?: string;
-    anchor?: string;
-    submenuEntries?: NsWowMenu[];
+    label: string
+    type: string
+    page?: string
+    url?: string
+    anchor?: string
+    submenuEntries?: NsWowMenu[]
   }
 
   export interface NsWowMenus {
     [locale: string]: {
-      [menu: string]: NsWowMenu[];
-    };
+      [menu: string]: NsWowMenu[]
+    }
   }
 
   export interface NsWowResponseRouting {
-    version: string;
-    pages: NsWowArticle[];
+    version: string
+    pages: NsWowArticle[]
     menu: {
-      [menu: string]: NsWowMenu[];
+      [menu: string]: NsWowMenu[]
     }
   }
 
   export interface NsWowDownload {
-    "type": string;
-    "title": string;
-    "fileType": string;
-    "size": string;
-    "artifact": string;
+    type: string
+    title: string
+    fileType: string
+    size: string
+    artifact: string
   }
 
   export type NsWowDownloads = {
-    version?: string;
-    structure: NsWowDownload[];
-    annualReport?: NsWowDownload;
+    version?: string
+    structure: NsWowDownload[]
+    annualReport?: NsWowDownload
   }
 }

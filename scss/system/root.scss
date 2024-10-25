@@ -1,7 +1,6 @@
-@use "variables";
-@use "mixins";
-@use "../grid";
-
+@use 'variables';
+@use 'mixins';
+@use '../grid';
 
 @mixin core-styles {
   @each $key, $value in variables.$root-styles {

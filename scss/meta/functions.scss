@@ -1,7 +1,7 @@
-@use "variables";
-@use "sass:list";
-@use "sass:map";
-@use "../system";
+@use 'variables';
+@use 'sass:list';
+@use 'sass:map';
+@use '../system';
 
 @function is($list, $map: variables.$meta) {
   $current: false;

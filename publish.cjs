@@ -1,17 +1,17 @@
-const { resolve } = require("node:path");
-const { readFileSync, writeFileSync, rmSync } = require("node:fs");
-const { globSync } = require("glob");
-const writeJson = require("write-json");
-const NpmApi = require("npm-api");
-const ts = require("typescript");
-const enquirer = require("enquirer");
+const { resolve } = require('node:path');
+const { readFileSync, writeFileSync, rmSync } = require('node:fs');
+const { globSync } = require('glob');
+const writeJson = require('write-json');
+const NpmApi = require('npm-api');
+const ts = require('typescript');
+const enquirer = require('enquirer');
 const { Input } = enquirer;
 
 async function compile(fileNames, options) {
   // Create a Program with an in-memory emit
-  const createdFiles = {}
+  const createdFiles = {};
   const host = ts.createCompilerHost(options);
-  host.writeFile = (fileName, contents) => createdFiles[fileName] = contents
+  host.writeFile = (fileName, contents) => (createdFiles[fileName] = contents);
 
   // Prepare and emit the d.ts files
   const program = ts.createProgram(fileNames, options, host);
@@ -25,7 +25,7 @@ async function compile(fileNames, options) {
 
 async function action() {
   const npm = new NpmApi();
-  const nswow = await npm.repo("@multivisio/nswow");
+  const nswow = await npm.repo('@multivisio/nswow');
   const nswowPackage = await nswow.package();
   const currentVersion = nswowPackage.version.split('.');
   let major = parseInt(currentVersion[0]);
@@ -47,25 +47,27 @@ async function action() {
 
   const prompt = new Input({
     message: 'Package version',
-    initial: version
+    initial: version,
   });
   version = await prompt.run();
 
   if (version) {
     const packageJson = JSON.parse(
-      await readFileSync(resolve(process.cwd(), './package.json'))
+      await readFileSync(resolve(process.cwd(), './package.json')),
     );
     packageJson.version = version;
     await writeJson(resolve(process.cwd(), './package.json'), packageJson);
 
     const devJson = JSON.parse(
-      await readFileSync(resolve(process.cwd(), './dev/package.json'))
+      await readFileSync(resolve(process.cwd(), './dev/package.json')),
     );
-    devJson.devDependencies["@multivisio/nswow"] = `^${version}`;
+    devJson.devDependencies['@multivisio/nswow'] = `^${version}`;
     await writeJson(resolve(process.cwd(), './dev/package.json'), devJson);
   }
 
-  const typescriptFiles = await globSync(resolve(process.cwd(), './scripts/**/*.d.ts'));
+  const typescriptFiles = await globSync(
+    resolve(process.cwd(), './scripts/**/*.d.ts'),
+  );
   for (let i = 0; i < typescriptFiles.length; i++) {
     await rmSync(typescriptFiles[i]);
   }
@@ -75,7 +77,7 @@ async function action() {
   await compile(jsFiles, {
     allowJs: true,
     declaration: true,
-    emitDeclarationOnly: true
+    emitDeclarationOnly: true,
   });
 }
 

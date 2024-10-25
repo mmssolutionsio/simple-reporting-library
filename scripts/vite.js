@@ -1,5 +1,5 @@
-import {beaver} from './beaver.js';
-import {map, mapLdd, mapJs} from './build.js';
+import { beaver } from './beaver.js';
+import { map, mapLdd, mapJs } from './build.js';
 
 /**
  * Configures the nswow-watcher for the server to monitor changes in specific files.
@@ -8,63 +8,51 @@ import {map, mapLdd, mapJs} from './build.js';
  * @param {Object} server - The server object.
  */
 function nswowWatcher() {
-    return {
-        name: "nswow-watcher",
-        configureServer(server) {
-            server.watcher.on("change", path => {
-                if (
-                    path.endsWith("/nswow.config.json")
-                ) {
-                    beaver();
-                }
+  return {
+    name: 'nswow-watcher',
+    configureServer(server) {
+      server.watcher.on('change', (path) => {
+        if (path.endsWith('/nswow.config.json')) {
+          beaver();
+        }
 
-                if (
-                    path.endsWith("/properties.json")
-                ) {
-                    mapLdd();
-                }
-            })
-            server.watcher.on("add", path => {
-                if (
-                    path.endsWith("/general.scss") ||
-                    path.endsWith("/app.scss") ||
-                    path.endsWith("/ldd.scss") ||
-                    path.endsWith("/pdf.scss") ||
-                    path.endsWith("/word.scss")
-                ) {
-                    map();
-                }
+        if (path.endsWith('/properties.json')) {
+          mapLdd();
+        }
+      });
+      server.watcher.on('add', (path) => {
+        if (
+          path.endsWith('/general.scss') ||
+          path.endsWith('/app.scss') ||
+          path.endsWith('/ldd.scss') ||
+          path.endsWith('/pdf.scss') ||
+          path.endsWith('/word.scss')
+        ) {
+          map();
+        }
 
-                if (
-                  path.endsWith("/app.js") ||
-                  path.endsWith("/app.ts")
-                ) {
-                    mapJs();
-                }
-            })
-            server.watcher.on("unlink", path => {
-                if (
-                    path.endsWith("/general.scss") ||
-                    path.endsWith("/app.scss") ||
-                    path.endsWith("/ldd.scss") ||
-                    path.endsWith("/pdf.scss") ||
-                    path.endsWith("/word.scss") ||
-                    path.endsWith("/properties.json")
-                ) {
-                    map();
-                }
+        if (path.endsWith('/app.js') || path.endsWith('/app.ts')) {
+          mapJs();
+        }
+      });
+      server.watcher.on('unlink', (path) => {
+        if (
+          path.endsWith('/general.scss') ||
+          path.endsWith('/app.scss') ||
+          path.endsWith('/ldd.scss') ||
+          path.endsWith('/pdf.scss') ||
+          path.endsWith('/word.scss') ||
+          path.endsWith('/properties.json')
+        ) {
+          map();
+        }
 
-                if (
-                  path.endsWith("/app.js") ||
-                  path.endsWith("/app.ts")
-                ) {
-                    mapJs();
-                }
-            })
-        },
-    }
+        if (path.endsWith('/app.js') || path.endsWith('/app.ts')) {
+          mapJs();
+        }
+      });
+    },
+  };
 }
 
-export {
-    nswowWatcher
-}
+export { nswowWatcher };

@@ -11,7 +11,7 @@ const config = await useConfig()
 const router = useRouter()
 const route = useRoute()
 const articleContent = ref<HTMLDivElement | undefined>()
-const output = ref<string>("")
+const output = ref<string>('')
 const locale = computed<string>(() => {
   return ArrayToString(route.params.locale)
 })
@@ -19,16 +19,18 @@ const slug = computed<string>(() => {
   return ArrayToString(route.params.slug)
 })
 async function getContent() {
-  const currentPage = config.value.articles[locale.value] && config.value.articles[locale.value].find( i => {
-    return i.slug === slug.value
-  })
-  let res = ""
+  const currentPage =
+    config.value.articles[locale.value] &&
+    config.value.articles[locale.value].find((i) => {
+      return i.slug === slug.value
+    })
+  let res = ''
   if (currentPage) {
     const file = `${config.value.baseUrl}/html/${locale.value}/${currentPage.name}.html`
     try {
       const response = await fetch(file)
       res = await response.text()
-      output.value = res;
+      output.value = res
       await nextTick(() => {
         if (articleContent.value) {
           Autoload.init(articleContent.value)
@@ -43,7 +45,7 @@ async function getContent() {
   }
 }
 
-watch(route,async () => await getContent())
+watch(route, async () => await getContent())
 onMounted(async () => {
   await getContent()
 })
@@ -52,14 +54,14 @@ onMounted(async () => {
 <template>
   <article>
     <transition name="fade">
-      <div v-if="output.length" ref="articleContent" class="srl-article-root" v-html="output"/>
+      <div v-if="output.length" ref="articleContent" class="srl-article-root" v-html="output" />
     </transition>
-    <PrevNext/>
+    <PrevNext />
   </article>
 </template>
 
 <style scoped lang="scss">
-@use "nswow";
+@use 'nswow';
 
 article {
   padding-bottom: nswow.system-size-unit(50);
@@ -67,7 +69,7 @@ article {
 </style>
 
 <style scoped lang="scss">
-@use "nswow";
+@use 'nswow';
 
 .srl-article-root {
   margin-bottom: nswow.system-size-unit(50);

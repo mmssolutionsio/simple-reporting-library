@@ -1,8 +1,8 @@
-@use "../system";
+@use '../system';
 
 $class-prefix: system.$class-prefix !default;
 $variable-prefix: system.$variable-prefix !default;
 
-$font-base-path: "" !default;
-$default-font: "" !default;
+$font-base-path: '' !default;
+$default-font: '' !default;
 $fonts: () !default;

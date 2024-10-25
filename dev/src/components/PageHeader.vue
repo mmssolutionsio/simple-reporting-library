@@ -12,13 +12,18 @@ const baseUrl = ref(window.baseUrl ?? '')
 function toggleSearchVisible() {
   srlSearch.value.classList.toggle('visible')
 }
+
+function search() {
+  $router.push(`/${locale}/search?searchValue=${searchValue.value}`)
+  toggleSearchVisible()
+}
 </script>
 
 <template>
   <header class="srl-bg-primary srl-color-light">
     <div class="srl-header__inner">
       <router-link class="srl-header__inner-logo" :to="{ path: `/${locale}` }">
-        <img :src="`${baseUrl}/assets/mms-logo-white.svg`" alt="logo"/>
+        <img :src="`${baseUrl}/assets/mms-logo-white.svg`" alt="logo" />
       </router-link>
       <div class="srl-header__inner-content">
         <div class="srl-header__inner-languages">
@@ -62,18 +67,13 @@ function toggleSearchVisible() {
       </div>
     </div>
     <div ref="srlSearch" class="srl-header__search">
-      <input
-        type="search"
-        placeholder="Search ..."
-        v-model="searchValue"
-        @keypress.enter="$router.push(`/${locale}/search?searchValue=${searchValue}`); toggleSearchVisible()"
-      />
+      <input type="search" placeholder="Search ..." v-model="searchValue" @keyup.enter="search" />
     </div>
   </header>
 </template>
 
 <style scoped lang="scss">
-@use "nswow";
+@use 'nswow';
 
 header {
   min-height: nswow.system-size-unit(60);
@@ -147,5 +147,4 @@ header {
     display: none;
   }
 }
-
 </style>

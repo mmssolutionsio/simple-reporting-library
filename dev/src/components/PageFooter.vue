@@ -2,14 +2,14 @@
 import { MenuArticle, MenuExternal, MenuEntry } from '@/components/MenuItem'
 import { computed, ref } from 'vue'
 import useConfig from '@/composables/config'
-import {useI18n} from 'vue-i18n'
+import { useI18n } from 'vue-i18n'
 
-const { locale } = useI18n();
+const { locale } = useI18n()
 const config = await useConfig()
 const navigation = ref<NsWowMenu[]>([])
 
 const currentMenus = computed<NsWowMenus>(() => {
-  return config.value.menus[locale.value]??{}
+  return config.value.menus[locale.value] ?? {}
 })
 
 function getLinkByPage(page: string): string {
@@ -28,22 +28,32 @@ if (currentMenus.value?.footer) {
         <h2>Footernavigation</h2>
         <ul>
           <li v-for="(item, index) in navigation" :key="index">
-            <MenuArticle v-if="item.type==='Article'" :label="item.label" :page="getLinkByPage(<string>item.page)" />
-            <MenuEntry v-if="item.type==='MenuEntry'" :label="item.label" />
-            <MenuExternal v-if="item.type==='ExternalLink'" :label="item.label" :url="<string>item.url" />
+            <MenuArticle
+              v-if="item.type === 'Article'"
+              :label="item.label"
+              :page="getLinkByPage(<string>item.page)"
+            />
+            <MenuEntry v-if="item.type === 'MenuEntry'" :label="item.label" />
+            <MenuExternal
+              v-if="item.type === 'ExternalLink'"
+              :label="item.label"
+              :url="<string>item.url"
+            />
           </li>
         </ul>
       </div>
       <div class="srl-footer__inner-imprint">
-        <p>Made by<br /><a href="https://mmssolutions.io/" target="_blank">mms solutions</a> x <a
-          href="https://www.multivisio.de/" target="_blank">MULTIVISIO</a></p>
+        <p>
+          Made by<br /><a href="https://mmssolutions.io/" target="_blank">mms solutions</a> x
+          <a href="https://www.multivisio.de/" target="_blank">MULTIVISIO</a>
+        </p>
       </div>
     </div>
   </footer>
 </template>
 
 <style scoped lang="scss">
-@use "nswow";
+@use 'nswow';
 
 footer {
   min-height: nswow.system-size-unit(60);

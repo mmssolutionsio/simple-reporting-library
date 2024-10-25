@@ -1,25 +1,29 @@
-@use "sass:map";
-@use "variables";
-@use "../system";
+@use 'sass:map';
+@use 'variables';
+@use '../system';
 
 @mixin core-styles {
   @each $font-family, $valFontFamily in variables.$fonts {
-    @each $index, $font in map.get($valFontFamily, "types") {
+    @each $index, $font in map.get($valFontFamily, 'types') {
       $font-types: ();
-      @each $format, $file in map.get($font, "src") {
-        $font-types: append($font-types, "url(\"#{variables.$font-base-path}/#{$font-family}/#{$file}\") format(\"#{$format}\")", comma);
+      @each $format, $file in map.get($font, 'src') {
+        $font-types: append(
+          $font-types,
+          'url("#{variables.$font-base-path}/#{$font-family}/#{$file}") format("#{$format}")',
+          comma
+        );
       }
       @font-face {
-        font-family: "#{$font-family}";
+        font-family: '#{$font-family}';
         src: #{$font-types};
-        @if map.has-key($font, "font-weight") {
-          font-weight: map.get($font, "font-weight");
+        @if map.has-key($font, 'font-weight') {
+          font-weight: map.get($font, 'font-weight');
         }
-        @if map.has-key($font, "font-style") {
-          font-style: "#{map.get($font, "font-style")}";
+        @if map.has-key($font, 'font-style') {
+          font-style: '#{map.get($font, 'font-style')}';
         }
-        @if map.has-key($font, "font-display") {
-          font-display: "#{map.get($font, "font-display")}";
+        @if map.has-key($font, 'font-display') {
+          font-display: '#{map.get($font, 'font-display')}';
         }
       }
     }

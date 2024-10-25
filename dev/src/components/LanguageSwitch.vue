@@ -6,15 +6,15 @@ import { ArrayToString } from '@/utils/variables'
 
 type langRoute = {
   params: {
-    locale: string;
-    slug?: string | string[];
+    locale: string
+    slug?: string | string[]
   }
   query?: LocationQuery
 }
 type langItem = {
-  label: string;
-  active: boolean;
-  route: langRoute;
+  label: string
+  active: boolean
+  route: langRoute
 }
 
 const config = await useConfig()
@@ -27,26 +27,26 @@ const locale = computed<string>(() => {
 })
 
 const articles = computed<NsWowArticle[]>(() => {
-  return config.value.articles[locale.value]??[]
+  return config.value.articles[locale.value] ?? []
 })
 
 async function makeLanguageSwitch() {
-  const languages = [];
+  const languages = []
   for (let i = 0; i < config.value.settings.languages.length; i++) {
-    const lang = config.value.settings.languages[i];
+    const lang = config.value.settings.languages[i]
     const routeParams = route.params
     const linkRoute: langRoute = {
       params: {
         locale: lang
       }
-    };
+    }
     if (routeParams.slug) {
       const slug = ArrayToString(routeParams.slug)
-      const currentArticle = articles.value.find(a=>{
-        return a.slug===slug
+      const currentArticle = articles.value.find((a) => {
+        return a.slug === slug
       })
       if (currentArticle) {
-        const langArticle = config.value.articles[lang].find(a=>{
+        const langArticle = config.value.articles[lang].find((a) => {
           return a.uuid === currentArticle.uuid
         })
 
@@ -57,7 +57,7 @@ async function makeLanguageSwitch() {
     }
 
     if (route.query) {
-      linkRoute.query=route.query
+      linkRoute.query = route.query
     }
 
     languages.push({
@@ -70,27 +70,20 @@ async function makeLanguageSwitch() {
 }
 
 watch(route, makeLanguageSwitch)
-
 </script>
 
 <template>
-<div class="srl-language-switch">
-  <div     v-for="link in languageItems"
-           :key="link.label">
-    <router-link
-      class="srl-color-light"
-      :to="link.route"
-      :class="{ active: link.active }"
-    >
-      {{ link.label.toUpperCase() }}
-    </router-link>
+  <div class="srl-language-switch">
+    <div v-for="link in languageItems" :key="link.label">
+      <router-link class="srl-color-light" :to="link.route" :class="{ active: link.active }">
+        {{ link.label.toUpperCase() }}
+      </router-link>
+    </div>
   </div>
-
-</div>
 </template>
 
 <style scoped lang="scss">
-@use "nswow";
+@use 'nswow';
 .srl-language-switch {
   display: flex;
   justify-content: flex-end;

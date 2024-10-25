@@ -3,25 +3,23 @@ import useConfig from '@/composables/config'
 
 const defaultMessages: LocaleMessages<any> = {}
 
-const locales = import.meta.glob('@/locales/**/*.json', { eager: true, import: "default" });
+const locales = import.meta.glob('@/locales/**/*.json', { eager: true, import: 'default' })
 
-for ( const path in locales) {
-  const matched = path.match(/([A-Za-z0-9-_]+)\./i);
+for (const path in locales) {
+  const matched = path.match(/([A-Za-z0-9-_]+)\./i)
   if (matched && matched.length > 1) {
-    const locale = matched[1];
-    defaultMessages[locale] = locales[path];
+    const locale = matched[1]
+    defaultMessages[locale] = locales[path]
   }
 }
 
 const options: I18nOptions = {
   legacy: false,
-  locale: "de",
-  fallbackLocale: "de",
+  locale: 'de',
+  fallbackLocale: 'de',
   globalInjection: true,
   messages: defaultMessages
 }
-
-
 
 const i18n = createI18n<false, typeof options>(options)
 
@@ -32,14 +30,11 @@ async function getTranslation() {
 
   try {
     const response: Response = await fetch(file)
-    const importMessages: LocaleMessages<any> = await response.json();
+    const importMessages: LocaleMessages<any> = await response.json()
 
-    for ( const lang in importMessages ) {
-      if (typeof defaultMessages[lang] !== "undefined") {
-        importMessages[lang] = Object.assign(
-          defaultMessages[lang],
-          importMessages[lang]
-        )
+    for (const lang in importMessages) {
+      if (typeof defaultMessages[lang] !== 'undefined') {
+        importMessages[lang] = Object.assign(defaultMessages[lang], importMessages[lang])
       }
     }
     messages = importMessages
@@ -52,13 +47,12 @@ async function getTranslation() {
     i18n.global.setLocaleMessage(lang, messages[lang])
   }
 
-  if (navigator && navigator.language && typeof messages[navigator.language] !== "undefined") {
-    i18n.locale = navigator.language;
+  if (navigator && navigator.language && typeof messages[navigator.language] !== 'undefined') {
+    i18n.locale = navigator.language
   } else {
     i18n.locale = config.value.settings.defaultLanguage
   }
   i18n.fallbackLocale = config.value.settings.defaultLanguage
-
 }
 getTranslation()
 

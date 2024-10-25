@@ -1,5 +1,5 @@
-@use "variables";
-@use "sass:map";
+@use 'variables';
+@use 'sass:map';
 
 @function is($font) {
   @return map.has-key(variables.$fonts, $font);
@@ -13,7 +13,7 @@
 }
 
 @function is-default() {
-  @return variables.$default-font != "";
+  @return variables.$default-font != '';
 }
 
 @function get-default() {

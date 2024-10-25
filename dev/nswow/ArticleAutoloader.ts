@@ -1,15 +1,15 @@
 import ArticleLoader from './ArticleLoader'
 import { camelCase } from 'cheerio/utils'
 
-type AutoloadList = string | string[];
+type AutoloadList = string | string[]
 
 /**
  * Class representing an ArticleAutoloader.
  * @class
  */
 class ArticleAutoloader {
-  classes: {[key: string]: {new(node: HTMLElement, options: any): any}};
-  selector: string;
+  classes: { [key: string]: { new (node: HTMLElement, options: any): any } }
+  selector: string
 
   /**
    * Constructor for the class.
@@ -18,8 +18,8 @@ class ArticleAutoloader {
    * @constructor
    */
   constructor() {
-    this.classes = {};
-    this.selector = '[data-autoload]';
+    this.classes = {}
+    this.selector = '[data-autoload]'
   }
 
   /**
@@ -29,10 +29,13 @@ class ArticleAutoloader {
    * @return {void}
    */
   init(obj: HTMLElement) {
-    const nodes: NodeListOf<Element> = obj.querySelectorAll(this.selector);
-    if (nodes) { for (let index = 0; index < nodes.length; index++) { this._initAutoload(nodes[index] as HTMLElement); } }
+    const nodes: NodeListOf<Element> = obj.querySelectorAll(this.selector)
+    if (nodes) {
+      for (let index = 0; index < nodes.length; index++) {
+        this._initAutoload(nodes[index] as HTMLElement)
+      }
+    }
   }
-
 
   /**
    * Registers the provided object class with the given class name.
@@ -41,7 +44,7 @@ class ArticleAutoloader {
    * @param {string} className - The name to associate with the object class.
    */
   register(objClass: ArticleLoader, className: string) {
-    this.classes[camelCase(className)] = objClass;
+    this.classes[camelCase(className)] = objClass
   }
 
   /**
@@ -55,7 +58,7 @@ class ArticleAutoloader {
    */
   _createInstance(node: HTMLElement, options: any, className: string) {
     if (this.classes[className] !== undefined) {
-      new this.classes[className](node, options);
+      new this.classes[className](node, options)
     }
   }
 
@@ -84,7 +87,7 @@ class ArticleAutoloader {
     } else {
       const optionsDataSet = JSON.parse(node.dataset.options || '{}')
       for (const className of load) {
-        if ( className !== "" ) {
+        if (className !== '') {
           const options = optionsDataSet[className] || {}
           this._createInstance(node, options, camelCase(className))
         }
@@ -93,7 +96,5 @@ class ArticleAutoloader {
   }
 }
 
-export default ArticleAutoloader;
-export {
-  ArticleAutoloader
-}
+export default ArticleAutoloader
+export { ArticleAutoloader }

@@ -1,5 +1,5 @@
-@use "../system";
-@use "sass:map";
+@use '../system';
+@use 'sass:map';
 
 $class-prefix: system.$class-prefix !default;
 $variable-prefix: system.$variable-prefix !default;
@@ -7,5 +7,5 @@ $variable-prefix: system.$variable-prefix !default;
 $typography: () !default;
 
 @mixin add-typography($typo, $map) {
-    $typography: map.set($typography, $typo, $map) !global;
+  $typography: map.set($typography, $typo, $map) !global;
 }

@@ -1,4 +1,5 @@
-@use "nswow";
+@use 'nswow';
+@use 'sass:map';
 
 table {
   border-collapse: collapse;
@@ -8,7 +9,8 @@ table {
   table-layout: fixed;
 }
 
-td, th {
+td,
+th {
   border-bottom: 1px solid #{nswow.colors-dark()};
   padding: nswow.system-size-unit(nswow.padding(small));
   vertical-align: bottom;
@@ -21,11 +23,11 @@ td, th {
   /**
   Paddings
    */
-  &[class*="noline"] {
+  &[class*='noline'] {
     padding: 0;
   }
 
-  &[class*="noline_space"] {
+  &[class*='noline_space'] {
     padding-top: 0;
     padding-bottom: 0;
   }
@@ -37,11 +39,11 @@ td, th {
   /*
   Font Sizes
   */
-  &[class*="head"] {
+  &[class*='head'] {
     @include nswow.typography-copy2();
   }
 
-  &[class*="head_small"] {
+  &[class*='head_small'] {
     @include nswow.typography-copy3();
   }
 
@@ -75,8 +77,8 @@ td, th {
   /*
   Font Weights
   */
-  &[class*="head"],
-  &[class*="bold"] {
+  &[class*='head'],
+  &[class*='bold'] {
     font-weight: 700;
   }
 
@@ -91,7 +93,7 @@ td, th {
   &:last-child {
     padding-right: 0;
 
-    &[class*="background"] {
+    &[class*='background'] {
       padding-right: nswow.system-size-unit(nswow.padding(small));
       @include nswow.grid-media(print) {
         padding-right: nswow.system-size-unit(nswow.padding(small), in);
@@ -102,23 +104,23 @@ td, th {
   /*
   Borders
   */
-  &[class="line"] {
+  &[class='line'] {
     border-bottom: 1px solid #{nswow.colors-dark()};
   }
 
-  &[class*="head"],
-  &[class*="bline"] {
+  &[class*='head'],
+  &[class*='bline'] {
     border-bottom: 2px solid #{nswow.colors-dark()};
   }
 
-  &[class*="noline"] {
+  &[class*='noline'] {
     border-bottom: 0;
   }
 
   /*
   Indents
   */
-  &[class*="_ind"] {
+  &[class*='_ind'] {
     &:first-child {
       padding-left: nswow.system-size-unit(nswow.padding(small));
       @include nswow.grid-media(print) {
@@ -127,11 +129,16 @@ td, th {
     }
   }
 
-  &[class*="_ind_ind"] {
+  &[class*='_ind_ind'] {
     &:first-child {
-      padding-left: nswow.system-size-unit(nswow.padding(small) * 2);
+      padding-left: nswow.system-size-unit(
+        map.get(nswow.$padding, 'small') * 2
+      );
       @include nswow.grid-media(print) {
-        padding-left: nswow.system-size-unit(nswow.padding(small) * 2, in);
+        padding-left: nswow.system-size-unit(
+          map.get(nswow.$padding, 'small') * 2,
+          in
+        );
       }
     }
   }
@@ -140,52 +147,43 @@ td, th {
   Cell Backgrounds
   DEFINE HERE; DIFFERENT CSS CLASSES IN EVERY PROJECT
   */
-  &[class*="background-01"] {
-    background-color: nswow.colors-gray-100();
-    color: nswow.colors-on-gray-100();
+  &[class*='background-01'] {
+    background-color: nswow.colors-shade-100();
   }
 
-  &[class*="background-02"] {
-    background-color: nswow.colors-gray-200();
-    color: nswow.colors-on-gray-200();
+  &[class*='background-02'] {
+    background-color: nswow.colors-shade-200();
   }
 
-  &[class*="background-03"] {
-    background-color: nswow.colors-gray-300();
-    color: nswow.colors-on-gray-300();
+  &[class*='background-03'] {
+    background-color: nswow.colors-shade-300();
   }
 
-  &[class*="background-04"] {
-    background-color: nswow.colors-gray-400();
-    color: nswow.colors-on-gray-400();
+  &[class*='background-04'] {
+    background-color: nswow.colors-shade-400();
   }
 
-  &[class*="background-05"] {
-    background-color: nswow.colors-gray-500();
-    color: nswow.colors-on-gray-500();
+  &[class*='background-05'] {
+    background-color: nswow.colors-shade-500();
   }
 
-  &[class*="background-06"] {
-    background-color: nswow.colors-gray-600();
-    color: nswow.colors-on-gray-600();
+  &[class*='background-06'] {
+    background-color: nswow.colors-shade-600();
   }
 
-  &[class*="background-07"] {
-    background-color: nswow.colors-gray-700();
-    color: nswow.colors-on-gray-700();
+  &[class*='background-07'] {
+    background-color: nswow.colors-shade-700();
   }
 
-  &[class*="background-08"] {
-    background-color: nswow.colors-gray-800();
-    color: nswow.colors-on-gray-800();
+  &[class*='background-08'] {
+    background-color: nswow.colors-shade-800();
   }
 
-  &[class*="background-09"] {
-    background-color: nswow.colors-gray-900();
-    color: nswow.colors-on-gray-900();
+  &[class*='background-09'] {
+    background-color: nswow.colors-shade-900();
   }
 
-  &[class*="background-10"] {
+  &[class*='background-10'] {
     background-color: nswow.colors-primary();
     color: nswow.colors-on-primary();
   }
@@ -193,27 +191,27 @@ td, th {
   /*
   Alignments
   */
-  &[class*="horizontal-left"] {
+  &[class*='horizontal-left'] {
     text-align: left;
   }
 
-  &[class*="horizontal-center"] {
+  &[class*='horizontal-center'] {
     text-align: center;
   }
 
-  &[class*="horizontal-right"] {
+  &[class*='horizontal-right'] {
     text-align: right;
   }
 
-  &[class*="vatop"] {
+  &[class*='vatop'] {
     vertical-align: top;
   }
 
-  &[class*="vamiddle"] {
+  &[class*='vamiddle'] {
     vertical-align: middle;
   }
 
-  &[class*="vabottom"] {
+  &[class*='vabottom'] {
     vertical-align: bottom;
   }
 
@@ -253,22 +251,22 @@ td, th {
   p span {
     white-space: pre-line;
 
-    &[class*="bold"] {
+    &[class*='bold'] {
       font-weight: 700;
     }
 
-    &[class*="srl-number"] {
+    &[class*='srl-number'] {
       white-space: nowrap;
     }
 
     &:empty {
       &:before {
-        content: " ";
+        content: ' ';
       }
     }
   }
 
-  &[class*="noline"] p span {
+  &[class*='noline'] p span {
     white-space: normal;
   }
 }

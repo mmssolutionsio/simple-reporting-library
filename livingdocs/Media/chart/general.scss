@@ -1,7 +1,6 @@
-@use "nswow";
+@use 'nswow';
 
 .srl-chart {
-
   &__title {
     @include nswow.typography-headline4(true);
   }

@@ -3,6 +3,7 @@
 Starter Package for nswow development
 
 ## Installation
+
 > npx @multivisio/nswow@latest init {{ project-name }}
 
 ### After installation
@@ -20,7 +21,3 @@ Run dev server:
 Build all required files.
 
 > npm run build
-
-
-
-

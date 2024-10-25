@@ -1,5 +1,5 @@
-@use "nswow";
+@use 'nswow';
 .srl-alphanumeric-list-group {
-  list-style-type:  lower-alpha;
+  list-style-type: lower-alpha;
   @include nswow.typography-copy1();
 }

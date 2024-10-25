@@ -1,9 +1,9 @@
-@use "nswow";
+@use 'nswow';
 
 $numberSize: 50;
 
 .srl-footnote {
-  color: nswow.colors-gray-800();
+  color: nswow.colors-shade-800();
 
   break-before: auto;
   break-inside: avoid;

@@ -1,77 +1,75 @@
-@use "variables";
-@use "sass:map";
-@use "sass:list";
-@use "sass:math";
-@use "sass:meta";
+@use 'variables';
+@use 'sass:map';
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:meta';
 
 @function map-get-next($map, $key, $fallback: false, $return: value) {
-    // Check if map is valid
-    @if meta.type-of($map) == map {
-        // Check if key exists in map
-        @if map.has-key($map, $key) {
-            // Init index counter variable
-            $i: 0;
-            // Init key index
-            $key-index: false;
-            // Traverse map for key
-            @each $map-key, $map-value in $map {
-                // Update index
-                $i: $i + 1;
-                // If map key found, set key index
-                @if $map-key == $key {
-                    $key-index: $i;
-                }
-                // If next index return next value or key based on $return
-                @if $i == $key-index + 1 {
-                    @if $return == key {
-                        @return $map-key;
-                    } @else {
-                        @return $map-value;
-                    }
-                }
-                // If last entry return false
-                @if $i == list.length($map) {
-                    @return $fallback;
-                }
-            }
-            @warn 'No next map item for key #{$key}';
-            @return $fallback;
+  // Check if map is valid
+  @if meta.type-of($map) == map {
+    // Check if key exists in map
+    @if map.has-key($map, $key) {
+      // Init index counter variable
+      $i: 0;
+      // Init key index
+      $key-index: false;
+      // Traverse map for key
+      @each $map-key, $map-value in $map {
+        // Update index
+        $i: $i + 1;
+        // If map key found, set key index
+        @if $map-key == $key {
+          $key-index: $i;
         }
-        @warn 'No valid key #{$key} in map';
-        @return $fallback;
+        // If next index return next value or key based on $return
+        @if $i == $key-index + 1 {
+          @if $return == key {
+            @return $map-key;
+          } @else {
+            @return $map-value;
+          }
+        }
+        // If last entry return false
+        @if $i == list.length($map) {
+          @return $fallback;
+        }
+      }
+      @warn 'No next map item for key #{$key}';
+      @return $fallback;
     }
-    @warn 'No valid map';
+    @warn 'No valid key #{$key} in map';
     @return $fallback;
+  }
+  @warn 'No valid map';
+  @return $fallback;
 }
 
 @function size-unit($size, $size-unit: false) {
-    @if not $size-unit {
-        $size-unit: variables.$size-unit;
+  @if not $size-unit {
+    $size-unit: variables.$size-unit;
+  }
+  @if meta.type-of($size) == 'number' and math.is-unitless($size) and $size != 0
+  {
+    @if $size-unit == 'rem' {
+      @return math.div($size, variables.$root-size) + rem;
+    } @else if $size-unit == 'in' {
+      @return math.div($size, variables.$dpi) + in;
+    } @else {
+      @return $size + $size-unit;
     }
-    @if meta.type-of($size) == "number" and math.is-unitless($size) and $size != 0 {
-        @if $size-unit == "rem" {
-            @return math.div($size, variables.$root-size)+rem;
-        } @else if $size-unit == "in" {
-            @return math.div($size, variables.$dpi)+in;
-        } @else {
-            @return $size+$size-unit;
-        }
-    }
-    @else if $size == false {
-        @return unset;
-    }
-    @else if $size == null {
-        @return unset;
-    }
-    @else {
-        @return #{$size};
-    }
+  } @else if $size == false {
+    @return unset;
+  } @else if $size == null {
+    @return unset;
+  } @else {
+    @return #{$size};
+  }
 }
 
 @function strip-unit($number) {
-    @if meta.type-of($number) == 'number' and not math.is-unitless($number) {
-        @return math.div($number, ($number * 0 + 1));
-    }
+  @if meta.type-of($number) == 'number' and not math.is-unitless($number) {
+    @return math.div($number, ($number * 0 + 1));
+  }
 
-    @return $number;
+  @return $number;
 }

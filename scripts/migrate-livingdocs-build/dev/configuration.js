@@ -1,5 +1,5 @@
-import configurationDefaults from "./configuration-defaults.js";
-import _ from "lodash";
+import configurationDefaults from './configuration-defaults.js';
+import _ from 'lodash';
 
 /*
 import fs from "fs";
