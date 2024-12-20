@@ -201,78 +201,44 @@
         "color": "#000000"
       },
       {
-        "name": "gray-100",
-        "color": "#F8F9FA"
-      },
-      {
-        "name": "on-gray-100",
-        "color": "#000000"
-      },
-      {
-        "name": "gray-200",
-        "color": "#E9ECEF"
-      },
-      {
-        "name": "on-gray-200",
-        "color": "#000000"
-      },
-      {
-        "name": "gray-300",
-        "color": "#DEE2E6"
-      },
-      {
-        "name": "on-gray-300",
-        "color": "#000000"
-      },
-      {
-        "name": "gray-400",
-        "color": "#CED4DA"
-      },
-      {
-        "name": "on-gray-400",
-        "color": "#000000"
-      },
-      {
-        "name": "gray-500",
-        "color": "#ADB5BD"
-      },
-      {
-        "name": "on-gray-500",
-        "color": "#000000"
-      },
-      {
-        "name": "gray-600",
+        "name": "shade",
         "color": "#6C757D"
-      },
-      {
-        "name": "on-gray-600",
-        "color": "#ffffff"
-      },
-      {
-        "name": "gray-700",
-        "color": "#495057"
-      },
-      {
-        "name": "on-gray-700",
-        "color": "#ffffff"
-      },
-      {
-        "name": "gray-800",
-        "color": "#343A40"
-      },
-      {
-        "name": "on-gray-800",
-        "color": "#ffffff"
-      },
-      {
-        "name": "gray-900",
-        "color": "#212529"
-      },
-      {
-        "name": "on-gray-900",
-        "color": "#ffffff"
       }
     ]
+  },
+  "spacer": {
+    "spacer": {
+      "tiny": {
+        "size": 16
+      },
+      "small": {
+        "size": 24
+      },
+      "medium": {
+        "size": 28,
+        "media": {
+          "up": {
+            "landscape": 32
+          }
+        }
+      },
+      "large": {
+        "size": 36,
+        "media": {
+          "up": {
+            "landscape": 48
+          }
+        }
+      },
+      "extra-large": {
+        "size": 50,
+        "media": {
+          "up": {
+            "landscape": 64
+          }
+        }
+      }
+    }
   },
   "grid": {
     "containers": {

@@ -1,10 +1,18 @@
-@use "nswow";
+@use 'nswow';
 
 .srl-spacer {
   &-web {
-    &-small {height: nswow.system-size-unit(nswow.spacer(small));}
-    &-medium {height: nswow.system-size-unit(nswow.spacer(medium));}
-    &-large {height: nswow.system-size-unit(nswow.spacer(large));}
-    &-extra-large {height: nswow.system-size-unit(nswow.spacer(extra-large));}
+    &-small {
+      height: nswow.system-size-unit(nswow.spacer(small));
+    }
+    &-medium {
+      height: nswow.system-size-unit(nswow.spacer(medium));
+    }
+    &-large {
+      height: nswow.system-size-unit(nswow.spacer(large));
+    }
+    &-extra-large {
+      height: nswow.system-size-unit(nswow.spacer(extra-large));
+    }
   }
 }

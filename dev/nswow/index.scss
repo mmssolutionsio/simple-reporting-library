@@ -1,8 +1,9 @@
-@use "config";
-@forward "system" as system-*;
-@forward "fonts" as fonts-*;
-@forward "grid" as grid-*;
-@forward "colors" as colors-*;
-@forward "typography" as typography-*;
-@forward "helpers" as helpers-*;
-@forward "meta";
+@use 'config';
+@forward 'system' as system-*;
+@forward 'fonts' as fonts-*;
+@forward 'grid' as grid-*;
+@forward 'colors' as colors-*;
+@forward 'typography' as typography-*;
+@forward 'helpers' as helpers-*;
+@forward 'spacer' as spacer-*;
+@forward 'meta';

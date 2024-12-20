@@ -1,25 +1,30 @@
 <script type="ld-conf">
-	{
-		"name": "signature-container",
-		"label": "Signature container",
-		"iconUrl": "https://mms-xbrl.s3.eu-central-1.amazonaws.com/design/svg/editor/icon-signature-container.min.svg",
-		"directives": {
-			"content": {
-				"allowedChildren": [
-					"signature-item"
-				],
-				"defaultContent": [
-					{
-						"component": "signature-item"
-					},
-					{
-						"component": "signature-item"
-					}
-				]
-			}
-		}
-	}
+  {
+  	"name": "signature-container",
+  	"label": "Signature container",
+  	"iconUrl": "https://mms-xbrl.s3.eu-central-1.amazonaws.com/design/svg/editor/icon-signature-container.min.svg",
+  	"directives": {
+  		"content": {
+  			"allowedChildren": [
+  				"signature-item"
+  			],
+  			"defaultContent": [
+  				{
+  					"component": "signature-item"
+  				},
+  				{
+  					"component": "signature-item"
+  				}
+  			]
+  		}
+  	}
+  }
 </script>
-<div class="srl-article__grid srl-article__grid--indent srl-signature-container">
-  <div class="srl-article__grid--inner srl-signature-container__inner" doc-container="content"></div>
+<div
+  class="srl-article__grid srl-article__grid--indent srl-signature-container"
+>
+  <div
+    class="srl-article__grid--inner srl-signature-container__inner"
+    doc-container="content"
+  ></div>
 </div>

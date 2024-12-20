@@ -1,12 +1,2 @@
-@use "config";
-@use "index";
-
-@import "modern-css-reset";
-
-@include index.core-styles;
-@include index.system-core-styles;
-@include index.fonts-core-styles;
-@include index.colors-core-styles;
-@include index.grid-core-styles;
-@include index.typography-core-styles;
-@include index.helpers-core-styles;
+@use 'config';
+@forward '@multivisio/nswow/scss/core-styles';

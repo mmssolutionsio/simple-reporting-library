@@ -1,19 +1,20 @@
 import useConfig from '@/composables/config'
 import i18n from '@/i18n'
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
-import {ref} from "vue"
+import { ref } from 'vue'
 
-let config = ref({});
-useConfig().then(c=> config = c);
+let config = ref({})
+useConfig().then((c) => (config = c))
 
 const Translate = {
-  isLocaleSupported(locale: string) { // <--- 1
+  isLocaleSupported(locale: string) {
+    // <--- 1
     return Translate.supportedLocales.includes(locale)
   },
 
-  getUserLocale() { // <--- 2
-    const locale: string = window.navigator.language ||
-      Translate.defaultLocale
+  getUserLocale() {
+    // <--- 2
+    const locale: string = window.navigator.language || Translate.defaultLocale
     return {
       locale: locale,
       localeNoRegion: locale.split('-')[0]
@@ -21,8 +22,8 @@ const Translate = {
   },
 
   getPersistedLocale(): string | null {
-    const persistedLocale = localStorage.getItem("user-locale")
-    if(persistedLocale && Translate.isLocaleSupported(persistedLocale)) {
+    const persistedLocale = localStorage.getItem('user-locale')
+    if (persistedLocale && Translate.isLocaleSupported(persistedLocale)) {
       return persistedLocale
     } else {
       return null
@@ -31,7 +32,7 @@ const Translate = {
 
   guessDefaultLocale(): string {
     const userPersistedLocale = Translate.getPersistedLocale()
-    if(userPersistedLocale) {
+    if (userPersistedLocale) {
       return userPersistedLocale
     }
     const userPreferredLocale = Translate.getUserLocale()
@@ -49,8 +50,7 @@ const Translate = {
     return config.value.settings.defaultLanguage
   },
 
-  get supportedLocales(): string[]
-  {
+  get supportedLocales(): string[] {
     return config.value.settings.languages
   },
 
@@ -60,23 +60,27 @@ const Translate = {
 
   async switchLanguage(newLocale: string) {
     Translate.currentLocale = newLocale
-    const objHtml = document.querySelector("html");
-    if ( objHtml ) {
-      objHtml.setAttribute("lang", newLocale)
+    const objHtml = document.querySelector('html')
+    if (objHtml) {
+      objHtml.setAttribute('lang', newLocale)
     }
-    localStorage.setItem("user-locale", newLocale)
+    localStorage.setItem('user-locale', newLocale)
   },
 
-  async routeMiddleware(to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) {
+  async routeMiddleware(
+    to: RouteLocationNormalized,
+    _from: RouteLocationNormalized,
+    next: NavigationGuardNext
+  ) {
     const paramLocale = to.params.locale
-    if (typeof paramLocale === "string") {
-      if(!Translate.isLocaleSupported(paramLocale)) {
+    if (typeof paramLocale === 'string') {
+      if (!Translate.isLocaleSupported(paramLocale)) {
         return next(Translate.guessDefaultLocale())
       }
       await Translate.switchLanguage(paramLocale)
     }
     return next()
-  },
+  }
 }
 
 export default Translate

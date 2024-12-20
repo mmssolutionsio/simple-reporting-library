@@ -1,21 +1,25 @@
 <script type="ld-conf">
-	{
-		"name": "ordered-list-group",
-		"label": "List (numeric)",
-		"iconUrl": "https://mms-xbrl.s3.eu-central-1.amazonaws.com/design/svg/editor/icon-ordered-list.min.svg",
-		"directives": {
-			"list": {
-				"allowedChildren": ["list-item"],
-				"defaultComponents": {
-					"paragraph": "list-item"
-				},
-				"defaultContent": [{
-					"component": "list-item"
-				}]
-			}
-		}
-	}
+  {
+  	"name": "ordered-list-group",
+  	"label": "List (numeric)",
+  	"iconUrl": "https://mms-xbrl.s3.eu-central-1.amazonaws.com/design/svg/editor/icon-ordered-list.min.svg",
+  	"directives": {
+  		"list": {
+  			"allowedChildren": ["list-item"],
+  			"defaultComponents": {
+  				"paragraph": "list-item"
+  			},
+  			"defaultContent": [{
+  				"component": "list-item"
+  			}]
+  		}
+  	}
+  }
 </script>
 <div class="srl-article__grid srl-article__grid--indent">
-  <ol class="srl-article__grid--inner srl-ordered-list-group" data-container-label="List container" doc-container="list"></ol>
+  <ol
+    class="srl-article__grid--inner srl-ordered-list-group"
+    data-container-label="List container"
+    doc-container="list"
+  ></ol>
 </div>

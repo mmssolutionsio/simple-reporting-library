@@ -1,14 +1,14 @@
-@use "../system";
-@use "../typography";
-@use "variables";
+@use '../system';
+@use '../typography';
+@use 'variables';
 
 @mixin trim-margins {
   > * {
     &:first-child {
-      margin-top: 0;
+      margin-block-start: 0;
     }
     &:last-child {
-      margin-bottom: 0;
+      margin-block-end: 0;
     }
   }
 }
@@ -68,7 +68,7 @@
 
 @mixin clearfix {
   &:after {
-    content: "";
+    content: '';
     font-size: 0;
     line-height: 0;
     width: 0;
@@ -79,5 +79,13 @@
 }
 
 @mixin core-styles {
-
+  .#{variables.$class-prefix}list-reset {
+    @include list-reset;
+  }
+  .#{variables.$class-prefix}trim-margins {
+    @include trim-margins;
+  }
+  .#{variables.$class-prefix}clearfix {
+    @include clearfix;
+  }
 }

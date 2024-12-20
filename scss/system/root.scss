@@ -1,0 +1,39 @@
+@use 'variables';
+@use 'mixins';
+@use '../grid';
+
+@mixin core-styles {
+  @each $key, $value in variables.$root-styles {
+    @include add-root-style($key, $value);
+  }
+  @at-root {
+    :root {
+      @each $key, $value in mixins.$styles {
+        --#{$key}: #{$value};
+      }
+      @each $breakpoint, $breakpointValue in mixins.$stylesUp {
+        @include grid.media-up($breakpoint) {
+          @each $key, $value in $breakpointValue {
+            --#{$key}: #{$value};
+          }
+        }
+      }
+
+      @each $breakpoint, $breakpointValue in mixins.$stylesDown {
+        @include grid.media-down($breakpoint) {
+          @each $key, $value in $breakpointValue {
+            --#{$key}: #{$value};
+          }
+        }
+      }
+
+      @each $breakpoint, $breakpointValue in mixins.$stylesOnly {
+        @include grid.media($breakpoint) {
+          @each $key, $value in $breakpointValue {
+            --#{$key}: #{$value};
+          }
+        }
+      }
+    }
+  }
+}

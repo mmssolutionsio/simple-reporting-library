@@ -1,10 +1,9 @@
-@use "nswow";
+@use 'nswow';
 
 $numberSize: 50;
 $iconSize: 20;
 
 .srl-accordion {
-
   margin-bottom: nswow.system-size-unit(30);
   @include nswow.grid-media(print) {
     margin-bottom: nswow.system-size-unit(30, in);

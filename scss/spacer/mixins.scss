@@ -1,0 +1,276 @@
+@use 'sass:map';
+@use 'variables';
+@use '../grid';
+@use '../system';
+
+@mixin margin($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid margin "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  margin: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@mixin margin-block($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid margin "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  margin-block: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@mixin margin-inline($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid margin "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  margin-inline: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@mixin margin-top($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid margin "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  margin-block-start: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@mixin margin-right($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid margin "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  margin-inline-end: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@mixin margin-bottom($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid margin "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  margin-block-end: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@mixin margin-left($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid margin "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  margin-inline-start: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@mixin padding($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid padding "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  padding: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@mixin padding-block($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid padding "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  padding-block: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@mixin padding-inline($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid padding "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  padding-inline: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@mixin padding-top($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid padding "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  padding-block-start: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@mixin padding-right($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid padding "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  padding-inline-end: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@mixin padding-bottom($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid padding "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  padding-block-end: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@mixin padding-left($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid padding "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  padding-inline-start: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@mixin gap($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid gap "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  gap: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@mixin row-gap($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid row-gap "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  row-gap: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@mixin column-gap($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid column-gap "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  column-gap: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}
+
+@each $spacer, $spacerValue in variables.$spacer {
+  $varName: #{variables.$variable-prefix}spacer-#{$spacer};
+  @include system.add-root-style(
+    $varName,
+    system.size-unit(map.get($spacerValue, size))
+  );
+  @if map.has-key($spacerValue, media) {
+    @each $breakpoint, $breakpointValue in map.get($spacerValue, media) {
+      @if $breakpoint == print {
+        @include system.add-root-style(
+          $varName,
+          system.size-unit(map.get($spacerValue, size), in)
+        );
+      } @else if $breakpoint == up {
+        @each $upBreakpoint, $upBreakpointValue in $breakpointValue {
+          @include system.add-root-style(
+            $varName,
+            system.size-unit($upBreakpointValue),
+            $upBreakpoint,
+            up
+          );
+        }
+      } @else if $breakpoint == down {
+        @each $downBreakpoint, $downBreakpointValue in $breakpointValue {
+          @include system.add-root-style(
+            $varName,
+            system.size-unit($downBreakpointValue),
+            $downBreakpoint,
+            down
+          );
+        }
+      } @else {
+        @include system.add-root-style(
+          $varName,
+          system.size-unit($breakpointValue),
+          $breakpoint
+        );
+      }
+    }
+  }
+}
+
+@mixin core-styles {
+  @at-root {
+    @each $spacer, $spacerValue in variables.$spacer {
+      .#{variables.$class-prefix}ma-none {
+        margin: 0;
+      }
+      .#{variables.$class-prefix}my-none {
+        margin-block: 0;
+      }
+      .#{variables.$class-prefix}mx-none {
+        margin-inline: 0;
+      }
+      .#{variables.$class-prefix}mt-none {
+        margin-block-start: 0;
+      }
+      .#{variables.$class-prefix}mr-none {
+        margin-inline-end: 0;
+      }
+      .#{variables.$class-prefix}mb-none {
+        margin-block-end: 0;
+      }
+      .#{variables.$class-prefix}ml-none {
+        margin-inline-start: 0;
+      }
+      .#{variables.$class-prefix}ma-#{'' + $spacer} {
+        @include margin($spacer);
+      }
+      .#{variables.$class-prefix}my-#{'' + $spacer} {
+        @include margin-block($spacer);
+      }
+      .#{variables.$class-prefix}mx-#{'' + $spacer} {
+        @include margin-inline($spacer);
+      }
+      .#{variables.$class-prefix}mt-#{'' + $spacer} {
+        @include margin-top($spacer);
+      }
+      .#{variables.$class-prefix}mr-#{'' + $spacer} {
+        @include margin-right($spacer);
+      }
+      .#{variables.$class-prefix}mb-#{'' + $spacer} {
+        @include margin-bottom($spacer);
+      }
+      .#{variables.$class-prefix}ml-#{'' + $spacer} {
+        @include margin-left($spacer);
+      }
+
+      .#{variables.$class-prefix}pa-none {
+        padding: 0;
+      }
+      .#{variables.$class-prefix}py-none {
+        padding-block: 0;
+      }
+      .#{variables.$class-prefix}px-none {
+        padding-inline: 0;
+      }
+      .#{variables.$class-prefix}pt-none {
+        padding-block-start: 0;
+      }
+      .#{variables.$class-prefix}pr-none {
+        padding-inline-end: 0;
+      }
+      .#{variables.$class-prefix}pb-none {
+        padding-block-end: 0;
+      }
+      .#{variables.$class-prefix}pl-none {
+        padding-inline-start: 0;
+      }
+      .#{variables.$class-prefix}pa-#{'' + $spacer} {
+        @include padding($spacer);
+      }
+      .#{variables.$class-prefix}py-#{'' + $spacer} {
+        @include padding-block($spacer);
+      }
+      .#{variables.$class-prefix}px-#{'' + $spacer} {
+        @include padding-inline($spacer);
+      }
+      .#{variables.$class-prefix}pt-#{'' + $spacer} {
+        @include padding-top($spacer);
+      }
+      .#{variables.$class-prefix}pr-#{'' + $spacer} {
+        @include padding-right($spacer);
+      }
+      .#{variables.$class-prefix}pb-#{'' + $spacer} {
+        @include padding-bottom($spacer);
+      }
+      .#{variables.$class-prefix}pl-#{'' + $spacer} {
+        @include padding-left($spacer);
+      }
+
+      .#{variables.$class-prefix}gap-none {
+        gap: 0;
+      }
+      .#{variables.$class-prefix}gap-#{'' + $spacer} {
+        @include gap($spacer);
+      }
+      .#{variables.$class-prefix}row-gap-none {
+        row-gap: 0;
+      }
+      .#{variables.$class-prefix}row-gap-#{'' + $spacer} {
+        @include row-gap($spacer);
+      }
+      .#{variables.$class-prefix}column-gap-none {
+        column-gap: 0;
+      }
+      .#{variables.$class-prefix}column-gap-#{'' + $spacer} {
+        @include column-gap($spacer);
+      }
+    }
+  }
+}

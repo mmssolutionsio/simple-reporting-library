@@ -1,5 +1,5 @@
-@use "nswow";
-@use "web";
+@use 'nswow';
+@use 'web';
 
 .fade-enter-from {
   opacity: 0;
@@ -26,14 +26,14 @@
 }
 
 .srl-article-root,
-.ns-article
-{
+.ns-article {
   > .srl-article__grid {
     margin-right: auto;
     margin-left: auto;
   }
 }
 
-[class^='srl-pdf-'], [class*=' srl-pdf-'] {
+[class^='srl-pdf-'],
+[class*=' srl-pdf-'] {
   display: none;
 }

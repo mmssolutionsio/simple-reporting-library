@@ -12,18 +12,23 @@ const baseUrl = ref(window.baseUrl ?? '')
 function toggleSearchVisible() {
   srlSearch.value.classList.toggle('visible')
 }
+
+function search() {
+  $router.push(`/${locale}/search?searchValue=${searchValue.value}`)
+  toggleSearchVisible()
+}
 </script>
 
 <template>
-  <header>
+  <header class="srl-bg-primary srl-color-light">
     <div class="srl-header__inner">
       <router-link class="srl-header__inner-logo" :to="{ path: `/${locale}` }">
-        <img :src="`${baseUrl}/assets/mms-logo-white.svg`" alt="logo"/>
+        <img :src="`${baseUrl}/assets/mms-logo-white.svg`" alt="logo" />
       </router-link>
       <div class="srl-header__inner-content">
         <div class="srl-header__inner-languages">
           <router-link :to="{ path: `/${locale}/downloads` }">
-            <button>
+            <button class="srl-color-light">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -41,7 +46,7 @@ function toggleSearchVisible() {
               </svg>
             </button>
           </router-link>
-          <button @click="toggleSearchVisible">
+          <button class="srl-color-light" @click="toggleSearchVisible">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -62,22 +67,15 @@ function toggleSearchVisible() {
       </div>
     </div>
     <div ref="srlSearch" class="srl-header__search">
-      <input
-        type="search"
-        placeholder="Search ..."
-        v-model="searchValue"
-        @keypress.enter="$router.push(`/${locale}/search?searchValue=${searchValue}`); toggleSearchVisible()"
-      />
+      <input type="search" placeholder="Search ..." v-model="searchValue" @keyup.enter="search" />
     </div>
   </header>
 </template>
 
 <style scoped lang="scss">
-@use "nswow";
+@use 'nswow';
 
 header {
-  background: nswow.colors-primary();
-  color: nswow.colors-light();
   min-height: nswow.system-size-unit(60);
   padding: nswow.system-size-unit(10) 0;
 
@@ -108,7 +106,6 @@ header {
         min-height: nswow.system-size-unit(5);
 
         button {
-          color: nswow.colors-light();
           background: transparent;
           border: none;
           cursor: pointer;
@@ -150,5 +147,4 @@ header {
     display: none;
   }
 }
-
 </style>

@@ -1,12 +1,10 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="srl-notfound">
     <div class="srl-notfound__inner">
       <h1>404</h1>
-      <h2>{{ $t("page.notFound") }}</h2>
+      <h2>{{ $t('page.notFound') }}</h2>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -27,7 +25,7 @@
 </template>
 
 <style scoped lang="scss">
-@use "nswow";
+@use 'nswow';
 
 .srl-notfound {
   margin: 0 auto;
@@ -48,19 +46,24 @@
       animation: spin 600ms linear 2;
 
       @keyframes spin {
-        10%, 90% {
+        10%,
+        90% {
           transform: translate3d(-1px, 0, 0);
         }
 
-        20%, 80% {
+        20%,
+        80% {
           transform: translate3d(2px, 0, 0);
         }
 
-        30%, 50%, 70% {
+        30%,
+        50%,
+        70% {
           transform: translate3d(-4px, 0, 0);
         }
 
-        40%, 60% {
+        40%,
+        60% {
           transform: translate3d(4px, 0, 0);
         }
       }

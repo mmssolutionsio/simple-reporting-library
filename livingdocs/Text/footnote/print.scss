@@ -1,9 +1,10 @@
-@use "nswow";
+@use 'nswow';
+@use 'sass:map';
 
 $numberSize: 50;
 
-$gap: map-get(nswow.$grid-gutter, print, gap);
-$column-gap: map-get(nswow.$grid-gutter, print, column-gap);
+$gap: map.get(nswow.$grid-gutter, print, gap);
+$column-gap: map.get(nswow.$grid-gutter, print, column-gap);
 @if not $column-gap {
   $column-gap: $gap;
 }

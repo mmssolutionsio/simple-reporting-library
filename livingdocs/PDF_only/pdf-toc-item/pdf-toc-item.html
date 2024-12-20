@@ -1,29 +1,31 @@
 <script type="ld-conf">
-	{
-		"name": "pdf-toc-item",
-		"label": "ToC item",
-		"iconUrl": "https://mms-xbrl.s3.eu-central-1.amazonaws.com/design/svg/editor/icon-pdf-toc-item.min.svg",
-		"properties": [
-			"toc-title"
-		],
-		"allowedParents": [
-			"pdf-toc-page"
-		],
-		"directives": {
-			"toc-number": {
-				"plainText": true
-			},
-			"toc-text": {
-				"plainText": true
-			}
-		}
-	}
+  {
+  	"name": "pdf-toc-item",
+  	"label": "ToC item",
+  	"iconUrl": "https://mms-xbrl.s3.eu-central-1.amazonaws.com/design/svg/editor/icon-pdf-toc-item.min.svg",
+  	"properties": [
+  		"toc-title"
+  	],
+  	"allowedParents": [
+  		"pdf-toc-page"
+  	],
+  	"directives": {
+  		"toc-number": {
+  			"plainText": true
+  		},
+  		"toc-text": {
+  			"plainText": true
+  		}
+  	}
+  }
 </script>
-<a class="srl-pdf-toc-item srl-article__grid srl-article__grid--content" doc-link="href" data-page-number="">
+<a
+  class="srl-pdf-toc-item srl-article__grid srl-article__grid--content"
+  doc-link="href"
+  data-page-number=""
+>
   <span class="srl-article__grid--inner">
-    <span class="srl-pdf-toc-item__number" doc-editable="toc-number">
-      1
-    </span>
+    <span class="srl-pdf-toc-item__number" doc-editable="toc-number"> 1 </span>
     <span class="srl-pdf-toc-item__text" doc-editable="toc-text">
       Chapter Title
     </span>

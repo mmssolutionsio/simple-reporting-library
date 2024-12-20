@@ -2,7 +2,7 @@
   {
   	"name": "chart",
   	"label": "Highchart / Lottie",
-	  "iconUrl": "https://mms-xbrl.s3.eu-central-1.amazonaws.com/design/svg/editor/icon-highchart.min.svg",
+   "iconUrl": "https://mms-xbrl.s3.eu-central-1.amazonaws.com/design/svg/editor/icon-highchart.min.svg",
     "properties": [
       "web-width",
       "pdf-width",
@@ -10,15 +10,20 @@
     ]
   }
 </script>
-<div class="srl-component srl-chart srl-article__grid srl-article__grid--indent" data-container-label="Chart container">
-    <div class="srl-article__grid--inner">
-      <p class="srl-chart__title" doc-editable="chart-title" doc-optional>Chart Title</p>
-      <p class="srl-chart__text" doc-editable="text" doc-optional>Total</p>
-      <div doc-html="free-html" class="srl-chart__chart">
-        <div class="iframe-placeholder"></div>
-      </div>
-      <figure class="srl-chart__image-container">
-        <img class="srl-chart__image" doc-image="pdf-image">
-      </figure>
+<div
+  class="srl-component srl-chart srl-article__grid srl-article__grid--indent"
+  data-container-label="Chart container"
+>
+  <div class="srl-article__grid--inner">
+    <p class="srl-chart__title" doc-editable="chart-title" doc-optional>
+      Chart Title
+    </p>
+    <p class="srl-chart__text" doc-editable="text" doc-optional>Total</p>
+    <div doc-html="free-html" class="srl-chart__chart">
+      <div class="iframe-placeholder"></div>
     </div>
+    <figure class="srl-chart__image-container">
+      <img class="srl-chart__image" doc-image="pdf-image" />
+    </figure>
+  </div>
 </div>

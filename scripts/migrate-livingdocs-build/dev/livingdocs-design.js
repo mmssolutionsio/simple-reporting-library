@@ -1,32 +1,39 @@
-import fs from "fs";
-import lib from "./lib.js";
-import logger from "./logger.js";
-import * as cheerio from "cheerio";
+import fs from 'fs';
+import lib from './lib.js';
+import logger from './logger.js';
+import * as cheerio from 'cheerio';
 
 class LivingdocsDesign {
   static loadDesign(configuration) {
-    logger.debug("loading design " + configuration.build.design);
+    logger.debug('loading design ' + configuration.build.design);
     if (!lib.bFileExists(configuration.build.design)) {
       throw {
-        message: "design not found at " + configuration.build.design
+        message: 'design not found at ' + configuration.build.design,
       };
     }
 
     try {
-      const designJSON = JSON.parse(fs.readFileSync(configuration.build.design, { encoding: 'utf8', flag: 'r' }));
+      const designJSON = JSON.parse(
+        fs.readFileSync(configuration.build.design, {
+          encoding: 'utf8',
+          flag: 'r',
+        }),
+      );
 
       return designJSON;
     } catch (error) {
       throw {
-        message: "design could not be loaded at " + configuration.build.design,
-        error: error
-      }
+        message: 'design could not be loaded at ' + configuration.build.design,
+        error: error,
+      };
     }
   }
 
   static loadComponents(configuration) {
-    logger.debug("loading components " + configuration.build.components);
-    const componentPaths = lib.getAllComponentPaths(configuration.build.components);
+    logger.debug('loading components ' + configuration.build.components);
+    const componentPaths = lib.getAllComponentPaths(
+      configuration.build.components,
+    );
     const components = [];
 
     for (let index = 0; index < componentPaths.length; index++) {
@@ -39,7 +46,9 @@ class LivingdocsDesign {
 
       // check component configuration for syntax errors
       try {
-        configurationData = JSON.parse(htmlObj(configuration.configurationSelector).html());
+        configurationData = JSON.parse(
+          htmlObj(configuration.configurationSelector).html(),
+        );
       } catch (error) {
         throw {
           message: `JSON error in component ${path}`,
@@ -56,13 +65,13 @@ class LivingdocsDesign {
           path: path,
           configurationData: configurationData,
           html: htmlObj.html(children[0]),
-        })
+        });
       } else {
         throw {
           message: `template ${path} contains ${children.length} root elements. Components only work with one root element.`,
-        }
+        };
       }
-    };
+    }
 
     return components;
   }

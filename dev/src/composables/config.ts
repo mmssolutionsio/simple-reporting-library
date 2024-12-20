@@ -1,22 +1,20 @@
 import { ref } from 'vue'
 
-
 const config = ref<NsWowConfig>({
   loaded: false,
-  baseUrl: window.baseUrl??"",
+  baseUrl: window.baseUrl ?? '',
   settings: {
-    languages:["de","en"],
-    defaultLanguage:"de",
-    shortBreadcrumb:false,
-    search:{
-      boldTheWord:true
+    languages: ['de', 'en'],
+    defaultLanguage: 'de',
+    shortBreadcrumb: false,
+    search: {
+      boldTheWord: true
     },
-    categories:[]
+    categories: []
   },
   articles: {},
   menus: {}
 })
-
 
 async function getData() {
   const file = `${config.value.baseUrl}/json/settings.json`
@@ -40,12 +38,12 @@ async function getData() {
     }
   }
 
-  config.value.loaded = true;
+  config.value.loaded = true
 }
 
 export default async function useConfig() {
   if (!config.value.loaded) {
     await getData()
   }
-  return config;
+  return config
 }

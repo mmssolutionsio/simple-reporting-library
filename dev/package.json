@@ -1,6 +1,6 @@
 {
   "name": "multivisio-ld",
-  "version": "1.0.51",
+  "version": "0.0.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -22,7 +22,8 @@
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
-    "@multivisio/nswow": "^0.1.71",
+    "@multivisio/nswow": "^0.1.79",
+    "@kne/color-palette": "^0.1.0",
     "@rushstack/eslint-patch": "^1.3.3",
     "@tsconfig/node20": "^20.1.2",
     "@types/jsdom": "^21.1.6",

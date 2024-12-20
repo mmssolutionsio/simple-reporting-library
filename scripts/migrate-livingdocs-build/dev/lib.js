@@ -1,10 +1,10 @@
-import fs from "fs";
-import { globbySync } from "globby";
-import logger from "./logger.js";
+import fs from 'fs';
+import { globbySync } from 'globby';
+import logger from './logger.js';
 
 const bFileExists = (path) => {
   return fs.existsSync(path);
-}
+};
 
 function getAllComponentPaths(componentPath) {
   const files = globbySync(componentPath);
@@ -24,35 +24,40 @@ function removeFile(path) {
 }
 
 function minifyHtml(s) {
-  return s ? s
-    .replace(/\>[\r\n ]+\</g, "><")  // Removes new lines and irrelevant spaces which might affect layout, and are better gone
-    .replace(/(<.*?>)|\s+/g, (m, $1) => $1 ? $1 : ' ')
-    .trim()
-    : "";
+  return s
+    ? s
+        .replace(/\>[\r\n ]+\</g, '><') // Removes new lines and irrelevant spaces which might affect layout, and are better gone
+        .replace(/(<.*?>)|\s+/g, (m, $1) => ($1 ? $1 : ' '))
+        .trim()
+    : '';
 }
 
 function testComponentExistV1(designData, components) {
-  const componentNames = components.map(component => component.configurationData.name);
-  designData.groups.forEach(componentGroup => {
-    componentGroup.components.forEach(c => {
+  const componentNames = components.map(
+    (component) => component.configurationData.name,
+  );
+  designData.groups.forEach((componentGroup) => {
+    componentGroup.components.forEach((c) => {
       if (!componentNames.includes(c)) {
         throw {
-          message: `component "${c}" in componentGroup "${componentGroup.label}" does not exist`
-        }
+          message: `component "${c}" in componentGroup "${componentGroup.label}" does not exist`,
+        };
       }
-    })
+    });
   });
 }
 
 function testComponentExistV2(designData, components) {
-  designData.designSettings.componentGroups.forEach(componentGroup => {
-    componentGroup.components.forEach(componentName => {
-      if (!components.find(component => {
-        return component.configurationData.name === componentName;
-      })) {
+  designData.designSettings.componentGroups.forEach((componentGroup) => {
+    componentGroup.components.forEach((componentName) => {
+      if (
+        !components.find((component) => {
+          return component.configurationData.name === componentName;
+        })
+      ) {
         throw {
-          message: `component "${componentName}" in componentGroup "${componentGroup.label}" does not exist`
-        }
+          message: `component "${componentName}" in componentGroup "${componentGroup.label}" does not exist`,
+        };
       }
     });
   });
@@ -66,11 +71,14 @@ function testPropertyExistV1(designData, components) {
   for (let index = 0; index < components.length; index++) {
     const component = components[index];
 
-    if (component.configurationData.properties && component.configurationData.properties.length > 0) {
-      component.configurationData.properties.forEach(cProperty => {
+    if (
+      component.configurationData.properties &&
+      component.configurationData.properties.length > 0
+    ) {
+      component.configurationData.properties.forEach((cProperty) => {
         if (!allProperties.includes(cProperty)) {
           throw {
-            message: `property "${cProperty}" in component "${component.configurationData.name}" is not present in design`
+            message: `property "${cProperty}" in component "${component.configurationData.name}" is not present in design`,
           };
         }
       });
@@ -79,15 +87,20 @@ function testPropertyExistV1(designData, components) {
 }
 
 function testPropertyExistV2(designData, components) {
-  const allProperties = designData.designSettings.componentProperties.map(p => p.name);
+  const allProperties = designData.designSettings.componentProperties.map(
+    (p) => p.name,
+  );
   for (let index = 0; index < components.length; index++) {
     const component = components[index];
 
-    if (component.configurationData.properties && component.configurationData.properties.length > 0) {
-      component.configurationData.properties.forEach(cProperty => {
+    if (
+      component.configurationData.properties &&
+      component.configurationData.properties.length > 0
+    ) {
+      component.configurationData.properties.forEach((cProperty) => {
         if (!allProperties.includes(cProperty)) {
           throw {
-            message: `property "${cProperty}" in component "${component.configurationData.name}" is not present in design`
+            message: `property "${cProperty}" in component "${component.configurationData.name}" is not present in design`,
           };
         }
       });
@@ -96,27 +109,45 @@ function testPropertyExistV2(designData, components) {
 }
 
 function testComponentsAllUsedV1(designData, components) {
-  const componentGroupComponents = [...designData.groups.map(componentGroup => componentGroup.components)].flat(1);
+  const componentGroupComponents = [
+    ...designData.groups.map((componentGroup) => componentGroup.components),
+  ].flat(1);
 
-  components.forEach(component => {
-    if (!componentGroupComponents.find(c => c === component.configurationData.name)) {
-      logger.warn(`component ${component.path} is unused in config.json, will not be packed into zip`);
+  components.forEach((component) => {
+    if (
+      !componentGroupComponents.find(
+        (c) => c === component.configurationData.name,
+      )
+    ) {
+      logger.warn(
+        `component ${component.path} is unused in config.json, will not be packed into zip`,
+      );
     }
   });
 }
 
 function testComponentsAllUsedV2(designData, components) {
-  const componentGroupComponents = [...designData.designSettings.componentGroups.map(componentGroup => componentGroup.components)].flat(1)
+  const componentGroupComponents = [
+    ...designData.designSettings.componentGroups.map(
+      (componentGroup) => componentGroup.components,
+    ),
+  ].flat(1);
 
-  components.forEach(component => {
-    if (!componentGroupComponents.find(c => c === component.configurationData.name)) {
-      logger.warn(`component ${component.path} is unused in config.json, will not be packed into zip`);
+  components.forEach((component) => {
+    if (
+      !componentGroupComponents.find(
+        (c) => c === component.configurationData.name,
+      )
+    ) {
+      logger.warn(
+        `component ${component.path} is unused in config.json, will not be packed into zip`,
+      );
     }
   });
 }
 
 function testDesignPropertiesV1(designData, components) {
-  Object.keys(designData.componentProperties).forEach(componentProperty => {
+  Object.keys(designData.componentProperties).forEach((componentProperty) => {
     if (!propertyExistInComponentsV1(componentProperty, components)) {
       logger.info(`property "${componentProperty}" is never used`);
     }
@@ -124,7 +155,7 @@ function testDesignPropertiesV1(designData, components) {
 }
 
 function testDesignPropertiesV2(designData, components) {
-  designData.designSettings.componentProperties.forEach(componentProperty => {
+  designData.designSettings.componentProperties.forEach((componentProperty) => {
     if (!propertyExistInComponentsV2(componentProperty.name, components)) {
       logger.info(`property "${componentProperty.name}" is never used`);
     }
@@ -134,7 +165,10 @@ function testDesignPropertiesV2(designData, components) {
 function propertyExistInComponentsV1(property, components) {
   for (let index = 0; index < components.length; index++) {
     const component = components[index];
-    if (component.configurationData.properties && component.configurationData.properties.includes(property)) {
+    if (
+      component.configurationData.properties &&
+      component.configurationData.properties.includes(property)
+    ) {
       return true;
     }
   }
@@ -145,7 +179,10 @@ function propertyExistInComponentsV1(property, components) {
 function propertyExistInComponentsV2(property, components) {
   for (let index = 0; index < components.length; index++) {
     const component = components[index];
-    if (component.configurationData.properties && component.configurationData.properties.includes(property)) {
+    if (
+      component.configurationData.properties &&
+      component.configurationData.properties.includes(property)
+    ) {
       return true;
     }
   }
@@ -155,32 +192,40 @@ function propertyExistInComponentsV2(property, components) {
 
 function mergeDesignV1(designData, components) {
   const newDesignData = JSON.parse(JSON.stringify(designData));
-  const designComponents = designData.groups.map(componentGroup => componentGroup.components).flat(1);
+  const designComponents = designData.groups
+    .map((componentGroup) => componentGroup.components)
+    .flat(1);
 
-  newDesignData.components = components.filter(component => {
-    return designComponents.includes(component.configurationData.name);
-  }).map(component => {
-    return {
-      ...component.configurationData,
-      html: minifyHtml(component.html)
-    }
-  });
+  newDesignData.components = components
+    .filter((component) => {
+      return designComponents.includes(component.configurationData.name);
+    })
+    .map((component) => {
+      return {
+        ...component.configurationData,
+        html: minifyHtml(component.html),
+      };
+    });
 
   return newDesignData;
 }
 
 function mergeDesignV2(designData, components) {
   const newDesignData = JSON.parse(JSON.stringify(designData));
-  const designComponents = designData.designSettings.componentGroups.map(componentGroup => componentGroup.components).flat(1);
+  const designComponents = designData.designSettings.componentGroups
+    .map((componentGroup) => componentGroup.components)
+    .flat(1);
 
-  newDesignData.components = components.filter(component => {
-    return designComponents.includes(component.configurationData.name);
-  }).map(component => {
-    return {
-      ...component.configurationData,
-      html: minifyHtml(component.html)
-    }
-  });
+  newDesignData.components = components
+    .filter((component) => {
+      return designComponents.includes(component.configurationData.name);
+    })
+    .map((component) => {
+      return {
+        ...component.configurationData,
+        html: minifyHtml(component.html),
+      };
+    });
 
   return newDesignData;
 }

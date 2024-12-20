@@ -1,6 +1,7 @@
-@use "variables";
-@use "sass:list";
-@use "sass:map";
+@use 'variables';
+@use 'sass:list';
+@use 'sass:map';
+@use '../system';
 
 @function is($list, $map: variables.$meta) {
   $current: false;
@@ -48,16 +49,16 @@
   }
 }
 
-@function spacer($name) {
-  @if not map-has-key(variables.$spacer, $name) {
-    @error "Invalid name for spacer specified! Choose one of #{map-keys(variables.$spacer)}";
+@function spacer($name, $size-unit: false) {
+  @if not map.has-key(variables.$spacer, $name) {
+    @error "Invalid name for spacer specified! Choose one of #{map.keys(variables.$spacer)}";
   }
-  @return map-get(variables.$spacer, $name)
+  @return system.size-unit(map.get(variables.$spacer, $name), $size-unit);
 }
 
-@function padding($name) {
-  @if not map-has-key(variables.$padding, $name) {
-    @error "Invalid name for padding specified! Choose one of #{map-keys(variables.$padding)}";
+@function padding($name, $size-unit: false) {
+  @if not map.has-key(variables.$padding, $name) {
+    @error "Invalid name for padding specified! Choose one of #{map.keys(variables.$padding)}";
   }
-  @return map-get(variables.$padding, $name)
+  @return system.size-unit(map.get(variables.$padding, $name), $size-unit);
 }

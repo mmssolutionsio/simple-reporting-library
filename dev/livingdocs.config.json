@@ -4,9 +4,7 @@
   "version": "1.0.51",
   "author": "nsgroup",
   "assets": {
-    "css": [
-      "./assets/ldd.css"
-    ],
+    "css": ["./assets/ldd.css"],
     "js": []
   },
   "wrapper": "<div class=\"srl-article-root doc-section\"></div>",
@@ -259,22 +257,15 @@
   "groups": [
     {
       "label": "Buttons",
-      "components": [
-        "button",
-        "button-container"
-      ]
+      "components": ["button", "button-container"]
     },
     {
       "label": "CV",
-      "components": [
-        "cv-timeline"
-      ]
+      "components": ["cv-timeline"]
     },
     {
       "label": "Container",
-      "components": [
-        "column-container"
-      ]
+      "components": ["column-container"]
     },
     {
       "label": "Lists",
@@ -287,21 +278,11 @@
     },
     {
       "label": "Media",
-      "components": [
-        "chart",
-        "graphic",
-        "image",
-        "nswow-table",
-        "video"
-      ]
+      "components": ["chart", "graphic", "image", "nswow-table", "video"]
     },
     {
       "label": "Misc",
-      "components": [
-        "accordion",
-        "anchor",
-        "spacer"
-      ]
+      "components": ["accordion", "anchor", "spacer"]
     },
     {
       "label": "PDF only",
@@ -319,31 +300,15 @@
     },
     {
       "label": "Signatures",
-      "components": [
-        "signature-container",
-        "signature-item"
-      ]
+      "components": ["signature-container", "signature-item"]
     },
     {
       "label": "Text",
-      "components": [
-        "footnote",
-        "lead",
-        "paragraph",
-        "quote",
-        "quote-with-portrait"
-      ]
+      "components": ["footnote", "lead", "paragraph", "quote", "quote-with-portrait"]
     },
     {
       "label": "Titles",
-      "components": [
-        "title-h1",
-        "title-h2",
-        "title-h3",
-        "title-h4",
-        "title-h5",
-        "title-h6"
-      ]
+      "components": ["title-h1", "title-h2", "title-h3", "title-h4", "title-h5", "title-h6"]
     }
   ],
   "defaultComponents": {
@@ -390,35 +355,22 @@
     {
       "identifier": "wp_cf_prettyNumber",
       "type": "text",
-      "matches": [
-        "title-h2.number",
-        "title-h3.number",
-        "title-h4.number"
-      ]
+      "matches": ["title-h2.number", "title-h3.number", "title-h4.number"]
     },
     {
       "identifier": "notesIdentifier",
       "type": "text",
-      "matches": [
-        "title-h2.number",
-        "title-h3.number",
-        "title-h4.number"
-      ]
+      "matches": ["title-h2.number", "title-h3.number", "title-h4.number"]
     },
     {
       "identifier": "wp_cf_excerpt",
       "type": "text",
-      "matches": [
-        "lead.text",
-        "paragraph.text"
-      ]
+      "matches": ["lead.text", "paragraph.text"]
     },
     {
       "identifier": "wp_img-cf_featuredImage",
       "type": "image",
-      "matches": [
-        "image.desktop-image"
-      ]
+      "matches": ["image.desktop-image"]
     }
   ]
 }

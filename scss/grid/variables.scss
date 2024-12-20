@@ -1,4 +1,4 @@
-@use "../system";
+@use '../system';
 
 $class-prefix: system.$class-prefix !default;
 $variable-prefix: system.$variable-prefix !default;
@@ -8,4 +8,3 @@ $breakpoints: () !default;
 $gutter: () !default;
 
 $column-default-span: 4 !default;
-

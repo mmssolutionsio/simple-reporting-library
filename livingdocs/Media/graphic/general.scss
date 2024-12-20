@@ -1,11 +1,11 @@
-@use "nswow";
+@use 'nswow';
 
-.srl-graphic{
+.srl-graphic {
   &__title {
-    @include nswow.typography-headline4(true)
+    @include nswow.typography-headline4(true);
   }
   &__sub-title {
-    @include nswow.typography-headline5(true)
+    @include nswow.typography-headline5(true);
   }
 
   &__figure {

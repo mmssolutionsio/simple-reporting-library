@@ -26,21 +26,21 @@ const articles = computed<NsWowArticle[]>(() => {
 })
 
 const activeArticle = computed<number>(() => {
-  return articles.value.findIndex(i => i.slug === ArrayToString(route.params.slug))
+  return articles.value.findIndex((i) => i.slug === ArrayToString(route.params.slug))
 })
 
 const nextRoute = computed(() => {
   if (activeArticle.value === -1) {
     return null
   }
-  let nextIndex: number = activeArticle.value + 1;
+  let nextIndex: number = activeArticle.value + 1
   if (nextIndex >= articles.value.length) {
-    nextIndex = 0;
+    nextIndex = 0
   }
   return {
     params: {
       locale: locale.value,
-      slug: articles.value[nextIndex].slug.split("/")
+      slug: articles.value[nextIndex].slug.split('/')
     }
   }
 })
@@ -49,43 +49,66 @@ const prevRoute = computed(() => {
   if (activeArticle.value === -1) {
     return null
   }
-  let prevIndex: number = activeArticle.value - 1;
+  let prevIndex: number = activeArticle.value - 1
   if (prevIndex < 0) {
-    prevIndex = articles.value.length - 1;
+    prevIndex = articles.value.length - 1
   }
   return {
     params: {
       locale: locale.value,
-      slug: articles.value[prevIndex].slug.split("/")
+      slug: articles.value[prevIndex].slug.split('/')
     }
   }
 })
-
 </script>
 <template>
   <div class="srl-nav-holder">
-    <router-link v-if="prevRoute" :to="prevRoute" class="srl-nav-holder__nav-btn">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left left"
-           viewBox="0 0 16 16">
-        <path fill-rule="evenodd"
-              d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+    <router-link
+      v-if="prevRoute"
+      :to="prevRoute"
+      class="srl-nav-holder__nav-btn srl-bg-primary srl-color-light srl-typo-headline3"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-chevron-left left"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
+        />
       </svg>
-      {{ $t("page.prev") }}
+      {{ $t('page.prev') }}
     </router-link>
     <ScrollToTop />
-    <router-link v-if="nextRoute" :to="nextRoute" class="srl-nav-holder__nav-btn">
-      {{ $t("page.next") }}
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-           class="bi bi-chevron-right right" viewBox="0 0 16 16">
-        <path fill-rule="evenodd"
-              d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+    <router-link
+      v-if="nextRoute"
+      :to="nextRoute"
+      class="srl-nav-holder__nav-btn srl-bg-primary srl-color-light srl-typo-headline3"
+    >
+      {{ $t('page.next') }}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-chevron-right right"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+        />
       </svg>
     </router-link>
   </div>
 </template>
 
 <style scoped lang="scss">
-@use "nswow";
+@use 'nswow';
 
 .srl-nav-holder {
   display: flex;
@@ -99,10 +122,7 @@ const prevRoute = computed(() => {
     display: flex;
     cursor: pointer;
     align-items: center;
-    background-color: nswow.colors-primary();
-    color: nswow.colors-light();
     padding: nswow.system-size-unit(10) nswow.system-size-unit(15);
-    @include nswow.typography-copy3();
 
     svg {
       transition: all 200ms ease;
@@ -121,5 +141,4 @@ const prevRoute = computed(() => {
     display: none;
   }
 }
-
 </style>
