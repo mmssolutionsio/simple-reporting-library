@@ -75,39 +75,39 @@
 @each $spacer, $spacerValue in variables.$spacer {
   $varName: #{variables.$variable-prefix}spacer-#{$spacer};
   @include system.add-root-style(
-                  $varName,
-                  system.size-unit(map.get($spacerValue, size))
+    $varName,
+    system.size-unit(map.get($spacerValue, size))
   );
   @if map.has-key($spacerValue, media) {
     @each $breakpoint, $breakpointValue in map.get($spacerValue, media) {
       @if $breakpoint == print {
         @include system.add-root-style(
-                        $varName,
-                        system.size-unit(map.get($spacerValue, size), in)
+          $varName,
+          system.size-unit(map.get($spacerValue, size), in)
         );
       } @else if $breakpoint == up {
         @each $upBreakpoint, $upBreakpointValue in $breakpointValue {
           @include system.add-root-style(
-                          $varName,
-                          system.size-unit($upBreakpointValue),
-                          $upBreakpoint,
-                          up
+            $varName,
+            system.size-unit($upBreakpointValue),
+            $upBreakpoint,
+            up
           );
         }
       } @else if $breakpoint == down {
         @each $downBreakpoint, $downBreakpointValue in $breakpointValue {
           @include system.add-root-style(
-                          $varName,
-                          system.size-unit($downBreakpointValue),
-                          $downBreakpoint,
-                          down
+            $varName,
+            system.size-unit($downBreakpointValue),
+            $downBreakpoint,
+            down
           );
         }
       } @else {
         @include system.add-root-style(
-                        $varName,
-                        system.size-unit($breakpointValue),
-                        $breakpoint
+          $varName,
+          system.size-unit($breakpointValue),
+          $breakpoint
         );
       }
     }

@@ -48,7 +48,4 @@ const initI18n = async function () {
   return i18n
 }
 
-export {
-  initI18n,
-  i18n
-}
+export { initI18n, i18n }

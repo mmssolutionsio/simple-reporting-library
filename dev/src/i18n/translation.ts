@@ -54,7 +54,6 @@ const Translate = {
   },
 
   set currentLocale(newLocale: string) {
-
     i18n.global.locale.value = newLocale
   },
 

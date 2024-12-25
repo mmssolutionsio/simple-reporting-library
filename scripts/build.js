@@ -83,9 +83,15 @@ async function buildApp() {
   await checkFolders();
   const build = await viteBuild();
   let index = await readFileSync(`${outputPath}/app/index.html`, 'utf8');
-  index = index.replace('<html>', `<html lang="[[language-${placeholderId}]]">`);
-  index = index.replace(/<base href="[^"]*">/, `<base href="[[base-${placeholderId}]]">
-  [[meta-${placeholderId}]]`);
+  index = index.replace(
+    '<html>',
+    `<html lang="[[language-${placeholderId}]]">`,
+  );
+  index = index.replace(
+    /<base href="[^"]*">/,
+    `<base href="[[base-${placeholderId}]]">
+  [[meta-${placeholderId}]]`,
+  );
   await mkdirSync(`${outputPath}/app/template`, { recursive: true });
   await writeFileSync(`${outputPath}/app/template/article.html`, index);
   /**
@@ -458,26 +464,26 @@ async function mapScss() {
     await writeFileSync(
       `${CWD}/.nswow/app.scss`,
       `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
-      output.app.join(';\n@use ') +
-      ';\n',
+        output.app.join(';\n@use ') +
+        ';\n',
     );
     await writeFileSync(
       `${CWD}/.nswow/ldd.scss`,
       `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
-      output.ldd.join(';\n@use ') +
-      ';\n',
+        output.ldd.join(';\n@use ') +
+        ';\n',
     );
     await writeFileSync(
       `${CWD}/.nswow/pdf.scss`,
       `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
-      output.pdf.join(';\n@use ') +
-      ';\n',
+        output.pdf.join(';\n@use ') +
+        ';\n',
     );
     await writeFileSync(
       `${CWD}/.nswow/word.scss`,
       `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
-      output.word.join(';\n@use ') +
-      ';\n',
+        output.word.join(';\n@use ') +
+        ';\n',
     );
 
     return true;
