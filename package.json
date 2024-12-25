@@ -1,13 +1,13 @@
 {
   "name": "@multivisio/nswow",
-  "version": "0.1.82",
+  "version": "0.1.83",
   "description": "Manage nswow templates, build and publish",
   "bin": {
     "nswow": "cli.js"
   },
   "type": "module",
   "scripts": {
-    "prepare": "node publish.cjs && prettier --write --list-different .",
+    "preparePublish": "node preparePublish.cjs && prettier --write --list-different .",
     "lint": "prettier --check .",
     "lint:fix": "prettier --write ."
   },
