@@ -1,0 +1,10 @@
+@use 'nswow';
+
+.srl-title-h6 {
+  color: nswow.colors-shade-800();
+
+  break-before: auto;
+  break-inside: avoid;
+  break-after: auto;
+  @include nswow.typography-headline6(true);
+}

@@ -1,0 +1,7 @@
+@use 'nswow';
+
+.srl-image {
+  &__image-container--mobile {
+    display: none;
+  }
+}

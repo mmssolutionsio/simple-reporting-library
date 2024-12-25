@@ -426,26 +426,26 @@ async function mapScss() {
     await writeFileSync(
       `${CWD}/.nswow/app.scss`,
       `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
-        output.app.join(';\n@use ') +
-        ';\n',
+      output.app.join(';\n@use ') +
+      ';\n',
     );
     await writeFileSync(
       `${CWD}/.nswow/ldd.scss`,
       `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
-        output.ldd.join(';\n@use ') +
-        ';\n',
+      output.ldd.join(';\n@use ') +
+      ';\n',
     );
     await writeFileSync(
       `${CWD}/.nswow/pdf.scss`,
       `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
-        output.pdf.join(';\n@use ') +
-        ';\n',
+      output.pdf.join(';\n@use ') +
+      ';\n',
     );
     await writeFileSync(
       `${CWD}/.nswow/word.scss`,
       `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
-        output.word.join(';\n@use ') +
-        ';\n',
+      output.word.join(';\n@use ') +
+      ';\n',
     );
 
     return true;
@@ -532,10 +532,12 @@ async function mapLdd() {
           const c = readdirSync(`${groupsPath}/${group}`);
           for (let j = 0; j < c.length; j++) {
             const component = c[j];
-            const stat = statSync(`${groupsPath}/${group}/${component}`);
-            if (stat.isDirectory()) {
+            try {
+              const stat = statSync(
+                `${groupsPath}/${group}/${component}/${component}.html`,
+              );
               components.push(component);
-            }
+            } catch (e) {}
           }
           if (components.length) {
             keepGroups.push(groupName);

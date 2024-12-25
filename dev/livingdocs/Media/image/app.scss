@@ -1,0 +1,25 @@
+@use 'web';
+
+@use 'nswow';
+
+.srl-image {
+  &:not(.show-mobile-image) {
+    @include nswow.grid-media(phone) {
+      .srl-image__image-container--desktop {
+        display: none;
+      }
+    }
+
+    @include nswow.grid-media-up(portrait) {
+      .srl-image__image-container--mobile {
+        display: none;
+      }
+    }
+  }
+
+  &.show-mobile-image {
+    .srl-image__image-container--desktop {
+      display: none;
+    }
+  }
+}
