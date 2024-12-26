@@ -88,9 +88,9 @@ async function buildApp() {
     `<html lang="[[language-${placeholderId}]]">`,
   );
   index = index.replace(
-    /<base href="[^"]*">/,
-    `<base href="[[base-${placeholderId}]]">
-  [[meta-${placeholderId}]]`,
+    /<base href="[^"]*" \/>/,
+    `<base href="[[base-${placeholderId}]]" />
+    [[meta-${placeholderId}]]`,
   );
   await mkdirSync(`${outputPath}/app/template`, { recursive: true });
   await writeFileSync(`${outputPath}/app/template/article.html`, index);
