@@ -7,7 +7,6 @@ import LanguageSwitch from '@/components/LanguageSwitch.vue'
 const { locale } = useI18n()
 const srlSearch = ref()
 let searchValue = ref('')
-const baseUrl = ref(window.baseUrl ?? '')
 
 function toggleSearchVisible() {
   srlSearch.value.classList.toggle('visible')
@@ -23,7 +22,7 @@ function search() {
   <header class="srl-bg-primary srl-color-light">
     <div class="srl-header__inner">
       <router-link class="srl-header__inner-logo" :to="{ path: `/${locale}` }">
-        <img :src="`${baseUrl}/assets/mms-logo-white.svg`" alt="logo" />
+        <img :src="`@/assets/images/mms-logo-white.svg`" alt="logo" />
       </router-link>
       <div class="srl-header__inner-content">
         <div class="srl-header__inner-languages">

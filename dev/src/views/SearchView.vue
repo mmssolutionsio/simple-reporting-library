@@ -54,7 +54,7 @@ async function getSearchResult() {
 
   if (routesArray.length) {
     routesArray.map(async (value) => {
-      const file = `${window.baseUrl}/html/${locale.value}/${value.name}.html`
+      const file = `./html/${locale.value}/${value.name}.html`
       try {
         const response = await fetch(file)
         const data = await response.text()

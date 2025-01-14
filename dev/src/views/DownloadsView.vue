@@ -10,7 +10,7 @@ const locale = computed(() => {
 const downloadData = ref<NsWowDownloads>({ structure: [] })
 
 async function getDownloads() {
-  const file = `${window.baseUrl}/downloads/downloads_${locale.value}.json`
+  const file = `./downloads/downloads_${locale.value}.json`
   try {
     const response = await fetch(file)
     downloadData.value = await response.json()
