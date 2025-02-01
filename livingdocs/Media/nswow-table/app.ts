@@ -15,7 +15,7 @@ export default class extends ArticleLoader {
 
         const elem = e.target;
         const uuid = elem.href.split('/').pop();
-        const file = `${window.baseUrl}/html/${lang}/${uuid}.html`;
+        const file = `./html/${lang}/${uuid}.html`;
         try {
           const res = await fetch(file, {
             redirect: 'error',

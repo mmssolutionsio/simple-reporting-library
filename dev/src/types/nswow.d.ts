@@ -1,9 +1,5 @@
 export {}
 declare global {
-  export interface Window {
-    baseUrl?: string
-  }
-
   export type NsWowSettings = {
     languages: string[]
     defaultLanguage: string
@@ -33,7 +29,6 @@ declare global {
 
   export type NsWowConfig = {
     loaded: boolean
-    baseUrl: string
     settings: NsWowSettings
     articles: NsWowArticles
     menus: NsWowMenus

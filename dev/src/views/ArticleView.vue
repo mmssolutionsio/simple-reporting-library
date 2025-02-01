@@ -26,7 +26,7 @@ async function getContent() {
     })
   let res = ''
   if (currentPage) {
-    const file = `${config.value.baseUrl}/html/${locale.value}/${currentPage.name}.html`
+    const file = `./html/${locale.value}/${currentPage.name}.html`
     try {
       const response = await fetch(file)
       res = await response.text()

@@ -7,7 +7,7 @@ import ArticleView from '@/views/ArticleView.vue'
 import PageNotFound from '@/views/PageNotFound.vue'
 
 const router = createRouter({
-  history: createWebHistory(window.baseUrl !== '' ? window.baseUrl : import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.BASE_URL),
   scrollBehavior() {
     window.scrollTo(0, 0)
   },

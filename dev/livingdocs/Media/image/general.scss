@@ -1,0 +1,11 @@
+@use 'nswow';
+
+.srl-image {
+  &__img {
+    width: 100%;
+  }
+
+  &__caption {
+    @include nswow.typography-blockquote();
+  }
+}

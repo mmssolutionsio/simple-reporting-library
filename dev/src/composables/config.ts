@@ -2,7 +2,6 @@ import { ref } from 'vue'
 
 const config = ref<NsWowConfig>({
   loaded: false,
-  baseUrl: window.baseUrl ?? '',
   settings: {
     languages: ['de', 'en'],
     defaultLanguage: 'de',
@@ -17,7 +16,7 @@ const config = ref<NsWowConfig>({
 })
 
 async function getData() {
-  const file = `${config.value.baseUrl}/json/settings.json`
+  const file = `./json/settings.json`
   try {
     const response: Response = await fetch(file)
     const lazySettings: NsWowSettings = await response.json()
@@ -27,7 +26,7 @@ async function getData() {
   }
 
   for (const locale of config.value.settings.languages) {
-    const file: string = `${config.value.baseUrl}/json/routing_${locale}.json`
+    const file: string = `./json/routing_${locale}.json`
     try {
       const response: Response = await fetch(file)
       const routing: NsWowResponseRouting = await response.json()

@@ -1,0 +1,41 @@
+{
+  "show-mobile-image": {
+    "label": "Show mobile image",
+    "type": "option",
+    "value": "show-mobile-image"
+  },
+  "web-width": {
+    "label": "Web width",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Text width"
+      },
+      {
+        "caption": "Content width",
+        "value": "srl-article__grid--content-web"
+      },
+      {
+        "caption": "Full width",
+        "value": "srl-article__grid--full-web"
+      }
+    ]
+  },
+  "pdf-width": {
+    "label": "PDF width",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Text width"
+      },
+      {
+        "caption": "Content width",
+        "value": "srl-article__grid--content-pdf"
+      },
+      {
+        "caption": "Full width",
+        "value": "srl-article__grid--full-pdf"
+      }
+    ]
+  }
+}

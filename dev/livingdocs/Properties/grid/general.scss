@@ -1,0 +1,95 @@
+@use 'nswow';
+
+.srl-article__grid {
+  @include nswow.grid-row();
+  @include nswow.grid-container();
+
+  &.srl-article__grid--full {
+    padding-inline: 0;
+    max-width: unset;
+  }
+
+  &.srl-article__grid--full,
+  &.srl-article__grid--content {
+    > .srl-article__grid--inner {
+      @include nswow.grid-offset(0, phone);
+      @include nswow.grid-col(12, phone);
+      @include nswow.grid-offset(0, portrait);
+      @include nswow.grid-col(12, portrait);
+      @include nswow.grid-offset(0, landscape);
+      @include nswow.grid-col(12, landscape);
+      @include nswow.grid-offset(0, desktop);
+      @include nswow.grid-col(12, desktop);
+      @include nswow.grid-offset(0, print);
+      @include nswow.grid-col(12, print);
+    }
+  }
+
+  &.srl-article__grid--indent {
+    > .srl-article__grid--inner {
+      @include nswow.grid-offset(0, phone);
+      @include nswow.grid-col(12, phone);
+      @include nswow.grid-offset(1, portrait);
+      @include nswow.grid-col(10, portrait);
+      @include nswow.grid-offset(2, landscape);
+      @include nswow.grid-col(8, landscape);
+      @include nswow.grid-offset(3, desktop);
+      @include nswow.grid-col(6, desktop);
+      @include nswow.grid-offset(3, print);
+      @include nswow.grid-col(6, print);
+    }
+  }
+
+  &.srl-article__grid--half {
+    > .srl-article__grid--inner {
+      @include nswow.grid-offset(0, phone);
+      @include nswow.grid-col(12, phone);
+      @include nswow.grid-offset(0, portrait);
+      @include nswow.grid-col(6, portrait);
+      @include nswow.grid-offset(0, landscape);
+      @include nswow.grid-col(6, landscape);
+      @include nswow.grid-offset(0, desktop);
+      @include nswow.grid-col(6, desktop);
+      @include nswow.grid-offset(0, print);
+      @include nswow.grid-col(6, print);
+    }
+  }
+
+  &.srl-article__grid--left {
+    > .srl-article__grid--inner {
+      @include nswow.grid-offset(0, phone);
+      @include nswow.grid-col(12, phone);
+      @include nswow.grid-offset(0, portrait);
+      @include nswow.grid-col(9, portrait);
+      @include nswow.grid-offset(0, landscape);
+      @include nswow.grid-col(9, landscape);
+      @include nswow.grid-offset(0, desktop);
+      @include nswow.grid-col(9, desktop);
+      @include nswow.grid-offset(0, print);
+      @include nswow.grid-col(9, print);
+    }
+  }
+
+  &.srl-article__grid--right {
+    > .srl-article__grid--inner {
+      @include nswow.grid-offset(0, phone);
+      @include nswow.grid-col(12, phone);
+      @include nswow.grid-offset(3, portrait);
+      @include nswow.grid-col(9, portrait);
+      @include nswow.grid-offset(3, landscape);
+      @include nswow.grid-col(9, landscape);
+      @include nswow.grid-offset(3, desktop);
+      @include nswow.grid-col(9, desktop);
+      @include nswow.grid-offset(3, print);
+      @include nswow.grid-col(9, print);
+    }
+  }
+}
+
+.srl-container,
+.srl-article__grid {
+  .srl-article__grid,
+  .srl-container {
+    padding-inline: 0;
+  }
+}
