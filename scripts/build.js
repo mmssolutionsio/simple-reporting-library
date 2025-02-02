@@ -434,9 +434,9 @@ async function mapScss() {
 
     const properties = livingdocs.filter((p) => {
       return p.name === 'Properties' || p.parent.name === 'Properties';
-    })
+    });
 
-    const livingdocsList = [...components, ...properties]
+    const livingdocsList = [...components, ...properties];
 
     for (let x = 0; x < livingdocsList.length; x++) {
       const p = livingdocsList[x];
@@ -474,26 +474,26 @@ async function mapScss() {
     await writeFileSync(
       `${CWD}/.nswow/app.scss`,
       `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
-      output.app.join(';\n@use ') +
-      ';\n',
+        output.app.join(';\n@use ') +
+        ';\n',
     );
     await writeFileSync(
       `${CWD}/.nswow/ldd.scss`,
       `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
-      output.ldd.join(';\n@use ') +
-      ';\n',
+        output.ldd.join(';\n@use ') +
+        ';\n',
     );
     await writeFileSync(
       `${CWD}/.nswow/pdf.scss`,
       `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
-      output.pdf.join(';\n@use ') +
-      ';\n',
+        output.pdf.join(';\n@use ') +
+        ';\n',
     );
     await writeFileSync(
       `${CWD}/.nswow/word.scss`,
       `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
-      output.word.join(';\n@use ') +
-      ';\n',
+        output.word.join(';\n@use ') +
+        ';\n',
     );
 
     return true;
@@ -554,14 +554,23 @@ async function mapLdd() {
     const lddJson = await readLivingDocsJson();
 
     const propertiesFiles = await glob(
-      resolve(CWD, './livingdocs/**/properties.json'),
+      resolve(CWD, './livingdocs/**/properties.{json,js,ts}'),
     );
     const mapProperties = {};
     for (let i = 0; i < propertiesFiles.length; i++) {
-      const properties = JSON.parse(readFileSync(propertiesFiles[i]));
-      const oKeys = Object.keys(properties);
-      for (let j = 0; j < oKeys.length; j++) {
-        mapProperties[oKeys[j]] = properties[oKeys[j]];
+      const file = propertiesFiles[i];
+      if (file.endsWith('.js') || file.endsWith('.ts')) {
+        const properties = require(propertiesFiles[i]).default;
+        const oKeys = Object.keys(properties);
+        for (let j = 0; j < oKeys.length; j++) {
+          mapProperties[oKeys[j]] = properties[oKeys[j]];
+        }
+      } else if (file.endsWith('.json')) {
+        const properties = JSON.parse(readFileSync(propertiesFiles[i]));
+        const oKeys = Object.keys(properties);
+        for (let j = 0; j < oKeys.length; j++) {
+          mapProperties[oKeys[j]] = properties[oKeys[j]];
+        }
       }
     }
     lddJson.componentProperties = mapProperties;
