@@ -473,27 +473,27 @@ async function mapScss() {
 
     await writeFileSync(
       `${CWD}/.nswow/app.scss`,
-      `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
+      `@use ` +
         output.app.join(';\n@use ') +
-        ';\n',
+        `;\n@use "nswow/core-styles" as nswowcorestyles;\n`,
     );
     await writeFileSync(
       `${CWD}/.nswow/ldd.scss`,
-      `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
+      `@use ` +
         output.ldd.join(';\n@use ') +
-        ';\n',
+        `;\n@use "nswow/core-styles" as nswowcorestyles;\n`,
     );
     await writeFileSync(
       `${CWD}/.nswow/pdf.scss`,
-      `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
+      `@use ` +
         output.pdf.join(';\n@use ') +
-        ';\n',
+        `;\n@use "nswow/core-styles" as nswowcorestyles;\n`,
     );
     await writeFileSync(
       `${CWD}/.nswow/word.scss`,
-      `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
+      `@use ` +
         output.word.join(';\n@use ') +
-        ';\n',
+        `;\n@use "nswow/core-styles" as nswowcorestyles;\n`,
     );
 
     return true;
