@@ -122,6 +122,24 @@ async function buildApp() {
 }
 
 /**
+ * Builds the application by performing the following steps:
+ *
+ * 1. Checks the folders.
+ * 2. Executes the viteBuild function.
+ *
+ * @returns {Promise<void>} A Promise that resolves when the application is built.
+ */
+async function buildDDev() {
+  await checkFolders();
+  const build = await viteBuild({
+    build: {
+      outDir: './.output/ddev',
+    },
+  });
+  return build;
+}
+
+/**
  * Compresses the 'app' folder into a zip file using archiver library.
  *
  * @async
@@ -340,6 +358,25 @@ async function build() {
     await zipApp();
   } catch (error) {
     console.log(error);
+  }
+}
+
+/**
+ * Builds the project sequentially by executing a series of asynchronous tasks in a specific order.
+ * This method is used to build the project in a predetermined sequence.
+ *
+ * @return {Promise<void>} A Promise that resolves when the build process is completed or rejects if an error occurs.
+ */
+async function ddev() {
+  try {
+    await checkFolders();
+    const packageJson = await readPackageJson();
+    await beaver(1);
+    await mapScss();
+    await mapLdd();
+    await buildDDev();
+  } catch (error) {
+    console.error(error);
   }
 }
 
@@ -662,4 +699,4 @@ async function map() {
   return true;
 }
 
-export { build, map, mapScss, mapLdd, mapJs };
+export { build, ddev, map, mapScss, mapLdd, mapJs };

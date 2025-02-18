@@ -9,7 +9,7 @@ import {
   removeGroups,
   createGroup,
 } from './scripts/components.js';
-import { build, map, mapJs } from './scripts/build.js';
+import { build, ddev, map, mapJs } from './scripts/build.js';
 import { beaver } from './scripts/beaver.js';
 
 const packageJson = JSON.parse(
@@ -79,6 +79,13 @@ commander
   .description('Build ldd, app, pdf and word for production')
   .action(async () => {
     await build();
+  });
+
+commander
+  .command('ddev')
+  .description('Build app for ddev')
+  .action(async () => {
+    await ddev();
   });
 
 commander
