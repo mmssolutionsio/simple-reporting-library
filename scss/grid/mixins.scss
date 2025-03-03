@@ -109,53 +109,21 @@
 }
 
 @mixin container-fluid {
-  & {
-    padding-inline: var(
-      --#{variables.$variable-prefix}container-padding,
-      unset
-    );
-  }
-
-  @if map.has-key(variables.$containers, print) {
-    $container: map.get(variables.$containers, print);
-    $padding: map.get($container, padding);
-    @media print {
-      & {
-        @if $padding {
-          padding-inline: #{system.size-unit($padding, in)};
-        }
-      }
-    }
-  }
+  padding-inline: var(
+    --#{variables.$variable-prefix}container-padding,
+    unset
+  );
 }
 
 @mixin container {
-  & {
-    max-width: var(--#{variables.$variable-prefix}container-max-width, unset);
-    padding-inline: var(
-      --#{variables.$variable-prefix}container-padding,
-      unset
-    );
-  }
-
-  @if map.has-key(variables.$containers, print) {
-    $container: map.get(variables.$containers, print);
-    $padding: map.get($container, padding);
-    $max-width: map.get($container, max-width);
-
-    @media print {
-      @if $max-width {
-        max-width: #{system.size-unit($max-width, in)};
-      }
-      @if $padding {
-        padding-inline: #{system.size-unit($padding, in)};
-      }
-    }
-  }
+  max-width: var(--#{variables.$variable-prefix}container-max-width, unset);
+  padding-inline: var(
+    --#{variables.$variable-prefix}container-padding,
+    unset
+  );
 }
 
 @mixin row() {
-  & {
     display: grid;
     grid-template-columns: repeat(
       var(--#{variables.$variable-prefix}gutter-columns),
@@ -163,64 +131,6 @@
     );
     column-gap: var(--#{variables.$variable-prefix}gutter-column-gap);
     row-gap: var(--#{variables.$variable-prefix}gutter-row-gap);
-  }
-
-  @if map.has-key(variables.$gutter, print) {
-    @media print {
-      & {
-        $gutter: map.get(variables.$gutter, print);
-        $col: map.get($gutter, columns);
-        @if not $col {
-          $col: 1;
-        }
-        $gap: map.get($gutter, gap);
-        $row-gap: map.get($gutter, row-gap);
-        $column-gap: map.get($gutter, column-gap);
-
-        @if $gap {
-          $row-gap: $gap;
-          $column-gap: $gap;
-        }
-
-        display: block;
-        box-sizing: border-box;
-        overflow: hidden;
-
-        @if $column-gap {
-          margin-inline: system.size-unit(math.div($column-gap, -2), in);
-        }
-
-        @if $row-gap {
-          margin-block-end: system.size-unit(-$row-gap, in);
-        }
-
-        &:after {
-          content: '';
-          display: block;
-          width: 0;
-          height: 0;
-          overflow: hidden;
-          clear: both;
-        }
-
-        > * {
-          display: block;
-          float: left;
-          box-sizing: border-box;
-          width: math.div(100%, variables.$column-default-span);
-          overflow: hidden;
-
-          @if $column-gap {
-            padding-inline: system.size-unit(math.div($column-gap, 2), in);
-          }
-
-          @if $row-gap {
-            padding-block-end: system.size-unit($row-gap, in);
-          }
-        }
-      }
-    }
-  }
 }
 
 @mixin col($span: false, $breakpoint-start: false, $breakpoint-end: false) {
@@ -231,17 +141,8 @@
     }
   } @else if $breakpoint-start and $span {
     @include media($breakpoint-start) {
-      @if $breakpoint-start == print {
-        $gutter: map.get(variables.$gutter, print);
-        $col: map.get($gutter, columns);
-        $gap: map.get($gutter, gap);
-        $row-gap: map.get($gutter, row-gap);
-        $col-width: math.div(100%, $col);
-        width: $span * $col-width;
-      } @else {
-        width: auto;
-        grid-column-end: span #{$span};
-      }
+      width: auto;
+      grid-column-end: span #{$span};
     }
   } @else if $span {
     width: auto;
@@ -258,15 +159,7 @@
       @error "Invalid breakpoint specified! Choose one of #{map.keys(variables.$breakpoints)}";
     }
     @include media($breakpoint) {
-      @if $breakpoint == print {
-        $gutter: map.get(variables.$gutter, print);
-        $columns: map.get($gutter, columns);
-        $col-width: math.div(100%, $columns);
-
-        margin-inline-start: $offset * $col-width;
-      } @else {
-        grid-column-start: ($offset + 1);
-      }
+      grid-column-start: ($offset + 1);
     }
   } @else {
     grid-column-start: ($offset + 1);
@@ -407,70 +300,27 @@
     @each $breakpoint in $listBreakpoints {
       $index: list.index($listBreakpoints, $breakpoint);
       @include media($breakpoint) {
-        @if $breakpoint == print {
-          $gutter: map.get(variables.$gutter, print);
-          $cols: map.get($gutter, columns);
-          $col-width: math.div(100%, $cols);
-          $gap: map.get($gutter, gap);
-          $row-gap: map.get($gutter, row-gap);
-          $column-gap: map.get($gutter, column-gap);
-
-          @if not $row-gap and $gap {
-            $row-gap: $gap;
-          }
-          @if not $column-gap and $gap {
-            $column-gap: $gap;
-          }
-
-          .#{variables.$class-prefix}col-#{$breakpoint} {
-            width: math.div(100%, variables.$column-default-span);
-            &-span {
-              @for $col
-                from 1
-                to
-                (map.get(map.get(variables.$gutter, $breakpoint), columns) + 1)
-              {
-                &-#{$col} {
-                  width: $col * $col-width;
-                }
-              }
-            }
-
-            &-offset {
-              @for $offset
-                from 1
-                to
-                map.get(map.get(variables.$gutter, $breakpoint), columns)
-              {
-                &-#{$offset} {
-                  margin-inline-start: $offset * $col-width;
-                }
+        .#{variables.$class-prefix}col-#{$breakpoint} {
+          &-span {
+            @for $col
+              from 1
+              to
+              map.get(map.get(variables.$gutter, $breakpoint), columns)
+            {
+              &-#{$col} {
+                grid-column-end: span #{$col};
               }
             }
           }
-        } @else {
-          .#{variables.$class-prefix}col-#{$breakpoint} {
-            &-span {
-              @for $col
-                from 1
-                to
-                map.get(map.get(variables.$gutter, $breakpoint), columns)
-              {
-                &-#{$col} {
-                  grid-column-end: span #{$col};
-                }
-              }
-            }
 
-            &-offset {
-              @for $offset
-                from 1
-                to
-                (map.get(map.get(variables.$gutter, $breakpoint), columns) - 1)
-              {
-                &-#{$offset} {
-                  grid-column-start: #{$offset + 1};
-                }
+          &-offset {
+            @for $offset
+              from 1
+              to
+              (map.get(map.get(variables.$gutter, $breakpoint), columns) - 1)
+            {
+              &-#{$offset} {
+                grid-column-start: #{$offset + 1};
               }
             }
           }
