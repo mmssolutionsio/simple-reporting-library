@@ -109,28 +109,22 @@
 }
 
 @mixin container-fluid {
-  padding-inline: var(
-    --#{variables.$variable-prefix}container-padding,
-    unset
-  );
+  padding-inline: var(--#{variables.$variable-prefix}container-padding, unset);
 }
 
 @mixin container {
   max-width: var(--#{variables.$variable-prefix}container-max-width, unset);
-  padding-inline: var(
-    --#{variables.$variable-prefix}container-padding,
-    unset
-  );
+  padding-inline: var(--#{variables.$variable-prefix}container-padding, unset);
 }
 
 @mixin row() {
-    display: grid;
-    grid-template-columns: repeat(
-      var(--#{variables.$variable-prefix}gutter-columns),
-      1fr
-    );
-    column-gap: var(--#{variables.$variable-prefix}gutter-column-gap);
-    row-gap: var(--#{variables.$variable-prefix}gutter-row-gap);
+  display: grid;
+  grid-template-columns: repeat(
+    var(--#{variables.$variable-prefix}gutter-columns),
+    1fr
+  );
+  column-gap: var(--#{variables.$variable-prefix}gutter-column-gap);
+  row-gap: var(--#{variables.$variable-prefix}gutter-row-gap);
 }
 
 @mixin col($span: false, $breakpoint-start: false, $breakpoint-end: false) {
