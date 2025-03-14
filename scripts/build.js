@@ -7,7 +7,7 @@ import {
   readdirSync,
   createWriteStream,
   rmSync,
-  cpSync
+  cpSync,
 } from 'node:fs';
 import { createRequire } from 'node:module';
 import { glob } from 'glob';
@@ -84,12 +84,14 @@ async function buildApp() {
   await checkFolders();
   const build = await viteBuild({
     build: {
-      copyPublicDir: false
-    }
+      copyPublicDir: false,
+    },
   });
 
   // Copy public folder exclude nswow folders
-  console.log("\n\nCopy public folder exclude nswow folders and exclude folder\n")
+  console.log(
+    '\n\nCopy public folder exclude nswow folders and exclude folder\n',
+  );
   await cpSync(`${CWD}/public/`, `${outputPath}/app`, {
     filter: (src) => {
       if (
@@ -99,15 +101,16 @@ async function buildApp() {
         src.startsWith(`${CWD}/public/json`) ||
         src.startsWith(`${CWD}/public/exclude`)
       ) {
-        return false
+        return false;
       } else {
-        src === `${CWD}/public/` || console.log(`Copy ${src} to ${outputPath}/app`)
-        return true
+        src === `${CWD}/public/` ||
+          console.log(`Copy ${src} to ${outputPath}/app`);
+        return true;
       }
     },
-    recursive: true
-  })
-  console.log("\n")
+    recursive: true,
+  });
+  console.log('\n');
 
   let index = await readFileSync(`${outputPath}/app/index.html`, 'utf8');
   index = index.replace(
@@ -115,9 +118,9 @@ async function buildApp() {
     `<html lang="[[language-${placeholderId}]]">`,
   );
   index = index.replace(
-    /<base href="[^"]*">/,
-    `<base href="[[base-${placeholderId}]]">
-  [[meta-${placeholderId}]]`,
+    /<base href="[^"]*" \/>/,
+    `<base href="[[base-${placeholderId}]]" />
+    [[meta-${placeholderId}]]`,
   );
   await mkdirSync(`${outputPath}/app/template`, { recursive: true });
   await writeFileSync(`${outputPath}/app/template/article.html`, index);
@@ -145,6 +148,24 @@ async function buildApp() {
    RewriteCond %{REQUEST_FILENAME} !-d
    RewriteRule ^(.*)$ index.html [L]`);
    /**/
+  return build;
+}
+
+/**
+ * Builds the application by performing the following steps:
+ *
+ * 1. Checks the folders.
+ * 2. Executes the viteBuild function.
+ *
+ * @returns {Promise<void>} A Promise that resolves when the application is built.
+ */
+async function buildDDev() {
+  await checkFolders();
+  const build = await viteBuild({
+    build: {
+      outDir: './.output/ddev',
+    },
+  });
   return build;
 }
 
@@ -371,6 +392,25 @@ async function build() {
 }
 
 /**
+ * Builds the project sequentially by executing a series of asynchronous tasks in a specific order.
+ * This method is used to build the project in a predetermined sequence.
+ *
+ * @return {Promise<void>} A Promise that resolves when the build process is completed or rejects if an error occurs.
+ */
+async function ddev() {
+  try {
+    await checkFolders();
+    const packageJson = await readPackageJson();
+    await beaver(1);
+    await mapScss();
+    await mapLdd();
+    await buildDDev();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+/**
  * Cleans up the SCSS alias by removing any characters that are not alphanumeric.
  * @param string
  */
@@ -455,8 +495,18 @@ async function mapScss() {
       return 0;
     });
 
-    for (let x = 0; x < livingdocs.length; x++) {
-      const p = livingdocs[x];
+    const components = livingdocs.filter((p) => {
+      return p.name !== 'Properties' && p.parent.name !== 'Properties';
+    });
+
+    const properties = livingdocs.filter((p) => {
+      return p.name === 'Properties' || p.parent.name === 'Properties';
+    });
+
+    const livingdocsList = [...components, ...properties];
+
+    for (let x = 0; x < livingdocsList.length; x++) {
+      const p = livingdocsList[x];
       try {
         const general = await statSync(p.fullpath() + '/general.scss');
         const alias = cleanupScssAlias(`${p.relative()}/general.scss`);
@@ -490,27 +540,27 @@ async function mapScss() {
 
     await writeFileSync(
       `${CWD}/.nswow/app.scss`,
-      `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
-      output.app.join(';\n@use ') +
-      ';\n',
+      `@use ` +
+        output.app.join(';\n@use ') +
+        `;\n@use "nswow/core-styles" as nswowcorestyles;\n`,
     );
     await writeFileSync(
       `${CWD}/.nswow/ldd.scss`,
-      `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
-      output.ldd.join(';\n@use ') +
-      ';\n',
+      `@use ` +
+        output.ldd.join(';\n@use ') +
+        `;\n@use "nswow/core-styles" as nswowcorestyles;\n`,
     );
     await writeFileSync(
       `${CWD}/.nswow/pdf.scss`,
-      `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
-      output.pdf.join(';\n@use ') +
-      ';\n',
+      `@use ` +
+        output.pdf.join(';\n@use ') +
+        `;\n@use "nswow/core-styles" as nswowcorestyles;\n`,
     );
     await writeFileSync(
       `${CWD}/.nswow/word.scss`,
-      `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
-      output.word.join(';\n@use ') +
-      ';\n',
+      `@use ` +
+        output.word.join(';\n@use ') +
+        `;\n@use "nswow/core-styles" as nswowcorestyles;\n`,
     );
 
     return true;
@@ -571,14 +621,23 @@ async function mapLdd() {
     const lddJson = await readLivingDocsJson();
 
     const propertiesFiles = await glob(
-      resolve(CWD, './livingdocs/**/properties.json'),
+      resolve(CWD, './livingdocs/**/properties.{json,js,ts}'),
     );
     const mapProperties = {};
     for (let i = 0; i < propertiesFiles.length; i++) {
-      const properties = JSON.parse(readFileSync(propertiesFiles[i]));
-      const oKeys = Object.keys(properties);
-      for (let j = 0; j < oKeys.length; j++) {
-        mapProperties[oKeys[j]] = properties[oKeys[j]];
+      const file = propertiesFiles[i];
+      if (file.endsWith('.js') || file.endsWith('.ts')) {
+        const properties = require(propertiesFiles[i]).default;
+        const oKeys = Object.keys(properties);
+        for (let j = 0; j < oKeys.length; j++) {
+          mapProperties[oKeys[j]] = properties[oKeys[j]];
+        }
+      } else if (file.endsWith('.json')) {
+        const properties = JSON.parse(readFileSync(propertiesFiles[i]));
+        const oKeys = Object.keys(properties);
+        for (let j = 0; j < oKeys.length; j++) {
+          mapProperties[oKeys[j]] = properties[oKeys[j]];
+        }
       }
     }
     lddJson.componentProperties = mapProperties;
@@ -670,4 +729,4 @@ async function map() {
   return true;
 }
 
-export { build, map, mapScss, mapLdd, mapJs };
+export { build, ddev, map, mapScss, mapLdd, mapJs };
