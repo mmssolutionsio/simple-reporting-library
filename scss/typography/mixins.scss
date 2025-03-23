@@ -30,7 +30,7 @@
   }
 
   @if map.has-key($map, text-transform) {
-    text-transform: functions.get-letter-spacing($typo);
+    text-transform: functions.get-text-transform($typo);
   }
 
   @if $margins {

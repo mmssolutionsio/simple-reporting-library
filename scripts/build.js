@@ -90,7 +90,7 @@ async function buildApp() {
 
   // Copy public folder exclude nswow folders
   console.log(
-    '\n\nCopy public folder exclude nswow folders and exclude folder\n',
+    '\n\nCopy public folder exclude nswow folders and exclude folder',
   );
   await cpSync(`${CWD}/public/`, `${outputPath}/app`, {
     filter: (src) => {
@@ -112,7 +112,12 @@ async function buildApp() {
   });
   console.log('\n');
 
+  console.log('Create fallback file sw.html for service worker');
   let index = await readFileSync(`${outputPath}/app/index.html`, 'utf8');
+
+  await writeFileSync(`${outputPath}/app/sw.html`, index);
+
+  console.log('Create file /template/article.html for nswow hybrid\n');
   index = index.replace(
     '<html>',
     `<html lang="[[language-${placeholderId}]]">`,
