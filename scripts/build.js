@@ -123,7 +123,7 @@ async function buildApp() {
     `<html lang="[[language-${placeholderId}]]">`,
   );
   index = index.replace(
-    /<base href="[^"]*" \/>/,
+    /<base\s+href\s*=\s*(['"])(.*?)\1\s*\/?>/gi,
     `<base href="[[base-${placeholderId}]]" />
     [[meta-${placeholderId}]]`,
   );
