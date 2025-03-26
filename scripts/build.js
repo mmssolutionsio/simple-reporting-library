@@ -112,10 +112,10 @@ async function buildApp() {
   });
   console.log('\n');
 
-  console.log('Create fallback file sw.html for service worker');
+  console.log('Create fallback file worker.html for service worker');
   let index = await readFileSync(`${outputPath}/app/index.html`, 'utf8');
 
-  await writeFileSync(`${outputPath}/app/sw.html`, index);
+  await writeFileSync(`${outputPath}/app/worker.html`, index);
 
   console.log('Create file /template/article.html for nswow hybrid\n');
   index = index.replace(
