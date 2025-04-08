@@ -1,0 +1,20 @@
+@media print {
+  .srl-subnavigation__wrap,
+  .srl-title-h2,
+  .iz-kfc-dropdown,
+  .kfc-chart-actions,
+  .iz-kfc-chart-types,
+  .iz-kfc-chart-toggles,
+  .srl-button-download,
+  .srl-button-next,
+  .srl-footnav,
+  .srl-page__footer {
+    display: none !important;
+  }
+
+  .srl-article__grid--kfc,
+  .srl-article__grid--kfc > .srl-article__grid--inner,
+  .kfc-chart-title {
+    display: block !important;
+  }
+}

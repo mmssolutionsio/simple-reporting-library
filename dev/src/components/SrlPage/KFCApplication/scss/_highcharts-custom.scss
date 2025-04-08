@@ -1,0 +1,71 @@
+#kfc-chart svg.highcharts-root {
+  width: 100%;
+}
+
+.highcharts-axis-labels text {
+  color: var(--global-color-gray-400);
+  font-weight: var(--global-font-weight-regular);
+  font-size: 14px;
+}
+
+.highcharts-background,
+.highcharts-plot-background {
+  fill: #fff;
+}
+
+.highcharts-legend-item > span,
+.highcharts-legend-item > text {
+  font-size: inherit;
+  color: var(--global-color-black-100);
+  font-weight: var(--global-font-weight-regular);
+  font-size: var(--srl-typo-copy3-font-size, unset);
+  line-height: var(--srl-typo-copy3-line-height, unset);
+}
+
+.highcharts-background {
+  fill: white;
+}
+
+.highcharts-xaxis {
+  .highcharts-tick {
+    &:last-of-type,
+    &:nth-last-of-type(2) {
+      display: block;
+    }
+  }
+
+  .highcharts-legend-item.highcharts-column-series .highcharts-point {
+  }
+}
+
+// .highcharts-tooltip-box {
+//   stroke-width: $tooltip-border;
+//   fill: $tooltip-background;
+//   stroke: var(--global-color-black-100);
+//   z-index: 999;
+// }
+
+.highcharts-axis-line {
+  stroke: #969ba0;
+}
+
+.highcharts-grid .highcharts-xaxis-grid {
+  stroke: #969ba0;
+  stroke-width: 1px;
+}
+
+.highcharts-grid .highcharts-grid-line:first-of-type {
+  display: block;
+}
+
+.highcharts-axis-labels.highcharts-xaxis-labels text,
+.highcharts-axis-labels.highcharts-yaxis-labels text {
+  fill: #969ba0;
+}
+
+.highcharts-yaxis-grid {
+  .highcharts-grid-line {
+    stroke: #969ba0;
+    stroke-width: 1px;
+  }
+}
