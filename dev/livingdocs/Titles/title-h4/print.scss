@@ -1,0 +1,34 @@
+@use 'nswow';
+@use 'sass:map';
+
+$numberSize: 50;
+
+$gap: map.get(nswow.$grid-gutter, print, gap);
+$column-gap: map.get(nswow.$grid-gutter, print, column-gap);
+@if not $column-gap {
+  $column-gap: $gap;
+}
+@if not $column-gap {
+  $column-gap: 0;
+}
+
+.srl-title-h4 {
+  > span {
+    position: relative;
+  }
+
+  &__number {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: nswow.system-size-unit($numberSize, in);
+  }
+
+  &__text {
+    display: block;
+    &:not(:first-child) {
+      margin-left: nswow.system-size-unit($numberSize + $column-gap, in);
+    }
+  }
+}

@@ -1,13 +1,17 @@
 {
   "name": "@multivisio/nswow",
-  "version": "0.1.79",
+  "version": "0.1.92",
   "description": "Manage nswow templates, build and publish",
   "bin": {
     "nswow": "cli.js"
   },
+  "engines": {
+    "node": ">=22.12.0",
+    "npm": ">=10.9.0"
+  },
   "type": "module",
   "scripts": {
-    "prepare": "node publish.cjs && prettier --write --list-different .",
+    "preparePublish": "node preparePublish.cjs && prettier --write --list-different .",
     "lint": "prettier --check .",
     "lint:fix": "prettier --write ."
   },
@@ -26,8 +30,8 @@
     "html-minifier": "^4.0.0",
     "lodash": "^4.17.21",
     "modern-css-reset": "^1.4.0",
-    "vite": "^5.4.10",
-    "winston": "^3.15.0",
+    "vite": "^5.4.11",
+    "winston": "^3.17.0",
     "write-json": "^3.0.1"
   },
   "keywords": [
@@ -40,8 +44,7 @@
   "author": "Michael Dörer",
   "license": "ISC",
   "devDependencies": {
-    "npm-api": "^1.0.1",
-    "prettier": "^3.3.3",
-    "typescript": "^5.6.3"
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
   }
 }

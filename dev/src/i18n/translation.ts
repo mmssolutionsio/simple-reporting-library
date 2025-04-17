@@ -1,9 +1,8 @@
 import useConfig from '@/composables/config'
-import i18n from '@/i18n'
+import { i18n } from '@/i18n'
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
-import { ref } from 'vue'
 
-let config = ref({})
+let config = null
 useConfig().then((c) => (config = c))
 
 const Translate = {

@@ -1,125 +1,75 @@
 @use 'sass:map';
 @use 'variables';
+@use 'functions';
 @use '../grid';
 @use '../system';
 
 @mixin margin($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid margin "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  margin: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  margin: functions.get($spacer);
 }
 
 @mixin margin-block($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid margin "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  margin-block: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  margin-block: functions.get($spacer);
 }
 
 @mixin margin-inline($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid margin "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  margin-inline: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  margin-inline: functions.get($spacer);
 }
 
 @mixin margin-top($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid margin "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  margin-block-start: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  margin-block-start: functions.get($spacer);
 }
 
 @mixin margin-right($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid margin "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  margin-inline-end: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  margin-inline-end: functions.get($spacer);
 }
 
 @mixin margin-bottom($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid margin "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  margin-block-end: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  margin-block-end: functions.get($spacer);
 }
 
 @mixin margin-left($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid margin "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  margin-inline-start: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  margin-inline-start: functions.get($spacer);
 }
 
 @mixin padding($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid padding "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  padding: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  padding: functions.get($spacer);
 }
 
 @mixin padding-block($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid padding "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  padding-block: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  padding-block: functions.get($spacer);
 }
 
 @mixin padding-inline($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid padding "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  padding-inline: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  padding-inline: functions.get($spacer);
 }
 
 @mixin padding-top($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid padding "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  padding-block-start: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  padding-block-start: functions.get($spacer);
 }
 
 @mixin padding-right($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid padding "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  padding-inline-end: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  padding-inline-end: functions.get($spacer);
 }
 
 @mixin padding-bottom($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid padding "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  padding-block-end: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  padding-block-end: functions.get($spacer);
 }
 
 @mixin padding-left($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid padding "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  padding-inline-start: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  padding-inline-start: functions.get($spacer);
 }
 
 @mixin gap($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid gap "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  gap: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  gap: functions.get($spacer);
 }
 
 @mixin row-gap($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid row-gap "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  row-gap: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  row-gap: functions.get($spacer);
 }
 
 @mixin column-gap($spacer) {
-  @if not map.has-key(variables.$spacer, $spacer) {
-    @error "Invalid column-gap "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
-  }
-  column-gap: var(--#{variables.$variable-prefix}spacer-#{$spacer});
+  column-gap: functions.get($spacer);
 }
 
 @each $spacer, $spacerValue in variables.$spacer {

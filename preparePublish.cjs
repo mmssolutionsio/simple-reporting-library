@@ -2,10 +2,19 @@ const { resolve } = require('node:path');
 const { readFileSync, writeFileSync, rmSync } = require('node:fs');
 const { globSync } = require('glob');
 const writeJson = require('write-json');
-const NpmApi = require('npm-api');
 const ts = require('typescript');
 const enquirer = require('enquirer');
 const { Input } = enquirer;
+const { exec } = require('child_process');
+
+function getPackageVersion(packageName) {
+  return new Promise((resolve, reject) => {
+    exec(`npm list ${packageName} --json`, (error, stdout, stderr) => {
+      const jsonOutput = JSON.parse(stdout);
+      resolve(jsonOutput.version);
+    });
+  });
+}
 
 async function compile(fileNames, options) {
   // Create a Program with an in-memory emit
@@ -24,10 +33,12 @@ async function compile(fileNames, options) {
 }
 
 async function action() {
-  const npm = new NpmApi();
-  const nswow = await npm.repo('@multivisio/nswow');
-  const nswowPackage = await nswow.package();
-  const currentVersion = nswowPackage.version.split('.');
+  const nswowVersion = await getPackageVersion('@multivisio/nswow');
+
+  const writeJson = require('write-json');
+  const { globSync } = require('glob');
+
+  const currentVersion = nswowVersion.split('.');
   let major = parseInt(currentVersion[0]);
   let minor = parseInt(currentVersion[1]);
   let patch = parseInt(currentVersion[2]);

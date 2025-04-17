@@ -21,6 +21,7 @@ import {
 } from './utils.js';
 import { camelCase } from 'cheerio/utils';
 
+const placeholderId = '6297EAFB-33A0-48B8-8D64-E61CDC3E9035';
 const CWD = process.cwd();
 const nswowPath = resolve(CWD, '.nswow');
 const outputPath = resolve(CWD, '.output');
@@ -80,7 +81,44 @@ async function cleanOutput() {
  */
 async function buildApp() {
   await checkFolders();
-  return await viteBuild();
+  const build = await viteBuild();
+  let index = await readFileSync(`${outputPath}/app/index.html`, 'utf8');
+  index = index.replace(
+    '<html>',
+    `<html lang="[[language-${placeholderId}]]">`,
+  );
+  index = index.replace(
+    /<base href="[^"]*" \/>/,
+    `<base href="[[base-${placeholderId}]]" />
+    [[meta-${placeholderId}]]`,
+  );
+  await mkdirSync(`${outputPath}/app/template`, { recursive: true });
+  await writeFileSync(`${outputPath}/app/template/article.html`, index);
+  /**
+   await writeFileSync(`${outputPath}/app/web.config`, `<?xml version="1.0" encoding="UTF-8"?>
+   <configuration>
+   <system.webServer>
+   <rewrite>
+   <rules>
+   <rule name="Rewrite to index.html" stopProcessing="true">
+   <match url=".*" />
+   <conditions logicalGrouping="MatchAll">
+   <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+   <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+   </conditions>
+   <action type="Rewrite" url="index.html" />
+   </rule>
+   </rules>
+   </rewrite>
+   </system.webServer>
+   </configuration>`);
+   await writeFileSync(`${outputPath}/app/.htaccess`, `RewriteEngine On
+   RewriteCond %{REQUEST_FILENAME} !-f
+   RewriteCond %{REQUEST_FILENAME} !-l
+   RewriteCond %{REQUEST_FILENAME} !-d
+   RewriteRule ^(.*)$ index.html [L]`);
+   /**/
+  return build;
 }
 
 /**
@@ -532,10 +570,12 @@ async function mapLdd() {
           const c = readdirSync(`${groupsPath}/${group}`);
           for (let j = 0; j < c.length; j++) {
             const component = c[j];
-            const stat = statSync(`${groupsPath}/${group}/${component}`);
-            if (stat.isDirectory()) {
+            try {
+              const stat = statSync(
+                `${groupsPath}/${group}/${component}/${component}.html`,
+              );
               components.push(component);
-            }
+            } catch (e) {}
           }
           if (components.length) {
             keepGroups.push(groupName);

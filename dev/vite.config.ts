@@ -13,6 +13,7 @@ await mapJs()
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue(), VueDevTools(), nswowWatcher()],
+  base: './',
   build: {
     outDir: './.output/app'
   },
@@ -21,5 +22,6 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       nswow: fileURLToPath(new URL('./nswow', import.meta.url))
     }
-  }
+  },
+  publicDir: process.env.NODE_ENV === 'development'
 })

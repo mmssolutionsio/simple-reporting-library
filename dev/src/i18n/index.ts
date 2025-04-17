@@ -1,59 +1,51 @@
-import { createI18n, type I18nOptions, type LocaleMessages } from 'vue-i18n'
+import { createI18n, type I18n, type I18nOptions, type LocaleMessages } from 'vue-i18n'
 import useConfig from '@/composables/config'
 
-const defaultMessages: LocaleMessages<any> = {}
+let i18n: I18n | undefined = undefined
+const initI18n = async function () {
+  if (!i18n) {
+    const config = await useConfig()
+    const defaultMessagesImport = import.meta.glob('@/locales/*.json', {
+      eager: true,
+      import: 'default'
+    })
+    const defaultMessages: LocaleMessages<any> = {}
 
-const locales = import.meta.glob('@/locales/**/*.json', { eager: true, import: 'default' })
-
-for (const path in locales) {
-  const matched = path.match(/([A-Za-z0-9-_]+)\./i)
-  if (matched && matched.length > 1) {
-    const locale = matched[1]
-    defaultMessages[locale] = locales[path]
-  }
-}
-
-const options: I18nOptions = {
-  legacy: false,
-  locale: 'de',
-  fallbackLocale: 'de',
-  globalInjection: true,
-  messages: defaultMessages
-}
-
-const i18n = createI18n<false, typeof options>(options)
-
-async function getTranslation() {
-  const config = await useConfig()
-  let messages = {}
-  const file = `${window.baseUrl}/json/translations_hosting.json`
-
-  try {
-    const response: Response = await fetch(file)
-    const importMessages: LocaleMessages<any> = await response.json()
-
-    for (const lang in importMessages) {
-      if (typeof defaultMessages[lang] !== 'undefined') {
-        importMessages[lang] = Object.assign(defaultMessages[lang], importMessages[lang])
+    for (const path in defaultMessagesImport) {
+      const matched = path.match(/([A-Za-z0-9-_]+)\./i)
+      if (matched && matched.length > 1) {
+        const locale = matched[1]
+        defaultMessages[locale] = defaultMessagesImport[path]
       }
     }
-    messages = importMessages
-  } catch (e) {
-    messages = defaultMessages
-    console.error(`"${file}" could not be loaded.`)
-  }
 
-  for (let lang in messages) {
-    i18n.global.setLocaleMessage(lang, messages[lang])
-  }
+    const file = `./json/translations_hosting.json`
+    try {
+      const responseMessages = await fetch(file)
+      if (responseMessages.ok) {
+        const importMessages: LocaleMessages<any> = await responseMessages.json()
+        for (const lang in importMessages) {
+          if (typeof defaultMessages[lang] !== 'undefined') {
+            importMessages[lang] = Object.assign(defaultMessages[lang], importMessages[lang])
+          }
+        }
+      }
+    } catch (e) {
+      console.error(`"${file}" could not be loaded.`)
+    }
 
-  if (navigator && navigator.language && typeof messages[navigator.language] !== 'undefined') {
-    i18n.locale = navigator.language
-  } else {
-    i18n.locale = config.value.settings.defaultLanguage
+    const options: I18nOptions = {
+      legacy: false,
+      locale: config.value.settings.defaultLanguage,
+      fallbackLocale: config.value.settings.defaultLanguage,
+      availableLocales: Object.keys(defaultMessages),
+      globalInjection: true,
+      messages: defaultMessages
+    }
+
+    i18n = createI18n<false, typeof options>(options)
   }
-  i18n.fallbackLocale = config.value.settings.defaultLanguage
+  return i18n
 }
-getTranslation()
 
-export default i18n
+export { initI18n, i18n }

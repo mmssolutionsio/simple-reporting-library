@@ -1,0 +1,9 @@
+@use 'variables';
+@use 'sass:map';
+
+@function get($spacer) {
+  @if not map.has-key(variables.$spacer, $spacer) {
+    @error "Invalid column-gap "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";
+  }
+  @return var(--#{variables.$variable-prefix}spacer-#{$spacer});
+}

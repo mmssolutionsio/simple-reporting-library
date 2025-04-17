@@ -1,0 +1,9 @@
+@use 'nswow';
+
+.srl-paragraph {
+  color: nswow.colors-shade-800();
+  break-before: auto;
+  break-inside: avoid;
+  break-after: auto;
+  @include nswow.typography-copy1(true);
+}

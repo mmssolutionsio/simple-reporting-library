@@ -357,39 +357,55 @@ async function writeComponent(group, name) {
     await mkdirSync(`${CWD}/livingdocs/${group}/${name}`);
     await writeFileSync(
       `${CWD}/livingdocs/${group}/${name}/${name}.html`,
-      '<script type="ld-conf">\n' +
-        '  {\n' +
-        '    "name": "' +
-        name +
-        '",\n' +
-        '    "label": "' +
-        name +
-        '",\n' +
-        '  }\n' +
-        '</script>\n' +
-        '<div doc-editable="text">\n' +
-        '  Editable Text\n' +
-        '</div>',
+      `<script type="ld-conf">
+{
+  "name": "${name}",
+  "label": "${name}",
+  "properties": [
+    "web-width",
+    "pdf-width"
+  ]
+}
+</script>
+<p class="srl-${name} srl-article__grid srl-article__grid--content">
+  <span class="srl-article__grid--inner" doc-editable="text">
+    Editable Text
+  </span>
+</p>
+`,
     );
     await writeFileSync(
       `${CWD}/livingdocs/${group}/${name}/general.scss`,
+      `@use "nswow";
+
+.srl-${name} {
+
+}
+`,
+    );
+    await writeFileSync(
+      `${CWD}/livingdocs/${group}/${name}/_web.scss`,
+      '@use "nswow";',
+    );
+    await writeFileSync(
+      `${CWD}/livingdocs/${group}/${name}/_print.scss`,
       '@use "nswow";',
     );
     await writeFileSync(
       `${CWD}/livingdocs/${group}/${name}/ldd.scss`,
-      '@use "nswow";',
+      '@use "_web";',
     );
     await writeFileSync(
       `${CWD}/livingdocs/${group}/${name}/app.scss`,
-      '@use "nswow";',
+      '@use "_web";',
     );
     await writeFileSync(
       `${CWD}/livingdocs/${group}/${name}/pdf.scss`,
-      '@use "nswow";',
+      '@use "_print";',
     );
     await writeFileSync(
       `${CWD}/livingdocs/${group}/${name}/word.scss`,
-      '@use "nswow";',
+      '@use "_print";',
     );
     await writeFileSync(
       `${CWD}/livingdocs/${group}/${name}/properties.json`,

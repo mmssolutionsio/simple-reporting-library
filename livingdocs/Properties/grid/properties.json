@@ -1,0 +1,68 @@
+{
+  "web-width": {
+    "label": "Web width",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Default"
+      },
+      {
+        "caption": "Text",
+        "value": "srl-article__grid--indent-web"
+      },
+      {
+        "caption": "Content",
+        "value": "srl-article__grid--content-web"
+      },
+      {
+        "caption": "Full",
+        "value": "srl-article__grid--full-web"
+      },
+      {
+        "caption": "Half",
+        "value": "srl-article__grid--half-web"
+      },
+      {
+        "caption": "Left",
+        "value": "srl-article__grid--left-web"
+      },
+      {
+        "caption": "Right",
+        "value": "srl-article__grid--right-web"
+      }
+    ]
+  },
+  "pdf-width": {
+    "label": "Pdf width",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Default"
+      },
+      {
+        "caption": "Text",
+        "value": "srl-article__grid--indent-print"
+      },
+      {
+        "caption": "Content",
+        "value": "srl-article__grid--content-print"
+      },
+      {
+        "caption": "Full",
+        "value": "srl-article__grid--full-print"
+      },
+      {
+        "caption": "Half",
+        "value": "srl-article__grid--half-print"
+      },
+      {
+        "caption": "Left",
+        "value": "srl-article__grid--left-print"
+      },
+      {
+        "caption": "Right",
+        "value": "srl-article__grid--right-print"
+      }
+    ]
+  }
+}
