@@ -1,0 +1,1 @@
+import '.nswow/word.scss'

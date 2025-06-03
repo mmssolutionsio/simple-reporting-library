@@ -9,6 +9,7 @@ import {
   rmSync,
   cpSync,
 } from 'node:fs';
+import { fileURLToPath, URL } from 'node:url';
 import { createRequire } from 'node:module';
 import { glob } from 'glob';
 import { beaver } from './beaver.js';
@@ -219,16 +220,13 @@ async function zipApp() {
  */
 async function buildPdf() {
   await checkFolders();
-  const input = resolve(CWD, 'pdf.html');
+
   try {
+    const input = resolve(CWD, 'pdf.html');
     await statSync(input);
-  } catch (e) {
-    return true;
-  }
-  try {
     return await viteBuild({
       build: {
-        outDir: './.output/pdf',
+        outDir: resolve(CWD, '.output/pdf'),
         rollupOptions: {
           input: {
             pdf: input,
@@ -243,8 +241,44 @@ async function buildPdf() {
       },
     });
   } catch (e) {
-    console.error(e);
-    return false;
+    let configFile = false;
+    try {
+      const file = resolve(CWD, 'vite.config.pdf.ts');
+      await statSync(file);
+      console.log('Use vite.config.pdf.ts file');
+      configFile = file;
+    } catch (e) {
+      console.log('No use of vite.config.pdf.ts file');
+    }
+
+    const entry = resolve(CWD, 'pdf.ts');
+
+    const config = {
+      configFile: configFile,
+      base: './',
+      build: {
+        outDir: resolve(CWD, '.output/pdf'),
+        lib: {
+          fileName: 'pdf',
+          entry: entry,
+          formats: ['es'],
+        },
+      },
+      resolve: {
+        alias: {
+          '@': fileURLToPath(new URL(resolve(CWD, 'src'), import.meta.url)),
+          nswow: fileURLToPath(new URL(resolve(CWD, 'nswow'), import.meta.url)),
+        },
+      },
+      publicDir: false,
+    };
+
+    try {
+      return await viteBuild(config);
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
   }
 }
 
@@ -338,16 +372,13 @@ async function buildLdd(version) {
  */
 async function buildWord() {
   await checkFolders();
-  const input = resolve(CWD, 'word.html');
+
   try {
+    const input = resolve(CWD, 'word.html');
     await statSync(input);
-  } catch (e) {
-    return true;
-  }
-  try {
     return await viteBuild({
       build: {
-        outDir: './.output/word',
+        outDir: resolve(CWD, '.output/word'),
         rollupOptions: {
           input: {
             word: input,
@@ -362,8 +393,44 @@ async function buildWord() {
       },
     });
   } catch (e) {
-    console.error(e);
-    return false;
+    let configFile = false;
+    try {
+      const file = resolve(CWD, 'vite.config.word.ts');
+      await statSync(file);
+      console.log('Use vite.config.word.ts file');
+      configFile = file;
+    } catch (e) {
+      console.log('No use of vite.config.word.ts file');
+    }
+
+    const entry = resolve(CWD, 'word.ts');
+
+    const config = {
+      configFile: configFile,
+      base: './',
+      build: {
+        outDir: resolve(CWD, '.output/word'),
+        lib: {
+          fileName: 'word',
+          entry: entry,
+          formats: ['es'],
+        },
+      },
+      resolve: {
+        alias: {
+          '@': fileURLToPath(new URL(resolve(CWD, 'src'), import.meta.url)),
+          nswow: fileURLToPath(new URL(resolve(CWD, 'nswow'), import.meta.url)),
+        },
+      },
+      publicDir: false,
+    };
+
+    try {
+      return await viteBuild(config);
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
   }
 }
 

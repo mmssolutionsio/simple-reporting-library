@@ -33,7 +33,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@multivisio/nswow": "^0.1.108",
+    "@multivisio/nswow": "^0.1.109",
     "@kne/color-palette": "^0.1.0",
     "@rushstack/eslint-patch": "^1.11.0",
     "@tsconfig/node22": "^22.0.0",
