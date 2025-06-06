@@ -5,7 +5,7 @@ import { copy, ensureDir } from 'fs-extra';
 import { rm, statSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { lddGroupNames } from './utils.js';
-import { map } from '@multivisio/nswow/scripts/build.js';
+import { map } from './build.js';
 
 const require = createRequire(import.meta.url);
 const __filename = fileURLToPath(import.meta.url);

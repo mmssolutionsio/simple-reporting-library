@@ -5,3 +5,5 @@
 /public/html/
 /public/images/
 /public/json/
+/public/exclude/
+/dev-dist/

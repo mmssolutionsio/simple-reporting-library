@@ -1,0 +1,17 @@
+{
+  "include": ["src/**/*.ts"],
+  "compilerOptions": {
+    "composite": true,
+
+    "baseUrl": "../../../",
+    "paths": {
+      "@/*": ["./src/*"],
+      "srl": ["@multivisio/nswow/src"],
+      "srl/*": ["@multivisio/nswow/src/*"],
+      "ldd": ["./livingdocs"],
+      "ldd/*": ["./livingdocs/*"],
+      "nswow": ["./nswow"],
+      "nswow/*": ["./nswow/*"]
+    }
+  }
+}

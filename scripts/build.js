@@ -1,4 +1,4 @@
-import { resolve } from 'node:path';
+import { resolve, join } from 'node:path';
 import {
   statSync,
   writeFileSync,
@@ -717,6 +717,7 @@ async function mapLdd() {
     const groupsPath = resolve(CWD, './livingdocs');
     const groups = readdirSync(groupsPath);
     const keepGroups = [];
+    const vueComponents = [];
 
     for (let x = 0; x < groups.length; x++) {
       const group = groups[x];
@@ -733,6 +734,16 @@ async function mapLdd() {
                 `${groupsPath}/${group}/${component}/${component}.html`,
               );
               components.push(component);
+            } catch (e) {}
+
+            try {
+              const stat = statSync(
+                `${groupsPath}/${group}/${component}/${component}.vue`,
+              );
+              vueComponents.push({
+                name: `SrlArticle${toUpperCamelCase(component)}`,
+                path: `${group}/${component}/${component}.vue`,
+              });
             } catch (e) {}
           }
           if (components.length) {
@@ -778,6 +789,10 @@ async function mapLdd() {
       }
     }
     lddJson.groups = newMap;
+    await writeFileSync(
+      join(CWD, '.nswow', 'components.json'),
+      JSON.stringify(vueComponents, null, 2),
+    );
     await writeLivingDocsJson(lddJson);
     return true;
   } catch (e) {
@@ -799,6 +814,13 @@ async function map() {
   await mapScss();
   await mapLdd();
   return true;
+}
+
+function toUpperCamelCase(input) {
+  return input
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join('');
 }
 
 export { build, ddev, map, mapScss, mapLdd, mapJs };
