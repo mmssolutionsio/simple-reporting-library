@@ -1,20 +1,31 @@
 <script setup lang="ts">
-import { nextTick, ref } from 'vue'
+import { nextTick, ref } from 'vue';
+import Autoload from '@/Autoload.ts'
+import SvgClose from '@/components/Svg/Close.vue'
+import VRuntimeTemplate from "vue3-runtime-template";
 
 const content = ref<string | null>(null)
 const state = ref<boolean>(false)
+const main = ref<HTMLDivElement | null>(null)
 
 async function setContent(html: string) {
   content.value = html
-  nextTick(open())
+  await nextTick(async () => {
+    await Autoload.init(main.value)
+    await open()
+  })
 }
 
 async function open() {
   state.value = true
+  await nextTick(() => {
+    main.value.focus()
+  })
 }
 
 function close() {
   state.value = false
+  content.value = null
 }
 
 defineExpose({
@@ -22,48 +33,72 @@ defineExpose({
   open,
   close
 })
+
 </script>
 
 <template>
-  <div class="modal" :hidden="!state" :class="{ open: state }">
-    <div class="background srl-bg-shade-200" @click="close" />
-    <div class="content srl-bg-light srl-color-dark" @click.stop>
+  <SrlAriaTabChain
+    class="srl-modal"
+    :hidden="!state"
+    role="dialog"
+  >
+    <div class="srl-modal__background srl-bg-shade-200" @click="close" />
+    <div class="srl-modal__content srl-bg-light srl-color-dark" @click.stop>
       <header>
-        <button title="$t('buttons.close')" @click="close">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-            <!--!Font Awesome Pro 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2024 Fonticons, Inc.-->
-            <path
-              d="M64 64C46.3 64 32 78.3 32 96V416c0 17.7 14.3 32 32 32H448c17.7 0 32-14.3 32-32V96c0-17.7-14.3-32-32-32H64zM0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm180.7 84.7c6.2-6.2 16.4-6.2 22.6 0L256 233.4l52.7-52.7c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6L278.6 256l52.7 52.7c6.2 6.2 6.2 16.4 0 22.6s-16.4 6.2-22.6 0L256 278.6l-52.7 52.7c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6L233.4 256l-52.7-52.7c-6.2-6.2-6.2-16.4 0-22.6z"
-            />
-          </svg>
+        <button
+          type="button"
+          class="srl-modal__close"
+          :title="$t('modalClose')"
+          :aria-label="$t('modalClose')"
+          @click="close"
+        >
+          <SvgClose :title="$t('modalClose')"/>
         </button>
       </header>
-      <main v-html="content" />
+      <div class="srl-modal__main" ref="main" tabindex="-1">
+        <VRuntimeTemplate v-if="content" :template="content" />
+      </div>
     </div>
-  </div>
+  </SrlAriaTabChain>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 @use 'nswow';
 
-.modal {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity ease-out 0.5s;
-  pointer-events: none;
-
-  &.open {
-    pointer-events: all;
-    opacity: 1;
-  }
+body:has(.srl-modal:not([hidden])) {
+  overflow: hidden;
 }
 
-header {
-  button {
+.srl-modal {
+  position: fixed;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+
+  &:not([hidden]) {
+    display: flex;
+  }
+
+  &__background {
+    position: fixed;
+    opacity: .7;
+    inset: 0;
+    z-index: 900;
+  }
+
+  &__content {
+    position: relative;
+    width: 80%;
+    min-height: 80%;
+    max-height: 80%;
+    border-radius: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 40px;
+    z-index: 901;
+  }
+
+  &__close {
     width: 50px;
     height: 50px;
     position: absolute;
@@ -74,22 +109,5 @@ header {
       height: 100%;
     }
   }
-}
-
-.background {
-  position: fixed;
-  inset: 0;
-  z-index: 900;
-}
-
-.content {
-  position: relative;
-  width: 80%;
-  min-height: 80%;
-  max-height: 80%;
-  border-radius: 20px;
-  overflow: hidden;
-  padding: 40px;
-  z-index: 901;
 }
 </style>

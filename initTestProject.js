@@ -44,7 +44,7 @@ init(projectFolder).then(() => {
     const searchKey = '@multivisio/nswow';
 
     if (packageJson.devDependencies && packageJson.devDependencies[searchKey]) {
-      packageJson.devDependencies[searchKey] = '../simple-reporting-library/';
+      packageJson.devDependencies[searchKey] = 'file:../simple-reporting-library';
       writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2), 'utf-8');
       console.log(msg.success(`Updated ${searchKey} in package.json.`));
     } else {

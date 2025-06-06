@@ -1,5 +1,5 @@
 import { createI18n, type I18n, type I18nOptions, type LocaleMessages } from 'vue-i18n'
-import useConfig from '@/composables/config'
+import useConfig from '#composables/config'
 
 let i18n: I18n | undefined = undefined
 const initI18n = async function () {

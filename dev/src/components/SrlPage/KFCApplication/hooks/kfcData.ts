@@ -1,4 +1,4 @@
-import useConfig from '@/composables/config'
+import useConfig from 'srl/composables/config'
 import generateKFCJson from '@/components/SrlPage/KFCApplication/services/xlsxParser'
 
 export default async function useKfcData() {

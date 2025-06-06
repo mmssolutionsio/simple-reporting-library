@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "node_modules/@multivisio/nswow/src/**/*"],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
     "composite": true,
@@ -8,7 +8,25 @@
 
     "baseUrl": ".",
     "paths": {
+      "#srl": ["@multivisio/nswow/src"],
+      "#srl/*": ["@multivisio/nswow/src/*"],
+      "#components": ["@multivisio/nswow/src/components"],
+      "#components/*": ["@multivisio/nswow/src/components/*"],
+      "#composables": ["@multivisio/nswow/src/composables"],
+      "#composables/*": ["@multivisio/nswow/src/composables/*"],
+      "#plugins": ["@multivisio/nswow/src/plugins"],
+      "#plugins/*": ["@multivisio/nswow/src/plugins/*"],
+      "#types": ["@multivisio/nswow/src/types"],
+      "#types/*": ["@multivisio/nswow/src/types/*"],
+      "#imports": ["./.nswow"],
+      "#imports/*": ["./.nswow/*"],
       "@/*": ["./src/*"],
+      "assets": ["./src/assets"],
+      "assets/*": ["./src/assets/*"],
+      "#ld": ["./livingdocs"],
+      "#ld/*": ["./livingdocs/*"],
+      "srl": ["./nswow"],
+      "srl/*": ["./nswow/*"],
       "nswow": ["./nswow"],
       "nswow/*": ["./nswow/*"]
     }

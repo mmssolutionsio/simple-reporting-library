@@ -19,8 +19,19 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      '#srl': '@multivisio/nswow/src',
+      '#components': '@multivisio/nswow/src/components',
+      '#composables': '@multivisio/nswow/src/composables',
+      '#plugins': '@multivisio/nswow/src/plugins',
+      '#types': '@multivisio/nswow/src/types',
+      '#imports': fileURLToPath(new URL('./.nswow', import.meta.url)),
+      '~': fileURLToPath(new URL('.', import.meta.url)),
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      nswow: fileURLToPath(new URL('./nswow', import.meta.url))
+      '#ld': fileURLToPath(new URL('./livingdocs', import.meta.url)),
+      assets: fileURLToPath(new URL('./src/assets', import.meta.url)),
+      nswow: fileURLToPath(new URL('./nswow', import.meta.url)),
+      srl: fileURLToPath(new URL('./nswow', import.meta.url)),
+      vue: 'vue/dist/vue.esm-bundler.js'
     }
   },
   publicDir: process.env.NODE_ENV === 'development'

@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps<{
+  mainNavigation: NsWowNavigationItem[]
+}>()
+</script>
 
 <template>
   <div class="srl-notfound">

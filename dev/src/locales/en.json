@@ -1,15 +1,9 @@
 {
-  "page": {
-    "next": "Next page",
-    "prev": "Previous page",
-    "notFound": "Page not found"
-  },
-  "search": {
-    "title": "Search results",
-    "for": "Your search for {search} returned {count} hits"
-  },
-  "scrollToTop": "Scroll to top",
-  "buttons": {
-    "close": "Close"
-  }
+  "toMainNavigation": "To main navigation",
+  "toMainContent": "To main content",
+  "toFooter": "To footer",
+  "pagePrev": "Previous page",
+  "pageNext": "Next page",
+  "toTop": "Back to top",
+  "modalClose": "Close window"
 }
