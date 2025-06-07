@@ -2,8 +2,7 @@ import { i18n } from '@/i18n'
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 import useConfig from '#composables/config'
 
-let config = null
-useConfig().then((c) => (config = c))
+const config = useConfig()
 
 const Translate = {
   isLocaleSupported(locale: string) {
@@ -57,16 +56,17 @@ const Translate = {
     i18n.global.locale.value = newLocale
   },
 
-  async switchLanguage(newLocale: string) {
+  switchLanguage(newLocale: string) {
     Translate.currentLocale = newLocale
     const objHtml = document.querySelector('html')
     if (objHtml) {
       objHtml.setAttribute('lang', newLocale)
+      config.value.locale = newLocale
     }
     localStorage.setItem('user-locale', newLocale)
   },
 
-  async routeMiddleware(
+  routeMiddleware(
     to: RouteLocationNormalized,
     _from: RouteLocationNormalized,
     next: NavigationGuardNext
@@ -76,7 +76,7 @@ const Translate = {
       if (!Translate.isLocaleSupported(paramLocale)) {
         return next(Translate.guessDefaultLocale())
       }
-      await Translate.switchLanguage(paramLocale)
+      Translate.switchLanguage(paramLocale)
     }
     return next()
   }

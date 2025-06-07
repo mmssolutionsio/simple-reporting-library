@@ -1,3 +1,107 @@
-@use 'config';
-@forward '@multivisio/nswow/scss/colors';
-@use '@multivisio/nswow/scss/colors';
+@use "config";
+@forward "@multivisio/nswow/scss/colors";
+@use "@multivisio/nswow/scss/colors";
+
+@function light() {
+  @return colors.get("light");
+}
+
+@function on-light() {
+  @return colors.get("on-light");
+}
+
+@function dark() {
+  @return colors.get("dark");
+}
+
+@function on-dark() {
+  @return colors.get("on-dark");
+}
+
+@function primary() {
+  @return colors.get("primary");
+}
+
+@function on-primary() {
+  @return colors.get("on-primary");
+}
+
+@function primary-dark() {
+  @return colors.get("primary-dark");
+}
+
+@function on-primary-dark() {
+  @return colors.get("on-primary-dark");
+}
+
+@function secondary-light() {
+  @return colors.get("secondary-light");
+}
+
+@function on-secondary-light() {
+  @return colors.get("on-secondary-light");
+}
+
+@function secondary() {
+  @return colors.get("secondary");
+}
+
+@function on-secondary() {
+  @return colors.get("on-secondary");
+}
+
+@function secondary-dark() {
+  @return colors.get("secondary-dark");
+}
+
+@function on-secondary-dark() {
+  @return colors.get("on-secondary-dark");
+}
+
+@function shade() {
+  @return colors.get("shade");
+}
+
+@function shade-50() {
+  @return colors.get("shade-50");
+}
+
+@function shade-100() {
+  @return colors.get("shade-100");
+}
+
+@function shade-200() {
+  @return colors.get("shade-200");
+}
+
+@function shade-300() {
+  @return colors.get("shade-300");
+}
+
+@function shade-400() {
+  @return colors.get("shade-400");
+}
+
+@function shade-500() {
+  @return colors.get("shade-500");
+}
+
+@function shade-600() {
+  @return colors.get("shade-600");
+}
+
+@function shade-700() {
+  @return colors.get("shade-700");
+}
+
+@function shade-800() {
+  @return colors.get("shade-800");
+}
+
+@function shade-900() {
+  @return colors.get("shade-900");
+}
+
+@function shade-950() {
+  @return colors.get("shade-950");
+}

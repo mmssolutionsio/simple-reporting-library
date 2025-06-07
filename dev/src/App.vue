@@ -6,7 +6,7 @@ import MainNavigation from '@/components/MainNavigation.vue'
 import useMenu from '#composables/menu.ts'
 import PageKeyboardPointer from '@/components/PageKeyboardPointer.vue';
 
-const mainNavigation = await useMenu('menuMain')
+const mainNavigation = useMenu('menuMain')
 </script>
 
 <template>

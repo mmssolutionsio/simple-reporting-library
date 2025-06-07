@@ -6,8 +6,8 @@ import useConfig from '@multivisio/nswow/src/composables/config.ts';
 
 const { locale } = useI18n()
 
-const config = await useConfig()
-const pageData = await usePageData();
+const config = useConfig()
+const pageData = usePageData();
 
 const languages = computed<NsWowNavigationItem[]>(() => {
   const uuid = pageData.article?.uuid
@@ -41,10 +41,10 @@ const languages = computed<NsWowNavigationItem[]>(() => {
 </template>
 
 <style lang="scss">
-@use 'nswow';
+@use 'srl';
 
 .srl-header {
-  background-color: nswow.colors-primary();
+  background-color: srl.colors-primary();
   display: flex;
   justify-content: center;
 
@@ -71,7 +71,7 @@ const languages = computed<NsWowNavigationItem[]>(() => {
     margin: 0;
   }
   a {
-    color: nswow.colors-light();
+    color: srl.colors-light();
     text-decoration: none;
     text-transform: uppercase;
   }

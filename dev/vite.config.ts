@@ -24,6 +24,7 @@ export default defineConfig({
       '#composables': '@multivisio/nswow/src/composables',
       '#plugins': '@multivisio/nswow/src/plugins',
       '#types': '@multivisio/nswow/src/types',
+      '#utils': '@multivisio/nswow/src/utils',
       '#imports': fileURLToPath(new URL('./.nswow', import.meta.url)),
       '~': fileURLToPath(new URL('.', import.meta.url)),
       '@': fileURLToPath(new URL('./src', import.meta.url)),

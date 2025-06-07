@@ -1,7 +1,7 @@
 {
-  "name": "multivisio-ld",
+  "name": "standard-ld",
   "label": "skeleton",
-  "version": "1.0.51",
+  "version": "0.0.1",
   "author": "nsgroup",
   "assets": {
     "css": [
@@ -81,7 +81,8 @@
     {
       "label": "Media",
       "components": [
-        "image"
+        "image",
+        "table"
       ]
     },
     {

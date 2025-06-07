@@ -18,6 +18,8 @@
       "#plugins/*": ["@multivisio/nswow/src/plugins/*"],
       "#types": ["@multivisio/nswow/src/types"],
       "#types/*": ["@multivisio/nswow/src/types/*"],
+      "#utils": ["@multivisio/nswow/src/utils"],
+      "#utils/*": ["@multivisio/nswow/src/utils/*"],
       "#imports": ["./.nswow"],
       "#imports/*": ["./.nswow/*"],
       "@/*": ["./src/*"],
