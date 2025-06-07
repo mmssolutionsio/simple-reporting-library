@@ -106,6 +106,7 @@ async function preparePageData(route: RouteLocationNormalizedLoadedGeneric, loca
 
   pageData.article = article
   pageData.content = content
+  pageData.time = new Date().getTime()
 }
 
 await preparePageData(route, locale, config)

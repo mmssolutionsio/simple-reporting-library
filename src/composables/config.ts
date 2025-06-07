@@ -1,41 +1,46 @@
 /**
- * `config.ts`
+ * `src/composables/config.ts`
  *
- * This Vue 3 composable provides access to application configuration data.
- * It loads settings and localized content from JSON files and maintains
- * a reactive configuration state for the application.
+ * A Vue 3 composable that manages the application configuration.
+ * Handles loading and accessing various configuration aspects including
+ * settings, translations, article data, and menu structures.
  *
- * ## Imports
- * - `ref`: Vue reactivity API for creating reactive references
+ * ## Core Functionality
+ * - Loads configuration from multiple JSON files
+ * - Manages application settings and supported languages
+ * - Handles internationalization with translations
+ * - Provides routing information for different locales
+ * - Manages downloadable content references
+ * - Offers environment detection helpers
  *
- * ## Reactive State
- * - `config`: Reactive reference containing application configuration:
- *   - `loaded`: Boolean flag indicating if config has been loaded
- *   - `locale`: Current active language
- *   - `settings`: Application settings (languages, search options, etc.)
- *   - `articles`: Localized article content
- *   - `menus`: Localized menu structures
+ * ## Data Structure
+ * - `NsWowConfig`: Main configuration object containing:
+ *   - `locale`: Current active locale
+ *   - `settings`: Application settings
+ *   - `articles`: Article data by language
+ *   - `menus`: Menu structures by language
+ *   - `translations`: Translation strings by language
+ *   - `downloads`: Download data by language
  *
- * ## Functions
- * - `getData()`: Asynchronously loads configuration from JSON files
- * - `useConfig()`: Main composable function that ensures config is loaded
- * - `isPreview()`: Determines if application is running in preview mode
- * - `isDevelopment()`: Determines if application is running in development mode
- * - `isWorkboxEnabled()`: Determines if Workbox service worker should be enabled
+ * ## Main Functions
+ * - `setConfig()`: Initializes the full configuration by loading all data files
+ * - `loadSettings()`: Loads application settings from JSON
+ * - `loadTranslations()`: Loads translation data
+ * - `loadRouting(locale)`: Loads routing information for specified locale
+ * - `loadDownloads(locale)`: Loads download data for specified locale
+ * - `useConfig()`: Returns the reactive configuration reference
  *
- * ## Exports
- * - Default export: useConfig function
- * - Named exports: useConfig, isPreview, isDevelopment
+ * ## Environment Helpers
+ * - `isPreview()`: Checks if application is running in preview mode
+ * - `isDevelopment()`: Checks if application is running in development mode
+ * - `isWorkboxEnabled()`: Determines if service worker functionality is enabled
  *
- * ## Usage Example
- * ```typescript
- * const config = await useConfig()
- * console.log(config.value.locale) // Current language
+ * ## Usage
+ * const config = useConfig()
  */
-import { ref } from 'vue'
+import { ref, type Ref } from 'vue'
 
 const config = ref<NsWowConfig>({
-  loaded: false,
   locale: 'de',
   settings: {
     languages: ['de', 'en'],
@@ -47,39 +52,91 @@ const config = ref<NsWowConfig>({
     categories: []
   },
   articles: {},
-  menus: {}
+  menus: {},
+  translations: {},
+  downloads: {}
 })
 
-async function getData() {
+async function setConfig(): Promise<Ref<NsWowConfig>> {
+  await loadSettings()
+  await loadTranslations()
+
+  const defaultMessages = import.meta.glob('@/locales/*.json', {
+    eager: true,
+    import: 'default'
+  })
+
+  for (const locale of config.value.settings.languages) {
+    await loadRouting(locale)
+    await loadDownloads(locale)
+
+    config.value.translations[locale] = config.value.translations[locale] || {}
+
+    const defaultMessages = import.meta.glob('@/locales/*.json', {
+      eager: true,
+      import: 'default'
+    })
+
+    const path = `/src/locales/${locale}.json`
+    if (defaultMessages[path]) {
+      config.value.translations[locale] = Object.assign(
+        defaultMessages[path],
+        config.value.translations[locale]
+      )
+    }
+  }
+  return config
+}
+
+async function loadSettings() {
   const file = `./json/settings.json`
   try {
     const response: Response = await fetch(file)
-    const lazySettings: NsWowSettings = await response.json()
-    config.value.settings = Object.assign(config.value.settings, lazySettings)
-    config.value.locale = lazySettings.defaultLanguage
+    const data: NsWowSettings = await response.json()
+    config.value.settings = Object.assign(config.value.settings, data)
+    config.value.locale = data.defaultLanguage
+    document.documentElement.lang = data.defaultLanguage
   } catch (e) {
-    console.error(`"${file}" could not be loaded.`)
+    errorLog(`"${file}" could not be loaded.`, e)
   }
-
-  for (const locale of config.value.settings.languages) {
-    const file: string = `./json/routing_${locale}.json`
-    try {
-      const response: Response = await fetch(file)
-      const routing: NsWowResponseRouting = await response.json()
-      config.value.articles[locale] = routing.pages
-      config.value.menus[locale] = routing.menu
-    } catch (e) {
-      console.error(`"${file}" could not be loaded.`)
-    }
-  }
-
-  config.value.loaded = true
 }
 
-async function useConfig() {
-  if (!config.value.loaded) {
-    await getData()
+async function loadTranslations() {
+  const file = `./json/translations_hosting.json`
+  try {
+    const response: Response = await fetch(file)
+    const data: NsWowTranslations = await response.json()
+    config.value.translations = data
+  } catch (e) {
+    errorLog(`"${file}" could not be loaded.`, e)
   }
+}
+
+async function loadRouting(locale: string) {
+  const file: string = `./json/routing_${locale}.json`
+  try {
+    const response: Response = await fetch(file)
+    const routing: NsWowResponseRouting = await response.json()
+    config.value.articles[locale] = routing.pages
+    config.value.menus[locale] = routing.menu
+  } catch (e) {
+    errorLog(`"${file}" could not be loaded.`, e)
+  }
+}
+
+async function loadDownloads(locale: string) {
+  config.value.downloads[locale] = {}
+  const file: string = `./downloads/downloads_${locale}.json`
+  try {
+    const response: Response = await fetch(file)
+    const data = await response.json()
+    config.value.downloads[locale] = data
+  } catch (e) {
+    errorLog(`"${file}" could not be loaded.`, e)
+  }
+}
+
+function useConfig() {
   return config
 }
 
@@ -95,5 +152,9 @@ function isWorkboxEnabled(): boolean {
   return (!isPreview() && !isDevelopment()) || (isDevelopment() && import.meta.env.VITE_WORKBOX === 'true')
 }
 
+function errorLog(message: string, error: Error) {
+  isDevelopment() || isPreview() ? console.error(`Error: ${message}`, error) : null
+}
+
 export default useConfig
-export { useConfig, isPreview, isDevelopment }
+export { setConfig, useConfig, isPreview, isDevelopment }

@@ -28,13 +28,24 @@ declare global {
   }
 
   export type NsWowConfig = {
-    loaded: boolean
     locale: string
     settings: NsWowSettings
     articles: NsWowArticles
     menus: {
       [locale: string]: NsWowMenus
     }
+    translations: NsWowTranslations
+    downloads: {
+      [locale: string]: NsWowDownloads
+    }
+  }
+
+  export type NsWowTranslations = {
+    [locale: string]: NsWowTranslation
+  }
+
+  export type NsWowTranslation = {
+    [key: string]: string
   }
 
   export interface NsWowMenu {
@@ -103,6 +114,7 @@ declare global {
   }
 
   export type NsWowPageData = {
+    time: number
     article: NsWowArticle | null
     content: string
   }

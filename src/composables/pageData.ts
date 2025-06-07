@@ -35,6 +35,7 @@
 import { reactive } from 'vue'
 
 const pageData = reactive<NsWowPageData>({
+  time: new Date().getTime(),
   article: null,
   content: '',
 })

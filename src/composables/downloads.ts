@@ -29,44 +29,18 @@
  * const downloads = await useDownloads()
  * console.log(downloads.value.structure) // Array of download structure items
  */
-import { computed, ref, type ComputedRef } from 'vue'
+import { computed } from 'vue'
+import { NsWowDownload } from '../types/nswow'
+import useConfig from '#composables/config.ts'
 
-const downloads = ref<{
-  [key: string]: NsWowDownloads
-}>()
-
-let computedDownloads: ComputedRef<NsWowDownloads>
-
-export default async function useDownloads() {
-  const config = await useConfig()
-  if (!downloads.value) {
-    for (const lang of config.value.settings.languages) {
-      const file = `./downloads/downloads_${lang}.json`
-      try {
-        const response: Response = await fetch(file)
-        const lazyDownloads: NsWowDownloads = await response.json()
-        if (!downloads.value) {
-          downloads.value = {}
-        }
-        downloads.value[lang] = lazyDownloads
-      } catch (e) {
-        console.error(`"${file}" could not be loaded.`)
-      }
-    }
+const downloads = computed<NsWowDownload[]>(() => {
+  const config = useConfig()
+  if (!config.value.downloads[config.value.locale]) {
+    return []
   }
+  return config.value.downloads[config.value.locale].structure
+})
 
-  if (!computedDownloads) {
-    computedDownloads = computed<NsWowDownloads>(() => {
-      if (!downloads.value || !downloads.value[config.value.locale]) {
-        return {
-          structure: [],
-          version: '',
-          annualReport: undefined
-        }
-      }
-      return downloads.value[config.value.locale]
-    })
-  }
-
-  return computedDownloads
+export default function useDownloads() {
+  return downloads
 }

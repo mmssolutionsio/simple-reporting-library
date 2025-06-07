@@ -33,7 +33,6 @@
     "modern-css-reset": "^1.4.0",
     "node-html-parser": "^7.0.1",
     "vite": "^5.4.11",
-    "vue3-runtime-template": "^1.0.2",
     "winston": "^3.17.0",
     "write-json": "^3.0.1"
   },

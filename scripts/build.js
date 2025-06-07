@@ -742,7 +742,7 @@ async function mapLdd() {
               );
               vueComponents.push({
                 name: `SrlArticle${toUpperCamelCase(component)}`,
-                path: `${group}/${component}/${component}.vue`,
+                path: join('#ld/', group, component, `${component}.vue`),
               });
             } catch (e) {}
           }
@@ -789,10 +789,31 @@ async function mapLdd() {
       }
     }
     lddJson.groups = newMap;
+
+    const asyncComponents = [
+      `import { defineAsyncComponent } from 'vue'`,
+      `export default function asyncLddComponent(app) {`
+    ];
+
+    for (let i = 0; i < vueComponents.length; i++) {
+      const component = vueComponents[i];
+      asyncComponents.push(
+        ` app.component('${component.name}', () => defineAsyncComponent(() => import('${component.path}')))`
+      );
+    }
+
+    asyncComponents.push("}");
+
     await writeFileSync(
-      join(CWD, '.nswow', 'components.json'),
+      join(CWD, '.nswow', 'asyncLddComponent.json'),
       JSON.stringify(vueComponents, null, 2),
     );
+
+    await writeFileSync(
+      join(CWD, '.nswow', 'asyncLddComponent.ts'),
+      asyncComponents.join("\n")
+    );
+
     await writeLivingDocsJson(lddJson);
     return true;
   } catch (e) {
