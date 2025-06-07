@@ -36,9 +36,9 @@
  * in the main App component and provides the content that will be
  * displayed to the user.
  */
-import { type RouteLocationNormalizedLoadedGeneric, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { nextTick, ref, type Ref, watch, type WritableComputedRef } from 'vue'
+import { nextTick, ref, watch } from 'vue'
 import useConfig from '../../../composables/config';
 import usePageData from '../../../composables/pageData';
 
@@ -49,7 +49,7 @@ const pageData = usePageData()
 const styles = ref<string[]>([])
 const htmlOutput = ref<string>('')
 
-async function preparePageData(route: RouteLocationNormalizedLoadedGeneric, locale: WritableComputedRef<string>, config: Ref<NsWowConfig>) {
+async function preparePageData() {
 
   let article: NsWowArticle | null = null
   let content = ''
@@ -84,6 +84,20 @@ async function preparePageData(route: RouteLocationNormalizedLoadedGeneric, loca
             }
           })
 
+          config.value.settings.languages.forEach((lang) => {
+            const pattern = new RegExp(`(\\.)?\\/${lang}\\/home`, 'g');
+            content = content.replace(pattern, `./${lang}`)
+          })
+
+          content = content.replace(/<style[^>]*>([\s\S]*?)<\/style>/ig, (match, p1) => {
+            styles.value.includes(p1) || styles.value.push(p1)
+            return ''
+          })
+
+          if (styles.value.length) {
+            htmlOutput.value = `<style>${styles.value.join('')}</style>`
+          }
+
         } else {
           console.log(`"${file}" could not be loaded.`)
         }
@@ -93,26 +107,15 @@ async function preparePageData(route: RouteLocationNormalizedLoadedGeneric, loca
     }
   }
 
-  content = content.replaceAll('/de/home', `/de`)
-
-  content = content.replace(/<style[^>]*>([\s\S]*?)<\/style>/ig, (match, p1) => {
-    styles.value.includes(p1) || styles.value.push(p1)
-    return ''
-  })
-
-  if (styles.value.length) {
-    htmlOutput.value = `<style>${styles.value.join('')}</style>`
-  }
-
   pageData.article = article
   pageData.content = content
   pageData.time = new Date().getTime()
 }
 
-await preparePageData(route, locale, config)
+await preparePageData()
 
 watch(route, async () => {
-  await preparePageData(route, locale, config)
+  await preparePageData()
   await nextTick(() => {
     if (route.hash) {
       const target = document.querySelector(route.hash);
