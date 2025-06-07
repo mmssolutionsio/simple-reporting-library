@@ -34,7 +34,7 @@ let computedStorage: ComputedRef<NsWowArticle[]>
 
 export default async function useArticles() {
   if (!computedStorage) {
-    const config = await useConfig()
+    const config = useConfig()
     computedStorage = computed<NsWowArticle[]>(() => config.value?.articles[config.value.locale])
   }
   return computedStorage

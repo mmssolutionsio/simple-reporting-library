@@ -44,7 +44,7 @@ import usePageData from '../../../composables/pageData';
 
 const route = useRoute()
 const { locale } = useI18n()
-const config = await useConfig()
+const config = useConfig()
 const pageData = usePageData()
 const styles = ref<string[]>([])
 const htmlOutput = ref<string>('')

@@ -66,13 +66,13 @@ function makeWords(html: string) {
 }
 
 export default async function useSearch() {
-  const config = await useConfig()
+  const config = useConfig()
   if (!storage.value || !storage.value[config.value.locale]) {
 
     !storage.value ? storage.value = {} : null
     storage.value[config.value.locale] = []
 
-    const articles = await useArticles()
+    const articles = useArticles()
 
     for (
       const article of
