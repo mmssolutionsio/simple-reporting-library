@@ -81,8 +81,7 @@
     {
       "label": "Media",
       "components": [
-        "image",
-        "table"
+        "image"
       ]
     },
     {
