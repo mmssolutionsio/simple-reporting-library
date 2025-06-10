@@ -1,9 +1,8 @@
-import { resolve, dirname } from 'node:path';
+import { resolve, dirname } from 'node:path/posix';
 import fs from 'fs-extra';
 import { statSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
-import writeJson from 'write-json';
 
 const require = createRequire(import.meta.url);
 

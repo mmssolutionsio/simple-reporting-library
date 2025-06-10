@@ -1,5 +1,5 @@
 import { writeFileSync, readFileSync } from 'node:fs';
-import { resolve, relative } from 'node:path';
+import { resolve, relative } from 'node:path/posix';
 import { colors } from './colors.js';
 import { readNsWowJson } from './utils.js';
 import colorPalette from '@kne/color-palette';

@@ -1,5 +1,5 @@
 import { createRequire } from 'node:module';
-import { resolve, dirname } from 'node:path';
+import { resolve, dirname } from 'node:path/posix';
 import { glob } from 'glob';
 import { copy, ensureDir } from 'fs-extra';
 import { rm, statSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
