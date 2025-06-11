@@ -38,7 +38,7 @@
  * ## Usage
  * const config = useConfig()
  */
-import { ref, type Ref } from 'vue'
+import { ref, type Ref } from 'vue';
 
 const config = ref<NsWowConfig>({
   locale: 'de',
@@ -47,114 +47,119 @@ const config = ref<NsWowConfig>({
     defaultLanguage: 'de',
     shortBreadcrumb: false,
     search: {
-      boldTheWord: true
+      boldTheWord: true,
     },
-    categories: []
+    categories: [],
   },
   articles: {},
   menus: {},
   translations: {},
-  downloads: {}
-})
+  downloads: {},
+});
 
 async function setConfig(): Promise<Ref<NsWowConfig>> {
-  await loadSettings()
-  await loadTranslations()
+  await loadSettings();
+  await loadTranslations();
 
   const defaultMessages = import.meta.glob('@/locales/*.json', {
     eager: true,
-    import: 'default'
-  })
+    import: 'default',
+  });
 
   for (const locale of config.value.settings.languages) {
-    await loadRouting(locale)
-    await loadDownloads(locale)
+    await loadRouting(locale);
+    await loadDownloads(locale);
 
-    config.value.translations[locale] = config.value.translations[locale] || {}
+    config.value.translations[locale] = config.value.translations[locale] || {};
 
     const defaultMessages = import.meta.glob('@/locales/*.json', {
       eager: true,
-      import: 'default'
-    })
+      import: 'default',
+    });
 
-    const path = `/src/locales/${locale}.json`
+    const path = `/src/locales/${locale}.json`;
     if (defaultMessages[path]) {
       config.value.translations[locale] = Object.assign(
         defaultMessages[path],
-        config.value.translations[locale]
-      )
+        config.value.translations[locale],
+      );
     }
   }
-  return config
+  return config;
 }
 
 async function loadSettings() {
-  const file = `./json/settings.json`
+  const file = `./json/settings.json`;
   try {
-    const response: Response = await fetch(file)
-    const data: NsWowSettings = await response.json()
-    config.value.settings = Object.assign(config.value.settings, data)
-    config.value.locale = data.defaultLanguage
-    document.documentElement.lang = data.defaultLanguage
+    const response: Response = await fetch(file);
+    const data: NsWowSettings = await response.json();
+    config.value.settings = Object.assign(config.value.settings, data);
+    config.value.locale = data.defaultLanguage;
+    document.documentElement.lang = data.defaultLanguage;
   } catch (e) {
-    errorLog(`"${file}" could not be loaded.`, e)
+    errorLog(`"${file}" could not be loaded.`, e);
   }
 }
 
 async function loadTranslations() {
-  const file = `./json/translations_hosting.json`
+  const file = `./json/translations_hosting.json`;
   try {
-    const response: Response = await fetch(file)
-    const data: NsWowTranslations = await response.json()
-    config.value.translations = data
+    const response: Response = await fetch(file);
+    const data: NsWowTranslations = await response.json();
+    config.value.translations = data;
   } catch (e) {
-    errorLog(`"${file}" could not be loaded.`, e)
+    errorLog(`"${file}" could not be loaded.`, e);
   }
 }
 
 async function loadRouting(locale: string) {
-  const file: string = `./json/routing_${locale}.json`
+  const file: string = `./json/routing_${locale}.json`;
   try {
-    const response: Response = await fetch(file)
-    const routing: NsWowResponseRouting = await response.json()
-    config.value.articles[locale] = routing.pages
-    config.value.menus[locale] = routing.menu
+    const response: Response = await fetch(file);
+    const routing: NsWowResponseRouting = await response.json();
+    config.value.articles[locale] = routing.pages;
+    config.value.menus[locale] = routing.menu;
   } catch (e) {
-    errorLog(`"${file}" could not be loaded.`, e)
+    errorLog(`"${file}" could not be loaded.`, e);
   }
 }
 
 async function loadDownloads(locale: string) {
-  config.value.downloads[locale] = {}
-  const file: string = `./downloads/downloads_${locale}.json`
+  config.value.downloads[locale] = {};
+  const file: string = `./downloads/downloads_${locale}.json`;
   try {
-    const response: Response = await fetch(file)
-    const data = await response.json()
-    config.value.downloads[locale] = data
+    const response: Response = await fetch(file);
+    const data = await response.json();
+    config.value.downloads[locale] = data;
   } catch (e) {
-    errorLog(`"${file}" could not be loaded.`, e)
+    errorLog(`"${file}" could not be loaded.`, e);
   }
 }
 
 function useConfig() {
-  return config
+  return config;
 }
 
 function isPreview(): boolean {
-  return window.location.pathname.includes('/preview/')
+  return window.location.pathname.includes('/preview/');
 }
 
 function isDevelopment(): boolean {
-  return import.meta.env.DEV
+  return import.meta.env.DEV;
 }
 
 function isWorkboxEnabled(): boolean {
-  return (!isPreview() && !isDevelopment()) || (isDevelopment() && import.meta.env.VITE_WORKBOX === 'true')
+  return (
+    (!isPreview() && !isDevelopment()) ||
+    (isDevelopment() && import.meta.env.VITE_WORKBOX === 'true')
+  );
 }
 
 function errorLog(message: string, error: Error) {
-  isDevelopment() || isPreview() ? console.error(`Error: ${message}`, error) : null
+  isDevelopment() || isPreview()
+    ? console.error(`Error: ${message}`, error)
+    : null;
 }
 
-export default useConfig
-export { setConfig, useConfig, isPreview, isDevelopment }
+export default useConfig;
+export { setConfig, useConfig, isPreview, isDevelopment };

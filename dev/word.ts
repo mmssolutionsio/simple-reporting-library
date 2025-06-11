@@ -1,1 +1,1 @@
-import '#imports/word.scss'
+import './.nswow/word.scss'

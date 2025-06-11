@@ -50,127 +50,135 @@
  *   @link="handleNavigation"
  * />
  */
-import { ref } from 'vue'
-import MenuItem  from './Item.vue'
+import { ref } from 'vue';
+import MenuItem from './Item.vue';
 
-const props = withDefaults(defineProps<{
-  name: string
-  menu: NsWowNavigationItem[]
-  disableTab?: boolean
-  disableTabIndex?: boolean
-  initOpen?: number
-  singleOpen?: boolean
-  depth?: number
-}>(), {
-  disableTab: false,
-  disableTabIndex: false,
-  initOpen: 0,
-  singleOpen: true,
-  depth: 0
-})
+const props = withDefaults(
+  defineProps<{
+    name: string;
+    menu: NsWowNavigationItem[];
+    disableTab?: boolean;
+    disableTabIndex?: boolean;
+    initOpen?: number;
+    singleOpen?: boolean;
+    depth?: number;
+  }>(),
+  {
+    disableTab: false,
+    disableTabIndex: false,
+    initOpen: 0,
+    singleOpen: true,
+    depth: 0,
+  },
+);
 
-const emit = defineEmits(['close', 'closeSub', 'link', 'routerChange', 'nextExceeded', 'prevExceeded', 'tab', 'back'])
-const items = ref<Array<typeof MenuItem>>([])
+const emit = defineEmits([
+  'close',
+  'closeSub',
+  'link',
+  'routerChange',
+  'nextExceeded',
+  'prevExceeded',
+  'tab',
+  'back',
+]);
+const items = ref<Array<typeof MenuItem>>([]);
 
-const opened = defineModel('opened', {type: Boolean,default: true})
+const opened = defineModel('opened', { type: Boolean, default: true });
 
 function open(event: { index: number }) {
   if (props.singleOpen) {
-    closeAll(event.index)
+    closeAll(event.index);
   }
 }
 
 function close() {
   if (props.initOpen < props.depth) {
     opened.value = false;
-    emit('closeSub')
+    emit('closeSub');
   } else {
-    emit('close')
+    emit('close');
   }
 }
 
 function next(event: { index: number }) {
-  let newIndex = event.index + 1
-  let exceeded = false
+  let newIndex = event.index + 1;
+  let exceeded = false;
   if (newIndex >= items.value.length) {
-    exceeded = true
-    newIndex = 0
+    exceeded = true;
+    newIndex = 0;
   }
-  const item = items.value[newIndex].$el
-  item.$el ? item.$el.focus() : item.focus()
-  !exceeded || emit('nextExceeded')
+  const item = items.value[newIndex].$el;
+  item.$el ? item.$el.focus() : item.focus();
+  !exceeded || emit('nextExceeded');
 }
 
 function prev(event: { index: number }) {
-  let newIndex = event.index - 1
-  let exceeded = false
+  let newIndex = event.index - 1;
+  let exceeded = false;
   if (newIndex < 0) {
-    exceeded = true
-    newIndex = items.value.length - 1
+    exceeded = true;
+    newIndex = items.value.length - 1;
   }
-  const item = items.value[newIndex].$el
-  item.$el ? item.$el.focus() : item.focus()
-  !exceeded || emit('prevExceeded')
+  const item = items.value[newIndex].$el;
+  item.$el ? item.$el.focus() : item.focus();
+  !exceeded || emit('prevExceeded');
 }
 
 function tab() {
-  emit('tab')
+  emit('tab');
 }
 
 function back() {
-  emit('back')
+  emit('back');
 }
 
 function link() {
-  emit('link')
+  emit('link');
 }
 
 function routerChange() {
-  emit('routerChange')
+  emit('routerChange');
 }
 
 function closeAll(keep?: number | string) {
   items.value.forEach((item: typeof MenuItem, index: number) => {
-    if (keep !== index)
-      item.closeItem()
-  })
+    if (keep !== index) item.closeItem();
+  });
 }
 
-const $el = ref<HTMLUListElement>()
+const $el = ref<HTMLUListElement>();
 
 defineExpose({
-  closeAll, $el, items
-})
+  closeAll,
+  $el,
+  items,
+});
 </script>
 
 <template>
-<ul ref="$el" :hidden="!opened">
-  <template
-    v-for="(item, index) in props.menu"
-    :key="index"
-  >
-    <MenuItem
-      ref="items"
-      :item="item"
-      :name="props.name"
-      :index="index"
-      :disableTab="props.disableTab"
-      :disableTabIndex="props.disableTabIndex"
-      :initOpen="props.initOpen"
-      :depth="props.depth"
-      @open="open"
-      @close="close"
-      @next="next"
-      @prev="prev"
-      @tab="tab"
-      @back="back"
-      @link="link"
-      @routerChange="routerChange"
-    />
-  </template>
-</ul>
+  <ul ref="$el" :hidden="!opened">
+    <template v-for="(item, index) in props.menu" :key="index">
+      <MenuItem
+        ref="items"
+        :item="item"
+        :name="props.name"
+        :index="index"
+        :disableTab="props.disableTab"
+        :disableTabIndex="props.disableTabIndex"
+        :initOpen="props.initOpen"
+        :depth="props.depth"
+        @open="open"
+        @close="close"
+        @next="next"
+        @prev="prev"
+        @tab="tab"
+        @back="back"
+        @link="link"
+        @routerChange="routerChange"
+      />
+    </template>
+  </ul>
 </template>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

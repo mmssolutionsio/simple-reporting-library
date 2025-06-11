@@ -1,59 +1,59 @@
-@use "config";
-@forward "@multivisio/nswow/scss/typography";
-@use "@multivisio/nswow/scss/typography";
+@use 'config';
+@forward '@multivisio/nswow/scss/typography';
+@use '@multivisio/nswow/scss/typography';
 
 @mixin display1($margins: false) {
-  @include typography.get("display1", $margins);
+  @include typography.get('display1', $margins);
 }
 
 @mixin display2($margins: false) {
-  @include typography.get("display2", $margins);
+  @include typography.get('display2', $margins);
 }
 
 @mixin display3($margins: false) {
-  @include typography.get("display3", $margins);
+  @include typography.get('display3', $margins);
 }
 
 @mixin headline1($margins: false) {
-  @include typography.get("headline1", $margins);
+  @include typography.get('headline1', $margins);
 }
 
 @mixin headline2($margins: false) {
-  @include typography.get("headline2", $margins);
+  @include typography.get('headline2', $margins);
 }
 
 @mixin headline3($margins: false) {
-  @include typography.get("headline3", $margins);
+  @include typography.get('headline3', $margins);
 }
 
 @mixin headline4($margins: false) {
-  @include typography.get("headline4", $margins);
+  @include typography.get('headline4', $margins);
 }
 
 @mixin headline5($margins: false) {
-  @include typography.get("headline5", $margins);
+  @include typography.get('headline5', $margins);
 }
 
 @mixin headline6($margins: false) {
-  @include typography.get("headline6", $margins);
+  @include typography.get('headline6', $margins);
 }
 
 @mixin copy1($margins: false) {
-  @include typography.get("copy1", $margins);
+  @include typography.get('copy1', $margins);
 }
 
 @mixin copy2($margins: false) {
-  @include typography.get("copy2", $margins);
+  @include typography.get('copy2', $margins);
 }
 
 @mixin copy3($margins: false) {
-  @include typography.get("copy3", $margins);
+  @include typography.get('copy3', $margins);
 }
 
 @mixin blockquote($margins: false) {
-  @include typography.get("blockquote", $margins);
+  @include typography.get('blockquote', $margins);
 }
 
 @mixin lead($margins: false) {
-  @include typography.get("lead", $margins);
+  @include typography.get('lead', $margins);
 }

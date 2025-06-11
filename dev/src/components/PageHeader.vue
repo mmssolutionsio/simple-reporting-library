@@ -1,42 +1,18 @@
 <script lang="ts" setup>
-import { useI18n } from 'vue-i18n'
-import { computed } from 'vue';
-import usePageData from '@multivisio/nswow/src/composables/pageData.ts';
-import useConfig from '@multivisio/nswow/src/composables/config.ts';
+import NavLanguages from '@/components/NavLanguages.vue'
+import { useLocale } from '#composables'
 
-const { locale } = useI18n()
-
-const config = useConfig()
-const pageData = usePageData();
-
-const languages = computed<NsWowNavigationItem[]>(() => {
-  const uuid = pageData.article?.uuid
-  const res: NsWowNavigationItem = []
-  if (uuid) {
-    for (const locale of config.value.settings.languages) {
-      const slug = config.value.articles[locale].find((article) => article.uuid === uuid)?.slug || ''
-      res.push({
-        label: locale,
-        href: `/${locale}/${slug}`,
-      })
-    }
-  }
-  return res
-})
-
-
+const locale = useLocale()
 </script>
 
 <template>
   <header id="srl-page__header" class="srl-header" tabindex="-1">
     <div class="srl-header__container">
-        <router-link :to="`/${locale}`" class="srl-logo">
-          <img src="@/assets/images/mms-logo-white.svg" alt="MMS Solutions"/>
-        </router-link>
+      <router-link :to="`/${locale}`" class="srl-logo">
+        <img src="@/assets/images/mms-logo-white.svg" alt="MMS Solutions" />
+      </router-link>
     </div>
-    <nav class="srl-language-switch srl-py-medium">
-      <SrlMenu class="srl-gap-medium" name="language-switch" :menu="languages"/>
-    </nav>
+    <NavLanguages />
   </header>
 </template>
 
@@ -61,19 +37,5 @@ const languages = computed<NsWowNavigationItem[]>(() => {
 .srl-logo {
   display: block;
   width: 300px;
-}
-
-.srl-language-switch {
-  ul {
-    list-style: none;
-    display: flex;
-    padding: 0;
-    margin: 0;
-  }
-  a {
-    color: srl.colors-light();
-    text-decoration: none;
-    text-transform: uppercase;
-  }
 }
 </style>

@@ -1,8 +1,11 @@
-<script lang="ts" setup>
-</script>
+<script lang="ts" setup></script>
 
 <template>
-  <footer id="srl-page__footer" class="srl-bg-secondary-light srl-color-on-secondary-light" tabindex="-1">
+  <footer
+    id="srl-page__footer"
+    class="srl-bg-secondary-light srl-color-on-secondary-light"
+    tabindex="-1"
+  >
     <div class="srl-footer__inner">
       <div class="srl-footer__inner-navigation">
         <h2>Footernavigation</h2>

@@ -27,15 +27,15 @@
  * const articles = await useArticles()
  * console.log(articles.value) // Array of articles in the current locale
  */
-import { computed, type ComputedRef } from 'vue'
-import useConfig from './config'
+import { computed } from 'vue';
+import useConfig from '@multivisio/nswow/src/composables/config.ts';
 
-let computedStorage: ComputedRef<NsWowArticle[]>
+const config = useConfig();
 
-export default async function useArticles() {
-  if (!computedStorage) {
-    const config = useConfig()
-    computedStorage = computed<NsWowArticle[]>(() => config.value?.articles[config.value.locale])
-  }
-  return computedStorage
+const articles = computed<NsWowArticle[]>(
+  () => config.value?.articles[config.value.locale],
+);
+
+export default function useArticles() {
+  return articles;
 }

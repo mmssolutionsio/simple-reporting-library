@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PrevNext from '@/components/PrevNext.vue';
+import PrevNext from '@/components/PrevNext.vue'
 const props = defineProps<{
   mainNavigation: NsWowNavigationItem[]
 }>()
@@ -7,6 +7,6 @@ const props = defineProps<{
 
 <template>
   <PrevNext :mainNavigation="props.mainNavigation">
-    <SrlArticleRoot/>
+    <SrlArticleRoot />
   </PrevNext>
 </template>

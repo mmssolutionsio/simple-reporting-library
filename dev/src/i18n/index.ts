@@ -11,7 +11,7 @@ function initI18n() {
     fallbackLocale: config.value.settings.defaultLanguage,
     availableLocales: Object.keys(config.value.translations),
     globalInjection: true,
-    messages: config.value.translations,
+    messages: config.value.translations
   }
 
   i18n = createI18n<false, typeof options>(options)

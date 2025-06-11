@@ -1,13 +1,13 @@
-@use "@multivisio/nswow/scss/system/variables.scss" as systemVariables with (
+@use '@multivisio/nswow/scss/system/variables.scss' as systemVariables with (
   $environment: development
 );
 
-@use "@multivisio/nswow/scss/fonts/variables.scss" as fontsVariables with (
-  $default-font: "Roboto, sans-serif",
-  $font-base-path: ".../src/assets/fonts"
+@use '@multivisio/nswow/scss/fonts/variables.scss' as fontsVariables with (
+  $default-font: 'Roboto, sans-serif',
+  $font-base-path: '.../src/assets/fonts'
 );
 
-@use "@multivisio/nswow/scss/meta/variables.scss" as metaVariables with (
+@use '@multivisio/nswow/scss/meta/variables.scss' as metaVariables with (
   $padding: (
     tiny: 4,
     base: 8,
@@ -23,7 +23,7 @@
   )
 );
 
-@use "@multivisio/nswow/scss/grid/variables.scss" as gridVariables with (
+@use '@multivisio/nswow/scss/grid/variables.scss' as gridVariables with (
   $containers: (
     print: (
       padding: 32
@@ -74,7 +74,7 @@
   )
 );
 
-@use "@multivisio/nswow/scss/colors/variables.scss" as colorsVariables with (
+@use '@multivisio/nswow/scss/colors/variables.scss' as colorsVariables with (
   $colors: (
     light: (
       color: #ffffff
@@ -89,37 +89,37 @@
       color: #ffffff
     ),
     primary: (
-      color: #E50000
+      color: #e50000
     ),
     on-primary: (
       color: #ffffff
     ),
     primary-dark: (
-      color: #5227CC
+      color: #5227cc
     ),
     on-primary-dark: (
       color: #ffffff
     ),
     secondary-light: (
-      color: #ABB5BE
+      color: #abb5be
     ),
     on-secondary-light: (
       color: #000000
     ),
     secondary: (
-      color: #6C757D
+      color: #6c757d
     ),
     on-secondary: (
       color: #ffffff
     ),
     secondary-dark: (
-      color: #54595E
+      color: #54595e
     ),
     on-secondary-dark: (
       color: #ffffff
     ),
     shade: (
-      color: #6C757D
+      color: #6c757d
     ),
     shade-50: (
       color: #b9c1c4
@@ -157,7 +157,7 @@
   )
 );
 
-@use "@multivisio/nswow/scss/typography/variables.scss" as typographyVariables with (
+@use '@multivisio/nswow/scss/typography/variables.scss' as typographyVariables with (
   $typography: (
     display1: (
       font-size: 72,
@@ -260,7 +260,7 @@
   )
 );
 
-@use "@multivisio/nswow/scss/spacer/variables.scss" as spacerVariables with (
+@use '@multivisio/nswow/scss/spacer/variables.scss' as spacerVariables with (
   $spacer: (
     tiny: (
       size: 16

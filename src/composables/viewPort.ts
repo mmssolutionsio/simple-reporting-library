@@ -36,45 +36,43 @@
  * console.log(viewport.value.viewPort) // Current viewport category (e.g., "sm", "md", "lg")
  * console.log(viewport.value.innerWidth) // Current window width in pixels
  */
-import {grid} from "~/nswow.config.json"
-import { computed, ref } from 'vue'
+import { grid } from '../../../../../nswow.config.json';
+import { computed, ref } from 'vue';
 
 type Breakpoints = {
-  [key: string]: number
-}
+  [key: string]: number;
+};
 
 type ViewPorts = {
-  breakPoints: Breakpoints
-  innerWidth: number
-  viewPort: string | null
-}
+  breakPoints: Breakpoints;
+  innerWidth: number;
+  viewPort: string | null;
+};
 
-const {breakpoints} = grid
-const innerWidth = ref<number>(window.innerWidth)
-
-
+const { breakpoints } = grid;
+const innerWidth = ref<number>(window.innerWidth);
 
 const viewPorts = computed<ViewPorts>(() => {
   const res: ViewPorts = {
     breakPoints: breakpoints,
     innerWidth: window.innerWidth,
-    viewPort: null
-  }
+    viewPort: null,
+  };
 
   for (const key in breakpoints) {
     if (breakpoints[key] <= innerWidth.value) {
-      res.viewPort = key
+      res.viewPort = key;
     } else {
-      break
+      break;
     }
   }
-  return res
-})
+  return res;
+});
 
 window.addEventListener('resize', () => {
-  innerWidth.value = window.innerWidth
-})
+  innerWidth.value = window.innerWidth;
+});
 
 export default function useViewPort() {
-  return viewPorts
+  return viewPorts;
 }

@@ -25,13 +25,13 @@
  *   <p>Content to be autoloaded</p>
  * </SrlArticleAutoload>
  */
-import Autoload from '@/Autoload.ts'
-import { onMounted, ref } from 'vue'
-const rootElement = ref<HTMLDivElement>()
+import Autoload from '@/Autoload.ts';
+import { onMounted, ref } from 'vue';
+const rootElement = ref<HTMLDivElement>();
 
 onMounted(() => {
-  !rootElement.value || Autoload.init(rootElement.value)
-})
+  !rootElement.value || Autoload.init(rootElement.value);
+});
 </script>
 
 <template>

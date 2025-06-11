@@ -29,18 +29,18 @@
  * const downloads = await useDownloads()
  * console.log(downloads.value.structure) // Array of download structure items
  */
-import { computed } from 'vue'
-import { NsWowDownload } from '../types/nswow'
-import useConfig from '#composables/config.ts'
+import { computed } from 'vue';
+import useConfig from './config';
+
+const config = useConfig();
 
 const downloads = computed<NsWowDownload[]>(() => {
-  const config = useConfig()
   if (!config.value.downloads[config.value.locale]) {
-    return []
+    return [];
   }
-  return config.value.downloads[config.value.locale].structure
-})
+  return config.value.downloads[config.value.locale].structure;
+});
 
 export default function useDownloads() {
-  return downloads
+  return downloads;
 }

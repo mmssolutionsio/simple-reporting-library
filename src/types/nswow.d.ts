@@ -1,121 +1,121 @@
-export {}
+export {};
 declare global {
   export type NsWowSettings = {
-    languages: string[]
-    defaultLanguage: string
-    shortBreadcrumb: boolean
+    languages: string[];
+    defaultLanguage: string;
+    shortBreadcrumb: boolean;
     search: {
-      boldTheWord: boolean
-    }
-    categories: string[]
-  }
+      boldTheWord: boolean;
+    };
+    categories: string[];
+  };
 
   export interface NsWowArticle {
-    uuid: string
-    name: string
-    translatedTitle: string
-    slug: string
-    index: boolean
-    seo_keywords: string[]
-    ignoreInSearch: boolean
-    excerpt: string
-    originalLanguageOfArticle: string
-    status: string
+    uuid: string;
+    name: string;
+    translatedTitle: string;
+    slug: string;
+    index: boolean;
+    seo_keywords: string[];
+    ignoreInSearch: boolean;
+    excerpt: string;
+    originalLanguageOfArticle: string;
+    status: string;
   }
 
   export interface NsWowArticles {
-    [locale: string]: NsWowArticle[]
+    [locale: string]: NsWowArticle[];
   }
 
   export type NsWowConfig = {
-    locale: string
-    settings: NsWowSettings
-    articles: NsWowArticles
+    locale: string;
+    settings: NsWowSettings;
+    articles: NsWowArticles;
     menus: {
-      [locale: string]: NsWowMenus
-    }
-    translations: NsWowTranslations
+      [locale: string]: NsWowMenus;
+    };
+    translations: NsWowTranslations;
     downloads: {
-      [locale: string]: NsWowDownloads
-    }
-  }
+      [locale: string]: NsWowDownloads;
+    };
+  };
 
   export type NsWowTranslations = {
-    [locale: string]: NsWowTranslation
-  }
+    [locale: string]: NsWowTranslation;
+  };
 
   export type NsWowTranslation = {
-    [key: string]: string
-  }
+    [key: string]: string;
+  };
 
   export interface NsWowMenu {
-    label: string
-    type: string
-    page?: string
-    url?: string
-    anchor?: string
-    submenuEntries?: NsWowMenu[]
+    label: string;
+    type: string;
+    page?: string;
+    url?: string;
+    anchor?: string;
+    submenuEntries?: NsWowMenu[];
   }
 
   export interface NsWowMenus {
-    [menu: string]: NsWowMenu[]
+    [menu: string]: NsWowMenu[];
   }
 
   export interface NsWowResponseRouting {
-    version: string
-    pages: NsWowArticle[]
+    version: string;
+    pages: NsWowArticle[];
     menu: {
-      [menu: string]: NsWowMenu[]
-    }
+      [menu: string]: NsWowMenu[];
+    };
   }
 
   export interface NsWowDownload {
-    type: string
-    title: string
-    fileType: string
-    size: string
-    artifact: string
+    type: string;
+    title: string;
+    fileType: string;
+    size: string;
+    artifact: string;
   }
 
   export type NsWowDownloads = {
-    version?: string
-    structure: NsWowDownload[]
-    annualReport?: NsWowDownload
-  }
+    version?: string;
+    structure: NsWowDownload[];
+    annualReport?: NsWowDownload;
+  };
 
   export type NsWowSearchList = {
-    article: NsWowArticle
-    href: string
-    words: string
-  }
+    article: NsWowArticle;
+    href: string;
+    words: string;
+  };
 
   export type NsWowNavigationItem = {
-    label: string
-    title?: string
+    label: string;
+    title?: string;
     img?: {
-      src: string
-      alt?: string
-    }
+      src: string;
+      alt?: string;
+    };
     imgBefore?: {
-      src: string
-      alt?: string
-    }
+      src: string;
+      alt?: string;
+    };
     imgAfter?: {
-      src: string
-      alt?: string
-    }
-    active?: boolean
-    href?: string
+      src: string;
+      alt?: string;
+    };
+    active?: boolean;
+    href?: string;
     attributes?: {
-      [key: string]: string
-    }
-    callback?: () => void
-    children?: NsWowNavigationItem[]
-  }
+      [key: string]: string;
+    };
+    callback?: () => void;
+    children?: NsWowNavigationItem[];
+  };
 
   export type NsWowPageData = {
-    time: number
-    article: NsWowArticle | null
-    content: string
-  }
+    time: number;
+    article: NsWowArticle | null;
+    content: string;
+  };
 }

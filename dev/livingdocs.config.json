@@ -4,9 +4,7 @@
   "version": "0.0.1",
   "author": "nsgroup",
   "assets": {
-    "css": [
-      "./assets/ldd.css"
-    ],
+    "css": ["./assets/ldd.css"],
     "js": []
   },
   "wrapper": "<div class=\"srl-article-root doc-section\"></div>",
@@ -80,26 +78,15 @@
   "groups": [
     {
       "label": "Media",
-      "components": [
-        "image"
-      ]
+      "components": ["image"]
     },
     {
       "label": "Text",
-      "components": [
-        "paragraph"
-      ]
+      "components": ["paragraph"]
     },
     {
       "label": "Titles",
-      "components": [
-        "title-h1",
-        "title-h2",
-        "title-h3",
-        "title-h4",
-        "title-h5",
-        "title-h6"
-      ]
+      "components": ["title-h1", "title-h2", "title-h3", "title-h4", "title-h5", "title-h6"]
     }
   ],
   "defaultComponents": {
@@ -146,35 +133,22 @@
     {
       "identifier": "wp_cf_prettyNumber",
       "type": "text",
-      "matches": [
-        "title-h2.number",
-        "title-h3.number",
-        "title-h4.number"
-      ]
+      "matches": ["title-h2.number", "title-h3.number", "title-h4.number"]
     },
     {
       "identifier": "notesIdentifier",
       "type": "text",
-      "matches": [
-        "title-h2.number",
-        "title-h3.number",
-        "title-h4.number"
-      ]
+      "matches": ["title-h2.number", "title-h3.number", "title-h4.number"]
     },
     {
       "identifier": "wp_cf_excerpt",
       "type": "text",
-      "matches": [
-        "lead.text",
-        "paragraph.text"
-      ]
+      "matches": ["lead.text", "paragraph.text"]
     },
     {
       "identifier": "wp_img-cf_featuredImage",
       "type": "image",
-      "matches": [
-        "image.desktop-image"
-      ]
+      "matches": ["image.desktop-image"]
     }
   ]
 }

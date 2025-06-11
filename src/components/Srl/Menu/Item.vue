@@ -1,114 +1,108 @@
 <script setup lang="ts">
-import { computed, nextTick, ref } from 'vue'
-import MenuItemContent from './Item/Content.vue'
-import MenuList from './List.vue'
-import type { RouterLink } from 'vue-router'
-import getUuid from '../../../composables/uuid';
+import { computed, nextTick, ref, useId } from 'vue';
+import MenuItemContent from './Item/Content.vue';
+import MenuList from './List.vue';
+import type { RouterLink } from 'vue-router';
+import { isExternalPath } from '../../../utils/uri';
 
 const props = defineProps<{
-  name: string
-  item: NsWowNavigationItem
-  index: number | string
-  disableTab: boolean
-  disableTabIndex: boolean
-  initOpen: number
-  depth: number
-}>()
+  name: string;
+  item: NsWowNavigationItem;
+  index: number | string;
+  disableTab: boolean;
+  disableTabIndex: boolean;
+  initOpen: number;
+  depth: number;
+}>();
 
-const emit = defineEmits(['open', 'close', 'link', 'routerChange', 'next', 'prev', 'tab', 'back'])
-const id = ref<number | string | undefined>()
+const emit = defineEmits([
+  'open',
+  'close',
+  'link',
+  'routerChange',
+  'next',
+  'prev',
+  'tab',
+  'back',
+]);
+const id = ref<number | string | undefined>();
 if (props.item.children) {
-  id.value = getUuid()
+  id.value = useId();
 }
 
-const external = ref(
-  props.item.href
-    && (
-      props.item.href.startsWith('http')
-      || props.item.href?.startsWith('//')
-      || props.item.href?.startsWith('mailto')
-      || props.item.href?.startsWith('tel')
-      || props.item.href?.startsWith('sms')
-      || props.item.href?.startsWith('callto')
-      || props.item.href?.startsWith('skype')
-      || props.item.href?.startsWith('sip')
-      || props.item.href?.startsWith('ws')
-      || props.item.href?.startsWith('wss')
-      || props.item.href?.startsWith('irc')
-      || props.item.href?.startsWith('gopher')
-      || props.item.href?.startsWith('whatsapp')
-  )
-)
+const external = ref(props.item.href && isExternalPath(props.item.href));
 
-const menu = ref()
-const $el = ref<HTMLButtonElement | HTMLAnchorElement | typeof RouterLink>()
-const opened = ref(false)
+const menu = ref();
+const $el = ref<HTMLButtonElement | HTMLAnchorElement | typeof RouterLink>();
+const opened = ref(false);
 
 function toggle() {
-  opened.value = !opened.value
+  opened.value = !opened.value;
   if (opened.value) {
-    emit('open', { index: props.index })
+    emit('open', { index: props.index });
     nextTick(() => {
-      const item = menu.value?.items[0].$el
-      item.$el ? item.$el.focus() : item.focus()
-    })
+      const item = menu.value?.items[0].$el;
+      item.$el ? item.$el.focus() : item.focus();
+    });
   }
 }
 
 function close() {
-  emit('close', { index: props.index })
+  emit('close', { index: props.index });
 }
 
 function closeSub() {
-  $el.value?.focus()
+  $el.value?.focus();
 }
 
 function next() {
-  emit('next', { index: props.index })
+  emit('next', { index: props.index });
 }
 
 function prev() {
-  emit('prev', { index: props.index })
+  emit('prev', { index: props.index });
 }
 
 function tab(event: KeyboardEvent) {
   if (props.disableTab && event) {
-    event.stopPropagation()
-    event.preventDefault()
-    opened.value = false
+    event.stopPropagation();
+    event.preventDefault();
+    opened.value = false;
   }
-  emit('tab')
+  emit('tab');
 }
 
 function back(event: KeyboardEvent) {
   if (props.disableTab && event) {
-    event.stopPropagation()
-    event.preventDefault()
+    event.stopPropagation();
+    event.preventDefault();
   }
-  emit('back')
+  emit('back');
 }
 
 function link() {
-  emit('link')
+  emit('link');
 }
 
 function routerChange() {
-  emit('link')
-  emit('routerChange')
+  emit('link');
+  emit('routerChange');
 }
 
 function closeItem() {
-  opened.value = false
-  menu.value?.closeAll()
+  opened.value = false;
+  menu.value?.closeAll();
 }
 
 defineExpose({
-  closeItem, $el, menu
-})
+  closeItem,
+  $el,
+  menu,
+});
 
 const dynamicAttributes = computed(() => {
-  return props.item.attributes ?? {}
-})
+  return props.item.attributes ?? {};
+});
 </script>
 
 <template>
@@ -118,7 +112,7 @@ const dynamicAttributes = computed(() => {
       ref="$el"
       :tabindex="props.index === 0 && !props.disableTabIndex ? 0 : -1"
       :to="props.item.href"
-      :class="{active: item.active}"
+      :class="{ active: item.active }"
       :title="props.item.title ?? props.item.label"
       v-bind="dynamicAttributes"
       @click="routerChange"

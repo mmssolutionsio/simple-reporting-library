@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
-  item: NsWowNavigationItem
-}>()
+  item: NsWowNavigationItem;
+}>();
 </script>
 
 <template>

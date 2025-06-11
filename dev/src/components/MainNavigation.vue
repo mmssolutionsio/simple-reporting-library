@@ -6,11 +6,7 @@ const props = defineProps<{
 
 <template>
   <nav id="srl-page__navigation" class="srl-navigation" tabindex="-1">
-    <SrlMenu
-      name="main-navigation"
-      :menu="props.mainNavigation"
-      class="srl-main-navigation"
-    />
+    <SrlMenu name="main-navigation" :menu="props.mainNavigation" class="srl-main-navigation" />
   </nav>
 </template>
 

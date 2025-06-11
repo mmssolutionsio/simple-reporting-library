@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { isRouterPath } from '#utils'
 
 const props = defineProps<{
   mainNavigation: NsWowNavigationItem[]
@@ -21,14 +22,7 @@ window.addEventListener('scroll', () => {
   scrollY.value = window.scrollY
 })
 function prevNextHelper(item: NsWowNavigationItem, label: string = '', depth: number = 0) {
-  if (
-    item.href
-    && !item.href?.startsWith('http')
-    && !item.href?.startsWith('mailto')
-    && !item.href?.startsWith('tel')
-    && !item.href?.startsWith('javascript')
-    && !item.href?.includes('#')
-  ) {
+  if (item.href && isRouterPath(item.href)) {
     const url = item.href
     const title = label.length > 0 ? `${label}\n${item.label}` : item.label
     prevNextNavigation.value.push({ title, url })
@@ -37,11 +31,7 @@ function prevNextHelper(item: NsWowNavigationItem, label: string = '', depth: nu
   if (item.children) {
     for (const child of item.children) {
       let nextLabel = ''
-      if (
-        depth !== 0
-        && item.label !== 'left'
-        && item.label !== 'right'
-      ) {
+      if (depth !== 0 && item.label !== 'left' && item.label !== 'right') {
         nextLabel = item.label
       }
       prevNextHelper(child, nextLabel, depth + 1)
@@ -54,45 +44,54 @@ for (const item of props.mainNavigation) {
 }
 
 const currentIndex = computed<number | -1>(() => {
-  return prevNextNavigation.value.findIndex(item => item.url === route.path)
+  return prevNextNavigation.value.findIndex((item) => item.url === route.path)
 })
 
 const prevItem = computed(() => {
   if (currentIndex.value === -1) {
     return null
   }
-  return currentIndex.value > 0 ?
-    prevNextNavigation.value[currentIndex.value - 1] :
-    prevNextNavigation.value[prevNextNavigation.value.length - 1]
+  return currentIndex.value > 0
+    ? prevNextNavigation.value[currentIndex.value - 1]
+    : prevNextNavigation.value[prevNextNavigation.value.length - 1]
 })
 
 const nextItem = computed(() => {
   if (currentIndex.value === -1) {
     return null
   }
-  return currentIndex.value < prevNextNavigation.value.length - 1 ?
-    prevNextNavigation.value[currentIndex.value + 1] :
-    prevNextNavigation.value[0]
+  return currentIndex.value < prevNextNavigation.value.length - 1
+    ? prevNextNavigation.value[currentIndex.value + 1]
+    : prevNextNavigation.value[0]
 })
 
 function toTop() {
   window.scrollTo(0, 0)
   document.querySelector('#srl-page__main')?.focus()
 }
-
 </script>
 <template>
   <div>
-    <slot/>
+    <slot />
     <div class="srl-prev-next">
       <div class="srl-prev-next__wrap">
         <button class="srl-to-top" :hidden="scrollY < 500" type="button" @click="toTop">
           <img src="@/assets/images/toTop.svg" :alt="$t('toTop')" :title="$t('toTop')" />
         </button>
-        <router-link v-if="prevItem" class="srl-page-prev" :to="prevItem.url" :title="prevItem.title">
+        <router-link
+          v-if="prevItem"
+          class="srl-page-prev"
+          :to="prevItem.url"
+          :title="prevItem.title"
+        >
           <img src="@/assets/images/prev.svg" :alt="$t('pagePrev')" />
         </router-link>
-        <router-link v-if="nextItem" class="srl-page-next" :to="nextItem.url" :title="nextItem.title">
+        <router-link
+          v-if="nextItem"
+          class="srl-page-next"
+          :to="nextItem.url"
+          :title="nextItem.title"
+        >
           <img src="@/assets/images/next.svg" :alt="$t('pageNext')" />
         </router-link>
       </div>
@@ -118,7 +117,7 @@ body:has(.srl-to-top) {
   padding-inline: var(--srl-container-padding);
   margin-inline: auto;
   padding-block-end: var(--srl-spacer-medium);
-  height: calc( var(--srl-spacer-L) + srl.system-size-unit(44));
+  height: calc(var(--srl-spacer-L) + srl.system-size-unit(44));
 
   &__wrap {
     display: flex;
@@ -139,7 +138,7 @@ body:has(.srl-to-top) {
   padding: 0;
   border: 0;
   cursor: pointer;
-  transition: all ease-out .3s;
+  transition: all ease-out 0.3s;
   opacity: 1;
 
   &:not([hidden]) {
@@ -166,5 +165,4 @@ body:has(.srl-to-top) {
     display: block;
   }
 }
-
 </style>

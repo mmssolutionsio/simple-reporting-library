@@ -35,31 +35,42 @@
  * managing the loading sequence of content and providing modal functionality
  * to other components in the application.
  */
-import App from '@/App.vue'
-import SrlPageData from './Data.vue'
-import SrlPageModal from '@/components/Srl/Page/Modal.vue'
-import { ref } from 'vue'
+import App from '@/App.vue';
+import SrlPageModal from '@/Modal.vue';
+import { ref, watch } from 'vue';
 
-const modal = ref<typeof SrlPageModal>()
+let styleElement = document.createElement('style');
+document.head.appendChild(styleElement);
 
+const modal = ref<typeof SrlPageModal>();
 async function modalContent(html: string) {
-  await modal.value?.setContent(html)
+  await modal.value?.setContent(html);
 }
+
+const styleContent = ref<string[]>([]);
+function addCssStyles(styles: string) {
+  styleContent.value.includes(styles) || styleContent.value.push(styles);
+}
+watch(
+  styleContent.value,
+  (newStyles) => {
+    styleElement.innerHTML = newStyles.join('');
+  },
+  { immediate: true },
+);
 
 defineExpose({
   modal,
-  modalContent
-})
+  modalContent,
+  addCssStyles,
+});
 </script>
 
 <template>
   <suspense>
-    <SrlPageData/>
+    <App />
   </suspense>
   <suspense>
-    <App/>
-  </suspense>
-  <suspense>
-    <SrlPageModal ref="modal"/>
+    <SrlPageModal ref="modal" />
   </suspense>
 </template>

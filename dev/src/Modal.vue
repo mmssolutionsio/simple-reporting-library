@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { nextTick, ref } from 'vue';
+import { nextTick, ref } from 'vue'
 import Autoload from '@/Autoload.ts'
 import SvgClose from '@/components/Svg/Close.vue'
-import VRuntimeTemplate from "vue3-runtime-template";
+import VRuntimeTemplate from 'vue3-runtime-template'
 
 const content = ref<string | null>(null)
 const state = ref<boolean>(false)
@@ -33,15 +33,10 @@ defineExpose({
   open,
   close
 })
-
 </script>
 
 <template>
-  <SrlAriaTabChain
-    class="srl-modal"
-    :hidden="!state"
-    role="dialog"
-  >
+  <SrlAriaTabChain class="srl-modal" :hidden="!state" role="dialog">
     <div class="srl-modal__background srl-bg-shade-200" @click="close" />
     <div class="srl-modal__content srl-bg-light srl-color-dark" @click.stop>
       <header>
@@ -52,7 +47,7 @@ defineExpose({
           :aria-label="$t('modalClose')"
           @click="close"
         >
-          <SvgClose :title="$t('modalClose')"/>
+          <SvgClose :title="$t('modalClose')" />
         </button>
       </header>
       <div class="srl-modal__main" ref="main" tabindex="-1">
@@ -81,7 +76,7 @@ body:has(.srl-modal:not([hidden])) {
 
   &__background {
     position: fixed;
-    opacity: .7;
+    opacity: 0.7;
     inset: 0;
     z-index: 900;
   }

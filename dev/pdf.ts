@@ -1,1 +1,1 @@
-import '#imports/pdf.scss'
+import './.nswow/pdf.scss'

@@ -27,68 +27,73 @@
  * const menu = useMenu('mainMenu')
  *
  */
-import { computed, type Ref, type WritableComputedRef } from 'vue'
-import { type RouteLocationNormalizedLoadedGeneric, useRoute } from 'vue-router'
-import { isRouterPath} from '../utils/uri'
-import useConfig from './config'
+import { computed, type Ref, type WritableComputedRef } from 'vue';
+import {
+  type RouteLocationNormalizedLoadedGeneric,
+  useRoute,
+} from 'vue-router';
+import { isRouterPath } from '../utils/uri';
+import useConfig from './config';
 
-const config = useConfig()
-const menus = {}
+const config = useConfig();
+const menus = {};
 
-
-function buildNav(item: NsWowMenu, route: RouteLocationNormalizedLoadedGeneric): NsWowNavigationItem {
-
+function buildNav(
+  item: NsWowMenu,
+  route: RouteLocationNormalizedLoadedGeneric,
+): NsWowNavigationItem {
   const res: NsWowNavigationItem = {
     label: item.label,
-    active: false
-  }
+    active: false,
+  };
 
   if (item.type === 'Article') {
-    const page = config.value.articles[config.value.locale].find(i => i.uuid === item.page)
+    const page = config.value.articles[config.value.locale].find(
+      (i) => i.uuid === item.page,
+    );
     if (page) {
-      res.href = `/${config.value.locale}/${page.slug}`
-      res.active = route.path === res.href
+      res.href = `/${config.value.locale}/${page.slug}`;
+      res.active = route.path === res.href;
     }
   } else if (item.url && item.type === 'ExternalLink') {
     if (isRouterPath(item.url)) {
-      res.href = item.url.startsWith('.') ? item.url.substring(1) : item.url
-      res.active = route.path === res.href
+      res.href = item.url.startsWith('.') ? item.url.substring(1) : item.url;
+      res.active = route.path === res.href;
     } else {
-      res.href = item.url
+      res.href = item.url;
     }
   }
 
   if (item.submenuEntries) {
     res.children = [];
     item.submenuEntries?.forEach((subItem) => {
-      const subMenu = buildNav(subItem, route)
+      const subMenu = buildNav(subItem, route);
       if (subMenu.active) {
-        res.active = true
+        res.active = true;
       }
-      res.children?.push(subMenu)
-    })
+      res.children?.push(subMenu);
+    });
   }
 
-  return res
+  return res;
 }
 
 export default function useMenu(name: string) {
-
   if (menus[name]) {
-    return menus[name]
+    return menus[name];
   } else {
     try {
-      const route = useRoute()
+      const route = useRoute();
       menus[name] = computed<NsWowNavigationItem[]>(() => {
         return config.value.menus[config.value.locale][name].map((item) => {
-          return buildNav(item, route)
-        })
-      })
+          return buildNav(item, route);
+        });
+      });
 
-      return menus[name]
+      return menus[name];
     } catch (e) {
-      console.error(e)
-      return computed<NsWowNavigationItem[]>(() => [])
+      console.error(e);
+      return computed<NsWowNavigationItem[]>(() => []);
     }
   }
 }

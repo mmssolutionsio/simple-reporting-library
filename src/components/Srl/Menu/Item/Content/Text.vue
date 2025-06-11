@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const pops = defineProps<{
-  item: NsWowNavigationItem
-}>()
+  item: NsWowNavigationItem;
+}>();
 </script>
 
 <template>

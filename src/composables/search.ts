@@ -36,15 +36,19 @@
  * const searchIndex = await useSearch()
  * console.log(searchIndex.value) // Array of search items for the current locale
  */
-import { computed, type ComputedRef, ref } from 'vue'
-import { HTMLElement, Node, parse as parseHtml } from 'node-html-parser'
+import { computed, type ComputedRef, ref } from 'vue';
+import { HTMLElement, Node, parse as parseHtml } from 'node-html-parser';
 
 const storage = ref<{
-  [locale: string]: NsWowSearchList[]
-}>()
-let computedStorage: ComputedRef<NsWowSearchList[]>
+  [locale: string]: NsWowSearchList[];
+}>();
+let computedStorage: ComputedRef<NsWowSearchList[]>;
 
-function findByTag(node: HTMLElement, tagName: string, tagsScope: HTMLElement[] = []) {
+function findByTag(
+  node: HTMLElement,
+  tagName: string,
+  tagsScope: HTMLElement[] = [],
+) {
   if (!node.querySelectorAll) return tagsScope;
   const nodes: HTMLElement[] = node.querySelectorAll(tagName);
   tagsScope.push(...nodes);
@@ -55,41 +59,38 @@ function findByTag(node: HTMLElement, tagName: string, tagsScope: HTMLElement[] 
 }
 
 function makeWords(html: string) {
-  const tagsToSearch = ["h1,h2,h3,p"];
+  const tagsToSearch = ['h1,h2,h3,p'];
   const rootObject = parseHtml(html);
   return tagsToSearch
     .flatMap((tag) => findByTag(rootObject, tag))
     .map((el) => el.innerText)
     .join(' ')
-    .replace(/\s{2,}/g, ' ')
-    ;
+    .replace(/\s{2,}/g, ' ');
 }
 
 export default async function useSearch() {
-  const config = useConfig()
+  const config = useConfig();
   if (!storage.value || !storage.value[config.value.locale]) {
+    !storage.value ? (storage.value = {}) : null;
+    storage.value[config.value.locale] = [];
 
-    !storage.value ? storage.value = {} : null
-    storage.value[config.value.locale] = []
+    const articles = useArticles();
 
-    const articles = useArticles()
-
-    for (
-      const article of
-      articles.value.filter(item => !item.ignoreInSearch)
-    ) {
-      const file = `./html/${config.value.locale}/${article.name}.html`
+    for (const article of articles.value.filter(
+      (item) => !item.ignoreInSearch,
+    )) {
+      const file = `./html/${config.value.locale}/${article.name}.html`;
       try {
-        const response = await fetch(file)
-        const htmlContent = await response.text()
+        const response = await fetch(file);
+        const htmlContent = await response.text();
 
         storage.value[config.value.locale].push({
           article: article,
           href: `/${config.value.locale}/${article.slug}`,
-          words: makeWords(htmlContent)
-        })
+          words: makeWords(htmlContent),
+        });
       } catch (e) {
-        console.error(e)
+        console.error(e);
       }
     }
   }
@@ -97,11 +98,11 @@ export default async function useSearch() {
   if (!computedStorage) {
     computedStorage = computed<NsWowSearchList[]>(() => {
       if (!storage.value || !storage.value[config.value.locale]) {
-        return []
+        return [];
       }
-      return storage.value[config.value.locale]
-    })
+      return storage.value[config.value.locale];
+    });
   }
 
-  return computedStorage
+  return computedStorage;
 }

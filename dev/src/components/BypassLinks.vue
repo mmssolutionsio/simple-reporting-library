@@ -8,7 +8,7 @@ const pointer = ref<NsWowNavigationItem[]>([
   {
     label: t('toMainNavigation'),
     attributes: {
-      id: 'srl-to-main-navigation',
+      id: 'srl-to-main-navigation'
     },
     callback: () => {
       const elem: HTMLDivElement | null = document.querySelector('#srl-page__navigation')
@@ -20,7 +20,7 @@ const pointer = ref<NsWowNavigationItem[]>([
   {
     label: t('toMainContent'),
     attributes: {
-      id: 'srl-to-main-content',
+      id: 'srl-to-main-content'
     },
     callback: () => {
       const elem: HTMLDivElement | null = document.querySelector('#srl-page__main')
@@ -32,7 +32,7 @@ const pointer = ref<NsWowNavigationItem[]>([
   {
     label: t('toFooter'),
     attributes: {
-      id: 'srl-to-footer',
+      id: 'srl-to-footer'
     },
     callback: () => {
       const elem: HTMLDivElement | null = document.querySelector('#srl-page__footer')
@@ -46,15 +46,14 @@ const pointer = ref<NsWowNavigationItem[]>([
 
 <template>
   <nav class="srl-page__keyboardpointer" id="srl-page__keyboardpointer" tabindex="-1">
-    <SrlMenu name="keyboardpointer" :menu="pointer"/>
+    <SrlMenu name="keyboardpointer" :menu="pointer" />
   </nav>
 </template>
 
 <style lang="scss">
-@use "srl";
+@use 'srl';
 
 .srl-page__keyboardpointer {
-
   overflow: hidden;
   height: 0;
 
@@ -88,5 +87,4 @@ const pointer = ref<NsWowNavigationItem[]>([
     border: 0;
   }
 }
-
 </style>
