@@ -33,7 +33,7 @@ async function init(folder, options) {
 
       await writeFileSync(
         `${projectPath}/.gitignore`,
-        `/.output/\n/.nswow/\n/node_modules/\n/public/downloads/\n/public/html/\n/public/images/\n/public/json/`,
+        `/.output/\n/.nswow/\n/node_modules/\n/public/downloads/\n/public/html/\n/public/images/\n/public/json/\n/public/exclude/\n/dev-dist/`,
       );
       console.log(`Project has created`);
       console.log(`cd ${folder}`);

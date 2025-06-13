@@ -6,6 +6,13 @@
  */
 export function build(): Promise<void>;
 /**
+ * Builds the project sequentially by executing a series of asynchronous tasks in a specific order.
+ * This method is used to build the project in a predetermined sequence.
+ *
+ * @return {Promise<void>} A Promise that resolves when the build process is completed or rejects if an error occurs.
+ */
+export function ddev(): Promise<void>;
+/**
  * Maps the SCSS files and the LDD files in the project.
  *
  * @async

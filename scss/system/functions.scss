@@ -54,6 +54,8 @@
       @return math.div($size, variables.$root-size) + rem;
     } @else if $size-unit == 'in' {
       @return math.div($size, variables.$dpi) + in;
+    } @else if $size-unit == 'pt' {
+      @return ($size * variables.$point) + pt;
     } @else {
       @return $size + $size-unit;
     }

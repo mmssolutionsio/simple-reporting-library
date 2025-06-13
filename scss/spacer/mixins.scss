@@ -78,12 +78,22 @@
     $varName,
     system.size-unit(map.get($spacerValue, size))
   );
+
+  @if not map.has-key($spacerValue, media, print) {
+    @include system.add-root-style(
+      $varName,
+      system.size-unit(map.get($spacerValue, size), in),
+      print
+    );
+  }
+
   @if map.has-key($spacerValue, media) {
     @each $breakpoint, $breakpointValue in map.get($spacerValue, media) {
       @if $breakpoint == print {
         @include system.add-root-style(
           $varName,
-          system.size-unit(map.get($spacerValue, size), in)
+          system.size-unit(map.get($spacerValue, size), in),
+          print
         );
       } @else if $breakpoint == up {
         @each $upBreakpoint, $upBreakpointValue in $breakpointValue {

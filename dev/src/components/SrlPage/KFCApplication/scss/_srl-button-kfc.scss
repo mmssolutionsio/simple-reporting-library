@@ -1,0 +1,21 @@
+@use 'nswow';
+
+.srl-button-kfc {
+  padding: 0;
+  margin: 0;
+  background: none;
+  -webkit-appearance: none;
+  border: none;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: nswow.system-size-unit(12);
+  cursor: pointer;
+  color: var(--srl-color-dark);
+
+  &:hover {
+    color: var(--srl-color-primary);
+  }
+}

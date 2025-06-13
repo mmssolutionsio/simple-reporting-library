@@ -7,7 +7,9 @@ import {
   readdirSync,
   createWriteStream,
   rmSync,
+  cpSync,
 } from 'node:fs';
+import { fileURLToPath, URL } from 'node:url';
 import { createRequire } from 'node:module';
 import { glob } from 'glob';
 import { beaver } from './beaver.js';
@@ -81,14 +83,48 @@ async function cleanOutput() {
  */
 async function buildApp() {
   await checkFolders();
-  const build = await viteBuild();
+  const build = await viteBuild({
+    build: {
+      copyPublicDir: false,
+    },
+  });
+
+  // Copy public folder exclude nswow folders
+  console.log(
+    '\n\nCopy public folder exclude nswow folders and exclude folder',
+  );
+  await cpSync(`${CWD}/public/`, `${outputPath}/app`, {
+    filter: (src) => {
+      if (
+        src.startsWith(`${CWD}/public/downloads`) ||
+        src.startsWith(`${CWD}/public/html`) ||
+        src.startsWith(`${CWD}/public/images`) ||
+        src.startsWith(`${CWD}/public/json`) ||
+        src.startsWith(`${CWD}/public/exclude`)
+      ) {
+        return false;
+      } else {
+        src === `${CWD}/public/` ||
+          console.log(`Copy ${src} to ${outputPath}/app`);
+        return true;
+      }
+    },
+    recursive: true,
+  });
+  console.log('\n');
+
+  console.log('Create fallback file worker.html for service worker');
   let index = await readFileSync(`${outputPath}/app/index.html`, 'utf8');
+
+  await writeFileSync(`${outputPath}/app/worker.html`, index);
+
+  console.log('Create file /template/article.html for nswow hybrid\n');
   index = index.replace(
     '<html>',
     `<html lang="[[language-${placeholderId}]]">`,
   );
   index = index.replace(
-    /<base href="[^"]*" \/>/,
+    /<base\s+href\s*=\s*(['"])(.*?)\1\s*\/?>/gi,
     `<base href="[[base-${placeholderId}]]" />
     [[meta-${placeholderId}]]`,
   );
@@ -118,6 +154,24 @@ async function buildApp() {
    RewriteCond %{REQUEST_FILENAME} !-d
    RewriteRule ^(.*)$ index.html [L]`);
    /**/
+  return build;
+}
+
+/**
+ * Builds the application by performing the following steps:
+ *
+ * 1. Checks the folders.
+ * 2. Executes the viteBuild function.
+ *
+ * @returns {Promise<void>} A Promise that resolves when the application is built.
+ */
+async function buildDDev() {
+  await checkFolders();
+  const build = await viteBuild({
+    build: {
+      outDir: './.output/ddev',
+    },
+  });
   return build;
 }
 
@@ -166,16 +220,13 @@ async function zipApp() {
  */
 async function buildPdf() {
   await checkFolders();
-  const input = resolve(CWD, 'pdf.html');
+
   try {
+    const input = resolve(CWD, 'pdf.html');
     await statSync(input);
-  } catch (e) {
-    return true;
-  }
-  try {
     return await viteBuild({
       build: {
-        outDir: './.output/pdf',
+        outDir: resolve(CWD, '.output/pdf'),
         rollupOptions: {
           input: {
             pdf: input,
@@ -190,8 +241,44 @@ async function buildPdf() {
       },
     });
   } catch (e) {
-    console.error(e);
-    return false;
+    let configFile = false;
+    try {
+      const file = resolve(CWD, 'vite.config.pdf.ts');
+      await statSync(file);
+      console.log('Use vite.config.pdf.ts file');
+      configFile = file;
+    } catch (e) {
+      console.log('No use of vite.config.pdf.ts file');
+    }
+
+    const entry = resolve(CWD, 'pdf.ts');
+
+    const config = {
+      configFile: configFile,
+      base: './',
+      build: {
+        outDir: resolve(CWD, '.output/pdf'),
+        lib: {
+          fileName: 'pdf',
+          entry: entry,
+          formats: ['es'],
+        },
+      },
+      resolve: {
+        alias: {
+          '@': fileURLToPath(new URL(resolve(CWD, 'src'), import.meta.url)),
+          nswow: fileURLToPath(new URL(resolve(CWD, 'nswow'), import.meta.url)),
+        },
+      },
+      publicDir: false,
+    };
+
+    try {
+      return await viteBuild(config);
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
   }
 }
 
@@ -285,16 +372,13 @@ async function buildLdd(version) {
  */
 async function buildWord() {
   await checkFolders();
-  const input = resolve(CWD, 'word.html');
+
   try {
+    const input = resolve(CWD, 'word.html');
     await statSync(input);
-  } catch (e) {
-    return true;
-  }
-  try {
     return await viteBuild({
       build: {
-        outDir: './.output/word',
+        outDir: resolve(CWD, '.output/word'),
         rollupOptions: {
           input: {
             word: input,
@@ -309,8 +393,44 @@ async function buildWord() {
       },
     });
   } catch (e) {
-    console.error(e);
-    return false;
+    let configFile = false;
+    try {
+      const file = resolve(CWD, 'vite.config.word.ts');
+      await statSync(file);
+      console.log('Use vite.config.word.ts file');
+      configFile = file;
+    } catch (e) {
+      console.log('No use of vite.config.word.ts file');
+    }
+
+    const entry = resolve(CWD, 'word.ts');
+
+    const config = {
+      configFile: configFile,
+      base: './',
+      build: {
+        outDir: resolve(CWD, '.output/word'),
+        lib: {
+          fileName: 'word',
+          entry: entry,
+          formats: ['es'],
+        },
+      },
+      resolve: {
+        alias: {
+          '@': fileURLToPath(new URL(resolve(CWD, 'src'), import.meta.url)),
+          nswow: fileURLToPath(new URL(resolve(CWD, 'nswow'), import.meta.url)),
+        },
+      },
+      publicDir: false,
+    };
+
+    try {
+      return await viteBuild(config);
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
   }
 }
 
@@ -340,6 +460,25 @@ async function build() {
     await zipApp();
   } catch (error) {
     console.log(error);
+  }
+}
+
+/**
+ * Builds the project sequentially by executing a series of asynchronous tasks in a specific order.
+ * This method is used to build the project in a predetermined sequence.
+ *
+ * @return {Promise<void>} A Promise that resolves when the build process is completed or rejects if an error occurs.
+ */
+async function ddev() {
+  try {
+    await checkFolders();
+    const packageJson = await readPackageJson();
+    await beaver(1);
+    await mapScss();
+    await mapLdd();
+    await buildDDev();
+  } catch (error) {
+    console.error(error);
   }
 }
 
@@ -428,8 +567,18 @@ async function mapScss() {
       return 0;
     });
 
-    for (let x = 0; x < livingdocs.length; x++) {
-      const p = livingdocs[x];
+    const components = livingdocs.filter((p) => {
+      return p.name !== 'Properties' && p.parent.name !== 'Properties';
+    });
+
+    const properties = livingdocs.filter((p) => {
+      return p.name === 'Properties' || p.parent.name === 'Properties';
+    });
+
+    const livingdocsList = [...components, ...properties];
+
+    for (let x = 0; x < livingdocsList.length; x++) {
+      const p = livingdocsList[x];
       try {
         const general = await statSync(p.fullpath() + '/general.scss');
         const alias = cleanupScssAlias(`${p.relative()}/general.scss`);
@@ -463,27 +612,27 @@ async function mapScss() {
 
     await writeFileSync(
       `${CWD}/.nswow/app.scss`,
-      `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
+      `@use ` +
         output.app.join(';\n@use ') +
-        ';\n',
+        `;\n@use "nswow/core-styles" as nswowcorestyles;\n`,
     );
     await writeFileSync(
       `${CWD}/.nswow/ldd.scss`,
-      `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
+      `@use ` +
         output.ldd.join(';\n@use ') +
-        ';\n',
+        `;\n@use "nswow/core-styles" as nswowcorestyles;\n`,
     );
     await writeFileSync(
       `${CWD}/.nswow/pdf.scss`,
-      `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
+      `@use ` +
         output.pdf.join(';\n@use ') +
-        ';\n',
+        `;\n@use "nswow/core-styles" as nswowcorestyles;\n`,
     );
     await writeFileSync(
       `${CWD}/.nswow/word.scss`,
-      `@use "nswow/core-styles" as nswowcorestyles;\n@use ` +
+      `@use ` +
         output.word.join(';\n@use ') +
-        ';\n',
+        `;\n@use "nswow/core-styles" as nswowcorestyles;\n`,
     );
 
     return true;
@@ -544,14 +693,23 @@ async function mapLdd() {
     const lddJson = await readLivingDocsJson();
 
     const propertiesFiles = await glob(
-      resolve(CWD, './livingdocs/**/properties.json'),
+      resolve(CWD, './livingdocs/**/properties.{json,js,ts}'),
     );
     const mapProperties = {};
     for (let i = 0; i < propertiesFiles.length; i++) {
-      const properties = JSON.parse(readFileSync(propertiesFiles[i]));
-      const oKeys = Object.keys(properties);
-      for (let j = 0; j < oKeys.length; j++) {
-        mapProperties[oKeys[j]] = properties[oKeys[j]];
+      const file = propertiesFiles[i];
+      if (file.endsWith('.js') || file.endsWith('.ts')) {
+        const properties = require(propertiesFiles[i]).default;
+        const oKeys = Object.keys(properties);
+        for (let j = 0; j < oKeys.length; j++) {
+          mapProperties[oKeys[j]] = properties[oKeys[j]];
+        }
+      } else if (file.endsWith('.json')) {
+        const properties = JSON.parse(readFileSync(propertiesFiles[i]));
+        const oKeys = Object.keys(properties);
+        for (let j = 0; j < oKeys.length; j++) {
+          mapProperties[oKeys[j]] = properties[oKeys[j]];
+        }
       }
     }
     lddJson.componentProperties = mapProperties;
@@ -643,4 +801,4 @@ async function map() {
   return true;
 }
 
-export { build, map, mapScss, mapLdd, mapJs };
+export { build, ddev, map, mapScss, mapLdd, mapJs };
