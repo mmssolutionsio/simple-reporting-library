@@ -1,0 +1,22 @@
+import { join } from 'path';
+
+export const root = process.cwd()
+export const packeage = join('@multivisio', 'nswow')
+export const packagePath = join(root, 'node_modules', packeage)
+export const packageSrl = join(packagePath, 'srl')
+export const packageLd = join(packagePath, 'livingdocs')
+export const srlRoot = join(root, '.srl')
+
+export const srlSystem = join(srlRoot, 'srl')
+export const srlComponents = join(srlRoot, 'components')
+export const srlComposables = join(srlRoot, 'composables')
+export const srlUtils = join(srlRoot, 'utils')
+export const srlPlugins = join(srlRoot, 'plugins')
+export const srlSrc = join(srlRoot, 'src')
+export const srlScss = join(srlRoot, 'scss')
+export const srlImports = join(srlRoot, 'imports')
+export const srlOutput = join(srlRoot, '.output')
+export const srlPublic = join(srlRoot, 'public')
+export const srlTypes = join(srlRoot, 'types')
+export const srlAssets = join(srlSrc, 'assets')
+export const ld = join(root, 'livingdocs')

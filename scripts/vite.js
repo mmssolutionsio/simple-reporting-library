@@ -12,7 +12,7 @@ function nswowWatcher() {
     name: 'nswow-watcher',
     configureServer(server) {
       server.watcher.on('change', (path) => {
-        if (path.endsWith('/nswow.config.json')) {
+        if (path.endsWith('/srl.config.json')) {
           beaver();
         }
 

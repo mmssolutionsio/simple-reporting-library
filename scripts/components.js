@@ -1,28 +1,26 @@
 import { createRequire } from 'node:module';
-import { resolve, dirname } from 'node:path';
+import { resolve, join } from 'node:path';
 import { glob } from 'glob';
-import { copy, ensureDir } from 'fs-extra';
+import { copy } from 'fs-extra';
 import { rm, statSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import { lddGroupNames } from './utils.js';
 import { map } from './build.js';
+import * as folders from '../srl/plugins/folders.js';
 
 const require = createRequire(import.meta.url);
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
-const packagePath = resolve(__dirname, '../');
-const CWD = process.cwd();
+const packagePath = folders.packagePath;
+const CWD = folders.root;
 
-const { MultiSelect, Confirm, AutoComplete, Input } = require('enquirer');
+const { MultiSelect, Confirm, AutoComplete } = require('enquirer');
 
 /**
  * Adds groups of livingdocs to a specified output directory.
  * @returns {boolean} - Returns true if groups were added successfully.
  */
 async function addGroups() {
-  const outputPath = resolve(CWD, './livingdocs');
-  const groupsPath = `${packagePath}/livingdocs`;
+  const outputPath = folders.ld;
+  const groupsPath = folders.packageLd;
   const groups = readdirSync(groupsPath);
   const groupsExists = [];
   for (let i = 0; i < groups.length; i++) {
@@ -60,17 +58,17 @@ async function addGroups() {
       const installed = [];
       for (const key in groups) {
         const group = groups[key];
-        const components = readdirSync(`${groupsPath}/${group}`);
+        const components = readdirSync( join( groupsPath, group));
         for (let i = 0; i < components.length; i++) {
           const component = components[i];
           try {
-            await statSync(`${outputPath}/${group}/${component}`);
+            await statSync( join( outputPath, group, component ));
             console.log(`Component ${key} / ${component} allready exists!`);
           } catch (e) {
             action = true;
             await copy(
-              `${groupsPath}/${group}/${component}`,
-              `${outputPath}/${group}/${component}`,
+              join( groupsPath, group, component ),
+              join( outputPath, group, component ),
             );
             console.log(`Component ${key} / ${component} installed!`);
           }
@@ -98,19 +96,19 @@ async function addGroups() {
  * @returns {Promise<void>} - A promise that resolves when the components are added successfully.
  */
 async function addComponents() {
-  const filesToAdd = await glob(`${packagePath}/livingdocs/**/*`, {
+  const filesToAdd = await glob( join( folders.packageLd, '**', '*' ), {
     maxDepth: 6,
   });
-  const filesExists = await glob(`${CWD}/livingdocs/**/*`, { maxDepth: 3 });
+  const filesExists = await glob( join( folders.ld, '**', '*' ), { maxDepth: 3 });
   const livingdocsToAdd = [];
   const livingdocsExists = [];
 
   for (let x = 0; x < filesExists.length; x++) {
-    const c = filesExists[x].replace(`${CWD}/livingdocs/`, '');
+    const c = filesExists[x].replace( join( folders.ld, '/' ), '');
     livingdocsExists.push(c);
   }
   for (let x = 0; x < filesToAdd.length; x++) {
-    const c = filesToAdd[x].replace(`${packagePath}/livingdocs/`, '');
+    const c = filesToAdd[x].replace(join( folders.packageLd, '/' ), '');
     if (!livingdocsExists.includes(c) && c.indexOf('/') !== -1) {
       livingdocsToAdd.push({ name: lddGroupNames(c), value: c });
     }
@@ -148,8 +146,8 @@ async function addComponents() {
         const oKeys = Object.keys(livingdocs);
         for (let x = 0; x < oKeys.length; x++) {
           await copy(
-            `${packagePath}/livingdocs/${livingdocs[oKeys[x]]}`,
-            `${CWD}/livingdocs/${livingdocs[oKeys[x]]}`,
+            join( folders.packageLd, livingdocs[oKeys[x]] ),
+            join( folders.ld, livingdocs[oKeys[x]] ),
           );
         }
         await map();
@@ -165,7 +163,7 @@ async function addComponents() {
  * @returns {boolean} Returns true if the livingdocs groups were successfully removed, otherwise false.
  */
 async function removeGroups() {
-  const livingdocsPath = resolve(CWD, './livingdocs');
+  const livingdocsPath = folders.ld;
   const groupsExists = [];
   const groupsList = await readdirSync(livingdocsPath);
   for (let i = 0; i < groupsList.length; i++) {
@@ -210,7 +208,7 @@ async function removeGroups() {
           if (remove) {
             oKeys.forEach(async (k) => {
               await rm(
-                `${CWD}/livingdocs/${groups[k]}`,
+                join( folders.ld, groups[k] ),
                 { recursive: true, force: true },
                 (err) => {
                   if (err) {
@@ -235,10 +233,10 @@ async function removeGroups() {
  * @returns {Promise<void>} A promise that resolves once the components are removed.
  */
 async function removeComponents() {
-  const filesExists = await glob(`${CWD}/livingdocs/**/*`, { maxDepth: 3 });
+  const filesExists = await glob( join( folders.ld, '**', '*' ), { maxDepth: 3 });
   const livingdocsExists = [];
   for (let x = 0; x < filesExists.length; x++) {
-    const c = filesExists[x].replace(`${CWD}/livingdocs/`, '');
+    const c = filesExists[x].replace(join( folders.ld, '/' ), '');
     if (c.indexOf('/') !== -1) {
       const p = c.split('/');
       let group = p[0].replace('_and_', ' / ').replace('_', ' ');
@@ -287,7 +285,7 @@ async function removeComponents() {
           if (remove) {
             oKeys.forEach(async (k) => {
               await rm(
-                `${CWD}/livingdocs/${livingdocs[k]}`,
+                join( folders.ld, livingdocs[k] ),
                 { recursive: true, force: true },
                 (err) => {
                   if (err) {
@@ -317,7 +315,7 @@ function mapComponentName(name) {
     name: false,
   };
   if (name) {
-    const n = name.split('/');
+    const n = name.includes('\\') ? name.split('\\') : name.split('/');
     if (n.length > 1) {
       component.group = n[0];
       component.name = n[1];
@@ -345,29 +343,19 @@ async function writeComponent(group, name) {
   }
 
   try {
-    const stat = await statSync(`${CWD}/livingdocs/${group}/${name}`);
+    const stat = await statSync( join( folders.ld, group, name ));
     console.error(`Component ${group}/${name} already exist!`);
   } catch (e) {
     try {
-      await statSync(`${CWD}/livingdocs/${group}`);
+      await statSync( join( folders.ld, group ));
     } catch (e) {
-      await mkdirSync(`${CWD}/livingdocs/${group}`);
+      await mkdirSync( join( folders.ld, group ));
     }
 
-    await mkdirSync(`${CWD}/livingdocs/${group}/${name}`);
+    await mkdirSync( join( folders.ld, group, name ));
     await writeFileSync(
-      `${CWD}/livingdocs/${group}/${name}/${name}.html`,
-      `<script type="ld-conf">
-{
-  "name": "${name}",
-  "label": "${name}",
-  "properties": [
-    "web-width",
-    "pdf-width"
-  ]
-}
-</script>
-<p class="srl-${name} srl-article__grid srl-article__grid--content">
+      join( folders.ld, group, name, `${name}.html` ),
+`<p class="srl-${name} srl-article__grid srl-article__grid--content">
   <span class="srl-article__grid--inner" doc-editable="text">
     Editable Text
   </span>
@@ -375,8 +363,8 @@ async function writeComponent(group, name) {
 `,
     );
     await writeFileSync(
-      `${CWD}/livingdocs/${group}/${name}/general.scss`,
-      `@use "nswow";
+      join( folders.ld, group, name, 'scss', `general.scss` ),
+      `@use "srl";
 
 .srl-${name} {
 
@@ -384,31 +372,31 @@ async function writeComponent(group, name) {
 `,
     );
     await writeFileSync(
-      `${CWD}/livingdocs/${group}/${name}/_web.scss`,
-      '@use "nswow";',
+      join( folders.ld, group, name, 'scss', `_web.scss` ),
+      '@use "srl";',
     );
     await writeFileSync(
-      `${CWD}/livingdocs/${group}/${name}/_print.scss`,
-      '@use "nswow";',
+      join( folders.ld, group, name, 'scss', `_print.scss` ),
+      '@use "srl";',
     );
     await writeFileSync(
-      `${CWD}/livingdocs/${group}/${name}/ldd.scss`,
+      join( folders.ld, group, name, 'scss', `ldd.scss` ),
       '@use "_web";',
     );
     await writeFileSync(
-      `${CWD}/livingdocs/${group}/${name}/app.scss`,
+      join( folders.ld, group, name, 'scss', `app.scss` ),
       '@use "_web";',
     );
     await writeFileSync(
-      `${CWD}/livingdocs/${group}/${name}/pdf.scss`,
+      join( folders.ld, group, name, 'scss', `pdf.scss` ),
       '@use "_print";',
     );
     await writeFileSync(
-      `${CWD}/livingdocs/${group}/${name}/word.scss`,
+      join( folders.ld, group, name, 'scss', `word.scss` ),
       '@use "_print";',
     );
     await writeFileSync(
-      `${CWD}/livingdocs/${group}/${name}/properties.json`,
+      join( folders.ld, group, name, `properties.json` ),
       '{}',
     );
     await map();
@@ -440,10 +428,12 @@ async function createComponent(name) {
       .then(async (name) => {
         component = mapComponentName(name);
         if (!component.group) {
-          const groupFolders = await glob(`${CWD}/livingdocs/*`);
+          const groupFolders = await glob( join( folders.ld, '*' ));
           const groups = [];
           for (let x = 0; x < groupFolders.length; x++) {
-            const f = groupFolders[x].split('/');
+            const f = groupFolders[x].includes('\\') ?
+              groupFolders[x].split('\\') :
+              groupFolders[x].split('/');
             groups.push(f.pop());
           }
           groups.sort((a, b) => {
@@ -474,10 +464,12 @@ async function createComponent(name) {
       })
       .catch(console.error);
   } else if (!component.group) {
-    const groupFolders = await glob(`${CWD}/livingdocs/*`);
+    const groupFolders = await glob( join( folders.ld, '*' ));
     const groups = [];
     for (let x = 0; x < groupFolders.length; x++) {
-      const f = groupFolders[x].split('/');
+      const f = groupFolders[x].includes('\\') ?
+        groupFolders[x].split('\\') :
+        groupFolders[x].split('/');
       groups.push(f.pop());
     }
     groups.sort((a, b) => {
@@ -519,7 +511,7 @@ async function writeGroup(group) {
     console.error('No group name set!');
     return false;
   }
-  const path = resolve(CWD, `./livingdocs/${group}`);
+  const path = join( folders.ld, group );
   try {
     const stat = await statSync(path);
     console.error(`Group "${group}" allready exist!`);

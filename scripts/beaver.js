@@ -1,8 +1,9 @@
 import { writeFileSync, readFileSync } from 'node:fs';
-import { resolve, relative } from 'node:path';
+import path from 'node:path';
 import { colors } from './colors.js';
 import { readNsWowJson } from './utils.js';
 import colorPalette from '@kne/color-palette';
+import * as folders from '../srl/plugins/folders.js';
 /**
  * Maps the values of an object or array recursively.
  *
@@ -45,7 +46,7 @@ function mapValues(values) {
  * @returns {string} - The generated SCSS code.
  */
 function writeTypographyScss(typography) {
-  let r = [`@use "config";`, `@forward "@multivisio/nswow/scss/typography";`];
+  let r = [`@use "config";`, `@forward "../scss/typography";`];
   if (typography) {
     if (typography.typography) {
       let o = [];
@@ -56,7 +57,7 @@ function writeTypographyScss(typography) {
         o.push(`}\n`);
       }
       if (o.length) {
-        r.push(`@use "@multivisio/nswow/scss/typography";\n`);
+        r.push(`@use "../scss/typography";\n`);
         r.push(o.join(`\n`));
       }
     }
@@ -71,7 +72,7 @@ function writeTypographyScss(typography) {
  * @returns {string} - The SCSS code for importing and forwarding colors.
  */
 function writeColorsScss(colors) {
-  let r = [`@use "config";`, `@forward "@multivisio/nswow/scss/colors";`];
+  let r = [`@use "config";`, `@forward "../scss/colors";`];
   if (colors) {
     if (colors.colors) {
       let o = [];
@@ -83,7 +84,7 @@ function writeColorsScss(colors) {
       }
 
       if (o.length) {
-        r.push(`@use "@multivisio/nswow/scss/colors";\n`);
+        r.push(`@use "../scss/colors";\n`);
         r.push(o.join(`\n`));
       }
     }
@@ -169,7 +170,7 @@ function makeScssVariables(values, indent = 2) {
  */
 async function beaver(verbose = 0) {
   const configJson = await readNsWowJson();
-  const nswowPath = resolve(process.cwd(), './nswow');
+  const nswowPath = folders.srlSystem;
 
   if (typeof verbose === 'boolean') {
     verbose = verbose ? 1 : 0;
@@ -186,7 +187,7 @@ async function beaver(verbose = 0) {
   if (typeof configJson.fonts !== 'undefined') {
     const fontBasePath = configJson.fonts['font-base-path'] ?? '';
     if (fontBasePath.length) {
-      configJson.fonts['font-base-path'] = '.' + fontBasePath;
+      configJson.fonts['font-base-path'] = '.' + path.normalize(fontBasePath);
     }
     if (typeof configJson.fonts.fonts !== 'undefined') {
       for (let x = 0; x < configJson.fonts.fonts.length; x++) {
@@ -194,7 +195,7 @@ async function beaver(verbose = 0) {
         if (typeof font === 'string') {
           configJson.fonts.fonts[x] = JSON.parse(
             readFileSync(
-              resolve(process.cwd(), `${fontBasePath}/${font}/styles.json`),
+              path.join( process.cwd(), fontBasePath, font, 'styles.json')
             ),
           );
         }
@@ -262,7 +263,7 @@ async function beaver(verbose = 0) {
     if (typeof map[file] !== 'undefined') {
       const o = [];
       o.push(
-        `@use "@multivisio/nswow/scss/${file}/variables.scss" as ${file}Variables with (`,
+        `@use "../scss/${file}/variables.scss" as ${file}Variables with (`,
       );
       let v = [];
       for (const variable in map[file]) {
@@ -275,14 +276,14 @@ async function beaver(verbose = 0) {
   });
 
   configOutput = configOutput.join(`\n`);
-  const configFile = `${nswowPath}/config.scss`;
+  const configFile = path.join(nswowPath, 'config.scss');
   writeFileSync(configFile, configOutput);
 
-  const typographyFile = `${nswowPath}/typography.scss`;
+  const typographyFile = path.join(nswowPath, 'typography.scss');
   const typographyOutput = writeTypographyScss(map.typography);
   writeFileSync(typographyFile, typographyOutput);
 
-  const colorsFile = `${nswowPath}/colors.scss`;
+  const colorsFile = path.join(nswowPath, 'colors.scss');
   const colorsOutput = writeColorsScss(map.colors);
   writeFileSync(colorsFile, colorsOutput);
 
@@ -290,21 +291,21 @@ async function beaver(verbose = 0) {
     console.log(colors.info(`\nThe following files has been written.\n`));
 
     console.log(
-      colors.bgWhite(colors.file(relative(process.cwd(), configFile))),
+      colors.bgWhite(colors.file(path.relative(process.cwd(), configFile))),
     );
     if (verbose > 1) {
       console.log(colors.prompt(`\n` + configOutput + `\n`));
     }
 
     console.log(
-      colors.bgWhite(colors.file(relative(process.cwd(), typographyFile))),
+      colors.bgWhite(colors.file(path.relative(process.cwd(), typographyFile))),
     );
     if (verbose > 1) {
       console.log(colors.prompt(`\n` + typographyOutput + `\n`));
     }
 
     console.log(
-      colors.bgWhite(colors.file(relative(process.cwd(), colorsFile))),
+      colors.bgWhite(colors.file(path.relative(process.cwd(), colorsFile))),
     );
     if (verbose > 1) {
       console.log(colors.prompt(`\n` + colorsOutput + `\n`));

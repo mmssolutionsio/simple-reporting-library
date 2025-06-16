@@ -1,4 +1,4 @@
-import { resolve } from 'node:path';
+import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 
@@ -26,7 +26,7 @@ function lddGroupNames(name) {
  * @returns {Promise<Object>} A Promise that resolves to the parsed contents of the package.json file.
  */
 async function readPackageJson() {
-  const file = resolve(process.cwd(), './package.json');
+  const file = join( process.cwd(), 'package.json' );
   return JSON.parse(await readFileSync(file));
 }
 
@@ -38,7 +38,7 @@ async function readPackageJson() {
  */
 async function writePackageJson(config) {
   if (config) {
-    const file = resolve(process.cwd(), './package.json');
+    const file = join( process.cwd(), 'package.json' );
     writeJson.sync(file, config);
   }
   return true;
@@ -50,7 +50,7 @@ async function writePackageJson(config) {
  * @return {Promise<Object>} A promise that resolves to the parsed JSON from the file.
  */
 async function readLivingDocsJson() {
-  const file = resolve(process.cwd(), './livingdocs.config.json');
+  const file = join( process.cwd(), 'livingdocs.config.json' );
   return JSON.parse(await readFileSync(file));
 }
 
@@ -62,7 +62,7 @@ async function readLivingDocsJson() {
  */
 async function writeLivingDocsJson(config) {
   if (config) {
-    const file = resolve(process.cwd(), './livingdocs.config.json');
+    const file = join( process.cwd(), 'livingdocs.config.json' );
     writeJson.sync(file, config);
   }
   return true;
@@ -74,7 +74,7 @@ async function writeLivingDocsJson(config) {
  * @returns {Promise<Object>} - Resolves to the parsed JSON object from the `nswow.config.json` file.
  */
 async function readNsWowJson() {
-  const file = resolve(process.cwd(), './nswow.config.json');
+  const file = join( process.cwd(), 'srl.config.json');
   return JSON.parse(await readFileSync(file));
 }
 
@@ -88,7 +88,7 @@ async function readNsWowJson() {
  */
 async function writeNsWowJson(config) {
   if (config) {
-    const file = resolve(process.cwd(), './nswow.config.json');
+    const file = join( process.cwd(), 'srl.config.json' );
     writeJson.sync(file, config);
   }
   return true;

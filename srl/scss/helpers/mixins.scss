@@ -1,0 +1,54 @@
+@use '../system';
+@use '../typography';
+@use 'variables';
+
+@mixin trim-margins {
+  > * {
+    &:first-child {
+      margin-block-start: 0;
+    }
+    &:last-child {
+      margin-block-end: 0;
+    }
+  }
+}
+
+@mixin list-reset() {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  li {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@mixin list-default($list-style: circle) {
+  list-style: #{$list-style};
+  margin: system.size-unit(variables.$default-list-margin);
+  padding: system.size-unit(variables.$default-list-padding);
+  li {
+    margin: system.size-unit(variables.$default-list-margin);
+    padding: system.size-unit(variables.$default-list-padding);
+  }
+}
+
+@mixin clearfix {
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin core-styles {
+  .#{variables.$class-prefix}list-reset {
+    @include list-reset;
+  }
+  .#{variables.$class-prefix}trim-margins {
+    @include trim-margins;
+  }
+  .#{variables.$class-prefix}clearfix {
+    @include clearfix;
+  }
+}
