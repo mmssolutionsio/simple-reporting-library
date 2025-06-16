@@ -350,9 +350,11 @@ async function writeComponent(group, name) {
       await statSync( join( folders.ld, group ));
     } catch (e) {
       await mkdirSync( join( folders.ld, group ));
+      await mkdirSync( join( folders.ld, group ));
     }
 
     await mkdirSync( join( folders.ld, group, name ));
+    await mkdirSync( join( folders.ld, group, name, 'scss' ));
     await writeFileSync(
       join( folders.ld, group, name, `${name}.html` ),
 `<p class="srl-${name} srl-article__grid srl-article__grid--content">
@@ -363,13 +365,19 @@ async function writeComponent(group, name) {
 `,
     );
     await writeFileSync(
+      join( folders.ld, group, name, `ld-conf.json` ),
+`{
+  "name": "${name}",
+  "label": "${name.charAt(0).toUpperCase()}${name.slice(1)}"
+}`,
+    );
+    await writeFileSync(
       join( folders.ld, group, name, 'scss', `general.scss` ),
-      `@use "srl";
+`@use "srl";
 
 .srl-${name} {
 
-}
-`,
+}`,
     );
     await writeFileSync(
       join( folders.ld, group, name, 'scss', `_web.scss` ),
@@ -394,6 +402,10 @@ async function writeComponent(group, name) {
     await writeFileSync(
       join( folders.ld, group, name, 'scss', `word.scss` ),
       '@use "_print";',
+    );
+    await writeFileSync(
+      join( folders.ld, group, name, 'scss', `xbrl.scss` ),
+      '@use "srl";',
     );
     await writeFileSync(
       join( folders.ld, group, name, `properties.json` ),

@@ -1,4 +1,4 @@
-import { App } from 'vue';
+import { type App } from 'vue';
 import SrlAriaTabChain from '../components/Srl/Aria/TabChain.vue';
 import SrlArticleAutoload from '../components/Srl/Article/Autoload.vue';
 import SrlArticleRoot from '../components/Srl/Article/Root.vue';

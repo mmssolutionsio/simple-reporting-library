@@ -36,7 +36,7 @@
  * console.log(viewport.value.viewPort) // Current viewport category (e.g., "sm", "md", "lg")
  * console.log(viewport.value.innerWidth) // Current window width in pixels
  */
-import { grid } from '~/nswow.config.json';
+import { grid } from '~/srl.config.json';
 import { computed, ref, type ComputedRef } from 'vue';
 
 type Breakpoints = {

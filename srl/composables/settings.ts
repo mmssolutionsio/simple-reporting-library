@@ -1,5 +1,5 @@
 import useConfig from './config';
-import { computed, ComputedRef } from 'vue';
+import { computed, type ComputedRef } from 'vue';
 
 const config = useConfig();
 

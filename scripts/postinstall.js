@@ -2,8 +2,6 @@ import * as folders from '../srl/plugins/folders.js'
 import fs from 'fs'
 import path from 'path'
 
-console.log(folders)
-
 if (fs.existsSync(folders.srlRoot)) {
   fs.rmSync(folders.srlRoot, { recursive: true, force: true })
 }
@@ -58,5 +56,3 @@ const mergedPaths = {
 appTsConfig.compilerOptions.paths = mergedPaths
 
 fs.writeFileSync(appTsConfigPath, JSON.stringify(appTsConfig, null, 2))
-
-console.log(path.join( folders.ld, '**', 'properties.{json,js,ts}' ))

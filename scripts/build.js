@@ -9,7 +9,6 @@ import {
   rmSync,
   cpSync,
 } from 'node:fs';
-import { fileURLToPath, URL } from 'node:url';
 import { createRequire } from 'node:module';
 import { glob } from 'glob';
 import { beaver } from './beaver.js';
@@ -130,6 +129,18 @@ async function buildApp() {
     `<base href="[[base-${placeholderId}]]" />
     [[meta-${placeholderId}]]`,
   );
+
+  index = index.replace(
+    /(<div\s+[^>]*id\s*=\s*["']app["'][^>]*>)([\s\S]*?)(<\/div>)/i,
+    `$1
+      <template>
+        [[content-${placeholderId}]]
+      </template>
+    $3`
+  )
+
+
+
   await mkdirSync( join(outputPath, 'app', 'template'), { recursive: true });
   await writeFileSync( join(outputPath, 'app', 'template', 'article.html'), index);
   /**
@@ -446,9 +457,6 @@ async function build() {
     });
     const version = await prompt.run();
     await cleanOutput();
-    await beaver(1);
-    await mapScss();
-    await mapLdd();
     await buildApp();
     await buildPdf();
     await buildWord();
@@ -494,13 +502,14 @@ function cleanupScssAlias(string) {
 async function mapScss() {
   await checkFolders();
   try {
-    const relativePathToRoot = join('..', '..');
+    const relativePathToRoot = join('..', '..', '/');
 
     const output = {
       app: [],
       ldd: [],
       pdf: [],
       word: [],
+      xbrl: [],
     };
 
     const mainFiles = await glob(
@@ -514,35 +523,38 @@ async function mapScss() {
       return p.name === 'general.scss';
     });
 
-    const alias = cleanupScssAlias(f.relative());
-
     if (f) {
-      output.app.push(`"${relativePathToRoot}${f.relative()}" as ${alias}`);
-      output.ldd.push(`"${relativePathToRoot}${f.relative()}" as ${alias}`);
-      output.pdf.push(`"${relativePathToRoot}${f.relative()}" as ${alias}`);
-      output.word.push(`"${relativePathToRoot}${f.relative()}" as ${alias}`);
+      output.app.push(`"${relativePathToRoot}${f.relative()}" as *`);
+      output.ldd.push(`"${relativePathToRoot}${f.relative()}" as *`);
+      output.pdf.push(`"${relativePathToRoot}${f.relative()}" as *`);
+      output.word.push(`"${relativePathToRoot}${f.relative()}" as *`);
     }
 
     for (let x = 0; x < mainFiles.length; x++) {
       const alias = cleanupScssAlias(mainFiles[x].relative());
       if (mainFiles[x].name === 'app.scss') {
         output.app.push(
-          `"${relativePathToRoot}${mainFiles[x].relative()}" as ${alias}`,
+          `"${relativePathToRoot}${mainFiles[x].relative()}" as *`,
         );
       }
       if (mainFiles[x].name === 'ldd.scss') {
         output.ldd.push(
-          `"${relativePathToRoot}${mainFiles[x].relative()}" as ${alias}`,
+          `"${relativePathToRoot}${mainFiles[x].relative()}" as *`,
         );
       }
       if (mainFiles[x].name === 'pdf.scss') {
         output.pdf.push(
-          `"${relativePathToRoot}${mainFiles[x].relative()}" as ${alias}`,
+          `"${relativePathToRoot}${mainFiles[x].relative()}" as *`,
         );
       }
       if (mainFiles[x].name === 'word.scss') {
         output.word.push(
-          `"${relativePathToRoot}${mainFiles[x].relative()}" as ${alias}`,
+          `"${relativePathToRoot}${mainFiles[x].relative()}" as *`,
+        );
+      }
+      if (mainFiles[x].name === 'xbrl.scss') {
+        output.xbrl.push(
+          `"${relativePathToRoot}${mainFiles[x].relative()}" as *`,
         );
       }
     }
@@ -576,59 +588,64 @@ async function mapScss() {
     for (let x = 0; x < livingdocsList.length; x++) {
       const p = livingdocsList[x];
       try {
-        const general = await statSync(join(p.fullpath(), 'general.scss' ));
-        const alias = cleanupScssAlias( p.relative + 'general.scss' );
+        const general = await statSync(join(p.fullpath(), 'scss', 'general.scss' ));
         output.app.push(
-          `"${relativePathToRoot}${p.relative()}/general.scss" as ${alias}`,
+          `"${relativePathToRoot}${p.relative()}/scss/general.scss" as *`,
         );
         output.ldd.push(
-          `"${relativePathToRoot}${p.relative()}/general.scss" as ${alias}`,
+          `"${relativePathToRoot}${p.relative()}/scss/general.scss" as *`,
         );
         output.pdf.push(
-          `"${relativePathToRoot}${p.relative()}/general.scss" as ${alias}`,
+          `"${relativePathToRoot}${p.relative()}/scss/general.scss" as *`,
         );
         output.word.push(
-          `"${relativePathToRoot}${p.relative()}/general.scss" as ${alias}`,
+          `"${relativePathToRoot}${p.relative()}/scss/general.scss" as *`,
         );
       } catch (e) {}
 
-      const types = ['app', 'ldd', 'pdf', 'word'];
+      const types = ['app', 'ldd', 'pdf', 'word', 'xbrl'];
 
       for (let i = 0; i < types.length; i++) {
         const type = types[i];
         try {
-          const f = await statSync(join( p.fullpath() , `${type}.scss`));
+          const f = await statSync(join( p.fullpath(), 'scss' , `${type}.scss`));
           const alias = cleanupScssAlias(`${p.relative()}/${type}.scss`);
           output[type].push(
-            `"${relativePathToRoot}${p.relative()}/${type}.scss" as ${alias}`,
+            `"${relativePathToRoot}${p.relative()}/scss/${type}.scss" as *`,
           );
         } catch (e) {}
       }
     }
 
     await writeFileSync(
-      join(folders.srlSystem, 'app.scss'),
+      join(folders.srlImports, 'app.scss'),
       `@use ` +
         output.app.join(';\n@use ') +
-        `;\n@use "srl/core-styles" as nswowcorestyles;\n`,
+        `;\n@use "srl/core-styles" as *;\n`,
     );
     await writeFileSync(
-      join(folders.srlSystem, 'ldd.scss'),
+      join(folders.srlImports, 'ldd.scss'),
       `@use ` +
         output.ldd.join(';\n@use ') +
-        `;\n@use "srl/core-styles" as nswowcorestyles;\n`,
+        `;\n@use "srl/core-styles" as *;\n`,
     );
     await writeFileSync(
-      join(folders.srlSystem, 'pdf.scss'),
+      join(folders.srlImports, 'pdf.scss'),
       `@use ` +
         output.pdf.join(';\n@use ') +
-        `;\n@use "srl/core-styles" as nswowcorestyles;\n`,
+        `;\n@use "srl/core-styles" as *;\n`,
     );
     await writeFileSync(
-      join(folders.srlSystem, 'word.scss'),
+      join(folders.srlImports, 'word.scss'),
       `@use ` +
         output.word.join(';\n@use ') +
-        `;\n@use "srl/core-styles" as nswowcorestyles;\n`,
+        `;\n@use "srl/core-styles" as *;\n`,
+    );
+    await writeFileSync(
+      join(folders.srlImports, 'xbrl.scss'),
+      `@use ` +
+      output.xbrl.join(';\n@use ') +
+      `;\n@use "srl/core-styles" as *;\n`,
     );
 
     return true;
@@ -667,7 +684,7 @@ async function mapJs() {
     register.push(`ClassAutoLoader.register(${className}, "${className}")`);
   }
 
-  const content = `import ArticleAutoloader from 'nswow/ArticleAutoloader'
+  const content = `import ArticleAutoloader from 'srl/ArticleAutoloader'
 ${imports.join('\n')}
 const ClassAutoLoader = new ArticleAutoloader()
 ${register.join('\n')}
@@ -788,7 +805,7 @@ async function mapLdd() {
 
     const asyncComponents = [
       `import { defineAsyncComponent } from 'vue'`,
-      `export default function asyncLddComponent(app) {`,
+      `export default function asyncLdComponent(app) {`,
     ];
 
     for (let i = 0; i < vueComponents.length; i++) {
@@ -801,7 +818,7 @@ async function mapLdd() {
     asyncComponents.push('}');
 
     await writeFileSync(
-      join( folders.srlPlugins, 'asyncLddComponent.ts'),
+      join( folders.srlPlugins, 'asyncLdComponent.ts'),
       asyncComponents.join('\n'),
     );
 
