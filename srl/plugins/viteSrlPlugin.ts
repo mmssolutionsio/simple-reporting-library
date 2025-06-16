@@ -1,3 +1,4 @@
+import { type Plugin } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
@@ -10,7 +11,7 @@ const msgBoxLength = 60
 
 const packageName = '@multivisio/nswow'
 
-function centerText(text) {
+function centerText(text: string): string {
   const padding = Math.max(0, (msgBoxLength - text.length) / 2)
   return ' '.repeat(Math.floor(padding)) + text + ' '.repeat(Math.ceil(padding))
 }
@@ -37,7 +38,7 @@ function checkSrlVersion() {
   } catch (e) {}
 }
 
-let timer = null
+let timer: NodeJS.Timeout | null = null
 
 function triggerAction(callback) {
   !timer || clearTimeout(timer)

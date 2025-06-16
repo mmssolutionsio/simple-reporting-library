@@ -287,8 +287,6 @@ async function beaver(verbose = 0) {
   const colorsOutput = writeColorsScss(map.colors);
   writeFileSync(colorsFile, colorsOutput);
 
-  console.log(verbose)
-
   if (verbose > 0) {
     console.log(colors.info(`\nThe following files has been written.\n`));
 

@@ -116,7 +116,6 @@ async function buildApp() {
   });
   console.log('\n');
 
-  console.log('Create fallback file worker.html for service worker');
   let index = await readFileSync( join(folders.srlOutput, 'app', 'index.html'), 'utf8');
 
   console.log('Create file /template/article.html for nswow hybrid\n');
@@ -234,61 +233,27 @@ async function zipApp() {
 async function buildPdf() {
   await checkFolders();
 
+  const config = {
+    base: './',
+    build: {
+      outDir: join(folders.srlOutput, 'pdf'),
+      lib: {
+        fileName: 'pdf',
+        entry: join(CWD, 'pdf.ts'),
+        formats: ['es'],
+      },
+    },
+    resolve: {
+      alias: aliases,
+    },
+    publicDir: false,
+  };
+
   try {
-    const input = join(CWD, 'pdf.html');
-    await statSync(input);
-    return await viteBuild({
-      build: {
-        outDir: join(folders.srlOutput, 'pdf'),
-        rollupOptions: {
-          input: {
-            pdf: input,
-          },
-          output: {
-            entryFileNames: `[name].js`,
-            chunkFileNames: `[name].js`,
-            assetFileNames: `[name].[ext]`,
-          },
-        },
-        copyPublicDir: false,
-      },
-    });
+    return await viteBuild(config);
   } catch (e) {
-    let configFile = false;
-    try {
-      const file = join(CWD, 'vite.config.pdf.ts');
-      await statSync(file);
-      console.log('Use vite.config.pdf.ts file');
-      configFile = file;
-    } catch (e) {
-      console.log('No use of vite.config.pdf.ts file');
-    }
-
-    const entry = join(CWD, 'pdf.ts');
-
-    const config = {
-      configFile: configFile,
-      base: './',
-      build: {
-        outDir: join(folders.srlOutput, 'pdf'),
-        lib: {
-          fileName: 'pdf',
-          entry: entry,
-          formats: ['es'],
-        },
-      },
-      resolve: {
-        alias: aliases,
-      },
-      publicDir: false,
-    };
-
-    try {
-      return await viteBuild(config);
-    } catch (e) {
-      console.error(e);
-      return false;
-    }
+    console.error(e);
+    return false;
   }
 }
 
@@ -382,62 +347,29 @@ async function buildLdd(version) {
  */
 async function buildWord() {
   await checkFolders();
+    let configFile = false;
+
+  const config = {
+    base: './',
+    build: {
+      outDir: join( folders.srlOutput, 'word'),
+      lib: {
+        fileName: 'word',
+        entry: join(CWD, 'word.ts'),
+        formats: ['es'],
+      },
+    },
+    resolve: {
+      alias: aliases,
+    },
+    publicDir: false,
+  };
 
   try {
-    const input = join(CWD, 'word.html');
-    await statSync(input);
-    return await viteBuild({
-      build: {
-        outDir: join(folders.srlOutput, 'word'),
-        rollupOptions: {
-          input: {
-            word: input,
-          },
-          output: {
-            entryFileNames: `[name].js`,
-            chunkFileNames: `[name].js`,
-            assetFileNames: `[name].[ext]`,
-          },
-        },
-        copyPublicDir: false,
-      },
-    });
+    return await viteBuild(config);
   } catch (e) {
-    let configFile = false;
-    try {
-      const file = join(CWD, 'vite.config.word.ts');
-      await statSync(file);
-      console.log('Use vite.config.word.ts file');
-      configFile = file;
-    } catch (e) {
-      console.log('No use of vite.config.word.ts file');
-    }
-
-    const entry = join(CWD, 'word.ts');
-
-    const config = {
-      configFile: configFile,
-      base: './',
-      build: {
-        outDir: join( folders.srlOutput, 'word'),
-        lib: {
-          fileName: 'word',
-          entry: entry,
-          formats: ['es'],
-        },
-      },
-      resolve: {
-        alias: aliases,
-      },
-      publicDir: false,
-    };
-
-    try {
-      return await viteBuild(config);
-    } catch (e) {
-      console.error(e);
-      return false;
-    }
+    console.error(e);
+    return false;
   }
 }
 
