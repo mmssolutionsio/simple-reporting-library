@@ -3,7 +3,7 @@ import path from 'node:path';
 import { colors } from './colors.js';
 import { readNsWowJson } from './utils.js';
 import colorPalette from '@kne/color-palette';
-import * as folders from '../srl/plugins/folders.js';
+import folders from './folders.js';
 /**
  * Maps the values of an object or array recursively.
  *

@@ -1,16 +1,13 @@
 import { createRequire } from 'node:module';
-import { resolve, join } from 'node:path';
+import { join } from 'node:path';
 import { glob } from 'glob';
 import { copy } from 'fs-extra';
 import { rm, statSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
 import { lddGroupNames } from './utils.js';
 import { map } from './build.js';
-import * as folders from '../srl/plugins/folders.js';
+import folders from './folders.js';
 
 const require = createRequire(import.meta.url);
-
-const packagePath = folders.packagePath;
-const CWD = folders.root;
 
 const { MultiSelect, Confirm, AutoComplete } = require('enquirer');
 

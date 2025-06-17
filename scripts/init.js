@@ -3,9 +3,10 @@ import fs from 'fs-extra';
 import { statSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
-import * as folders from '../srl/plugins/folders.js';
 
 const require = createRequire(import.meta.url);
+
+const { Input } = require('enquirer');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,6 +19,16 @@ const __dirname = dirname(__filename);
  * @return {Promise<void>} - A promise that resolves when the project initialization is complete.
  */
 async function init(folder, options) {
+
+  const prompt = new Input({
+    message: 'Project name',
+    initial: folder,
+  });
+  let projectName = await prompt.run();
+  if (projectName === '') {
+    projectName = folder;
+  }
+
   const projectPath = join( process.cwd(), folder );
 
   try {
@@ -27,7 +38,7 @@ async function init(folder, options) {
     await fs.copy(join(__dirname, '..' , 'dev'), projectPath).then(async () => {
       const packageJsonFile = join(projectPath, 'package.json');
       const packageJson = JSON.parse(await readFileSync(packageJsonFile));
-      packageJson.name = folder;
+      packageJson.name = projectName;
       const writeJson = require('write-json');
       writeJson.sync(packageJsonFile, packageJson);
 

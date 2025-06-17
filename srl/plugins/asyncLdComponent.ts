@@ -1,3 +1,4 @@
 import { defineAsyncComponent } from 'vue'
-export default function asyncLddComponent(app) {
+export default function asyncLdComponent(app) {
+ app.component('SrlArticleTable', defineAsyncComponent(() => import('#ld/Media/table/table.vue')))
 }

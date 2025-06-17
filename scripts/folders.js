@@ -1,8 +1,8 @@
 import { join } from 'path';
 
 export const root = process.cwd()
-export const packeage = join('@multivisio', 'nswow')
-export const packagePath = join(root, 'node_modules', packeage)
+export const packageName = join('@multivisio', 'nswow')
+export const packagePath = join(root, 'node_modules', packageName)
 export const packageSrl = join(packagePath, 'srl')
 export const packageLd = join(packagePath, 'livingdocs')
 export const srlRoot = join(root, '.srl')
@@ -20,3 +20,26 @@ export const srlSrc = join(root, 'src')
 export const srlAssets = join(srlSrc, 'assets')
 export const srlEntries = join(srlSrc, 'entries')
 export const ld = join(root, 'livingdocs')
+
+export default {
+  root,
+  packageName,
+  packagePath,
+  packageSrl,
+  packageLd,
+  srlRoot,
+  srlSystem,
+  srlComponents,
+  srlComposables,
+  srlUtils,
+  srlPlugins,
+  srlScss,
+  srlImports,
+  srlTypes,
+  srlOutput,
+  srlPublic,
+  srlSrc,
+  srlAssets,
+  srlEntries,
+  ld
+}

@@ -54,11 +54,10 @@ async function startActions() {
   await mapJs()
 }
 
-export default function viteSrlPlugin() {
+export default function viteSrlPlugin(): Plugin {
   return {
     name: 'vite-srl-plugin',
     config(config) {
-
       startActions()
 
       config.base = './'

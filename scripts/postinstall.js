@@ -1,4 +1,4 @@
-import * as folders from '../srl/plugins/folders.js'
+import folders from './folders.js'
 import fs from 'fs'
 import path from 'path'
 

@@ -45,3 +45,8 @@ export function isExternalPath(path: string): boolean {
     path?.startsWith('whatsapp')
   );
 }
+
+export default {
+  isRouterPath,
+  isExternalPath,
+}

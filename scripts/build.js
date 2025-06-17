@@ -21,11 +21,9 @@ import {
   writeLivingDocsJson,
 } from './utils.js';
 import { camelCase } from 'cheerio/utils';
-import * as folders from '../srl/plugins/folders.js';
-import aliases from '../srl/plugins/aliases.js';
+import folders from './folders.js';
 
 const placeholderId = '6297EAFB-33A0-48B8-8D64-E61CDC3E9035';
-const CWD = folders.root;
 const nswowPath = folders.srlImports;
 const outputPath = folders.srlOutput;
 const require = createRequire(import.meta.url);
@@ -245,8 +243,29 @@ async function buildPdf() {
         formats: ['es'],
       },
     },
-    resolve: {
-      alias: aliases,
+    publicDir: false,
+  };
+
+  try {
+    return await viteBuild(config);
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+}
+
+async function buildXbrl() {
+  await checkFolders();
+
+  const config = {
+    base: './',
+    build: {
+      outDir: join(folders.srlOutput, 'xbrl'),
+      lib: {
+        fileName: 'xbrl',
+        entry: join(folders.srlEntries, 'xbrl.ts'),
+        formats: ['es'],
+      },
     },
     publicDir: false,
   };
@@ -291,9 +310,6 @@ async function buildLdd(version) {
         entry: join(folders.srlEntries, 'ldd.ts'),
         formats: ['es'],
       },
-    },
-    resolve: {
-      alias: aliases,
     },
     publicDir: false,
   };
@@ -419,9 +435,6 @@ async function buildWord() {
         formats: ['es'],
       },
     },
-    resolve: {
-      alias: aliases,
-    },
     publicDir: false,
   };
 
@@ -452,6 +465,7 @@ async function build() {
     await buildApp();
     await buildPdf();
     await buildWord();
+    await buildXbrl();
     await buildLdd(version);
     await zipApp();
   } catch (error) {
