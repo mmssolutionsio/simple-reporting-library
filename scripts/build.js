@@ -627,31 +627,31 @@ async function mapScss() {
       join(folders.srlImports, 'app.scss'),
       `@use ` +
         output.app.join(';\n@use ') +
-        `;\n@use "srl/core-styles" as *;\n`,
+        `;\n@use "../scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'ldd.scss'),
       `@use ` +
         output.ldd.join(';\n@use ') +
-        `;\n@use "srl/core-styles" as *;\n`,
+        `;\n@use "../scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'pdf.scss'),
       `@use ` +
         output.pdf.join(';\n@use ') +
-        `;\n@use "srl/core-styles" as *;\n`,
+        `;\n@use "../scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'word.scss'),
       `@use ` +
         output.word.join(';\n@use ') +
-        `;\n@use "srl/core-styles" as *;\n`,
+        `;\n@use "../scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'xbrl.scss'),
       `@use ` +
       output.xbrl.join(';\n@use ') +
-      `;\n@use "srl/core-styles" as *;\n`,
+      `;\n@use "../scss/xbrl-core-styles.scss" as *;\n`,
     );
 
     return true;
