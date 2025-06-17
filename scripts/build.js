@@ -113,10 +113,7 @@ async function buildApp() {
   });
   console.log('\n');
 
-  console.log('Create fallback file worker.html for service worker');
   let index = await readFileSync(`${outputPath}/app/index.html`, 'utf8');
-
-  await writeFileSync(`${outputPath}/app/worker.html`, index);
 
   console.log('Create file /template/article.html for nswow hybrid\n');
   index = index.replace(
@@ -128,6 +125,16 @@ async function buildApp() {
     `<base href="[[base-${placeholderId}]]" />
     [[meta-${placeholderId}]]`,
   );
+
+  index = index.replace(
+    /(<div\s+[^>]*id\s*=\s*["']app["'][^>]*>)([\s\S]*?)(<\/div>)/i,
+    `$1
+      <template>
+        [[content-${placeholderId}]]
+      </template>
+    $3`,
+  );
+
   await mkdirSync(`${outputPath}/app/template`, { recursive: true });
   await writeFileSync(`${outputPath}/app/template/article.html`, index);
   /**
