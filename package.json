@@ -11,6 +11,7 @@
   },
   "type": "module",
   "scripts": {
+    "postinstall": "node scripts/postinstall.js",
     "preparePublish": "node preparePublish.cjs && prettier --write --list-different .",
     "lint": "prettier --check .",
     "lint:fix": "prettier --write ."

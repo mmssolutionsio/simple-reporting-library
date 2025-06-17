@@ -1,8 +1,1 @@
-{
-  "version": "v1.0",
-  "languages": ["de", "en"],
-  "defaultLanguage": "de",
-  "shortBreadcrumb": false,
-  "search": { "boldTheWord": true },
-  "categories": []
-}
+{"version":"v1.0","languages":["de","en"],"defaultLanguage":"de","shortBreadcrumb":false,"search":{"boldTheWord":true},"categories":[]}

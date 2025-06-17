@@ -1,4 +1,4 @@
-import ArticleAutoloader from 'nswow/ArticleAutoloader'
+import ArticleAutoloader from 'srl/ArticleAutoloader'
 
 const ClassAutoLoader = new ArticleAutoloader()
 

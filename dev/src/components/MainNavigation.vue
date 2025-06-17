@@ -11,5 +11,5 @@ const props = defineProps<{
 </template>
 
 <style lang="scss">
-@use 'nswow';
+@use 'srl';
 </style>

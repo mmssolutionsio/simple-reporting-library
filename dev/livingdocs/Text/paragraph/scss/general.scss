@@ -1,0 +1,9 @@
+@use 'srl';
+
+.srl-paragraph {
+  color: srl.colors-shade-800();
+  break-before: auto;
+  break-inside: avoid;
+  break-after: auto;
+  @include srl.typography-copy1(true);
+}

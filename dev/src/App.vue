@@ -3,8 +3,8 @@ import PageHeader from '@/components/PageHeader.vue'
 import PageMain from '@/components/PageMain.vue'
 import PageFooter from '@/components/PageFooter.vue'
 import MainNavigation from '@/components/MainNavigation.vue'
-import useMenu from '#composables/menu.ts'
 import BypassLinks from '@/components/BypassLinks.vue'
+import { useMenu } from '#composables'
 
 const mainNavigation = useMenu('menuMain')
 </script>
@@ -20,6 +20,7 @@ const mainNavigation = useMenu('menuMain')
 </template>
 
 <style lang="scss">
+@use 'srl';
 .srl-page__wrap {
   min-height: 100vh;
   display: flex;
