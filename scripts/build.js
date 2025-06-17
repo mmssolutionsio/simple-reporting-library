@@ -88,6 +88,7 @@ async function buildApp() {
     build: {
       copyPublicDir: false,
     },
+    publicDir: false,
   });
 
   // Copy public folder exclude nswow folders
@@ -183,6 +184,7 @@ async function buildDDev() {
     build: {
       outDir: './.output/ddev',
     },
+    publicDir: false,
   });
   return build;
 }
@@ -239,7 +241,7 @@ async function buildPdf() {
       outDir: join(folders.srlOutput, 'pdf'),
       lib: {
         fileName: 'pdf',
-        entry: join(CWD, 'pdf.ts'),
+        entry: join(folders.srlEntries, 'pdf.ts'),
         formats: ['es'],
       },
     },
@@ -286,7 +288,7 @@ async function buildLdd(version) {
       outDir: join(folders.srlOutput, 'ldd', 'assets'),
       lib: {
         fileName: 'ldd',
-        entry: join(CWD, 'ldd.ts'),
+        entry: join(folders.srlEntries, 'ldd.ts'),
         formats: ['es'],
       },
     },
@@ -413,7 +415,7 @@ async function buildWord() {
       outDir: join( folders.srlOutput, 'word'),
       lib: {
         fileName: 'word',
-        entry: join(CWD, 'word.ts'),
+        entry: join(folders.srlEntries, 'word.ts'),
         formats: ['es'],
       },
     },

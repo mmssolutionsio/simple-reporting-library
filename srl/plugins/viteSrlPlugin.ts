@@ -76,8 +76,6 @@ export default function viteSrlPlugin() {
       config.resolve.alias['assets'] = fileURLToPath(new URL('../../src/assets', import.meta.url))
       config.resolve.alias['srl'] = fileURLToPath(new URL('../srl', import.meta.url))
       config.resolve.alias['vue'] = 'vue/dist/vue.esm-bundler.js'
-
-      config.publicDir = process.env.NODE_ENV === 'development'
     },
     configureServer(server) {
       server.watcher.on('change', (path) => {
