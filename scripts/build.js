@@ -280,6 +280,62 @@ async function buildLdd(version) {
   lddJson.name = packageJson.name;
   lddJson.version = packageJson.version;
 
+  const config = {
+    base: './',
+    build: {
+      outDir: join(folders.srlOutput, 'ldd', 'assets'),
+      lib: {
+        fileName: 'ldd',
+        entry: join(CWD, 'ldd.ts'),
+        formats: ['es'],
+      },
+    },
+    resolve: {
+      alias: aliases,
+    },
+    publicDir: false,
+  };
+
+  await writeFileSync(join( outputPath, `v${lddJson.version}.txt`), '');
+
+  try {
+    return await viteBuild(config).then(async () => {
+      const assetsPath = join( outputPath, 'ldd', 'assets');
+      const assetsFiles = await readdirSync(assetsPath);
+      lddJson.assets.css = [];
+      lddJson.assets.js = [];
+      for (let i = 0; i < assetsFiles.length; i++) {
+        const file = assetsFiles[i];
+        if (file.endsWith('.css')) {
+          const path = './assets/' + file;
+          if (!lddJson.assets.css.includes(path)) {
+            action = true;
+            lddJson.assets.css.push(path);
+          }
+        }
+        if (file.endsWith('.js')) {
+          const path = './assets/' + file;
+          if (!lddJson.assets.js.includes(path)) {
+            action = true;
+            lddJson.assets.js.push(path);
+          }
+        }
+      }
+      if (action) {
+        await writeLivingDocsJson(lddJson);
+      }
+      return true;
+    })
+      .then(async () => {
+        return await finalizeLdd();
+      });
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+
+  /*
+
   const input = resolve(CWD, 'ldd.html');
   try {
     await statSync(input);
@@ -287,7 +343,7 @@ async function buildLdd(version) {
     return true;
   }
   try {
-    await writeFileSync(`${outputPath}/v${lddJson.version}.txt`, '');
+    await writeFileSync(join( outputPath, `v${lddJson.version}.txt`), '');
     return await viteBuild({
       build: {
         outDir: './.output/ldd',
@@ -336,6 +392,8 @@ async function buildLdd(version) {
     console.error(e);
     return false;
   }
+
+   */
 }
 
 /**
