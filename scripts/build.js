@@ -136,6 +136,7 @@ async function buildApp() {
   );
 
   await mkdirSync(`${outputPath}/app/template`, { recursive: true });
+  await writeFileSync(`${outputPath}/app/index.html`, index);
   await writeFileSync(`${outputPath}/app/template/article.html`, index);
   /**
    await writeFileSync(`${outputPath}/app/web.config`, `<?xml version="1.0" encoding="UTF-8"?>
