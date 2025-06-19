@@ -1,1 +1,1 @@
-import "#imports/xbrl.scss"
+import '#imports/xbrl.scss'

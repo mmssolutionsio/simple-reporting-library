@@ -78,7 +78,9 @@ function buildNav(
   return res;
 }
 
-export default function useMenu(name: string): ComputedRef<NsWowNavigationItem[]> {
+export default function useMenu(
+  name: string,
+): ComputedRef<NsWowNavigationItem[]> {
   if (menus[name]) {
     return menus[name];
   } else {

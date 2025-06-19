@@ -1,15 +1,15 @@
-import ArticleLoader from './ArticleLoader'
-import { camelCase } from 'cheerio/utils'
+import ArticleLoader from './ArticleLoader';
+import { camelCase } from 'cheerio/utils';
 
-type AutoloadList = string | string[]
+type AutoloadList = string | string[];
 
 /**
  * Class representing an ArticleAutoloader.
  * @class
  */
 class ArticleAutoloader {
-  classes: { [key: string]: { new (node: HTMLElement, options: any): any } }
-  selector: string
+  classes: { [key: string]: { new (node: HTMLElement, options: any): any } };
+  selector: string;
 
   /**
    * Constructor for the class.
@@ -18,8 +18,8 @@ class ArticleAutoloader {
    * @constructor
    */
   constructor() {
-    this.classes = {}
-    this.selector = '[data-autoload]'
+    this.classes = {};
+    this.selector = '[data-autoload]';
   }
 
   /**
@@ -29,10 +29,10 @@ class ArticleAutoloader {
    * @return {void}
    */
   init(obj: HTMLElement) {
-    const nodes: NodeListOf<Element> = obj.querySelectorAll(this.selector)
+    const nodes: NodeListOf<Element> = obj.querySelectorAll(this.selector);
     if (nodes) {
       for (let index = 0; index < nodes.length; index++) {
-        this._initAutoload(nodes[index] as HTMLElement)
+        this._initAutoload(nodes[index] as HTMLElement);
       }
     }
   }
@@ -44,7 +44,7 @@ class ArticleAutoloader {
    * @param {string} className - The name to associate with the object class.
    */
   register(objClass: ArticleLoader, className: string) {
-    this.classes[camelCase(className)] = objClass
+    this.classes[camelCase(className)] = objClass;
   }
 
   /**
@@ -58,7 +58,7 @@ class ArticleAutoloader {
    */
   _createInstance(node: HTMLElement, options: any, className: string) {
     if (this.classes[className] !== undefined) {
-      new this.classes[className](node, options)
+      new this.classes[className](node, options);
     }
   }
 
@@ -68,33 +68,33 @@ class ArticleAutoloader {
    * @param {HTMLElement} node - The node for which to initialize the autoload feature.
    */
   _initAutoload(node: HTMLElement): void {
-    let load: AutoloadList = node.dataset.autoload
+    let load: AutoloadList = node.dataset.autoload;
 
     // Converting to array in case of single string for uniform processing
     try {
-      load = JSON.parse(load)
+      load = JSON.parse(load);
     } catch (e) {
-      load = load.split(' ')
+      load = load.split(' ');
     }
 
     if (typeof load === 'string') {
-      load = [load]
+      load = [load];
     }
     // check if it's a single string or a list
     if (load.length === 1) {
-      const options = node.dataset.options || {}
-      this._createInstance(node, options, camelCase(load[0]))
+      const options = node.dataset.options || {};
+      this._createInstance(node, options, camelCase(load[0]));
     } else {
-      const optionsDataSet = JSON.parse(node.dataset.options || '{}')
+      const optionsDataSet = JSON.parse(node.dataset.options || '{}');
       for (const className of load) {
         if (className !== '') {
-          const options = optionsDataSet[className] || {}
-          this._createInstance(node, options, camelCase(className))
+          const options = optionsDataSet[className] || {};
+          this._createInstance(node, options, camelCase(className));
         }
       }
     }
   }
 }
 
-export default ArticleAutoloader
-export { ArticleAutoloader }
+export default ArticleAutoloader;
+export { ArticleAutoloader };

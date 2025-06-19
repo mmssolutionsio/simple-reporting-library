@@ -81,10 +81,12 @@ function back(event: KeyboardEvent) {
 }
 
 function link() {
+  !props.item.callback || props.item.callback();
   emit('link');
 }
 
 function routerChange() {
+  !props.item.callback || props.item.callback();
   emit('link');
   emit('routerChange');
 }

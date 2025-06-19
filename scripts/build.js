@@ -93,9 +93,7 @@ async function buildApp() {
   console.log(
     '\n\nCopy public folder exclude nswow folders and exclude folder',
   );
-  await cpSync(
-    join(folders.srlPublic, '/'),
-    join(outputPath, 'app'), {
+  await cpSync(join(folders.srlPublic, '/'), join(outputPath, 'app'), {
     filter: (src) => {
       if (
         src.startsWith(join(folders.srlPublic, 'downloads')) ||
@@ -115,7 +113,10 @@ async function buildApp() {
   });
   console.log('\n');
 
-  let index = await readFileSync( join(folders.srlOutput, 'app', 'index.html'), 'utf8');
+  let index = await readFileSync(
+    join(folders.srlOutput, 'app', 'index.html'),
+    'utf8',
+  );
 
   console.log('Create file /template/article.html for nswow hybrid\n');
   index = index.replace(
@@ -134,13 +135,14 @@ async function buildApp() {
       <template>
         [[content-${placeholderId}]]
       </template>
-    $3`
-  )
+    $3`,
+  );
 
-
-
-  await mkdirSync( join(outputPath, 'app', 'template'), { recursive: true });
-  await writeFileSync( join(outputPath, 'app', 'template', 'article.html'), index);
+  await mkdirSync(join(outputPath, 'app', 'template'), { recursive: true });
+  await writeFileSync(
+    join(outputPath, 'app', 'template', 'article.html'),
+    index,
+  );
   /**
    await writeFileSync(`${outputPath}/app/web.config`, `<?xml version="1.0" encoding="UTF-8"?>
    <configuration>
@@ -197,7 +199,7 @@ async function buildDDev() {
 async function zipApp() {
   await checkFolders();
   const archiver = require('archiver');
-  const output = createWriteStream( join(outputPath, 'app.zip'));
+  const output = createWriteStream(join(outputPath, 'app.zip'));
   const archive = archiver('zip', {
     zlib: { level: 9 }, // Sets the compression level.
   });
@@ -220,7 +222,7 @@ async function zipApp() {
     throw err;
   });
   archive.pipe(output);
-  archive.directory(join( outputPath, 'app', '/'), false);
+  archive.directory(join(outputPath, 'app', '/'), false);
   archive.finalize();
 }
 
@@ -314,36 +316,37 @@ async function buildLdd(version) {
     publicDir: false,
   };
 
-  await writeFileSync(join( outputPath, `v${lddJson.version}.txt`), '');
+  await writeFileSync(join(outputPath, `v${lddJson.version}.txt`), '');
 
   try {
-    return await viteBuild(config).then(async () => {
-      const assetsPath = join( outputPath, 'ldd', 'assets');
-      const assetsFiles = await readdirSync(assetsPath);
-      lddJson.assets.css = [];
-      lddJson.assets.js = [];
-      for (let i = 0; i < assetsFiles.length; i++) {
-        const file = assetsFiles[i];
-        if (file.endsWith('.css')) {
-          const path = './assets/' + file;
-          if (!lddJson.assets.css.includes(path)) {
-            action = true;
-            lddJson.assets.css.push(path);
+    return await viteBuild(config)
+      .then(async () => {
+        const assetsPath = join(outputPath, 'ldd', 'assets');
+        const assetsFiles = await readdirSync(assetsPath);
+        lddJson.assets.css = [];
+        lddJson.assets.js = [];
+        for (let i = 0; i < assetsFiles.length; i++) {
+          const file = assetsFiles[i];
+          if (file.endsWith('.css')) {
+            const path = './assets/' + file;
+            if (!lddJson.assets.css.includes(path)) {
+              action = true;
+              lddJson.assets.css.push(path);
+            }
+          }
+          if (file.endsWith('.js')) {
+            const path = './assets/' + file;
+            if (!lddJson.assets.js.includes(path)) {
+              action = true;
+              lddJson.assets.js.push(path);
+            }
           }
         }
-        if (file.endsWith('.js')) {
-          const path = './assets/' + file;
-          if (!lddJson.assets.js.includes(path)) {
-            action = true;
-            lddJson.assets.js.push(path);
-          }
+        if (action) {
+          await writeLivingDocsJson(lddJson);
         }
-      }
-      if (action) {
-        await writeLivingDocsJson(lddJson);
-      }
-      return true;
-    })
+        return true;
+      })
       .then(async () => {
         return await finalizeLdd();
       });
@@ -423,12 +426,12 @@ async function buildLdd(version) {
  */
 async function buildWord() {
   await checkFolders();
-    let configFile = false;
+  let configFile = false;
 
   const config = {
     base: './',
     build: {
-      outDir: join( folders.srlOutput, 'word'),
+      outDir: join(folders.srlOutput, 'word'),
       lib: {
         fileName: 'word',
         entry: join(folders.srlEntries, 'word.ts'),
@@ -518,12 +521,9 @@ async function mapScss() {
       xbrl: [],
     };
 
-    const mainFiles = await glob(
-      join( folders.srlAssets, 'scss', '*.scss'),
-      {
-        withFileTypes: true,
-      },
-    );
+    const mainFiles = await glob(join(folders.srlAssets, 'scss', '*.scss'), {
+      withFileTypes: true,
+    });
 
     let f = mainFiles.find((p) => {
       return p.name === 'general.scss';
@@ -565,7 +565,7 @@ async function mapScss() {
       }
     }
 
-    const livingdocs = await glob( join( folders.ld, '**', '*'), {
+    const livingdocs = await glob(join(folders.ld, '**', '*'), {
       maxDepth: 3,
       withFileTypes: true,
     });
@@ -594,7 +594,9 @@ async function mapScss() {
     for (let x = 0; x < livingdocsList.length; x++) {
       const p = livingdocsList[x];
       try {
-        const general = await statSync(join(p.fullpath(), 'scss', 'general.scss' ));
+        const general = await statSync(
+          join(p.fullpath(), 'scss', 'general.scss'),
+        );
         output.app.push(
           `"${relativePathToRoot}${p.relative()}/scss/general.scss" as *`,
         );
@@ -614,7 +616,7 @@ async function mapScss() {
       for (let i = 0; i < types.length; i++) {
         const type = types[i];
         try {
-          const f = await statSync(join( p.fullpath(), 'scss' , `${type}.scss`));
+          const f = await statSync(join(p.fullpath(), 'scss', `${type}.scss`));
           const alias = cleanupScssAlias(`${p.relative()}/${type}.scss`);
           output[type].push(
             `"${relativePathToRoot}${p.relative()}/scss/${type}.scss" as *`,
@@ -650,8 +652,8 @@ async function mapScss() {
     await writeFileSync(
       join(folders.srlImports, 'xbrl.scss'),
       `@use ` +
-      output.xbrl.join(';\n@use ') +
-      `;\n@use "../scss/xbrl-core-styles.scss" as *;\n`,
+        output.xbrl.join(';\n@use ') +
+        `;\n@use "../scss/xbrl-core-styles.scss" as *;\n`,
     );
 
     return true;
@@ -666,7 +668,7 @@ async function mapScss() {
  * @returns {Promise<boolean>} - A promise that resolves to true if the mapping and importing is successful.
  */
 async function mapJs() {
-  const jsFiles = await glob(join( folders.ld, '**', 'app.[t,j]s'), {
+  const jsFiles = await glob(join(folders.ld, '**', 'app.[t,j]s'), {
     withFileTypes: true,
   });
 
@@ -697,7 +699,7 @@ ${register.join('\n')}
 export default ClassAutoLoader
 export { ClassAutoLoader }`;
 
-  await writeFileSync(join( folders.srlSrc, 'Autoload.ts' ), content);
+  await writeFileSync(join(folders.srlSrc, 'Autoload.ts'), content);
   return true;
 }
 
@@ -712,7 +714,7 @@ async function mapLdd() {
     const lddJson = await readLivingDocsJson();
 
     const propertiesFiles = await glob(
-      join( folders.ld, '**', 'properties.{json,js,ts}' ),
+      join(folders.ld, '**', 'properties.{json,js,ts}'),
     );
     const mapProperties = {};
     for (let i = 0; i < propertiesFiles.length; i++) {
@@ -824,7 +826,7 @@ async function mapLdd() {
     asyncComponents.push('}');
 
     await writeFileSync(
-      join( folders.srlPlugins, 'asyncLdComponent.ts'),
+      join(folders.srlPlugins, 'asyncLdComponent.ts'),
       asyncComponents.join('\n'),
     );
 

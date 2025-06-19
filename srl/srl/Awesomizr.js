@@ -22,15 +22,26 @@ const Awesomizr = {};
  */
 export function matchesSelector(ele, selector) {
   if (!ele || !(ele instanceof HTMLElement)) {
-    throw "The first parameter must indicate an HTML element";
+    throw 'The first parameter must indicate an HTML element';
   }
 
   if (selector) {
-    const matchesList = ['matches', 'webkitMatches', 'mozMatches', 'msMatches', 'oMatches', 'matchesSelector', 'webkitMatchesSelector', 'mozMatchesSelector', 'msMatchesSelector', 'oMatchesSelector'];
+    const matchesList = [
+      'matches',
+      'webkitMatches',
+      'mozMatches',
+      'msMatches',
+      'oMatches',
+      'matchesSelector',
+      'webkitMatchesSelector',
+      'mozMatchesSelector',
+      'msMatchesSelector',
+      'oMatchesSelector',
+    ];
 
     for (let i = 0; i < matchesList.length; i++) {
       if (typeof ele[matchesList[i]] == 'function') {
-        matchesSelector = function(e, s) {
+        matchesSelector = function (e, s) {
           return e[matchesList[i]](s);
         };
 
@@ -40,7 +51,7 @@ export function matchesSelector(ele, selector) {
   }
 
   return false;
-};
+}
 
 /**
  * Generates the next unused ID by incrementing the start value. If the ID is already in use in the document,
@@ -52,16 +63,23 @@ export function matchesSelector(ele, selector) {
  * @returns {IdValue} A currently unused ID value.
  */
 export function getNextId(startValue, prefix, suffix) {
-  if (startValue === undefined || (typeof startValue).toLowerCase() != "number") {
+  if (
+    startValue === undefined ||
+    (typeof startValue).toLowerCase() != 'number'
+  ) {
     startValue = 0;
   }
 
-  if (prefix === undefined || (typeof prefix).toLowerCase() != "string" || !prefix) {
-    prefix = "ro-id";
+  if (
+    prefix === undefined ||
+    (typeof prefix).toLowerCase() != 'string' ||
+    !prefix
+  ) {
+    prefix = 'ro-id';
   }
 
-  if (suffix === undefined || (typeof suffix).toLowerCase() != "string") {
-    suffix = "";
+  if (suffix === undefined || (typeof suffix).toLowerCase() != 'string') {
+    suffix = '';
   }
 
   let index = startValue;
@@ -71,7 +89,7 @@ export function getNextId(startValue, prefix, suffix) {
   }
 
   return { index: index, prefix: prefix, value: prefix + index + suffix };
-};
+}
 
 /**
  * This function transforms and rotates a table header, in order to reduce its width. If there is no table header, the first line is converted to one.
@@ -84,16 +102,18 @@ export function getNextId(startValue, prefix, suffix) {
  * @param {boolean} [params.lastCol=false] Whether to prevent the last column from being transformed.
  * @param {boolean} [params.footer=false] Whether to create a "tfoot" element from the last row in the table. Has no effect if the table already contains a "tfoot".
  */
-export function rotateTableHeader(table, {
-  angle =     45,
-  width =     "auto",
-  firstCol =  false,
-  lastCol =   false,
-  footer =    false
-} = {}) {
-
+export function rotateTableHeader(
+  table,
+  {
+    angle = 45,
+    width = 'auto',
+    firstCol = false,
+    lastCol = false,
+    footer = false,
+  } = {},
+) {
   if (!table) {
-    throw "An HTML table element must be specified."
+    throw 'An HTML table element must be specified.';
   }
 
   // normalize the angle
@@ -123,28 +143,29 @@ export function rotateTableHeader(table, {
     endCol = -1;
   }
 
-  table.classList.add("awesomizr-table-table");
+  table.classList.add('awesomizr-table-table');
 
-  elems = table.querySelectorAll("thead td, thead th");
+  elems = table.querySelectorAll('thead td, thead th');
 
   let hasNoTHead = elems.length == 0;
   let needsTFoot = footer;
 
   // if we dont have a thead then create one from the first row
   // also create a tfoot when necessary from the last row
-  if (hasNoTHead || (needsTFoot = footer
-    && (table.querySelectorAll("tfoot td").length == 0))) {
-
-    let firstRow = table.querySelector("tr");
+  if (
+    hasNoTHead ||
+    (needsTFoot = footer && table.querySelectorAll('tfoot td').length == 0)
+  ) {
+    let firstRow = table.querySelector('tr');
 
     if (!firstRow) {
       return;
     }
 
     // Build a new valid table with thead, tbody and optional tfoot
-    let thead = document.createElement("thead"),
-      tbody = document.createElement("tbody"),
-      tfoot = document.createElement("tfoot");
+    let thead = document.createElement('thead'),
+      tbody = document.createElement('tbody'),
+      tfoot = document.createElement('tfoot');
 
     let rows;
 
@@ -153,19 +174,19 @@ export function rotateTableHeader(table, {
       rows = firstRow.parentNode.children;
     } else {
       // rows inside tbody
-      rows = table.querySelectorAll("tbody > tr");
+      rows = table.querySelectorAll('tbody > tr');
       if (rows.lenght == 0) {
         // rows might be direct children of table
         let hadId = true;
         if (!table.id) {
           hadID = false;
-          table.id = "awesomizr-table-no-tbody-helper-id";
+          table.id = 'awesomizr-table-no-tbody-helper-id';
         }
 
-        rows = table.parentNode.querySelectorAll("#" + table.id + " > tr");
+        rows = table.parentNode.querySelectorAll('#' + table.id + ' > tr');
 
         if (!hadId) {
-          table.id = "";
+          table.id = '';
         }
       }
     }
@@ -177,7 +198,7 @@ export function rotateTableHeader(table, {
       thead.appendChild(firstRow.cloneNode(true));
     } else {
       // continue to use thead
-      thead = table.querySelector("thead").cloneNode(true);
+      thead = table.querySelector('thead').cloneNode(true);
     }
     if (footer && needsTFoot && length > 0) {
       // use the last row as tfoot
@@ -185,54 +206,56 @@ export function rotateTableHeader(table, {
     }
 
     // use the remaining rows for tbody
-    for (let i = (hasNoTHead ? 1 : 0); i < length; i++) {
+    for (let i = hasNoTHead ? 1 : 0; i < length; i++) {
       tbody.appendChild(rows[i].cloneNode(true));
     }
-    table.innerHTML = "";
+    table.innerHTML = '';
 
     table.appendChild(thead);
     table.appendChild(tbody);
     table.appendChild(tfoot);
-    elems =  table.querySelectorAll("thead td, thead th");
+    elems = table.querySelectorAll('thead td, thead th');
   }
 
   for (let i = 0; i < elems.length; i++) {
-    elems[i].innerHTML = "<div>" + elems[i].innerHTML + "</div>";
-    elems[i].firstElementChild.style.overflow = "visible";
-    elems[i].firstElementChild.style.whiteSpace = "nowrap";
-    elems[i].style.verticalAlign = "bottom";
-    elems[i].style.transformOrigin = "50% 100%";
+    elems[i].innerHTML = '<div>' + elems[i].innerHTML + '</div>';
+    elems[i].firstElementChild.style.overflow = 'visible';
+    elems[i].firstElementChild.style.whiteSpace = 'nowrap';
+    elems[i].style.verticalAlign = 'bottom';
+    elems[i].style.transformOrigin = '50% 100%';
 
     if (i >= startCol && i < elems.length + endCol) {
-      elems[i].style.textAlign = "center";
+      elems[i].style.textAlign = 'center';
       elems[i].style.width = width;
 
       // some styles to extract the width
-      elems[i].firstElementChild.style.position = "absolute";
-      elems[i].firstElementChild.style["float"] = "left";
-      elems[i].firstElementChild.style.maxWidth = "none";
+      elems[i].firstElementChild.style.position = 'absolute';
+      elems[i].firstElementChild.style['float'] = 'left';
+      elems[i].firstElementChild.style.maxWidth = 'none';
 
       let curWidth = elems[i].firstElementChild.clientWidth;
-      maxWidth = Math.max(maxWidth,curWidth);
+      maxWidth = Math.max(maxWidth, curWidth);
 
       // style back
-      elems[i].firstElementChild.style.maxWidth = "0pt";
-      elems[i].firstElementChild.style.position = "static";
-      elems[i].firstElementChild.style["float"] = "none";
-      elems[i].firstElementChild.style.marginLeft = "50%";
+      elems[i].firstElementChild.style.maxWidth = '0pt';
+      elems[i].firstElementChild.style.position = 'static';
+      elems[i].firstElementChild.style['float'] = 'none';
+      elems[i].firstElementChild.style.marginLeft = '50%';
 
       // flip the direction of the text if the angle is less than 0
       if (angle < 0 || angle >= 180) {
-        elems[i].firstElementChild.style.transform = "translateX(" + (-curWidth) + "px)";
+        elems[i].firstElementChild.style.transform =
+          'translateX(' + -curWidth + 'px)';
       }
 
-      elems[i].style.transform = "skewX(" + (-angle) + "deg)";
+      elems[i].style.transform = 'skewX(' + -angle + 'deg)';
     }
   }
 
   maxWidth = maxWidth * 1.5;
-  table.querySelector("thead tr").style.height = (maxWidth * Math.abs(Math.cos(angle/180 * Math.PI))) + "px";
-  elems = table.querySelectorAll("thead td > div, thead th > div");
+  table.querySelector('thead tr').style.height =
+    maxWidth * Math.abs(Math.cos((angle / 180) * Math.PI)) + 'px';
+  elems = table.querySelectorAll('thead td > div, thead th > div');
 
   for (let i = startCol; i < elems.length + endCol; i++) {
     let rotation = angle - 90;
@@ -241,7 +264,8 @@ export function rotateTableHeader(table, {
       rotation = angle - 270;
     }
 
-    elems[i].style.transform = "skewX(" + angle + "deg) rotate(" + rotation + "deg)";
+    elems[i].style.transform =
+      'skewX(' + angle + 'deg) rotate(' + rotation + 'deg)';
   }
 
   // if we have a special first column and/or last column
@@ -252,12 +276,14 @@ export function rotateTableHeader(table, {
 
   if (specialCols.length > 0) {
     for (let i = 0; i < specialCols.length; i++) {
-      elems[specialCols[i]].parentNode.className = specialCols[i] === 0 ?
-        "awesomizr-table-first-column" : "awesomizr-table-last-column";
-      elems[specialCols[i]].style.width = "auto";
+      elems[specialCols[i]].parentNode.className =
+        specialCols[i] === 0
+          ? 'awesomizr-table-first-column'
+          : 'awesomizr-table-last-column';
+      elems[specialCols[i]].style.width = 'auto';
     }
   }
-};
+}
 
 /**
  * This function allows to insert a table of contents that is generated from given elements.
@@ -284,30 +310,29 @@ export function rotateTableHeader(table, {
  * The element representing the entry is passed as an argument to the function. Returning "false" will skip the entry entirely and not include it in the TOC.
  */
 export function createTableOfContents({
-                                        insertiontarget         = "body",
-                                        insertiontype           = "afterbegin",
-                                        elements                = [ "h1", "h2" ],
-                                        toctitle                = "Table of Contents",
-                                        disabledocumenttitle    = false,
-                                        text                    = null,
-                                        accessible              = false
-                                      } = {}) {
-
+  insertiontarget = 'body',
+  insertiontype = 'afterbegin',
+  elements = ['h1', 'h2'],
+  toctitle = 'Table of Contents',
+  disabledocumenttitle = false,
+  text = null,
+  accessible = false,
+} = {}) {
   let toc = '';
 
-  const tocHeadingClass = "ro-toc-heading";
-  const tocClass = "ro-toc";
-  const tocAccClass = "ro-toc-acc";
+  const tocHeadingClass = 'ro-toc-heading';
+  const tocClass = 'ro-toc';
+  const tocAccClass = 'ro-toc-acc';
 
   // Check whether the elements parameter is a string instead of an array
-  if ((typeof elements).toLowerCase() == "string") {
+  if ((typeof elements).toLowerCase() == 'string') {
     elements = [elements];
   }
 
   // Get an selector for all heading elements that should be added to the toc
   let selector = elements[0];
   for (let i = 1; i < elements.length; i++) {
-    selector += ", " + elements[i];
+    selector += ', ' + elements[i];
   }
 
   // Create the TOC HTML
@@ -318,7 +343,7 @@ export function createTableOfContents({
     let id = ele.id;
     let textContent = null;
 
-    if ((typeof text).toLowerCase() === "function") {
+    if ((typeof text).toLowerCase() === 'function') {
       textContent = text(ele);
 
       if (textContent === false) {
@@ -326,7 +351,7 @@ export function createTableOfContents({
       } else if (textContent === true) {
         textContent = null;
       } else {
-        textContent += "";
+        textContent += '';
       }
     }
 
@@ -335,7 +360,7 @@ export function createTableOfContents({
     }
 
     if (!id) {
-      let nextId = getNextId(idNumber, "ro-toc-heading");
+      let nextId = getNextId(idNumber, 'ro-toc-heading');
 
       idNumber = nextId.index;
       id = nextId.value;
@@ -345,7 +370,7 @@ export function createTableOfContents({
     let tocLevel = 0;
     for (let k = 0; k < elements.length; k++) {
       if (matchesSelector(ele, elements[k])) {
-        tocLevel = k+1;
+        tocLevel = k + 1;
         break;
       }
     }
@@ -355,16 +380,20 @@ export function createTableOfContents({
     if (accessible) {
       toc += '<div>';
     }
-    toc += '<a href="#' + id + '">' + textContent.replace("&", "&amp;").replace("<", "&lt;") + '</a></div>';
+    toc +=
+      '<a href="#' +
+      id +
+      '">' +
+      textContent.replace('&', '&amp;').replace('<', '&lt;') +
+      '</a></div>';
     if (accessible) {
       toc += '</div>';
     }
   }
 
   // Prepare to wrap TOC HTML into container
-  let tocContainer = '<div class="' + tocClass
-    + (accessible ? (' ' + tocAccClass) : '')
-    + '">';
+  let tocContainer =
+    '<div class="' + tocClass + (accessible ? ' ' + tocAccClass : '') + '">';
 
   if (!disabledocumenttitle) {
     // Add the document title as a heading
@@ -385,8 +414,10 @@ export function createTableOfContents({
   }
 
   // Insert TOC HTML before the content of target (body by default)
-  document.querySelector(insertiontarget).insertAdjacentHTML(insertiontype, tocContainer);
-};
+  document
+    .querySelector(insertiontarget)
+    .insertAdjacentHTML(insertiontype, tocContainer);
+}
 
 /**
  * Automatically adds page breaks depending on the amount of space left below an element.
@@ -396,14 +427,14 @@ export function createTableOfContents({
  * @param {string} [selector="h1, h2"] The CSS selector for the elements that may require a new page break.
  * @param {number} [threshold=67] If an element is below this percentage of the page height, a page break is inserted.
  */
-export function applyAdaptivePageBreaks(selector = "h1, h2", threshold = 67) {
+export function applyAdaptivePageBreaks(selector = 'h1, h2', threshold = 67) {
   // Check whether the required JS API exists
   if (window.ro === undefined || window.ro.layout === undefined) {
     return;
   }
 
   // If the threshold is a string (e.g. "50%") convert it to a 0-100 value.
-  if ((typeof threshold).toLowerCase() == "string") {
+  if ((typeof threshold).toLowerCase() == 'string') {
     threshold = Math.max(Math.min(parseInt(threshold), 100), 0);
   }
 
@@ -418,31 +449,33 @@ export function applyAdaptivePageBreaks(selector = "h1, h2", threshold = 67) {
     let compStyle;
     let compDisplayStyle;
     // if necessary move up until we find an element that is not inline, has at least one box and is not the body or root element
-    while(element && (
-      element == document
-      || element == document.documentElement
-      || element == document.body
-      || !(compStyle = window.getComputedStyle(element))
-      || !(compDisplayStyle = compStyle.display)
-      || (compDisplayStyle == "inline")
-      || (compDisplayStyle == "none")
-      || (compDisplayStyle == "table-cell")
-      || !(boxDescList = ro.layout.getBoxDescriptions(element))
-      || (boxDescList.length == 0))) {
+    while (
+      element &&
+      (element == document ||
+        element == document.documentElement ||
+        element == document.body ||
+        !(compStyle = window.getComputedStyle(element)) ||
+        !(compDisplayStyle = compStyle.display) ||
+        compDisplayStyle == 'inline' ||
+        compDisplayStyle == 'none' ||
+        compDisplayStyle == 'table-cell' ||
+        !(boxDescList = ro.layout.getBoxDescriptions(element)) ||
+        boxDescList.length == 0)
+    ) {
       element = element.parentNode;
     }
-    if(element) {
+    if (element) {
       let boxDesc = boxDescList[0];
       let boxRect = boxDesc.borderRectInPage;
       let pageMarginRect = boxDesc.pageDescription.marginRect;
       // Check whether the box starts below the threshold value
       if (boxRect.top > pageMarginRect.height * threshold) {
         // Add a page break
-        element.style.breakBefore = "page";
+        element.style.breakBefore = 'page';
       }
     }
   }
-};
+}
 
 /**
  * Automatically fills up the document with empty pages until
@@ -457,17 +490,16 @@ export function applyAdaptivePageBreaks(selector = "h1, h2", threshold = 67) {
  * the total number of filler pages to be inserted, the total (original) page count of the document.
  */
 export function autoFillPages({
-                                multiple    = 2,
-                                target      = "body",
-                                template    = null
-                              } = {}) {
-
+  multiple = 2,
+  target = 'body',
+  template = null,
+} = {}) {
   // Check whether the required JS API exists
   if (window.ro === undefined || window.ro.layout === undefined) {
     return;
   }
 
-  const roFillerPage = "roFillerPage";
+  const roFillerPage = 'roFillerPage';
 
   const currentPageCount = ro.layout.numberOfPages;
   let pagesToInsert = 0;
@@ -485,7 +517,7 @@ export function autoFillPages({
     throw "Param 'multiple' must be positive integer.";
   }
 
-  console.debug("[Awesomizr] Inserting " + pagesToInsert + " pages");
+  console.debug('[Awesomizr] Inserting ' + pagesToInsert + ' pages');
 
   // Begin inserting pages
   if (pagesToInsert > 0) {
@@ -517,15 +549,15 @@ export function autoFillPages({
       }
 
       // Always add class and some basic styles
-      fillerPage.className         = roFillerPage;
-      fillerPage.style.page        = roFillerPage;
-      fillerPage.style.display     = "block";
-      fillerPage.style.breakBefore = "page";
+      fillerPage.className = roFillerPage;
+      fillerPage.style.page = roFillerPage;
+      fillerPage.style.display = 'block';
+      fillerPage.style.breakBefore = 'page';
 
       targetElement.appendChild(fillerPage);
     }
   }
-};
+}
 
 /**
  * Converts a wide data table into a compact, vertical layout that displays each cell below the previous one.
@@ -540,19 +572,18 @@ export function autoFillPages({
  * @param {string[]} [params.widths=["fit-content(50%)", "auto"]] An array with two entries, each specifying the width of one of the two display columns. The values must be a CSS length.
  * @param {boolean} [params.autoDetectOverflow=false] Whether to automatically detect if a table's width overflows the page. If not, the table is not converted.
  */
-export function compactifyTable(table, {
-  widths = [ "fit-content(50%)", "auto" ],
-  autoDetectOverflow = false
-} = {}) {
-
+export function compactifyTable(
+  table,
+  { widths = ['fit-content(50%)', 'auto'], autoDetectOverflow = false } = {},
+) {
   if (!Array.isArray(widths) || widths.length != 2) {
-    throw "Param 'widths' must be an array with length 2."
+    throw "Param 'widths' must be an array with length 2.";
   }
 
-  const thead = table.querySelector("thead");
+  const thead = table.querySelector('thead');
 
   if (thead == null) {
-    throw "Table must have a thead element."
+    throw 'Table must have a thead element.';
   }
 
   if (autoDetectOverflow && window.ro && window.ro.layout) {
@@ -570,23 +601,28 @@ export function compactifyTable(table, {
     }
   }
 
-  const columnHeaders = thead.querySelectorAll("thead > tr:first-child > :is(td, th)");
-  const rows = table.querySelectorAll("tbody tr");
+  const columnHeaders = thead.querySelectorAll(
+    'thead > tr:first-child > :is(td, th)',
+  );
+  const rows = table.querySelectorAll('tbody tr');
 
-  const classTable = "awesomizr-compact-table";
-  const classHeaderCell = "awesomizr-compact-table-header-cell";
+  const classTable = 'awesomizr-compact-table';
+  const classHeaderCell = 'awesomizr-compact-table-header-cell';
 
   table.classList.add(classTable);
 
-  for (const cell of [ ...columnHeaders, ...thead.querySelectorAll("tfoot > tr:first-child > :is(td, th)") ]) {
-    cell.setAttribute("data-awesomizr-content", cell.textContent);
+  for (const cell of [
+    ...columnHeaders,
+    ...thead.querySelectorAll('tfoot > tr:first-child > :is(td, th)'),
+  ]) {
+    cell.setAttribute('data-awesomizr-content', cell.textContent);
   }
 
   for (const row of rows) {
-    const cells = row.querySelectorAll(":scope > :is(td, th)");
+    const cells = row.querySelectorAll(':scope > :is(td, th)');
 
-    row.style.display = "grid";
-    row.style.gridTemplateColumns = widths.join(" ");
+    row.style.display = 'grid';
+    row.style.gridTemplateColumns = widths.join(' ');
 
     let index = 0;
     for (const cell of cells) {
@@ -596,12 +632,12 @@ export function compactifyTable(table, {
       headerCell.classList.add(classHeaderCell);
       headerCell.innerHTML = columnHeader.innerHTML;
 
-      row.insertBefore(headerCell, cell)
+      row.insertBefore(headerCell, cell);
 
       index++;
     }
   }
-};
+}
 
 /**
  * This is a helper function to dynamically load MathJax with a configuration. If the configuration
@@ -619,20 +655,20 @@ export function loadMathJax(url, configuration) {
      */
     configuration = {
       showMathMenu: false,
-      jax: ["input/MathML", "output/SVG"],
-      extensions: ["mml2jax.js"],
-      MathML: { extensions: ["content-mathml.js"] },
-      SVG: { blacker: 0 }
+      jax: ['input/MathML', 'output/SVG'],
+      extensions: ['mml2jax.js'],
+      MathML: { extensions: ['content-mathml.js'] },
+      SVG: { blacker: 0 },
     };
   }
 
-  const script = document.createElement("script");
+  const script = document.createElement('script');
   const scriptUrl = new URL(url, window.location.href);
 
   if (typeof configuration === 'object') {
     // For configuration objects, use a script
-    const configScript = document.createElement("script");
-    configScript.type = "text/x-mathjax-config";
+    const configScript = document.createElement('script');
+    configScript.type = 'text/x-mathjax-config';
     configScript.textContent = `MathJax.Hub.Config(${JSON.stringify(configuration)});`;
 
     document.head.appendChild(configScript);
@@ -643,4 +679,4 @@ export function loadMathJax(url, configuration) {
   script.src = scriptUrl.href;
 
   document.head.appendChild(script);
-};
+}

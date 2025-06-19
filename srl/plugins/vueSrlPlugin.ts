@@ -1,4 +1,4 @@
-import { type App } from 'vue';
+import { defineComponent, type App } from 'vue';
 import SrlAriaTabChain from '#components/Srl/Aria/TabChain.vue';
 import SrlArticleAutoload from '#components/Srl/Article/Autoload.vue';
 import SrlArticleRoot from '#components/Srl/Article/Root.vue';
@@ -9,12 +9,15 @@ import asyncLdComponent from './asyncLdComponent.ts';
 
 export default {
   install(app: App) {
-    app.component('SrlAriaTabChain', SrlAriaTabChain);
-    app.component('SrlArticleAutoload', SrlArticleAutoload);
-    app.component('SrlArticleRoot', SrlArticleRoot);
-    app.component('SrlArticleDialogButton', SrlArticleDialogButton);
-    app.component('SrlPageDialog', SrlPageDialog);
-    app.component('SrlMenu', SrlMenu);
-    asyncLdComponent(app)
+    app.component('SrlAriaTabChain', defineComponent(SrlAriaTabChain));
+    app.component('SrlArticleAutoload', defineComponent(SrlArticleAutoload));
+    app.component('SrlArticleRoot', defineComponent(SrlArticleRoot));
+    app.component(
+      'SrlArticleDialogButton',
+      defineComponent(SrlArticleDialogButton),
+    );
+    app.component('SrlPageDialog', defineComponent(SrlPageDialog));
+    app.component('SrlMenu', defineComponent(SrlMenu));
+    asyncLdComponent(app);
   },
 };

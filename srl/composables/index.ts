@@ -1,6 +1,6 @@
 import _usArticle from './article';
 import _useArticles from './articles';
-import _useConfig  from './config';
+import _useConfig from './config';
 import _useDownloads from './downloads';
 import _useLocale from './locale';
 import _useMenu from './menu';

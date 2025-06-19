@@ -1,5 +1,5 @@
 {
-  "name": "simple-reporting-library-test-project",
+  "name": "standard-ld",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -15,10 +15,11 @@
     "test:unit": "vitest",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "postinstall": "nswow prepare"
   },
   "dependencies": {
-    "@multivisio/nswow": "^1.0.3",
+    "@multivisio/nswow": "^1.0.11",
     "axios": "^1.9.0",
     "chalk": "^5.4.1",
     "cheerio": "^1.0.0",

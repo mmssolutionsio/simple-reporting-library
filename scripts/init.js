@@ -19,7 +19,6 @@ const __dirname = dirname(__filename);
  * @return {Promise<void>} - A promise that resolves when the project initialization is complete.
  */
 async function init(folder, options) {
-
   const prompt = new Input({
     message: 'Project name',
     initial: folder,
@@ -29,13 +28,13 @@ async function init(folder, options) {
     projectName = folder;
   }
 
-  const projectPath = join( process.cwd(), folder );
+  const projectPath = join(process.cwd(), folder);
 
   try {
     const stat = statSync(projectPath);
     console.error(`Folder ${projectPath} already exist!`);
   } catch (e) {
-    await fs.copy(join(__dirname, '..' , 'dev'), projectPath).then(async () => {
+    await fs.copy(join(__dirname, '..', 'dev'), projectPath).then(async () => {
       const packageJsonFile = join(projectPath, 'package.json');
       const packageJson = JSON.parse(await readFileSync(packageJsonFile));
       packageJson.name = projectName;

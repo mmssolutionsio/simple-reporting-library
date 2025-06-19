@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
 import { computed } from 'vue'
+import Tr from '@/i18n/translation.ts'
 
 import { useConfig, useArticle } from '#composables'
 
@@ -20,7 +21,10 @@ const languages = computed<NsWowNavigationItem[]>(() => {
       const slug = config.value.articles[locale].find((a) => a.uuid === uuid)?.slug || ''
       res.push({
         label: locale.toUpperCase(),
-        href: article.value.index ? `/${locale}` : `/${locale}/${slug}`
+        href: article.value.index ? `/${locale}` : `/${locale}/${slug}`,
+        callback: () => {
+          Tr.switchLanguage(locale)
+        }
       })
     }
   }

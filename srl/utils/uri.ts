@@ -49,4 +49,4 @@ export function isExternalPath(path: string): boolean {
 export default {
   isRouterPath,
   isExternalPath,
-}
+};

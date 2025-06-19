@@ -1,1 +1,86 @@
-{"version":"v1.0","pages":[{"uuid":"home","name":"Home","translatedTitle":"Home","slug":"home","index":true,"seo_keywords":["Home"],"ignoreInSearch":false,"excerpt":"2","originalLanguageOfArticle":"de","wp_cf_prettyTitle":"Home","status":"Done","excludeFromWord":true,"wp_cf_excerpt":"2"},{"uuid":"suche","name":"Suche","translatedTitle":"Suche","slug":"suche","index":false,"seo_keywords":["Suche"],"ignoreInSearch":false,"excerpt":"","originalLanguageOfArticle":"de","status":"In Progress","wp_cf_prettyTitle":"Suche"},{"uuid":"downloads","name":"Downloads","translatedTitle":"Downloads","slug":"downloads","index":false,"seo_keywords":["Downloads"],"ignoreInSearch":false,"excerpt":"","originalLanguageOfArticle":"de","status":"In Progress","wp_cf_prettyTitle":"Downloads"},{"uuid":"search-999","name":"search","translatedTitle":"Suche","slug":"suche","index":false,"ignoreInSearch":true,"component":"Search"},{"uuid":"download-999","name":"download","translatedTitle":"Download","slug":"download","index":false,"ignoreInSearch":true,"component":"DownloadCenter"},{"uuid":"notfound-999","name":"notFound","translatedTitle":"Not Found","slug":"404","index":false,"ignoreInSearch":true,"component":"ErrorView"}],"menu":{"menuMain":[{"label":"Home","type":"Article","page":"home","anchor":""},{"label":"Untermenu","type":"MenuEntry","submenuEntries":[{"label":"Suche","type":"Article","page":"suche","anchor":""},{"label":"Downloads","type":"Article","page":"downloads","anchor":""}]}]}}
+{
+  "version": "v1.0",
+  "pages": [
+    {
+      "uuid": "home",
+      "name": "Home",
+      "translatedTitle": "Home",
+      "slug": "home",
+      "index": true,
+      "seo_keywords": ["Home"],
+      "ignoreInSearch": false,
+      "excerpt": "2",
+      "originalLanguageOfArticle": "de",
+      "wp_cf_prettyTitle": "Home",
+      "status": "Done",
+      "excludeFromWord": true,
+      "wp_cf_excerpt": "2"
+    },
+    {
+      "uuid": "suche",
+      "name": "Suche",
+      "translatedTitle": "Suche",
+      "slug": "suche",
+      "index": false,
+      "seo_keywords": ["Suche"],
+      "ignoreInSearch": false,
+      "excerpt": "",
+      "originalLanguageOfArticle": "de",
+      "status": "In Progress",
+      "wp_cf_prettyTitle": "Suche"
+    },
+    {
+      "uuid": "downloads",
+      "name": "Downloads",
+      "translatedTitle": "Downloads",
+      "slug": "downloads",
+      "index": false,
+      "seo_keywords": ["Downloads"],
+      "ignoreInSearch": false,
+      "excerpt": "",
+      "originalLanguageOfArticle": "de",
+      "status": "In Progress",
+      "wp_cf_prettyTitle": "Downloads"
+    },
+    {
+      "uuid": "search-999",
+      "name": "search",
+      "translatedTitle": "Suche",
+      "slug": "suche",
+      "index": false,
+      "ignoreInSearch": true,
+      "component": "Search"
+    },
+    {
+      "uuid": "download-999",
+      "name": "download",
+      "translatedTitle": "Download",
+      "slug": "download",
+      "index": false,
+      "ignoreInSearch": true,
+      "component": "DownloadCenter"
+    },
+    {
+      "uuid": "notfound-999",
+      "name": "notFound",
+      "translatedTitle": "Not Found",
+      "slug": "404",
+      "index": false,
+      "ignoreInSearch": true,
+      "component": "ErrorView"
+    }
+  ],
+  "menu": {
+    "menuMain": [
+      { "label": "Home", "type": "Article", "page": "home", "anchor": "" },
+      {
+        "label": "Untermenu",
+        "type": "MenuEntry",
+        "submenuEntries": [
+          { "label": "Suche", "type": "Article", "page": "suche", "anchor": "" },
+          { "label": "Downloads", "type": "Article", "page": "downloads", "anchor": "" }
+        ]
+      }
+    ]
+  }
+}

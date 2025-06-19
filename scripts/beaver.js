@@ -195,7 +195,7 @@ async function beaver(verbose = 0) {
         if (typeof font === 'string') {
           configJson.fonts.fonts[x] = JSON.parse(
             readFileSync(
-              path.join( process.cwd(), fontBasePath, font, 'styles.json')
+              path.join(process.cwd(), fontBasePath, font, 'styles.json'),
             ),
           );
         }
