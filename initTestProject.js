@@ -1,6 +1,6 @@
 import { init } from './scripts/init.js';
 import { execSync } from 'child_process';
-import { join, resolve } from 'path';
+import { join, resolve } from 'path/posix';
 import { rmSync, existsSync, readFileSync, writeFileSync, cpSync } from 'fs';
 import chalk from 'chalk';
 
