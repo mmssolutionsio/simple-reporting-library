@@ -44,10 +44,10 @@ init(projectFolder)
       const searchKey = '@multivisio/nswow';
 
       if (
-        packageJson.devDependencies &&
-        packageJson.devDependencies[searchKey]
+        packageJson.dependencies &&
+        packageJson.dependencies[searchKey]
       ) {
-        packageJson.devDependencies[searchKey] =
+        packageJson.dependencies[searchKey] =
           'file:../simple-reporting-library';
         writeFileSync(
           packageJsonPath,
