@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, useId } from 'vue';
 import { useArticles, useConfig } from '#composables';
+import { prepareHtmlContent } from '#utils'
 
 const props = defineProps<{
   uuid: string;
@@ -18,7 +19,7 @@ async function loadContent() {
     try {
       const req = await fetch(file);
       const text = await req.text();
-      content.value = text;
+      content.value = prepareHtmlContent(text);
     } catch (error) {
       console.error(`Failed to load article content from ${file}:`, error);
     }
