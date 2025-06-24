@@ -93,6 +93,15 @@ async function writeNsWowJson(config) {
   }
   return true;
 }
+/**
+ * Convert a string to camel case notation.
+ *
+ * @param str - The string to be converted.
+ * @returns String in camel case notation.
+ */
+export function camelCase(str) {
+  return str.replace(/[._-](\w|$)/g, (_, x) => x.toUpperCase());
+}
 
 export {
   writeJson,
@@ -103,4 +112,5 @@ export {
   writeLivingDocsJson,
   readNsWowJson,
   writeNsWowJson,
+  camelCase,
 };

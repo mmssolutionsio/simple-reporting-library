@@ -1,3 +1,6 @@
+import { createLogger } from 'vite';
+const logger = createLogger();
+
 let lddDesign = null;
 
 const directiveHtmlRegex =
@@ -13,7 +16,7 @@ export function IsLddDesignValid(designToValidate) {
   // checks that only throw a warning
   allComponentPropertiesAreUsed();
 
-  // checks that fail the build
+  // checks that should fail the build
   return (
     hasNoDuplicateComponentNames() &&
     hasNoDuplicateGroupNames() &&
@@ -36,7 +39,7 @@ function hasNoDuplicateComponentNames() {
     const { name } = components[i];
 
     if (usedNames.includes(name)) {
-      console.error(`component name ${name} is a duplicate`);
+      logger.error(`component name ${name} is a duplicate`);
     } else {
       usedNames.push(name);
     }
@@ -57,7 +60,7 @@ function hasNoDuplicateGroupNames() {
     const name = groups[i];
 
     if (usedNames.includes(name)) {
-      console.error(`group name ${name} is a duplicate`);
+      logger.error(`group name ${name} is a duplicate`);
     } else {
       usedNames.push(name);
     }
@@ -80,7 +83,7 @@ function allComponentPropertiesAreUsed() {
   );
 
   unusedProps.forEach((c) =>
-    console.warn(`component property "${c}" is unused and can be removed`),
+    logger.warn(`component property "${c}" is unused and can be removed`),
   );
 }
 
@@ -101,7 +104,7 @@ function usedPropertiesAreDeclared() {
 
   if (notExistingProperties.length) {
     notExistingProperties.forEach((x) =>
-      console.error(`component property "${x}" is not declared`),
+      logger.error(`component property "${x}" is not declared`),
     );
 
     return false;
@@ -123,7 +126,7 @@ function everyComponentHasAGroup() {
 
   if (componentsNotInGroups.lenght > 0) {
     componentsNotInGroups.forEach((element) => {
-      console.warn(
+      logger.warn(
         warn(
           `component "${element.name}" is not in any group and will not show in the editor`,
         ),
@@ -187,7 +190,7 @@ function delcaredDirectivesExistsOnComponent(component) {
   );
 
   duplicateDirectiveNames.forEach((duplicate) => {
-    console.error(
+    logger.error(
       `directive value "${duplicate}" duplicate in component "${component.name}"`,
     );
 
@@ -195,7 +198,7 @@ function delcaredDirectivesExistsOnComponent(component) {
   });
 
   if (htmlDirectiveTypes.filter((x) => x === 'link').length > 1) {
-    console.error(
+    logger.error(
       `directive doc-link used multiple times in component "${component.name}"`,
     );
 
@@ -216,7 +219,7 @@ function delcaredDirectivesExistsOnComponent(component) {
       directive.defaultContent?.length > 0
     ) {
       if (!_checkContainerDirective(directive)) {
-        console.error(
+        logger.error(
           `directive "${directiveName}" in component "${component.name}" references non-existing component/s`,
         );
 
@@ -228,7 +231,7 @@ function delcaredDirectivesExistsOnComponent(component) {
   directiveNames
     .filter((directiveName) => htmlFoundDirectives[directiveName] !== true)
     .forEach((dn) => {
-      console.error(
+      logger.error(
         `directive "${dn}" in component "${component.name}" is declared but not referenced in html`,
       );
 

@@ -14,6 +14,9 @@ import {
   readLivingDocsJson,
   writeLivingDocsJson,
 } from '../utils.js';
+import { createLogger } from 'vite';
+
+const logger = createLogger();
 const require = createRequire(import.meta.url);
 
 export async function mapLdd() {
@@ -115,7 +118,7 @@ async function mapGroups(lddJson) {
         rmSync(groupFolderPath);
       }
     } catch (error) {
-      console.log(e);
+      logger.error(e);
       return false;
     }
   }

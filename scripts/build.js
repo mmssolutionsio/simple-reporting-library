@@ -19,8 +19,8 @@ import {
   writePackageJson,
   readLivingDocsJson,
   writeLivingDocsJson,
+  camelCase,
 } from './utils.js';
-import { camelCase } from 'cheerio/utils';
 import folders from './folders.js';
 import { mapLdd } from './ldd/build.js';
 import { IsLddDesignValid } from './ldd/ldd-design-validation.js';
@@ -732,13 +732,6 @@ async function map() {
   await mapScss();
   await mapLdd();
   return true;
-}
-
-function toUpperCamelCase(input) {
-  return input
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join('');
 }
 
 export { build, ddev, map, mapScss, mapLdd, mapJs };
