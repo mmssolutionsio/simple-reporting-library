@@ -78,8 +78,9 @@ commander
 commander
   .command('build')
   .description('Build ldd, app, pdf and word for production')
-  .action(async () => {
-    await build();
+  .argument('[version]', 'The name of component or group.')
+  .action(async (version) => {
+    await build(version);
   });
 
 commander
