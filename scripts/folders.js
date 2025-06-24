@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join } from 'path/posix';
 
 export const root = process.cwd();
 export const packageName = join('@multivisio', 'nswow');

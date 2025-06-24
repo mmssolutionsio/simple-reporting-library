@@ -1,6 +1,6 @@
 import folders from './folders.js';
 import fs from 'fs';
-import path from 'path';
+import path from 'path/posix';
 
 const tsConfigIncludes = [
   '.srl/**/*',

@@ -1,4 +1,4 @@
-import { resolve, join } from 'node:path';
+import { resolve, join } from 'node:path/posix';
 import {
   statSync,
   writeFileSync,
@@ -328,14 +328,14 @@ async function buildLdd(version) {
         for (let i = 0; i < assetsFiles.length; i++) {
           const file = assetsFiles[i];
           if (file.endsWith('.css')) {
-            const path = './assets/' + file;
+            const path = join('./assets/' + file);
             if (!lddJson.assets.css.includes(path)) {
               action = true;
               lddJson.assets.css.push(path);
             }
           }
           if (file.endsWith('.js')) {
-            const path = './assets/' + file;
+            const path = join('./assets/' + file);
             if (!lddJson.assets.js.includes(path)) {
               action = true;
               lddJson.assets.js.push(path);
@@ -530,37 +530,37 @@ async function mapScss() {
     });
 
     if (f) {
-      output.app.push(`"${relativePathToRoot}${f.relative()}" as *`);
-      output.ldd.push(`"${relativePathToRoot}${f.relative()}" as *`);
-      output.pdf.push(`"${relativePathToRoot}${f.relative()}" as *`);
-      output.word.push(`"${relativePathToRoot}${f.relative()}" as *`);
+      output.app.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
+      output.ldd.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
+      output.pdf.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
+      output.word.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
     }
 
     for (let x = 0; x < mainFiles.length; x++) {
-      const alias = cleanupScssAlias(mainFiles[x].relative());
+      const alias = cleanupScssAlias(mainFiles[x].relativePosix());
       if (mainFiles[x].name === 'app.scss') {
         output.app.push(
-          `"${relativePathToRoot}${mainFiles[x].relative()}" as *`,
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
         );
       }
       if (mainFiles[x].name === 'ldd.scss') {
         output.ldd.push(
-          `"${relativePathToRoot}${mainFiles[x].relative()}" as *`,
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
         );
       }
       if (mainFiles[x].name === 'pdf.scss') {
         output.pdf.push(
-          `"${relativePathToRoot}${mainFiles[x].relative()}" as *`,
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
         );
       }
       if (mainFiles[x].name === 'word.scss') {
         output.word.push(
-          `"${relativePathToRoot}${mainFiles[x].relative()}" as *`,
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
         );
       }
       if (mainFiles[x].name === 'xbrl.scss') {
         output.xbrl.push(
-          `"${relativePathToRoot}${mainFiles[x].relative()}" as *`,
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
         );
       }
     }
@@ -570,8 +570,8 @@ async function mapScss() {
       withFileTypes: true,
     });
     livingdocs.sort((a, b) => {
-      const valueA = a.relative().toUpperCase();
-      const valueB = b.relative().toUpperCase();
+      const valueA = a.relativePosix().toUpperCase();
+      const valueB = b.relativePosix().toUpperCase();
       if (valueA < valueB) {
         return -1;
       }
@@ -598,16 +598,16 @@ async function mapScss() {
           join(p.fullpath(), 'scss', 'general.scss'),
         );
         output.app.push(
-          `"${relativePathToRoot}${p.relative()}/scss/general.scss" as *`,
+          `"${relativePathToRoot}${p.relativePosix()}/scss/general.scss" as *`,
         );
         output.ldd.push(
-          `"${relativePathToRoot}${p.relative()}/scss/general.scss" as *`,
+          `"${relativePathToRoot}${p.relativePosix()}/scss/general.scss" as *`,
         );
         output.pdf.push(
-          `"${relativePathToRoot}${p.relative()}/scss/general.scss" as *`,
+          `"${relativePathToRoot}${p.relativePosix()}/scss/general.scss" as *`,
         );
         output.word.push(
-          `"${relativePathToRoot}${p.relative()}/scss/general.scss" as *`,
+          `"${relativePathToRoot}${p.relativePosix()}/scss/general.scss" as *`,
         );
       } catch (e) {}
 
@@ -617,9 +617,9 @@ async function mapScss() {
         const type = types[i];
         try {
           const f = await statSync(join(p.fullpath(), 'scss', `${type}.scss`));
-          const alias = cleanupScssAlias(`${p.relative()}/${type}.scss`);
+          const alias = cleanupScssAlias(`${p.relativePosix()}/${type}.scss`);
           output[type].push(
-            `"${relativePathToRoot}${p.relative()}/scss/${type}.scss" as *`,
+            `"${relativePathToRoot}${p.relativePosix()}/scss/${type}.scss" as *`,
           );
         } catch (e) {}
       }

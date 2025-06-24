@@ -1,4 +1,4 @@
-import { join } from 'node:path';
+import { join } from 'node:path/posix';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 

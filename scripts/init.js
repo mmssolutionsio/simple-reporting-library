@@ -1,4 +1,4 @@
-import { dirname, join } from 'node:path';
+import { dirname, join } from 'node:path/posix';
 import fs from 'fs-extra';
 import { statSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';

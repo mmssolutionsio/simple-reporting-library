@@ -1,4 +1,4 @@
-const { resolve } = require('node:path');
+const { resolve } = require('node:path/posix');
 const { readFileSync, writeFileSync, rmSync } = require('node:fs');
 const { globSync } = require('glob');
 const writeJson = require('write-json');
