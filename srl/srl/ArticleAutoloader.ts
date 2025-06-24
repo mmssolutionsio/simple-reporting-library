@@ -1,4 +1,4 @@
-import { camelCase } from 'cheerio/utils';
+import { camelCase } from '#utils';
 import ArticleLoader from './ArticleLoader';
 
 type AutoloadList = string | string[];

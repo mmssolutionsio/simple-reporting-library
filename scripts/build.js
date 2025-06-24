@@ -19,11 +19,11 @@ import {
   writePackageJson,
   readLivingDocsJson,
   writeLivingDocsJson,
-  camelCase,
 } from './utils.js';
 import folders from './folders.js';
-import { mapLdd } from './ldd/build.js';
+import { mapLdd } from './ldd/mapLdd.js';
 import { IsLddDesignValid } from './ldd/ldd-design-validation.js';
+import { camelCase } from './utils.js';
 
 const placeholderId = '6297EAFB-33A0-48B8-8D64-E61CDC3E9035';
 const nswowPath = folders.srlImports;

@@ -99,7 +99,7 @@ async function writeNsWowJson(config) {
  * @param str - The string to be converted.
  * @returns String in camel case notation.
  */
-export function camelCase(str) {
+function camelCase(str) {
   return str.replace(/[._-](\w|$)/g, (_, x) => x.toUpperCase());
 }
 

@@ -20,7 +20,6 @@
     "@kne/color-palette": "^0.1.0",
     "archiver": "^7.0.1",
     "chalk": "^5.4.1",
-    "cheerio": "^1.0.0",
     "colors": "^1.4.0",
     "commander": "^11.1.0",
     "enquirer": "^2.4.1",

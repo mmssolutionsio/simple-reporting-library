@@ -1,3 +1,4 @@
 import { isRouterPath, isExternalPath } from './uri';
+import { camelCase } from './camelCase';
 
-export { isRouterPath, isExternalPath };
+export { isRouterPath, isExternalPath, camelCase };
