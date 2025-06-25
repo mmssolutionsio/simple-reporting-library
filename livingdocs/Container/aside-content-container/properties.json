@@ -1,0 +1,7 @@
+{
+  "sticky": {
+    "label": "Sticky aside column",
+    "type": "option",
+    "value": "srl-aside-content-container--sticky"
+  }
+}

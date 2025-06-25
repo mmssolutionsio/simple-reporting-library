@@ -1,0 +1,7 @@
+{
+  "name": "paragraph",
+  "label": "Paragraph",
+  "properties": [
+    "pdf-spacer"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "footnote-item",
+  "label": "Footnote item",
+  "allowedParents": [
+    "footnote-container"
+  ]
+}

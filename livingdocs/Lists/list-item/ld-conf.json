@@ -1,0 +1,9 @@
+{
+  "name": "list-item",
+  "label": "List item",
+  "allowedParents": [
+    "unordered-list",
+    "alphanumeric-list",
+    "ordered-list"
+  ]
+}

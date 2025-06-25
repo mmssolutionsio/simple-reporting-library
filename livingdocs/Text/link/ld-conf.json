@@ -1,0 +1,17 @@
+{
+  "name": "link",
+  "label": "Link",
+  "properties": [
+    "pdf-spacer"
+  ],
+  "directives": {
+    "showParagraph": {
+      "type": "toggle",
+      "label": "Show paragraph",
+      "default": true
+    },
+    "link": {
+      "plainText": true
+    }
+  }
+}

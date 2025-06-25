@@ -1,0 +1,32 @@
+{
+  "width-all": {
+    "label": "Width",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Regular"
+      },
+      {
+        "caption": "Wide",
+        "value": "srl-wide-width"
+      },
+      {
+        "caption": "Full",
+        "value": "srl-full-width"
+      }
+    ]
+  },
+  "width-reduced": {
+    "label": "Width",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Regular"
+      },
+      {
+        "caption": "Wide",
+        "value": "srl-wide-width"
+      }
+    ]
+  }
+}

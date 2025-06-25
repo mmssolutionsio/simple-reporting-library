@@ -1,0 +1,43 @@
+{
+  "pdf-spacer": {
+    "label": "PDF spacer (please use with caution)",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Default"
+      },
+      {
+        "caption": "XXXS spacer",
+        "value": "srl-spacer-xs"
+      },
+      {
+        "caption": "XXS spacer",
+        "value": "srl-spacer-xs"
+      },
+      {
+        "caption": "XS spacer",
+        "value": "srl-spacer-xs"
+      },
+      {
+        "caption": "S spacer",
+        "value": "srl-spacer-sm"
+      },
+      {
+        "caption": "M spacer",
+        "value": "srl-spacer-md"
+      },
+      {
+        "caption": "L spacer",
+        "value": "srl-spacer-lg"
+      },
+      {
+        "caption": "XL spacer",
+        "value": "srl-spacer-xl"
+      },
+      {
+        "caption": "XXL spacer",
+        "value": "srl-spacer-xxl"
+      }
+    ]
+  }
+}

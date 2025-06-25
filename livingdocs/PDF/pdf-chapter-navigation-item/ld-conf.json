@@ -1,0 +1,10 @@
+{
+  "name": "pdf-chapter-navigation-item",
+  "label": "PDF chapter navigation item",
+  "properties": [
+    "pdf-chapter-navigation-item-current"
+  ],
+  "allowedParents": [
+    "pdf-chapter-navigation"
+  ]
+}
