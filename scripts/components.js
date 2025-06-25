@@ -1,5 +1,5 @@
 import { createRequire } from 'node:module';
-import { join } from 'node:path';
+import { join } from 'node:path/posix';
 import { glob } from 'glob';
 import { copy } from 'fs-extra';
 import { rm, statSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
