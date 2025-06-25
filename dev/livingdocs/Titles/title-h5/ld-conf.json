@@ -1,9 +1,0 @@
-{
-  "name": "title-h5",
-  "label": "Title (h5)",
-  "iconUrl": "https://mms-xbrl.s3.eu-central-1.amazonaws.com/design/svg/editor/icon-h5.min.svg",
-  "properties": [
-    "web-width",
-    "pdf-width"
-  ]
-}
