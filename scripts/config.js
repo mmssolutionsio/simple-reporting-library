@@ -5,10 +5,10 @@ export const baseComponentsToInstall = [
     "Container/column-container",
     "CV/cv",
     "CV/cv-time-span",
-    "List/alphanumeric-list",
-    "List/list-item",
-    "List/ordered-list",
-    "List/unordered-list",
+    "Lists/alphanumeric-list",
+    "Lists/list-item",
+    "Lists/ordered-list",
+    "Lists/unordered-list",
     "Media/image",
     "Media/interactive-element",
     "Media/table",
@@ -26,8 +26,8 @@ export const baseComponentsToInstall = [
     "Properties/hide-quote-characters",
     "Properties/pdf-spacer",
     "Properties/width",
-    "Signature/signature-container",
-    "Signature/signature-item",
+    "Signatures/signature-container",
+    "Signatures/signature-item",
     "Text/footnote-container",
     "Text/footnote-item",
     "Text/lead",
@@ -45,5 +45,4 @@ export const baseComponentsToInstall = [
 export default {
     packageName,
     baseComponentsToInstall
-
 };

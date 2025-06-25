@@ -32,6 +32,7 @@ export function prepareHtmlContent(text: string): string {
       const arrLink = attrObj.href.split('#')
 
       if (isRouterPath(arrLink[0])) {
+        console.log(arrLink)
         delete attrObj.href
         if (arrLink[0].startsWith('./')) {
           arrLink[0] = arrLink[0].substring(1)
@@ -39,7 +40,10 @@ export function prepareHtmlContent(text: string): string {
         if (arrLink[0] === `/${locale.value}/home`) {
           arrLink[0] = `/${locale.value}`
         }
-        attrObj.to = arrLink[0] + (arrLink[1] ? `#${arrLink[1]}` : '')
+        attrObj.to = arrLink[0]
+        if (arrLink[1]) {
+          attrObj.to += `#${arrLink[1]}`
+        }
         const attrs = attributesToString(attrObj)
         return `<router-link ${attrs}>${innerText}</router-link>`
       }
@@ -47,7 +51,10 @@ export function prepareHtmlContent(text: string): string {
       const a = articles.value.find( i => i.uuid === arrLink[0])
       if (a) {
         delete attrObj.href
-        attrObj.to = a.index ? `/${locale.value}` : `/${locale.value}/${a.slug}` + (arrLink[1] ? `#${arrLink[1]}` : '')
+        attrObj.to = a.index ? `/${locale.value}` : `/${locale.value}/${a.slug}`
+        if (arrLink[1]) {
+          attrObj.to += `#${arrLink[1]}`
+        }
         const attrs = attributesToString(attrObj)
         return `<router-link ${attrs}>${innerText}</router-link>`
       }
