@@ -13,7 +13,8 @@
   "scripts": {
     "preparePublish": "node preparePublish.cjs && prettier --write --list-different .",
     "lint": "prettier --check .",
-    "lint:fix": "prettier --write ."
+    "lint:fix": "prettier --write .",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "main": "cli.js",
   "dependencies": {
@@ -41,6 +42,7 @@
   "author": "Michael Dörer",
   "license": "ISC",
   "devDependencies": {
+    "jest": "^30.0.2",
     "prettier": "^3.4.2",
     "typescript": "^5.7.2"
   }
