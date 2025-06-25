@@ -15,14 +15,18 @@
     "test:unit": "vitest",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "postinstall": "nswow prepare"
   },
   "dependencies": {
+    "@multivisio/nswow": "^1.0.11",
     "axios": "^1.9.0",
+    "chalk": "^5.4.1",
     "cheerio": "^1.0.0",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
     "highcharts": "^11.4.8",
+    "modern-css-reset": "^1.4.0",
     "node-html-parser": "^7.0.1",
     "pinia": "^2.3.1",
     "scrollmonitor": "^1.2.11",
@@ -36,7 +40,6 @@
   },
   "devDependencies": {
     "@kne/color-palette": "^0.1.0",
-    "@multivisio/nswow": "^1.0.3",
     "@rushstack/eslint-patch": "^1.11.0",
     "@tsconfig/node22": "^22.0.2",
     "@types/jsdom": "^21.1.7",

@@ -1,0 +1,10 @@
+@use 'srl';
+
+.srl-title-h5 {
+  color: srl.colors-shade-800();
+
+  break-before: auto;
+  break-inside: avoid;
+  break-after: auto;
+  @include srl.typography-headline5(true);
+}

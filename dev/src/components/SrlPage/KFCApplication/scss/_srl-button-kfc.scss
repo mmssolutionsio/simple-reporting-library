@@ -1,4 +1,4 @@
-@use 'nswow';
+@use 'srl';
 
 .srl-button-kfc {
   padding: 0;
@@ -11,7 +11,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: nswow.system-size-unit(12);
+  gap: srl.system-size-unit(12);
   cursor: pointer;
   color: var(--srl-color-dark);
 

@@ -11,6 +11,7 @@ import {
 } from './scripts/components.js';
 import { build, ddev, map, mapJs } from './scripts/build.js';
 import { beaver } from './scripts/beaver.js';
+import prepare from './scripts/prepare.js';
 
 const packageJson = JSON.parse(
   await readFile(new URL('./package.json', import.meta.url)),
@@ -110,5 +111,10 @@ commander
   .action(() => {
     beaver(1);
   });
+
+commander
+  .command('prepare')
+  .description('Prepare development environment')
+  .action(prepare);
 
 commander.parse();

@@ -1,3 +1,5 @@
+export const packageName = '@multivisio/nswow';
+
 export const baseComponentsToInstall = [
     "Container/aside-content-container",
     "Container/column-container",
@@ -41,5 +43,7 @@ export const baseComponentsToInstall = [
 ];
 
 export default {
+    packageName,
     baseComponentsToInstall
-}
+
+};

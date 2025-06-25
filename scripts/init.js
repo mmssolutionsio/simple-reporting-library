@@ -1,4 +1,4 @@
-import {dirname, join} from 'node:path/posix';
+import {dirname, join} from 'node:path';
 import fs from 'fs-extra';
 import {statSync, readFileSync, writeFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
@@ -11,8 +11,6 @@ const {Input} = require('enquirer');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
-
 
 /**
  * Initializes a new project in the given folder with the provided options.
@@ -57,8 +55,6 @@ async function init(folder, options) {
             console.log(`cd ${folder}`);
             console.log(`npm install`);
         });
-
-
     }
 }
 

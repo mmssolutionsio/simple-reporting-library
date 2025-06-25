@@ -1,0 +1,47 @@
+@use 'srl';
+@use 'index';
+@use 'system/mixins';
+@use 'grid/variables';
+@use 'sass:map';
+@use 'sass:list';
+
+$breakpointsList: map.keys(variables.$breakpoints);
+$breakpointsListLength: list.length($breakpointsList);
+
+@at-root {
+  :root {
+    @each $key, $value in mixins.$styles {
+      $currentValue: $value;
+      $currentBreakpoint: 'print';
+      @each $breakpoint, $breakpointValue in variables.$breakpoints {
+        @if map.has-key(mixins.$stylesUp, $breakpoint, $key) {
+          $currentValue: map.get(mixins.$stylesUp, $breakpoint, $key);
+          $currentBreakpoint: $breakpoint;
+        }
+
+        @if map.has-key(mixins.$stylesOnly, $breakpoint, $key) {
+          $indexCurrent: list.index($breakpointsList, $currentBreakpoint);
+          $indexBreakpoint: list.index($breakpointsList, $breakpoint);
+          @if $indexBreakpoint >
+            $indexCurrent or
+            $indexBreakpoint ==
+            $breakpointsListLength
+          {
+            $currentValue: map.get(mixins.$stylesOnly, $breakpoint, $key);
+            $currentBreakpoint: $breakpoint;
+          }
+        }
+      }
+      --#{$key}: #{$currentValue};
+    }
+  }
+}
+
+@include index.core-styles;
+@include index.system-core-styles;
+@include index.fonts-core-styles;
+@include index.grid-core-styles;
+@include index.colors-core-styles;
+@include index.typography-core-styles;
+@include index.spacer-core-styles;
+@include index.helpers-core-styles;

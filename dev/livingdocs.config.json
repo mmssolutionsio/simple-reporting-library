@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "author": "nsgroup",
   "assets": {
-    "css": ["./assets/ldd.css"],
-    "js": []
+    "css": ["./assets/style.css"],
+    "js": ["./assets/ldd.js"]
   },
   "wrapper": "<div class=\"srl-article-root doc-section\"></div>",
   "imageRatios": {
@@ -78,7 +78,7 @@
   "groups": [
     {
       "label": "Media",
-      "components": ["image"]
+      "components": ["image", "table"]
     },
     {
       "label": "Text",

@@ -21,16 +21,16 @@
 </template>
 
 <style scoped lang="scss">
-@use 'nswow';
+@use 'srl';
 
 footer {
-  min-height: nswow.system-size-unit(60);
-  padding: nswow.system-size-unit(20) 0;
+  min-height: srl.system-size-unit(60);
+  padding: srl.system-size-unit(20) 0;
 
   .srl-footer {
     &__inner {
       margin: 0 auto;
-      @include nswow.grid-container();
+      @include srl.grid-container();
 
       &-imprint {
         text-align: center;
@@ -38,7 +38,7 @@ footer {
     }
   }
 
-  @include nswow.grid-media(print) {
+  @include srl.grid-media(print) {
     display: none;
   }
 }

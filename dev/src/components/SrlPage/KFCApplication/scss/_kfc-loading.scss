@@ -1,10 +1,10 @@
-@use 'nswow';
+@use 'srl';
 
 .loading-text {
   grid-column: auto / span 4;
   text-align: center;
 
-  @include nswow.grid-media-up(portrait) {
+  @include srl.grid-media-up(portrait) {
     grid-column: auto / span 8;
   }
 }
@@ -14,7 +14,7 @@
   justify-self: center;
   grid-column: auto / span 4;
 
-  @include nswow.grid-media-up(portrait) {
+  @include srl.grid-media-up(portrait) {
     grid-column: auto / span 8;
   }
 }
