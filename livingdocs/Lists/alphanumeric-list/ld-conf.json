@@ -1,0 +1,22 @@
+{
+  "name": "alphanumeric-list",
+  "label": "List (alphanumeric)",
+  "properties": [
+    "pdf-spacer"
+  ],
+  "directives": {
+    "list": {
+      "allowedChildren": [
+        "list-item"
+      ],
+      "defaultComponents": {
+        "paragraph": "list-item"
+      },
+      "defaultContent": [
+        {
+          "component": "list-item"
+        }
+      ]
+    }
+  }
+}

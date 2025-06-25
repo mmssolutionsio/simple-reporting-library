@@ -1,0 +1,13 @@
+{
+  "name": "cv",
+  "label": "CV",
+  "properties": [
+    "pdf-spacer"
+  ],
+  "directives": {
+    "image": {
+      "imageRatios": ["1:1"],
+      "allowOriginalRatio": false
+    }
+  }
+}

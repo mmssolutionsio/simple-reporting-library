@@ -1,0 +1,9 @@
+{
+  "name": "interactive-element",
+  "label": "Interactive element",
+  "description": "Separate image for PDF",
+  "properties": [
+    "width-reduced",
+    "pdf-spacer"
+  ]
+}

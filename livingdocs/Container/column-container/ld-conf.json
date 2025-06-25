@@ -1,0 +1,21 @@
+{
+  "name": "columns-container",
+  "label": "Columns container",
+  "properties": [
+    "width-reduced",
+    "vertical-alignment",
+    "pdf-spacer"
+  ],
+  "directives": {
+    "show-column-3": {
+      "type": "toggle",
+      "label": "Show column 3",
+      "default": false
+    },
+    "show-column-4": {
+      "type": "toggle",
+      "label": "Show column 4",
+      "default": false
+    }
+  }
+}

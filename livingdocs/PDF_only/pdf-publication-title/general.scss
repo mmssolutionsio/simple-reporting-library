@@ -1,5 +1,0 @@
-@use 'nswow';
-
-.srl-pdf-publication-title {
-  @include nswow.typography-headline2(true);
-}

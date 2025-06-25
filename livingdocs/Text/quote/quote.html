@@ -1,29 +1,15 @@
-<script type="ld-conf">
-  {
-  	"name": "quote",
-  	"label": "Quote",
-  	"iconUrl": "https://mms-xbrl.s3.eu-central-1.amazonaws.com/design/svg/editor/icon-quote.min.svg",
-  	"properties": [
-      "web-width",
-      "pdf-width",
-  		"hide-quote-characters"
-  	]
-  }
-</script>
-<blockquote class="srl-quote srl-article__grid srl-article__grid--indent">
-  <div class="srl-quote__row srl-article__grid--inner">
-    <div class="srl-quote__container">
-      <p class="lc-linkable srl-quote__text" doc-editable="text">
-        Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse
+<blockquote class="srl-grid srl-quote">
+  <div class="srl-grid__inner srl-quote__text">
+    <p class="srl-quote__quote srl-linkable" doc-editable="quote-text">
+      Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse
+    </p>
+    <cite class="srl-quote__cite">
+      <p class="srl-quote__author" doc-editable="quote-author" doc-optional>
+        Max Mustermann
       </p>
-      <cite class="srl-quote__cite">
-        <span class="srl-quote__author" doc-editable="author" doc-optional
-          >Max Mustermann</span
-        >
-        <span class="srl-quote__function" doc-editable="job" doc-optional
-          >Tätigkeit</span
-        >
-      </cite>
-    </div>
+      <p class="srl-quote__function" doc-editable="quote-function" doc-optional>
+        Tätigkeit
+      </p>
+    </cite>
   </div>
 </blockquote>

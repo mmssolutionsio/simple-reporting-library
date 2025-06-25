@@ -1,0 +1,28 @@
+{
+  "name": "accordion",
+  "label": "Accordion",
+  "properties": [
+    "pdf-spacer"
+  ],
+  "directives": {
+    "header": {
+      "allowedChildren": [
+        "title-h2",
+        "title-h3",
+        "title-h4",
+        "title-h5",
+        "title-h6"
+      ],
+      "defaultContent": [
+        {
+          "component": "title-h2"
+        }
+      ]
+    },
+    "content": {
+      "defaultComponents": {
+        "paragraph": "paragraph"
+      }
+    }
+  }
+}

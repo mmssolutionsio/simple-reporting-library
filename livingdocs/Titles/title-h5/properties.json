@@ -1,0 +1,15 @@
+{
+  "h5-as": {
+    "label": "Title styling",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Default"
+      },
+      {
+        "caption": "Styling from title h6",
+        "value": "srl-title-h6"
+      }
+    ]
+  }
+}

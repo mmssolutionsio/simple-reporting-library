@@ -1,0 +1,18 @@
+{
+  "name": "pdf-toc-item",
+  "label": "ToC item",
+  "properties": [
+    "toc-title"
+  ],
+  "allowedParents": [
+    "pdf-toc-page"
+  ],
+  "directives": {
+    "pdf-toc-item-number": {
+      "plainText": true
+    },
+    "pdf-toc-item-text": {
+      "plainText": true
+    }
+  }
+}
