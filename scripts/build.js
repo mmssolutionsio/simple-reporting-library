@@ -22,7 +22,7 @@ import {
 } from './utils.js';
 import folders from './folders.js';
 import { mapLdd } from './ldd/mapLdd.js';
-import { LivingdocsDesignValidator } from './ldd/ldd-design-validation.js';
+import { LivingdocsDesignValidator } from './ldd/LivingdocsDesignValidator.js';
 import { camelCase } from './utils.js';
 
 const placeholderId = '6297EAFB-33A0-48B8-8D64-E61CDC3E9035';
