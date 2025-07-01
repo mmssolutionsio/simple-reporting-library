@@ -236,7 +236,7 @@ async function removeComponents() {
     const c = filesExists[x].replace(join(folders.ld, '/'), '');
     if (c.indexOf('/') !== -1) {
       const p = c.split('/');
-      let group = p[0].replace('_and_', ' / ').replace('_', ' ');
+      let group = lddGroupNames(p[0]);
       livingdocsExists.push({
         name: lddGroupNames(`${group} / ${p[1]}`),
         value: c,
