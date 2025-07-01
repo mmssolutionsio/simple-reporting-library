@@ -1,11 +1,11 @@
 {
-  "name": "multivisio-ld",
+  "name": "standard-ld",
   "label": "skeleton",
-  "version": "1.0.51",
+  "version": "0.0.1",
   "author": "nsgroup",
   "assets": {
-    "css": ["./assets/ldd.css"],
-    "js": []
+    "css": ["./assets/style.css"],
+    "js": ["./assets/ldd.js"]
   },
   "wrapper": "<div class=\"srl-article-root doc-section\"></div>",
   "imageRatios": {
@@ -35,81 +35,6 @@
     }
   },
   "componentProperties": {
-    "round-portrait": {
-      "label": "Round portrait",
-      "type": "option",
-      "value": "round-portrait"
-    },
-    "hide-quote-characters": {
-      "label": "Hide quote characters before and after",
-      "type": "option",
-      "value": "hide-quote-characters"
-    },
-    "pdf-hide-paging-publication-chapter-title": {
-      "label": "Hide Paging/Publication/Chapter title",
-      "type": "option",
-      "value": "hide-paging-publication-chapter-title"
-    },
-    "toc-page-type": {
-      "label": "Is main ToC",
-      "type": "option",
-      "value": "lc-pdf-toc-page--main"
-    },
-    "toc-title": {
-      "label": "Show as title",
-      "type": "option",
-      "value": "srl-pdf-toc__item--title"
-    },
-    "web-spacer": {
-      "label": "Web spacer",
-      "type": "select",
-      "options": [
-        {
-          "caption": "Default"
-        },
-        {
-          "caption": "Small",
-          "value": "srl-spacer-web-small"
-        },
-        {
-          "caption": "Medium",
-          "value": "srl-spacer-web-medium"
-        },
-        {
-          "caption": "Large",
-          "value": "srl-spacer-web-large"
-        },
-        {
-          "caption": "Extra Large",
-          "value": "srl-spacer-web-extra-large"
-        }
-      ]
-    },
-    "pdf-spacer": {
-      "label": "PDF spacer",
-      "type": "select",
-      "options": [
-        {
-          "caption": "Default"
-        },
-        {
-          "caption": "Small",
-          "value": "srl-spacer-print-small"
-        },
-        {
-          "caption": "Medium",
-          "value": "srl-spacer-print-medium"
-        },
-        {
-          "caption": "Large",
-          "value": "srl-spacer-print-large"
-        },
-        {
-          "caption": "Extra Large",
-          "value": "srl-spacer-print-extra-large"
-        }
-      ]
-    },
     "web-width": {
       "label": "Web width",
       "type": "select",
@@ -144,167 +69,20 @@
         }
       ]
     },
-    "hide-in-pdf": {
-      "label": "Hide in PDF",
-      "type": "option",
-      "value": "hide-in-pdf"
-    },
-    "pdf-padding": {
-      "label": "PDF padding",
-      "type": "select",
-      "options": [
-        {
-          "caption": "Normal"
-        },
-        {
-          "caption": "Small",
-          "value": "pdf-padding-small"
-        },
-        {
-          "caption": "Tiny",
-          "value": "pdf-padding-tiny"
-        }
-      ]
-    },
-    "pdf-font-size": {
-      "label": "PDF font-size",
-      "type": "select",
-      "options": [
-        {
-          "caption": "Normal"
-        },
-        {
-          "caption": "Small",
-          "value": "pdf-font-size-small"
-        }
-      ]
-    },
     "show-mobile-image": {
       "label": "Show mobile image",
       "type": "option",
       "value": "show-mobile-image"
-    },
-    "show-pdf-image": {
-      "label": "Show PDF image",
-      "type": "option",
-      "value": "show-pdf-image"
-    },
-    "vertical-alignment": {
-      "label": "Vertical alignment",
-      "type": "select",
-      "options": [
-        {
-          "caption": "top"
-        },
-        {
-          "caption": "center",
-          "value": "vertical-center"
-        },
-        {
-          "caption": "bottom",
-          "value": "vertical-bottom"
-        }
-      ]
-    },
-    "columns": {
-      "label": "Columns",
-      "type": "select",
-      "options": [
-        {
-          "caption": "1/2 1/2"
-        },
-        {
-          "caption": "1/3 2/3",
-          "value": "srl-columns--1-2"
-        },
-        {
-          "caption": "2/3 1/3",
-          "value": "srl-columns--2-1"
-        },
-        {
-          "caption": "1/3 1/3 1/3",
-          "value": "srl-columns--3"
-        },
-        {
-          "caption": "1/4 1/4 1/4 1/4",
-          "value": "srl-columns--4"
-        }
-      ]
-    },
-    "revert": {
-      "label": "Switch sides",
-      "type": "option",
-      "value": "revert"
-    },
-    "horizontal-alignment": {
-      "label": "Horizontal alignment",
-      "type": "select",
-      "options": [
-        {
-          "caption": "left"
-        },
-        {
-          "caption": "center",
-          "value": "horizontal-center"
-        },
-        {
-          "caption": "right",
-          "value": "horizontal-right"
-        }
-      ]
     }
   },
   "groups": [
     {
-      "label": "Buttons",
-      "components": ["button", "button-container"]
-    },
-    {
-      "label": "CV",
-      "components": ["cv-timeline"]
-    },
-    {
-      "label": "Container",
-      "components": ["column-container"]
-    },
-    {
-      "label": "Lists",
-      "components": [
-        "alphanumeric-list-group",
-        "list-item",
-        "ordered-list-group",
-        "unordered-list-group"
-      ]
-    },
-    {
       "label": "Media",
-      "components": ["chart", "graphic", "image", "nswow-table", "video"]
-    },
-    {
-      "label": "Misc",
-      "components": ["accordion", "anchor", "spacer"]
-    },
-    {
-      "label": "PDF only",
-      "components": [
-        "pdf-cover",
-        "pdf-cover-chapter",
-        "pdf-pagebreak",
-        "pdf-publication-title",
-        "pdf-toc-item",
-        "pdf-toc-item-blank",
-        "pdf-toc-item-title",
-        "pdf-toc-page",
-        "pdf-video-link"
-      ]
-    },
-    {
-      "label": "Signatures",
-      "components": ["signature-container", "signature-item"]
+      "components": ["image", "table"]
     },
     {
       "label": "Text",
-      "components": ["footnote", "lead", "paragraph", "quote", "quote-with-portrait"]
+      "components": ["paragraph"]
     },
     {
       "label": "Titles",

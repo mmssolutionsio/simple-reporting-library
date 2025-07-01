@@ -1,0 +1,14 @@
+{
+  "name": "title-h3",
+  "label": "Title (h3)",
+  "properties": [
+    "h3-as",
+    "width-reduced",
+    "pdf-spacer"
+  ],
+  "directives": {
+    "title-h3-number": {
+      "recommendedMaxLength": 4
+    }
+  }
+}

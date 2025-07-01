@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Tr from '@/i18n/translation'
 import HomeView from '@/views/HomeView.vue'
-import SearchView from '@/views/SearchView.vue'
-import DownloadsView from '@/views/DownloadsView.vue'
 import ArticleView from '@/views/ArticleView.vue'
 import PageNotFound from '@/views/PageNotFound.vue'
 
@@ -19,26 +17,14 @@ const router = createRouter({
       beforeEnter: Tr.routeMiddleware
     },
     {
-      path: '/:locale/search',
-      name: 'search',
-      component: SearchView,
-      beforeEnter: Tr.routeMiddleware
-    },
-    {
-      path: '/:locale/downloads',
-      name: 'downloads',
-      component: DownloadsView,
+      path: '/:locale/:slug+',
+      component: ArticleView,
       beforeEnter: Tr.routeMiddleware
     },
     {
       path: '/:locale/404',
       name: 'pageNotFound',
       component: PageNotFound,
-      beforeEnter: Tr.routeMiddleware
-    },
-    {
-      path: '/:locale/:slug+',
-      component: ArticleView,
       beforeEnter: Tr.routeMiddleware
     }
   ]

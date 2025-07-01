@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps<{
+  mainNavigation: NsWowNavigationItem[]
+}>()
+</script>
 
 <template>
   <div class="srl-notfound">
@@ -25,12 +29,12 @@
 </template>
 
 <style scoped lang="scss">
-@use 'nswow';
+@use 'srl';
 
 .srl-notfound {
   margin: 0 auto;
-  @include nswow.grid-container();
-  @include nswow.fonts-core-styles();
+  @include srl.grid-container();
+  @include srl.fonts-core-styles();
 
   &__inner {
     display: flex;

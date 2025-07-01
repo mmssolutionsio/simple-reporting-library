@@ -1,0 +1,32 @@
+{
+  "pdf-padding": {
+    "label": "PDF padding",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Normal"
+      },
+      {
+        "caption": "Small",
+        "value": "srl-pdf-padding-small"
+      },
+      {
+        "caption": "Tiny",
+        "value": "srl-pdf-padding-tiny"
+      }
+    ]
+  },
+  "pdf-font-size": {
+    "label": "PDF font-size",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Normal"
+      },
+      {
+        "caption": "Small",
+        "value": "srl-pdf-font-size-small"
+      }
+    ]
+  }
+}

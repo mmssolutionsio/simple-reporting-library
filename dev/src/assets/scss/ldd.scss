@@ -1,15 +1,15 @@
-@use 'nswow';
+@use 'srl';
 @use 'web';
 
 .ns-temp-highlight {
-  background: nswow.colors-primary();
+  background: srl.colors-primary();
 }
 
-$editor-color-nswow: nswow.colors-shade-200();
+$editor-color-srl: srl.colors-shade-200();
 
 span.ns-nowrap {
   --b: 1px; /* thickness of the border */
-  --c: #{$editor-color-nswow}; /* color of the border */
+  --c: #{$editor-color-srl}; /* color of the border */
   --w: 6px; /* width of border */
   border: var(--b) solid #0000; /* space for the border */
   --_g: #0000 90deg, var(--c) 0;
@@ -22,6 +22,6 @@ span.ns-nowrap {
 }
 
 span.ns-key-figure {
-  color: nswow.colors-on-primary();
-  background-color: nswow.colors-primary();
+  color: srl.colors-on-primary();
+  background-color: srl.colors-primary();
 }

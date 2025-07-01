@@ -1,0 +1,244 @@
+@use 'variables';
+@use 'functions';
+@use '../system';
+@use 'sass:math';
+@use 'sass:map';
+@use 'sass:list';
+
+@mixin media($breakpoint) {
+  @if not map.has-key(variables.$breakpoints, $breakpoint) {
+    @error "Invalid breakpoint specified! Choose one of #{map.keys(variables.$breakpoints)}";
+  }
+  @if $breakpoint == print {
+    @media print {
+      @content;
+    }
+  } @else {
+    $min: map.get(variables.$breakpoints, $breakpoint);
+    @if $min == 0 {
+      $min: false;
+    }
+    $next: system.map-get-next(variables.$breakpoints, $breakpoint);
+    $max: false;
+    @if $next {
+      $max: $next - 1;
+    }
+    @if (not $min and $max) {
+      @media screen and (max-width: #{system.size-unit($max)}) {
+        @content;
+      }
+    } @else if ($min and not $max) {
+      @media screen and (min-width: #{system.size-unit($min)}) {
+        @content;
+      }
+    } @else if ($min and $max) {
+      @media screen and (min-width: #{system.size-unit($min)}) and (max-width: #{system.size-unit($max)}) {
+        @content;
+      }
+    } @else {
+      @content;
+    }
+  }
+}
+
+@mixin media-up($breakpoint) {
+  @if not map.has-key(variables.$breakpoints, $breakpoint) {
+    @error "Invalid breakpoint specified! Choose one of #{map.keys(variables.$breakpoints)}";
+  }
+  $min: map.get(variables.$breakpoints, $breakpoint);
+
+  @if $min == 0 {
+    @content;
+  } @else {
+    @media screen and (min-width: #{system.size-unit($min)}) {
+      @content;
+    }
+  }
+}
+
+@mixin media-down($breakpoint) {
+  @if not map.has-key(variables.$breakpoints, $breakpoint) {
+    @error "Invalid breakpoint specified! Choose one of #{map.keys(variables.$breakpoints)}";
+  }
+  $next: system.map-get-next(variables.$breakpoints, $breakpoint);
+  $max: false;
+  @if $next {
+    $max: $next - 1;
+  }
+  @if $max {
+    @media screen and (max-width: #{system.size-unit($max)}) {
+      @content;
+    }
+  } @else {
+    @error "Invalid max breakpoint #{$breakpoint} specified! Choose one of #{map.keys(map-remove(variables.$breakpoints, $breakpoint))}";
+  }
+}
+
+@mixin media-between($breakpoint-min, $breakpoint-max) {
+  @if (
+    not
+      map.has-key(variables.$breakpoints, $breakpoint-min) or not
+      map.has-key(variables.$breakpoints, $breakpoint-max)
+  ) {
+    @error "Invalid breakpoint specified! Choose one of #{map.keys(variables.$breakpoints)}";
+  }
+  $min: map.get(variables.$breakpoints, $breakpoint-min);
+  @if $min == 0 {
+    $min: false;
+  }
+  $next: system.map-get-next(variables.$breakpoints, $breakpoint-max);
+  $max: false;
+  @if $next {
+    $max: $next - 1;
+  }
+  @if (not $min and $max) {
+    @media screen and (max-width: #{system.size-unit($max)}) {
+      @content;
+    }
+  } @else if ($min and not $max) {
+    @media screen and (min-width: #{system.size-unit($min)}) {
+      @content;
+    }
+  } @else if ($min and $max) {
+    @media screen and (min-width: #{system.size-unit($min)}) and (max-width: #{system.size-unit($max)}) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin container-fluid {
+  padding-inline: var(--#{variables.$variable-prefix}container-padding, unset);
+}
+
+@mixin container {
+  max-width: var(--#{variables.$variable-prefix}container-max-width, unset);
+  padding-inline: var(--#{variables.$variable-prefix}container-padding, unset);
+}
+
+@mixin row() {
+  display: grid;
+  grid-template-columns: repeat(
+    var(--#{variables.$variable-prefix}gutter-columns),
+    1fr
+  );
+  column-gap: var(--#{variables.$variable-prefix}gutter-column-gap);
+  row-gap: var(--#{variables.$variable-prefix}gutter-row-gap);
+}
+
+@mixin col($span: false, $breakpoint-start: false, $breakpoint-end: false) {
+  @if $breakpoint-start and $breakpoint-end and $span {
+    @include media-between($breakpoint-start, $breakpoint-end) {
+      width: auto;
+      grid-column-end: span #{$span};
+    }
+  } @else if $breakpoint-start and $span {
+    @include media($breakpoint-start) {
+      width: auto;
+      grid-column-end: span #{$span};
+    }
+  } @else if $span {
+    width: auto;
+    grid-column-end: span #{$span};
+  } @else {
+    width: auto;
+    grid-column-end: span #{variables.$column-default-span};
+  }
+}
+
+@mixin offset($offset, $breakpoint: false) {
+  @if $breakpoint {
+    @if not map.has-key(variables.$breakpoints, $breakpoint) {
+      @error "Invalid breakpoint specified! Choose one of #{map.keys(variables.$breakpoints)}";
+    }
+    @include media($breakpoint) {
+      grid-column-start: ($offset + 1);
+    }
+  } @else {
+    grid-column-start: ($offset + 1);
+  }
+}
+
+@each $breakpoint, $min-width in variables.$breakpoints {
+  $size-unit: false;
+  @if $breakpoint == print {
+    $size-unit: in;
+  }
+
+  @include system.add-root-style(
+    #{variables.$variable-prefix}breakpoint-#{$breakpoint},
+    system.size-unit($min-width, $size-unit)
+  );
+
+  $container: map.get(variables.$containers, $breakpoint);
+
+  $container-max-width: map.get($container, max-width);
+  @if not $container-max-width {
+    $container-max-width: unset;
+  }
+
+  @include system.add-root-style(
+    #{variables.$variable-prefix}container-max-width,
+    system.size-unit($container-max-width, $size-unit),
+    $breakpoint
+  );
+
+  $container-padding: map.get($container, padding);
+  @if not $container-padding {
+    $container-padding: unset;
+  }
+
+  @include system.add-root-style(
+    #{variables.$variable-prefix}container-padding,
+    system.size-unit($container-padding, $size-unit),
+    $breakpoint
+  );
+
+  $gutter: map.get(variables.$gutter, $breakpoint);
+  @if not $gutter {
+    $gutter: (
+      columns: 1,
+    );
+  }
+
+  $columns: map.get($gutter, columns);
+  @if not $columns {
+    $columns: 1;
+  }
+
+  $gap: map.get($gutter, gap);
+  $row-gap: unset;
+  $column-gap: unset;
+  @if $gap {
+    $row-gap: $gap;
+    $column-gap: $gap;
+  } @else {
+    @if map.has-key($gutter, row-gap) {
+      $row-gap: map.get($gutter, row-gap);
+    }
+    @if map.has-key($gutter, column-gap) {
+      $column-gap: map.get($gutter, column-gap);
+    }
+  }
+
+  @include system.add-root-style(
+    #{variables.$variable-prefix}gutter-columns,
+    $columns,
+    $breakpoint
+  );
+  @include system.add-root-style(
+    #{variables.$variable-prefix}gutter-row-gap,
+    system.size-unit($row-gap, $size-unit),
+    $breakpoint
+  );
+
+  @include system.add-root-style(
+    #{variables.$variable-prefix}gutter-column-gap,
+    system.size-unit($column-gap, $size-unit),
+    $breakpoint
+  );
+}
+
+@mixin core-styles {
+}

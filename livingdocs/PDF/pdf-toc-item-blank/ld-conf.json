@@ -1,0 +1,7 @@
+{
+  "name": "pdf-toc-item-blank",
+  "label": "ToC item blank",
+  "allowedParents": [
+    "pdf-toc-page"
+  ]
+}

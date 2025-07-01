@@ -1,144 +1,168 @@
 <script lang="ts" setup>
-import ScrollToTop from '@/components/ScrollToTop.vue'
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import useConfig from '@/composables/config'
-import { ArrayToString } from '@/utils/variables'
+import { isRouterPath } from '#utils'
 
-const config = await useConfig()
+const props = defineProps<{
+  mainNavigation: NsWowNavigationItem[]
+}>()
+
 const route = useRoute()
 
-const locale = computed<string>(() => {
-  return ArrayToString(route.params.locale)
-})
+type PrevNextNavigationItem = {
+  title: string
+  url: string
+}
 
-const articles = computed<NsWowArticle[]>(() => {
-  const a = config.value.articles[locale.value]
-  const res = []
-  if (a) {
-    for (let i = 0; i < a.length; i++) {
-      if (a[i].originalLanguageOfArticle) {
-        res.push(a[i])
+const prevNextNavigation = ref<PrevNextNavigationItem[]>([])
+
+const scrollY = ref(window.scrollY)
+
+window.addEventListener('scroll', () => {
+  scrollY.value = window.scrollY
+})
+function prevNextHelper(item: NsWowNavigationItem, label: string = '', depth: number = 0) {
+  if (item.href && isRouterPath(item.href)) {
+    const url = item.href
+    const title = label.length > 0 ? `${label}\n${item.label}` : item.label
+    prevNextNavigation.value.push({ title, url })
+  }
+
+  if (item.children) {
+    for (const child of item.children) {
+      let nextLabel = ''
+      if (depth !== 0 && item.label !== 'left' && item.label !== 'right') {
+        nextLabel = item.label
       }
+      prevNextHelper(child, nextLabel, depth + 1)
     }
   }
-  return res
+}
+
+for (const item of props.mainNavigation) {
+  prevNextHelper(item)
+}
+
+const currentIndex = computed<number | -1>(() => {
+  return prevNextNavigation.value.findIndex((item) => item.url === route.path)
 })
 
-const activeArticle = computed<number>(() => {
-  return articles.value.findIndex((i) => i.slug === ArrayToString(route.params.slug))
-})
-
-const nextRoute = computed(() => {
-  if (activeArticle.value === -1) {
+const prevItem = computed(() => {
+  if (currentIndex.value === -1) {
     return null
   }
-  let nextIndex: number = activeArticle.value + 1
-  if (nextIndex >= articles.value.length) {
-    nextIndex = 0
-  }
-  return {
-    params: {
-      locale: locale.value,
-      slug: articles.value[nextIndex].slug.split('/')
-    }
-  }
+  return currentIndex.value > 0
+    ? prevNextNavigation.value[currentIndex.value - 1]
+    : prevNextNavigation.value[prevNextNavigation.value.length - 1]
 })
 
-const prevRoute = computed(() => {
-  if (activeArticle.value === -1) {
+const nextItem = computed(() => {
+  if (currentIndex.value === -1) {
     return null
   }
-  let prevIndex: number = activeArticle.value - 1
-  if (prevIndex < 0) {
-    prevIndex = articles.value.length - 1
-  }
-  return {
-    params: {
-      locale: locale.value,
-      slug: articles.value[prevIndex].slug.split('/')
-    }
-  }
+  return currentIndex.value < prevNextNavigation.value.length - 1
+    ? prevNextNavigation.value[currentIndex.value + 1]
+    : prevNextNavigation.value[0]
 })
+
+function toTop() {
+  window.scrollTo(0, 0)
+  document.querySelector('#srl-page__main')?.focus()
+}
 </script>
 <template>
-  <div class="srl-nav-holder">
-    <router-link
-      v-if="prevRoute"
-      :to="prevRoute"
-      class="srl-nav-holder__nav-btn srl-bg-primary srl-color-light srl-typo-headline3"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-chevron-left left"
-        viewBox="0 0 16 16"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
-        />
-      </svg>
-      {{ $t('page.prev') }}
-    </router-link>
-    <ScrollToTop />
-    <router-link
-      v-if="nextRoute"
-      :to="nextRoute"
-      class="srl-nav-holder__nav-btn srl-bg-primary srl-color-light srl-typo-headline3"
-    >
-      {{ $t('page.next') }}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-chevron-right right"
-        viewBox="0 0 16 16"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
-        />
-      </svg>
-    </router-link>
+  <div>
+    <slot />
+    <div class="srl-prev-next">
+      <div class="srl-prev-next__wrap">
+        <button class="srl-to-top" :hidden="scrollY < 500" type="button" @click="toTop">
+          <img src="@/assets/images/toTop.svg" :alt="$t('toTop')" :title="$t('toTop')" />
+        </button>
+        <router-link
+          v-if="prevItem"
+          class="srl-page-prev"
+          :to="prevItem.url"
+          :title="prevItem.title"
+        >
+          <img src="@/assets/images/prev.svg" :alt="$t('pagePrev')" />
+        </router-link>
+        <router-link
+          v-if="nextItem"
+          class="srl-page-next"
+          :to="nextItem.url"
+          :title="nextItem.title"
+        >
+          <img src="@/assets/images/next.svg" :alt="$t('pageNext')" />
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
-<style scoped lang="scss">
-@use 'nswow';
+<style lang="scss">
+@use 'srl';
 
-.srl-nav-holder {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
+body:has(.srl-to-top) {
+  .srl-article-root {
+    padding-block-end: srl.system-size-unit(60) !important;
+  }
+}
+
+.srl-prev-next {
+  pointer-events: none;
   position: sticky;
   bottom: 0;
-  margin-bottom: nswow.system-size-unit(10);
+  z-index: 800;
+  max-width: calc(var(--srl-container-max-width) + var(--srl-container-padding) * 2);
+  padding-inline: var(--srl-container-padding);
+  margin-inline: auto;
+  padding-block-end: var(--srl-spacer-medium);
+  height: calc(var(--srl-spacer-L) + srl.system-size-unit(44));
 
-  &__nav-btn {
+  &__wrap {
     display: flex;
-    cursor: pointer;
-    align-items: center;
-    padding: nswow.system-size-unit(10) nswow.system-size-unit(15);
+    position: relative;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
 
-    svg {
-      transition: all 200ms ease;
+.srl-to-top {
+  pointer-events: auto;
+  width: srl.system-size-unit(44);
+  height: srl.system-size-unit(44);
+  position: absolute;
+  top: srl.system-size-unit(-52);
+  right: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  transition: all ease-out 0.3s;
+  opacity: 1;
 
-      &.left {
-        margin-right: nswow.system-size-unit(10);
-      }
-
-      &.right {
-        margin-left: nswow.system-size-unit(10);
-      }
-    }
+  &:not([hidden]) {
+    display: block;
   }
 
-  @include nswow.grid-media(print) {
-    display: none;
+  &[hidden] {
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  img {
+    display: block;
+  }
+}
+
+.srl-page-prev,
+.srl-page-next {
+  pointer-events: auto;
+  width: srl.system-size-unit(44);
+  height: srl.system-size-unit(44);
+  display: block;
+  img {
+    display: block;
   }
 }
 </style>

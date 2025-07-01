@@ -1,0 +1,22 @@
+{
+  "name": "footnote-container",
+  "label": "Footnote container",
+  "properties": [
+    "pdf-spacer"
+  ],
+  "directives": {
+    "container": {
+      "allowedChildren": [
+        "footnote-item"
+      ],
+      "defaultComponents": {
+        "paragraph": "footnote-item"
+      },
+      "defaultContent": [
+        {
+          "component": "footnote-item"
+        }
+      ]
+    }
+  }
+}

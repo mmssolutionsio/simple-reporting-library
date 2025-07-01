@@ -1,0 +1,20 @@
+{
+  "name": "table",
+  "label": "Table (finance plus)",
+  "properties": [
+    "pdf-padding",
+    "pdf-font-size",
+    "width-reduced",
+    "pdf-spacer"
+  ],
+  "directives": {
+    "nswow-table": {
+      "services": [
+        {
+          "service": "nswow-table",
+          "label": "ns.wow Table"
+        }
+      ]
+    }
+  }
+}

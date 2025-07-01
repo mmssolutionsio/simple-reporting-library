@@ -1,15 +1,9 @@
 {
-  "page": {
-    "next": "Nächste Seite",
-    "prev": "Vorherige Seite",
-    "notFound": "Seite nicht gefunden"
-  },
-  "search": {
-    "title": "Suchergebnisse",
-    "for": "Ihre Suche nach {search} ergab {count} Treffer"
-  },
-  "scrollToTop": "Nach oben scrollen",
-  "buttons": {
-    "close": "Schließen"
-  }
+  "toMainNavigation": "Zur Hauptnavigation",
+  "toMainContent": "Zum Inhalt",
+  "toFooter": "Zum Footer",
+  "pagePrev": "Vorherige Seite",
+  "pageNext": "Nächste Seite",
+  "toTop": "An den Seitenanfang",
+  "modalClose": "Fenster schließen"
 }

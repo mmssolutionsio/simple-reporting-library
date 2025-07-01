@@ -1,8 +1,0 @@
-@use 'nswow';
-
-.srl-spacer {
-  height: nswow.system-size-unit(nswow.spacer(medium));
-  @include nswow.grid-media(print) {
-    height: nswow.system-size-unit(nswow.spacer(medium), in);
-  }
-}

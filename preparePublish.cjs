@@ -1,4 +1,4 @@
-const { resolve } = require('node:path');
+const { resolve } = require('node:path/posix');
 const { readFileSync, writeFileSync, rmSync } = require('node:fs');
 const { globSync } = require('glob');
 const writeJson = require('write-json');
@@ -72,7 +72,7 @@ async function action() {
     const devJson = JSON.parse(
       await readFileSync(resolve(process.cwd(), './dev/package.json')),
     );
-    devJson.devDependencies['@multivisio/nswow'] = `^${version}`;
+    devJson.dependencies['@multivisio/nswow'] = `^${version}`;
     await writeJson(resolve(process.cwd(), './dev/package.json'), devJson);
   }
 
@@ -86,6 +86,13 @@ async function action() {
   const jsFiles = await globSync(resolve(process.cwd(), './scripts/**/*.js'));
 
   await compile(jsFiles, {
+    allowJs: true,
+    declaration: true,
+    emitDeclarationOnly: true,
+  });
+
+  const vueComponents = await globSync(process.cwd() + '/src/**/*.vue');
+  await compile(vueComponents, {
     allowJs: true,
     declaration: true,
     emitDeclarationOnly: true,

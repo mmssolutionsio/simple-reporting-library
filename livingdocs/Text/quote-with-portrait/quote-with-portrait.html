@@ -1,49 +1,18 @@
-<script type="ld-conf">
-  {
-  	"name": "quote-with-portrait",
-  	"label": "Quote with image",
-  	"iconUrl": "https://mms-xbrl.s3.eu-central-1.amazonaws.com/design/svg/editor/icon-quote-image.min.svg",
-  	"properties": [
-      "web-width",
-      "pdf-width",
-  		"round-portrait",
-  		"hide-quote-characters"
-  	],
-  	"directives": {
-  		"image": {
-  			"imageRatios": ["1:1"],
-  			"allowOriginalRatio": false
-  		}
-  	}
-  }
-</script>
-<blockquote
-  class="srl-quote-with-portrait srl-article__grid srl-article__grid--content"
->
-  <div class="srl-quote-width-portrait__container srl-article__grid--inner">
-    <div class="srl-quote-width-portrait__image">
-      <figure class="srl-quote-with-portrait__image-figure">
-        <img class="srl-quote-with-portrait__image-img" doc-image="image" />
-      </figure>
-    </div>
-    <div class="srl-quote-with-portrait__text">
-      <p class="lc-linkable srl-quote-with-portrait__quote" doc-editable="text">
-        Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse
+<blockquote class="srl-grid srl-quote">
+  <figure class="srl-grid__aside srl-quote__figure">
+    <img class="srl-quote__img" doc-image="image"/>
+  </figure>
+  <div class="srl-grid__content srl-quote__text">
+    <p class="srl-quote__quote srl-linkable" doc-editable="quote-text">
+      Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse
+    </p>
+    <cite class="srl-quote__cite">
+      <p class="srl-quote__author" doc-editable="quote-author" doc-optional>
+        Max Mustermann
       </p>
-      <cite class="srl-quote-with-portrait__cite">
-        <span
-          class="srl-quote-with-portrait__author"
-          doc-editable="author"
-          doc-optional
-          >Max Mustermann</span
-        >
-        <span
-          class="srl-quote-with-portrait__function"
-          doc-editable="job"
-          doc-optional
-          >Tätigkeit</span
-        >
-      </cite>
-    </div>
+      <p class="srl-quote__function" doc-editable="quote-function" doc-optional>
+        CEO
+      </p>
+    </cite>
   </div>
 </blockquote>

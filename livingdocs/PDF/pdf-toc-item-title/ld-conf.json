@@ -1,0 +1,7 @@
+{
+  "name": "pdf-toc-item-title",
+  "label": "ToC item title",
+  "allowedParents": [
+    "pdf-toc-page"
+  ]
+}

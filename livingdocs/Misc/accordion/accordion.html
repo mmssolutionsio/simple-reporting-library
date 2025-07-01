@@ -1,56 +1,12 @@
-<script type="ld-conf">
-  {
-  	"name": "accordion",
-  	"label": "Accordion",
-  	"iconUrl": "https://mms-xbrl.s3.eu-central-1.amazonaws.com/design/svg/editor/icon-accordion.min.svg",
-  	"directives": {
-            "content": {
-  			"defaultComponents": {
-  				"paragraph": "paragraph"
-  			}
-  		}
-  	}
-  }
-</script>
-<div class="srl-accordion" data-autoload="accordion">
-  <div class="srl-accordion__toggle">
-    <div class="srl-accordion__head">
-      <div class="srl-accordion__title">
-        <span
-          class="srl-accordion__title-number"
-          doc-optional
-          doc-editable="number"
-        >
-          1.
-        </span>
-        <span class="srl-accordion__title-text" doc-editable="text">
-          Title
-        </span>
-        <span class="srl-accordion__title-icon">
-          <svg
-            viewBox="0 0 18 18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M9 1v16M17 9H1"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-miterlimit="10"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </span>
-      </div>
+<div class="srl-accordion">
+  <div class="srl-accordion__inner">
+    <div class="srl-accordion__head" doc-container="header">
+
     </div>
-  </div>
-  <div class="srl-accordion__content">
-    <div class="srl-accordion__content-wrapper">
-      <div
-        class="srl-accordion__content-inner srl-article-root"
-        doc-container="content"
-      ></div>
+    <div class="srl-accordion__content">
+      <div class="srl-accordion__content-inner" doc-container="content">
+
+      </div>
     </div>
   </div>
 </div>

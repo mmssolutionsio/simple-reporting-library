@@ -1,44 +1,8 @@
-<script type="ld-conf">
-  {
-  	"name": "column-container",
-  	"label": "Columns container",
-  	"iconUrl": "https://mms-xbrl.s3.eu-central-1.amazonaws.com/design/svg/editor/icon-columns.min.svg",
-  	"properties": [
-  		"web-width",
-  		"pdf-width",
-  		"vertical-alignment",
-  		"columns",
-  		"revert"
-  	]
-  }
-</script>
-
-<div
-  class="srl-columns srl-article__grid srl-article__grid--indent"
-  data-container-label="Column container"
->
-  <div class="srl-article__grid--inner">
-    <div class="srl-columns__grid">
-      <div
-        class="srl-columns__column srl-columns__column--1"
-        data-container-label="column 1"
-        doc-container="column-1"
-      ></div>
-      <div
-        class="srl-columns__column srl-columns__column--2"
-        data-container-label="column 2"
-        doc-container="column-2"
-      ></div>
-      <div
-        class="srl-columns__column srl-columns__column--3"
-        data-container-label="column 3"
-        doc-container="column-3"
-      ></div>
-      <div
-        class="srl-columns__column srl-columns__column--4"
-        data-container-label="column 4"
-        doc-container="column-4"
-      ></div>
-    </div>
+<div class="srl-grid srl-columns">
+  <div class="srl-grid__inner srl-flex srl-flex-gap">
+    <div class="srl-columns__column srl-columns__column--1" doc-container="column-1"></div>
+    <div class="srl-columns__column srl-columns__column--2" doc-container="column-2"></div>
+    <div class="srl-columns__column srl-columns__column--3" doc-container="column-3" doc-toggle="show-column-3"></div>
+    <div class="srl-columns__column srl-columns__column--4" doc-container="column-4" doc-toggle="show-column-4"></div>
   </div>
 </div>

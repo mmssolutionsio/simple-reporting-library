@@ -1,44 +1,33 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import PageHeader from '@/components/PageHeader.vue'
+import PageMain from '@/components/PageMain.vue'
 import PageFooter from '@/components/PageFooter.vue'
 import MainNavigation from '@/components/MainNavigation.vue'
-import { watch } from 'vue'
-import { useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
-import { ArrayToString } from '@/utils/variables'
-import PageModal from '@/components/PageModal.vue'
+import BypassLinks from '@/components/BypassLinks.vue'
+import { useMenu } from '#composables'
 
-const route = useRoute()
-const { locale } = useI18n()
-const modal = ref()
-
-async function modalContent(html: string) {
-  await modal.value.setContent(html)
-}
-
-defineExpose({
-  modalContent
-})
-
-watch(route, () => {
-  const paramLocale = ArrayToString(route.params.locale)
-  if (paramLocale !== locale.value) {
-    locale.value = paramLocale
-  }
-})
+const mainNavigation = useMenu('menuMain')
 </script>
 
 <template>
-  <PageHeader />
-  <suspense>
-    <MainNavigation />
-  </suspense>
-  <suspense>
-    <RouterView />
-  </suspense>
-  <suspense>
+  <div class="srl-page__wrap">
+    <BypassLinks />
+    <PageHeader />
+    <MainNavigation :mainNavigation="mainNavigation" />
+    <PageMain :mainNavigation="mainNavigation" />
     <PageFooter />
-  </suspense>
-  <PageModal ref="modal" />
+  </div>
 </template>
+
+<style lang="scss">
+@use 'srl';
+.srl-page__wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  #srl-page__main {
+    flex: 1 1 auto;
+  }
+}
+</style>

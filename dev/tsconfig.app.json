@@ -5,12 +5,9 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "nswow": ["./nswow"],
-      "nswow/*": ["./nswow/*"]
+      "@/*": ["./src/*"]
     }
   }
 }

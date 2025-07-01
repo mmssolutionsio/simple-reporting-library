@@ -1,8 +1,0 @@
-@use 'nswow';
-@use 'print';
-
-tr {
-  &[class*='pagebreak'] {
-    break-after: always;
-  }
-}

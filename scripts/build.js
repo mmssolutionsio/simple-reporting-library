@@ -1,4 +1,4 @@
-import { resolve } from 'node:path';
+import { resolve, join } from 'node:path/posix';
 import {
   statSync,
   writeFileSync,
@@ -9,7 +9,6 @@ import {
   rmSync,
   cpSync,
 } from 'node:fs';
-import { fileURLToPath, URL } from 'node:url';
 import { createRequire } from 'node:module';
 import { glob } from 'glob';
 import { beaver } from './beaver.js';
@@ -22,11 +21,11 @@ import {
   writeLivingDocsJson,
 } from './utils.js';
 import { camelCase } from 'cheerio/utils';
+import folders from './folders.js';
 
 const placeholderId = '6297EAFB-33A0-48B8-8D64-E61CDC3E9035';
-const CWD = process.cwd();
-const nswowPath = resolve(CWD, '.nswow');
-const outputPath = resolve(CWD, '.output');
+const nswowPath = folders.srlImports;
+const outputPath = folders.srlOutput;
 const require = createRequire(import.meta.url);
 
 const { Input } = require('enquirer');
@@ -65,7 +64,7 @@ async function cleanOutput() {
   await checkFolders();
   const output = readdirSync(outputPath);
   for (let i = 0; i < output.length; i++) {
-    await rmSync(`${outputPath}/${output[i]}`, {
+    await rmSync(join(outputPath, output[i]), {
       force: true,
       recursive: true,
     });
@@ -87,24 +86,25 @@ async function buildApp() {
     build: {
       copyPublicDir: false,
     },
+    publicDir: false,
   });
 
   // Copy public folder exclude nswow folders
   console.log(
     '\n\nCopy public folder exclude nswow folders and exclude folder',
   );
-  await cpSync(`${CWD}/public/`, `${outputPath}/app`, {
+  await cpSync(join(folders.srlPublic, '/'), join(outputPath, 'app'), {
     filter: (src) => {
       if (
-        src.startsWith(`${CWD}/public/downloads`) ||
-        src.startsWith(`${CWD}/public/html`) ||
-        src.startsWith(`${CWD}/public/images`) ||
-        src.startsWith(`${CWD}/public/json`) ||
-        src.startsWith(`${CWD}/public/exclude`)
+        src.startsWith(join(folders.srlPublic, 'downloads')) ||
+        src.startsWith(join(folders.srlPublic, 'html')) ||
+        src.startsWith(join(folders.srlPublic, 'images')) ||
+        src.startsWith(join(folders.srlPublic, 'json')) ||
+        src.startsWith(join(folders.srlPublic, 'exclude'))
       ) {
         return false;
       } else {
-        src === `${CWD}/public/` ||
+        src === join(folders.srlPublic, '/') ||
           console.log(`Copy ${src} to ${outputPath}/app`);
         return true;
       }
@@ -113,10 +113,10 @@ async function buildApp() {
   });
   console.log('\n');
 
-  console.log('Create fallback file worker.html for service worker');
-  let index = await readFileSync(`${outputPath}/app/index.html`, 'utf8');
-
-  await writeFileSync(`${outputPath}/app/worker.html`, index);
+  let index = await readFileSync(
+    join(folders.srlOutput, 'app', 'index.html'),
+    'utf8',
+  );
 
   console.log('Create file /template/article.html for nswow hybrid\n');
   index = index.replace(
@@ -128,8 +128,26 @@ async function buildApp() {
     `<base href="[[base-${placeholderId}]]" />
     [[meta-${placeholderId}]]`,
   );
-  await mkdirSync(`${outputPath}/app/template`, { recursive: true });
-  await writeFileSync(`${outputPath}/app/template/article.html`, index);
+
+  await writeFileSync(
+    join(outputPath, 'app', 'index.html'),
+    index,
+  );
+
+  index = index.replace(
+    /(<div\s+[^>]*id\s*=\s*["']app["'][^>]*>)([\s\S]*?)(<\/div>)/i,
+    `$1
+      <template>
+        [[content-${placeholderId}]]
+      </template>
+    $3`,
+  );
+
+  await mkdirSync(join(outputPath, 'app', 'template'), { recursive: true });
+  await writeFileSync(
+    join(outputPath, 'app', 'template', 'article.html'),
+    index,
+  );
   /**
    await writeFileSync(`${outputPath}/app/web.config`, `<?xml version="1.0" encoding="UTF-8"?>
    <configuration>
@@ -171,6 +189,7 @@ async function buildDDev() {
     build: {
       outDir: './.output/ddev',
     },
+    publicDir: false,
   });
   return build;
 }
@@ -185,7 +204,7 @@ async function buildDDev() {
 async function zipApp() {
   await checkFolders();
   const archiver = require('archiver');
-  const output = createWriteStream(outputPath + '/app.zip');
+  const output = createWriteStream(join(outputPath, 'app.zip'));
   const archive = archiver('zip', {
     zlib: { level: 9 }, // Sets the compression level.
   });
@@ -208,7 +227,7 @@ async function zipApp() {
     throw err;
   });
   archive.pipe(output);
-  archive.directory(outputPath + '/app/', false);
+  archive.directory(join(outputPath, 'app', '/'), false);
   archive.finalize();
 }
 
@@ -221,64 +240,48 @@ async function zipApp() {
 async function buildPdf() {
   await checkFolders();
 
+  const config = {
+    base: './',
+    build: {
+      outDir: join(folders.srlOutput, 'pdf'),
+      lib: {
+        fileName: 'pdf',
+        entry: join(folders.srlEntries, 'pdf.ts'),
+        formats: ['es'],
+      },
+    },
+    publicDir: false,
+  };
+
   try {
-    const input = resolve(CWD, 'pdf.html');
-    await statSync(input);
-    return await viteBuild({
-      build: {
-        outDir: resolve(CWD, '.output/pdf'),
-        rollupOptions: {
-          input: {
-            pdf: input,
-          },
-          output: {
-            entryFileNames: `[name].js`,
-            chunkFileNames: `[name].js`,
-            assetFileNames: `[name].[ext]`,
-          },
-        },
-        copyPublicDir: false,
-      },
-    });
+    return await viteBuild(config);
   } catch (e) {
-    let configFile = false;
-    try {
-      const file = resolve(CWD, 'vite.config.pdf.ts');
-      await statSync(file);
-      console.log('Use vite.config.pdf.ts file');
-      configFile = file;
-    } catch (e) {
-      console.log('No use of vite.config.pdf.ts file');
-    }
+    console.error(e);
+    return false;
+  }
+}
 
-    const entry = resolve(CWD, 'pdf.ts');
+async function buildXbrl() {
+  await checkFolders();
 
-    const config = {
-      configFile: configFile,
-      base: './',
-      build: {
-        outDir: resolve(CWD, '.output/pdf'),
-        lib: {
-          fileName: 'pdf',
-          entry: entry,
-          formats: ['es'],
-        },
+  const config = {
+    base: './',
+    build: {
+      outDir: join(folders.srlOutput, 'xbrl'),
+      lib: {
+        fileName: 'xbrl',
+        entry: join(folders.srlEntries, 'xbrl.ts'),
+        formats: ['es'],
       },
-      resolve: {
-        alias: {
-          '@': fileURLToPath(new URL(resolve(CWD, 'src'), import.meta.url)),
-          nswow: fileURLToPath(new URL(resolve(CWD, 'nswow'), import.meta.url)),
-        },
-      },
-      publicDir: false,
-    };
+    },
+    publicDir: false,
+  };
 
-    try {
-      return await viteBuild(config);
-    } catch (e) {
-      console.error(e);
-      return false;
-    }
+  try {
+    return await viteBuild(config);
+  } catch (e) {
+    console.error(e);
+    return false;
   }
 }
 
@@ -305,6 +308,60 @@ async function buildLdd(version) {
   lddJson.name = packageJson.name;
   lddJson.version = packageJson.version;
 
+  const config = {
+    base: './',
+    build: {
+      outDir: join(folders.srlOutput, 'ldd', 'assets'),
+      lib: {
+        fileName: 'ldd',
+        entry: join(folders.srlEntries, 'ldd.ts'),
+        formats: ['es'],
+      },
+    },
+    publicDir: false,
+  };
+
+  await writeFileSync(join(outputPath, `v${lddJson.version}.txt`), '');
+
+  try {
+    return await viteBuild(config)
+      .then(async () => {
+        const assetsPath = join(outputPath, 'ldd', 'assets');
+        const assetsFiles = await readdirSync(assetsPath);
+        lddJson.assets.css = [];
+        lddJson.assets.js = [];
+        for (let i = 0; i < assetsFiles.length; i++) {
+          const file = assetsFiles[i];
+          if (file.endsWith('.css')) {
+            const path = join('./assets/' + file);
+            if (!lddJson.assets.css.includes(path)) {
+              action = true;
+              lddJson.assets.css.push(path);
+            }
+          }
+          if (file.endsWith('.js')) {
+            const path = join('./assets/' + file);
+            if (!lddJson.assets.js.includes(path)) {
+              action = true;
+              lddJson.assets.js.push(path);
+            }
+          }
+        }
+        if (action) {
+          await writeLivingDocsJson(lddJson);
+        }
+        return true;
+      })
+      .then(async () => {
+        return await finalizeLdd();
+      });
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+
+  /*
+
   const input = resolve(CWD, 'ldd.html');
   try {
     await statSync(input);
@@ -312,7 +369,7 @@ async function buildLdd(version) {
     return true;
   }
   try {
-    await writeFileSync(`${outputPath}/v${lddJson.version}.txt`, '');
+    await writeFileSync(join( outputPath, `v${lddJson.version}.txt`), '');
     return await viteBuild({
       build: {
         outDir: './.output/ldd',
@@ -330,7 +387,7 @@ async function buildLdd(version) {
       },
     })
       .then(async () => {
-        const assetsPath = outputPath + '/ldd/assets';
+        const assetsPath = join( outputPath, 'ldd', 'assets');
         const assetsFiles = await readdirSync(assetsPath);
         for (let i = 0; i < assetsFiles.length; i++) {
           const file = assetsFiles[i];
@@ -361,6 +418,8 @@ async function buildLdd(version) {
     console.error(e);
     return false;
   }
+
+   */
 }
 
 /**
@@ -372,65 +431,26 @@ async function buildLdd(version) {
  */
 async function buildWord() {
   await checkFolders();
+  let configFile = false;
+
+  const config = {
+    base: './',
+    build: {
+      outDir: join(folders.srlOutput, 'word'),
+      lib: {
+        fileName: 'word',
+        entry: join(folders.srlEntries, 'word.ts'),
+        formats: ['es'],
+      },
+    },
+    publicDir: false,
+  };
 
   try {
-    const input = resolve(CWD, 'word.html');
-    await statSync(input);
-    return await viteBuild({
-      build: {
-        outDir: resolve(CWD, '.output/word'),
-        rollupOptions: {
-          input: {
-            word: input,
-          },
-          output: {
-            entryFileNames: `[name].js`,
-            chunkFileNames: `[name].js`,
-            assetFileNames: `[name].[ext]`,
-          },
-        },
-        copyPublicDir: false,
-      },
-    });
+    return await viteBuild(config);
   } catch (e) {
-    let configFile = false;
-    try {
-      const file = resolve(CWD, 'vite.config.word.ts');
-      await statSync(file);
-      console.log('Use vite.config.word.ts file');
-      configFile = file;
-    } catch (e) {
-      console.log('No use of vite.config.word.ts file');
-    }
-
-    const entry = resolve(CWD, 'word.ts');
-
-    const config = {
-      configFile: configFile,
-      base: './',
-      build: {
-        outDir: resolve(CWD, '.output/word'),
-        lib: {
-          fileName: 'word',
-          entry: entry,
-          formats: ['es'],
-        },
-      },
-      resolve: {
-        alias: {
-          '@': fileURLToPath(new URL(resolve(CWD, 'src'), import.meta.url)),
-          nswow: fileURLToPath(new URL(resolve(CWD, 'nswow'), import.meta.url)),
-        },
-      },
-      publicDir: false,
-    };
-
-    try {
-      return await viteBuild(config);
-    } catch (e) {
-      console.error(e);
-      return false;
-    }
+    console.error(e);
+    return false;
   }
 }
 
@@ -450,12 +470,10 @@ async function build() {
     });
     const version = await prompt.run();
     await cleanOutput();
-    await beaver(1);
-    await mapScss();
-    await mapLdd();
     await buildApp();
     await buildPdf();
     await buildWord();
+    await buildXbrl();
     await buildLdd(version);
     await zipApp();
   } catch (error) {
@@ -498,66 +516,67 @@ function cleanupScssAlias(string) {
 async function mapScss() {
   await checkFolders();
   try {
-    const relativePathToRoot = '../';
+    const relativePathToRoot = join('..', '..', '/');
 
     const output = {
       app: [],
       ldd: [],
       pdf: [],
       word: [],
+      xbrl: [],
     };
 
-    const mainFiles = await glob(
-      resolve(process.cwd(), './src/assets/scss/*.scss'),
-      {
-        withFileTypes: true,
-      },
-    );
+    const mainFiles = await glob(join(folders.srlAssets, 'scss', '*.scss'), {
+      withFileTypes: true,
+    });
 
     let f = mainFiles.find((p) => {
       return p.name === 'general.scss';
     });
 
-    const alias = cleanupScssAlias(f.relative());
-
     if (f) {
-      output.app.push(`"${relativePathToRoot}${f.relative()}" as ${alias}`);
-      output.ldd.push(`"${relativePathToRoot}${f.relative()}" as ${alias}`);
-      output.pdf.push(`"${relativePathToRoot}${f.relative()}" as ${alias}`);
-      output.word.push(`"${relativePathToRoot}${f.relative()}" as ${alias}`);
+      output.app.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
+      output.ldd.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
+      output.pdf.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
+      output.word.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
     }
 
     for (let x = 0; x < mainFiles.length; x++) {
-      const alias = cleanupScssAlias(mainFiles[x].relative());
+      const alias = cleanupScssAlias(mainFiles[x].relativePosix());
       if (mainFiles[x].name === 'app.scss') {
         output.app.push(
-          `"${relativePathToRoot}${mainFiles[x].relative()}" as ${alias}`,
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
         );
       }
       if (mainFiles[x].name === 'ldd.scss') {
         output.ldd.push(
-          `"${relativePathToRoot}${mainFiles[x].relative()}" as ${alias}`,
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
         );
       }
       if (mainFiles[x].name === 'pdf.scss') {
         output.pdf.push(
-          `"${relativePathToRoot}${mainFiles[x].relative()}" as ${alias}`,
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
         );
       }
       if (mainFiles[x].name === 'word.scss') {
         output.word.push(
-          `"${relativePathToRoot}${mainFiles[x].relative()}" as ${alias}`,
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
+        );
+      }
+      if (mainFiles[x].name === 'xbrl.scss') {
+        output.xbrl.push(
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
         );
       }
     }
 
-    const livingdocs = await glob(resolve(process.cwd(), './livingdocs/**/*'), {
+    const livingdocs = await glob(join(folders.ld, '**', '*'), {
       maxDepth: 3,
       withFileTypes: true,
     });
     livingdocs.sort((a, b) => {
-      const valueA = a.relative().toUpperCase();
-      const valueB = b.relative().toUpperCase();
+      const valueA = a.relativePosix().toUpperCase();
+      const valueB = b.relativePosix().toUpperCase();
       if (valueA < valueB) {
         return -1;
       }
@@ -580,59 +599,68 @@ async function mapScss() {
     for (let x = 0; x < livingdocsList.length; x++) {
       const p = livingdocsList[x];
       try {
-        const general = await statSync(p.fullpath() + '/general.scss');
-        const alias = cleanupScssAlias(`${p.relative()}/general.scss`);
+        const general = await statSync(
+          join(p.fullpath(), 'scss', 'general.scss'),
+        );
         output.app.push(
-          `"${relativePathToRoot}${p.relative()}/general.scss" as ${alias}`,
+          `"${relativePathToRoot}${p.relativePosix()}/scss/general.scss" as *`,
         );
         output.ldd.push(
-          `"${relativePathToRoot}${p.relative()}/general.scss" as ${alias}`,
+          `"${relativePathToRoot}${p.relativePosix()}/scss/general.scss" as *`,
         );
         output.pdf.push(
-          `"${relativePathToRoot}${p.relative()}/general.scss" as ${alias}`,
+          `"${relativePathToRoot}${p.relativePosix()}/scss/general.scss" as *`,
         );
         output.word.push(
-          `"${relativePathToRoot}${p.relative()}/general.scss" as ${alias}`,
+          `"${relativePathToRoot}${p.relativePosix()}/scss/general.scss" as *`,
         );
       } catch (e) {}
 
-      const types = ['app', 'ldd', 'pdf', 'word'];
+      const types = ['app', 'ldd', 'pdf', 'word', 'xbrl'];
 
       for (let i = 0; i < types.length; i++) {
         const type = types[i];
         try {
-          const f = await statSync(p.fullpath() + '/' + type + '.scss');
-          const alias = cleanupScssAlias(`${p.relative()}/${type}.scss`);
+          const f = await statSync(join(p.fullpath(), 'scss', `${type}.scss`));
+          const alias = cleanupScssAlias(`${p.relativePosix()}/${type}.scss`);
           output[type].push(
-            `"${relativePathToRoot}${p.relative()}/${type}.scss" as ${alias}`,
+            `"${relativePathToRoot}${p.relativePosix()}/scss/${type}.scss" as *`,
           );
         } catch (e) {}
       }
     }
 
     await writeFileSync(
-      `${CWD}/.nswow/app.scss`,
+      join(folders.srlImports, 'app.scss'),
       `@use ` +
         output.app.join(';\n@use ') +
-        `;\n@use "nswow/core-styles" as nswowcorestyles;\n`,
+        `;\n@use "../scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
-      `${CWD}/.nswow/ldd.scss`,
+      join(folders.srlImports, 'ldd.scss'),
       `@use ` +
         output.ldd.join(';\n@use ') +
-        `;\n@use "nswow/core-styles" as nswowcorestyles;\n`,
+        `;\n@use "../scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
-      `${CWD}/.nswow/pdf.scss`,
+      join(folders.srlImports, 'pdf.scss'),
       `@use ` +
         output.pdf.join(';\n@use ') +
-        `;\n@use "nswow/core-styles" as nswowcorestyles;\n`,
+        `;\n@use "../scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
-      `${CWD}/.nswow/word.scss`,
+      join(folders.srlImports, 'word.scss'),
       `@use ` +
         output.word.join(';\n@use ') +
-        `;\n@use "nswow/core-styles" as nswowcorestyles;\n`,
+        `;\n@use "../scss/core-styles.scss" as *;\n`,
+    );
+
+    await writeFileSync(
+      join(folders.srlImports, 'xbrl.scss'),
+      output.xbrl.length ?
+      `@use ` +
+        output.xbrl.join(';\n@use ') : '' +
+        `;\n@use "../scss/xbrl-core-styles.scss" as *;\n`,
     );
 
     return true;
@@ -647,7 +675,7 @@ async function mapScss() {
  * @returns {Promise<boolean>} - A promise that resolves to true if the mapping and importing is successful.
  */
 async function mapJs() {
-  const jsFiles = await glob(resolve(CWD, './livingdocs/' + '**/app.[t,j]s'), {
+  const jsFiles = await glob(join(folders.ld, '**', 'app.[t,j]s'), {
     withFileTypes: true,
   });
 
@@ -671,14 +699,14 @@ async function mapJs() {
     register.push(`ClassAutoLoader.register(${className}, "${className}")`);
   }
 
-  const content = `import ArticleAutoloader from 'nswow/ArticleAutoloader'
+  const content = `import ArticleAutoloader from 'srl/ArticleAutoloader'
 ${imports.join('\n')}
 const ClassAutoLoader = new ArticleAutoloader()
 ${register.join('\n')}
 export default ClassAutoLoader
 export { ClassAutoLoader }`;
 
-  await writeFileSync(resolve(CWD, './src/Autoload.ts'), content);
+  await writeFileSync(join(folders.srlSrc, 'Autoload.ts'), content);
   return true;
 }
 
@@ -693,7 +721,7 @@ async function mapLdd() {
     const lddJson = await readLivingDocsJson();
 
     const propertiesFiles = await glob(
-      resolve(CWD, './livingdocs/**/properties.{json,js,ts}'),
+      join(folders.ld, '**', 'properties.{json,js,ts}'),
     );
     const mapProperties = {};
     for (let i = 0; i < propertiesFiles.length; i++) {
@@ -714,9 +742,10 @@ async function mapLdd() {
     }
     lddJson.componentProperties = mapProperties;
 
-    const groupsPath = resolve(CWD, './livingdocs');
+    const groupsPath = folders.ld;
     const groups = readdirSync(groupsPath);
     const keepGroups = [];
+    const vueComponents = [];
 
     for (let x = 0; x < groups.length; x++) {
       const group = groups[x];
@@ -733,6 +762,16 @@ async function mapLdd() {
                 `${groupsPath}/${group}/${component}/${component}.html`,
               );
               components.push(component);
+            } catch (e) {}
+
+            try {
+              const stat = statSync(
+                `${groupsPath}/${group}/${component}/${component}.vue`,
+              );
+              vueComponents.push({
+                name: `SrlArticle${toUpperCamelCase(component)}`,
+                path: join('#ld', group, component, `${component}.vue`),
+              });
             } catch (e) {}
           }
           if (components.length) {
@@ -778,6 +817,26 @@ async function mapLdd() {
       }
     }
     lddJson.groups = newMap;
+
+    const asyncComponents = [
+      `import { defineAsyncComponent } from 'vue'`,
+      `export default function asyncLdComponent(app) {`,
+    ];
+
+    for (let i = 0; i < vueComponents.length; i++) {
+      const component = vueComponents[i];
+      asyncComponents.push(
+        ` app.component('${component.name}', defineAsyncComponent(() => import('${component.path}')))`,
+      );
+    }
+
+    asyncComponents.push('}');
+
+    await writeFileSync(
+      join(folders.srlPlugins, 'asyncLdComponent.ts'),
+      asyncComponents.join('\n'),
+    );
+
     await writeLivingDocsJson(lddJson);
     return true;
   } catch (e) {
@@ -799,6 +858,13 @@ async function map() {
   await mapScss();
   await mapLdd();
   return true;
+}
+
+function toUpperCamelCase(input) {
+  return input
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join('');
 }
 
 export { build, ddev, map, mapScss, mapLdd, mapJs };

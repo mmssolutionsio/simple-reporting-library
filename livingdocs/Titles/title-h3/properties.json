@@ -1,0 +1,23 @@
+{
+  "h3-as": {
+    "label": "Title styling",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Default"
+      },
+      {
+        "caption": "Styling from title h4",
+        "value": "srl-title-h4"
+      },
+      {
+        "caption": "Styling from title h5",
+        "value": "srl-title-h5"
+      },
+      {
+        "caption": "Styling from title h6",
+        "value": "srl-title-h6"
+      }
+    ]
+  }
+}
