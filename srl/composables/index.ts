@@ -1,4 +1,4 @@
-import _usArticle from './article';
+import _useArticle from './article';
 import _useArticles from './articles';
 import _useConfig from './config';
 import _useDownloads from './downloads';
@@ -9,7 +9,7 @@ import _useSearch from './search';
 import _useSettings from './settings';
 import _useViewPort from './viewPort';
 
-export const useArticle = _usArticle;
+export const useArticle = _useArticle;
 export const useArticles = _useArticles;
 export const useConfig = _useConfig;
 export const useDownloads = _useDownloads;
