@@ -138,6 +138,11 @@ async function buildApp() {
     [[meta-${placeholderId}]]`,
   );
 
+  await writeFileSync(
+    join(outputPath, 'app', 'index.html'),
+    index,
+  );
+
   index = index.replace(
     /(<div\s+[^>]*id\s*=\s*["']app["'][^>]*>)([\s\S]*?)(<\/div>)/i,
     `$1
@@ -665,10 +670,12 @@ async function mapScss() {
         output.word.join(';\n@use ') +
         `;\n@use "../scss/core-styles.scss" as *;\n`,
     );
+
     await writeFileSync(
       join(folders.srlImports, 'xbrl.scss'),
+      output.xbrl.length ?
       `@use ` +
-        output.xbrl.join(';\n@use ') +
+        output.xbrl.join(';\n@use ') : '' +
         `;\n@use "../scss/xbrl-core-styles.scss" as *;\n`,
     );
 

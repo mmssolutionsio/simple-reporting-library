@@ -1,5 +1,8 @@
-import { Component } from 'vue';
+import { Component, App } from 'vue';
 
+interface window {
+  app: App;
+}
 interface _GlobalComponents {
   SrlAriaTabChain: (typeof import('../components/Srl/Aria/TabChain.vue'))['default'];
   SrlArticleAutoload: (typeof import('../components/Srl/Article/Autoload.vue'))['default'];

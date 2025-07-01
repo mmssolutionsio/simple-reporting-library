@@ -1,0 +1,38 @@
+{
+  "name": "image",
+  "label": "Image",
+  "properties": [
+    "width-all",
+    "pdf-spacer"
+  ],
+  "directives": {
+    "show-mobile-image": {
+      "type": "toggle",
+      "label": "Show mobile image",
+      "default": false
+    },
+    "show-caption": {
+      "type": "toggle",
+      "label": "Show caption",
+      "default": true
+    },
+    "desktop-image": {
+      "imageRatios": [
+        "1:1",
+        "3:2",
+        "4:3",
+        "16:9"
+      ],
+      "allowOriginalRatio": true
+    },
+    "mobile-image": {
+      "imageRatios": [
+        "1:1",
+        "3:2",
+        "4:3",
+        "16:9"
+      ],
+      "allowOriginalRatio": true
+    }
+  }
+}

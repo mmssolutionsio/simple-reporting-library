@@ -8,8 +8,6 @@
     "playwright.config.*"
   ],
 
-  "include": [],
-
   "compilerOptions": {
     "composite": true,
     "noEmit": true,

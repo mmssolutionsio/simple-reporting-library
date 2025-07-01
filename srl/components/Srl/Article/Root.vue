@@ -28,71 +28,45 @@
  * This component is typically used as part of a page layout system to display
  * the main content of articles that may contain dynamic elements requiring initialization.
  */
-import { nextTick, ref, onMounted } from 'vue';
-import VRuntimeTemplate from 'vue3-runtime-template';
-import Autoload from '@/Autoload.ts';
-import { useRoute } from 'vue-router';
-import { useArticle, useArticles, useConfig, useRoot } from '#composables';
+import { nextTick, ref, onMounted } from 'vue'
+import VRuntimeTemplate from 'vue3-runtime-template'
+import Autoload from '@/Autoload.ts'
+import { useRoute } from 'vue-router'
+import { useArticle, useArticles, useConfig, useRoot } from '#composables'
+import { prepareHtmlContent } from '#utils'
 
-const rootComponent = useRoot();
-const articleRoot = ref<HTMLDivElement | null>(null);
-const config = useConfig();
-const route = useRoute();
-const articles = useArticles();
-const content = ref<string>('');
-const locale = route.params.locale as string;
-const slug = route.params.slug ? (route.params.slug[0] as string) : undefined;
-const article = useArticle();
+const articleRoot = ref<HTMLDivElement | null>(null)
+const config = useConfig()
+const route = useRoute()
+const articles = useArticles()
+const content = ref<string>('')
+const locale = route.params.locale as string
+const article = useArticle()
 
 if (article.value) {
-  const file = `./html/${locale}/${article.value.name}.html`;
+  const file = `./html/${locale}/${article.value.name}.html`
   try {
-    const req = await fetch(file);
-    let text = await req.text();
+    const req = await fetch(file)
+    let text = await req.text()
 
-    document.title = article.value.translatedTitle;
-
-    text = text.replaceAll('../', `./`);
-    const hrefs = [...text.matchAll(/href="([^"]*)"/g)].map(
-      (match) => match[1],
-    );
-    hrefs.forEach((link) => {
-      const arrLink = link.split('#');
-      const article = articles.value.find((page) => page.uuid === arrLink[0]);
-      if (article) {
-        const href =
-          `./${locale}/${article.slug}` + (arrLink[1] ? `#${arrLink[1]}` : '');
-        text = text.replaceAll(`href="${link}"`, `href="${href}"`);
-      }
-    });
-
-    config.value.settings.languages.forEach((lang) => {
-      const pattern = new RegExp(`(\\.)?\\/${lang}\\/home`, 'g');
-      text = text.replace(pattern, `./${lang}`);
-    });
-
-    text = text.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, (match, p1) => {
-      rootComponent.addCssStyles(p1);
-      return '';
-    });
-
-    content.value = text;
+    document.title = article.value.translatedTitle
+    content.value = prepareHtmlContent(text)
   } catch (error) {
-    console.error(`Failed to load article content from ${file}:`, error);
+    console.error(`Failed to load article content from ${file}:`, error)
   }
 }
 
 onMounted(() => {
   nextTick(() => {
-    Autoload.init(articleRoot.value);
+    Autoload.init(articleRoot.value)
     if (route.hash) {
-      const target = document.querySelector(route.hash);
+      const target = document.querySelector(route.hash)
       if (target) {
-        target.scrollIntoView({ behavior: 'instant', block: 'start' });
+        target.scrollIntoView({ behavior: 'instant', block: 'start' })
       }
     }
-  });
-});
+  })
+})
 </script>
 
 <template>

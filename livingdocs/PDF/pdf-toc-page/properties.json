@@ -1,0 +1,20 @@
+{
+  "pdf-hide-paging-publication-chapter-title": {
+    "label": "Hide Paging/Publication/Chapter title",
+    "type": "option",
+    "value": "hide-paging-publication-chapter-title"
+  },
+  "toc-page-type": {
+    "label": "ToC page type",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Default"
+      },
+      {
+        "caption": "Main ToC",
+        "value": "srl-pdf-toc-page--main"
+      }
+    ]
+  }
+}

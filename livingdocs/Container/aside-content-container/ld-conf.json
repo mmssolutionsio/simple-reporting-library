@@ -1,0 +1,24 @@
+{
+  "name": "aside-content-container",
+  "label": "Aside / Content container",
+  "properties": [
+    "sticky",
+    "pdf-spacer"
+  ],
+  "directives": {
+    "aside": {
+      "allowedChildren": [
+        "paragraph",
+        "link"
+      ]
+    },
+    "content": {
+      "defaultComponents": {
+        "paragraph": "paragraph"
+      },
+      "defaultContent": [{
+        "component": "paragraph"
+      }]
+    }
+  }
+}

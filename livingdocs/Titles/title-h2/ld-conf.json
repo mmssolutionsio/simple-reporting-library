@@ -1,0 +1,14 @@
+{
+  "name": "title-h2",
+  "label": "Title (h2)",
+  "properties": [
+    "h2-as",
+    "width-reduced",
+    "pdf-spacer"
+  ],
+  "directives": {
+    "title-h2-number": {
+      "recommendedMaxLength": 2
+    }
+  }
+}

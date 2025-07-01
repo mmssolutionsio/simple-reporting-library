@@ -1,23 +1,9 @@
-<script type="ld-conf">
-  {
-  	"name": "signature-item",
-  	"label": "Signature item",
-  	"iconUrl": "https://mms-xbrl.s3.eu-central-1.amazonaws.com/design/svg/editor/icon-signature-item.min.svg",
-  	"allowedParents": [
-  		"signature-container"
-  	],
-  	"directives": {
-  		"image": {
-  			"imageRatios": ["1:1", "4:3", "16:9"],
-  			"allowOriginalRatio": true
-  		}
-  	}
-  }
-</script>
-<div class="srl-signature-item">
-  <div class="srl-signature-item__image">
-    <img class="srl-signature-item__img" doc-image="image" />
-  </div>
-  <p class="srl-signature-item__name" doc-editable="name">Vorname Nachname</p>
-  <p class="srl-signature-item__position" doc-editable="position">Position</p>
+<div class="srl-signature__item">
+  <img class="srl-signature__img" doc-image="image"/>
+  <p class="srl-signature__name" doc-editable="signature-item-name">
+    Max Mustermann
+  </p>
+  <p class="srl-signature__position" doc-editable="signature-item-position">
+    Position
+  </p>
 </div>

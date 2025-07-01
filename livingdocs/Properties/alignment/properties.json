@@ -1,0 +1,36 @@
+{
+  "horizontal-alignment": {
+    "label": "Horizontal alignment",
+    "type": "select",
+    "options": [
+      {
+        "caption": "left"
+      },
+      {
+        "caption": "center",
+        "value": "srl-horizontal-center"
+      },
+      {
+        "caption": "right",
+        "value": "srl-horizontal-right"
+      }
+    ]
+  },
+  "vertical-alignment": {
+    "label": "Vertical alignment",
+    "type": "select",
+    "options": [
+      {
+        "caption": "top"
+      },
+      {
+        "caption": "center",
+        "value": "srl-vertical-center"
+      },
+      {
+        "caption": "bottom",
+        "value": "srl-vertical-bottom"
+      }
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "pdf-chapter-navigation-item-current": {
+    "label": "Is current navigation item",
+    "type": "option",
+    "value": "srl-chapter-navigation__list-item--current"
+  }
+}

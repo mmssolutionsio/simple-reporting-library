@@ -31,18 +31,18 @@ export function isRouterPath(path: string): boolean {
 export function isExternalPath(path: string): boolean {
   return (
     path.startsWith('http') ||
-    path?.startsWith('//') ||
-    path?.startsWith('mailto') ||
-    path?.startsWith('tel') ||
-    path?.startsWith('sms') ||
-    path?.startsWith('callto') ||
-    path?.startsWith('skype') ||
-    path?.startsWith('sip') ||
-    path?.startsWith('ws') ||
-    path?.startsWith('wss') ||
-    path?.startsWith('irc') ||
-    path?.startsWith('gopher') ||
-    path?.startsWith('whatsapp')
+    path.startsWith('//') ||
+    path.startsWith('mailto') ||
+    path.startsWith('tel') ||
+    path.startsWith('sms') ||
+    path.startsWith('callto') ||
+    path.startsWith('skype') ||
+    path.startsWith('sip') ||
+    path.startsWith('ws') ||
+    path.startsWith('wss') ||
+    path.startsWith('irc') ||
+    path.startsWith('gopher') ||
+    path.startsWith('whatsapp')
   );
 }
 

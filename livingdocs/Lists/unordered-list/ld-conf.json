@@ -1,0 +1,22 @@
+{
+  "name": "unordered-list",
+  "label": "List (unordered)",
+  "properties": [
+    "pdf-spacer"
+  ],
+  "directives": {
+    "list": {
+      "allowedChildren": [
+        "list-item"
+      ],
+      "defaultComponents": {
+        "paragraph": "list-item"
+      },
+      "defaultContent": [
+        {
+          "component": "list-item"
+        }
+      ]
+    }
+  }
+}

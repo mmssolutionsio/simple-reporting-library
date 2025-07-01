@@ -1,0 +1,22 @@
+{
+  "name": "ordered-list",
+  "label": "List (numeric)",
+  "properties": [
+    "pdf-spacer"
+  ],
+  "directives": {
+    "list": {
+      "allowedChildren": [
+        "list-item"
+      ],
+      "defaultComponents": {
+        "paragraph": "list-item"
+      },
+      "defaultContent": [
+        {
+          "component": "list-item"
+        }
+      ]
+    }
+  }
+}

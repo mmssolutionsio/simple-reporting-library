@@ -1,0 +1,25 @@
+{
+  "name": "pdf-cover",
+  "label": "PDF cover",
+  "directives": {
+    "show-logo": {
+      "type": "toggle",
+      "label": "Show logo",
+      "default": false
+    },
+    "show-main-title": {
+      "type": "toggle",
+      "label": "Show main title",
+      "default": true
+    },
+    "show-sub-title": {
+      "type": "toggle",
+      "label": "Show sub title",
+      "default": false
+    },
+    "cover": {
+      "imageRatios": ["a4"],
+      "allowOriginalRatio": false
+    }
+  }
+}
