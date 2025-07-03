@@ -1,11 +1,7 @@
 {
   "name": "columns-container",
   "label": "Columns container",
-  "properties": [
-    "width-reduced",
-    "vertical-alignment",
-    "pdf-spacer"
-  ],
+  "properties": ["width-reduced", "vertical-alignment", "pdf-spacer"],
   "directives": {
     "show-column-3": {
       "type": "toggle",

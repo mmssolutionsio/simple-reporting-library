@@ -3,9 +3,7 @@
   "label": "PDF chapter navigation container",
   "directives": {
     "pdf-chapter-navigation-list": {
-      "allowedChildren": [
-        "pdf-chapter-navigation-item"
-      ],
+      "allowedChildren": ["pdf-chapter-navigation-item"],
       "defaultComponents": {
         "paragraph": "pdf-chapter-navigation-item"
       },

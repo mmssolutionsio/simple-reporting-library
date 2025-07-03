@@ -1,9 +1,7 @@
 {
   "name": "link",
   "label": "Link",
-  "properties": [
-    "pdf-spacer"
-  ],
+  "properties": ["pdf-spacer"],
   "directives": {
     "showParagraph": {
       "type": "toggle",

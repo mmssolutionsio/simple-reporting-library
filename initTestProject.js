@@ -43,10 +43,7 @@ init(projectFolder)
       const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
       const searchKey = '@multivisio/nswow';
 
-      if (
-        packageJson.dependencies &&
-        packageJson.dependencies[searchKey]
-      ) {
+      if (packageJson.dependencies && packageJson.dependencies[searchKey]) {
         packageJson.dependencies[searchKey] =
           'file:../simple-reporting-library';
         writeFileSync(
