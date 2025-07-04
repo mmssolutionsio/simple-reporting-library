@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, useId } from 'vue';
 import { useArticles, useConfig } from '#composables';
-import { prepareHtmlContent } from '#utils'
+import { prepareHtmlContent } from '#utils';
 
 const props = defineProps<{
   uuid: string;

@@ -1,8 +1,5 @@
 {
   "name": "title-h1",
   "label": "Title (h1)",
-  "properties": [
-    "width-reduced",
-    "pdf-spacer"
-  ]
+  "properties": ["width-reduced", "pdf-spacer"]
 }

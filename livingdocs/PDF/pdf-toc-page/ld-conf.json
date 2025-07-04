@@ -1,10 +1,7 @@
 {
   "name": "pdf-toc-page",
   "label": "ToC page",
-  "properties": [
-    "pdf-hide-paging-publication-chapter-title",
-    "toc-page-type"
-  ],
+  "properties": ["pdf-hide-paging-publication-chapter-title", "toc-page-type"],
   "directives": {
     "toc": {
       "allowedChildren": [
@@ -12,9 +9,7 @@
         "pdf-toc-item",
         "pdf-toc-item-blank"
       ],
-      "defaultContent": [
-        {"component": "pdf-toc-item"}
-      ]
+      "defaultContent": [{ "component": "pdf-toc-item" }]
     }
   }
 }

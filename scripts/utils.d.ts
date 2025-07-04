@@ -46,4 +46,11 @@ export function readNsWowJson(): Promise<any>;
  * @return {boolean} - Returns true if the configuration was successfully written, otherwise false.
  */
 export function writeNsWowJson(config: any): boolean;
+/**
+ * Convert a string to camel case notation.
+ *
+ * @param str - The string to be converted.
+ * @returns String in camel case notation.
+ */
+export function camelCase(str: any): any;
 export { writeJson };

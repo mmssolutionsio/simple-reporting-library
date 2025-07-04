@@ -1,9 +1,7 @@
 {
   "name": "accordion",
   "label": "Accordion",
-  "properties": [
-    "pdf-spacer"
-  ],
+  "properties": ["pdf-spacer"],
   "directives": {
     "header": {
       "allowedChildren": [

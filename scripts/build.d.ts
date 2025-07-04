@@ -2,9 +2,10 @@
  * Builds the project sequentially by executing a series of asynchronous tasks in a specific order.
  * This method is used to build the project in a predetermined sequence.
  *
+ * @param {string} version
  * @return {Promise<void>} A Promise that resolves when the build process is completed or rejects if an error occurs.
  */
-export function build(): Promise<void>;
+export function build(version: string): Promise<void>;
 /**
  * Builds the project sequentially by executing a series of asynchronous tasks in a specific order.
  * This method is used to build the project in a predetermined sequence.
@@ -27,14 +28,10 @@ export function map(): Promise<boolean>;
  * @returns {Promise<boolean>} Returns a promise that resolves to true if the SCSS mapping is successful, and false if there's an error.
  */
 export function mapScss(): Promise<boolean>;
-/**
- * Maps the livingdocs properties to components and groups.
- *
- * @returns {Promise<boolean>} Returns a promise that resolves to a boolean indicating the success or failure of the mapping.
- */
-export function mapLdd(): Promise<boolean>;
+import { mapLdd } from './ldd/mapLdd.js';
 /**
  * This function asynchronously maps JavaScript files and imports them into specific files.
  * @returns {Promise<boolean>} - A promise that resolves to true if the mapping and importing is successful.
  */
 export function mapJs(): Promise<boolean>;
+export { mapLdd };

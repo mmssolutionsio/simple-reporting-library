@@ -1,11 +1,7 @@
 {
   "name": "title-h4",
   "label": "Title (h4)",
-  "properties": [
-    "h4-as",
-    "width-reduced",
-    "pdf-spacer"
-  ],
+  "properties": ["h4-as", "width-reduced", "pdf-spacer"],
   "directives": {
     "title-h4-number": {
       "recommendedMaxLength": 6

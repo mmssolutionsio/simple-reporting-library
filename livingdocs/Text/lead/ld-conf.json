@@ -1,9 +1,7 @@
 {
   "name": "lead",
   "label": "Lead",
-  "properties": [
-    "pdf-spacer"
-  ],
+  "properties": ["pdf-spacer"],
   "directives": {
     "lead": {
       "recommendedMaxLength": 325

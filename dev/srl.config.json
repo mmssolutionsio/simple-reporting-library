@@ -21,6 +21,22 @@
   "typography": {
     "typography": [
       {
+        "name": "title-h1",
+        "font-family": "Inter",
+        "font-size": 30,
+        "line-height": 1.5,
+        "font-style": "normal",
+        "font-weight": 600,
+        "letter-spacing": 0,
+        "media": {
+          "up": {
+            "tablet-ls": {
+              "font-size": 36
+            }
+          }
+        }
+      },
+      {
         "name": "display1",
         "font-size": 72,
         "line-height": 1.4,
@@ -218,7 +234,7 @@
         "size": 28,
         "media": {
           "up": {
-            "landscape": 32
+            "tablet-ls": 32
           }
         }
       },
@@ -226,7 +242,7 @@
         "size": 36,
         "media": {
           "up": {
-            "landscape": 48
+            "tablet-ls": 48
           }
         }
       },
@@ -234,7 +250,7 @@
         "size": 50,
         "media": {
           "up": {
-            "landscape": 64
+            "tablet-ls": 64
           }
         }
       }
@@ -243,50 +259,68 @@
   "grid": {
     "containers": {
       "print": {
-        "padding": 32
+        "padding": 0
       },
-      "phone": {
+      "phone-pt": {
         "padding": 16
       },
-      "portrait": {
+      "phone-ls": {
         "padding": 16
       },
-      "landscape": {
-        "padding": 16,
-        "max-width": 1280
+      "tablet-pt": {
+        "padding": 16
+      },
+      "tablet-ls": {
+        "padding": 16
       },
       "desktop": {
-        "padding": 16,
+        "padding": 32,
+        "max-width": 1280
+      },
+      "desktop-large": {
+        "padding": 32,
         "max-width": 1280
       }
     },
     "breakpoints": {
       "print": 0,
-      "phone": 0,
-      "portrait": 768,
-      "landscape": 1024,
-      "desktop": 1440
+      "phone-pt": 0,
+      "phone-ls": 576,
+      "tablet-pt": 768,
+      "tablet-ls": 992,
+      "desktop": 1200,
+      "desktop-large": 1400
+    },
+    "columns": {
+      "print": 12,
+      "phone-pt": 4,
+      "phone-ls": 4,
+      "tablet-pt": 8,
+      "tablet-ls": 12,
+      "desktop": 12,
+      "desktop-large": 12
     },
     "gutter": {
       "print": {
-        "columns": 12,
         "column-gap": 16
       },
-      "phone": {
-        "columns": 12,
+      "phone-pt": {
         "column-gap": 16
       },
-      "portrait": {
-        "columns": 12,
+      "phone-ls": {
         "column-gap": 16
       },
-      "landscape": {
-        "columns": 12,
+      "tablet-pt": {
+        "column-gap": 16
+      },
+      "tablet-ls": {
         "column-gap": 16
       },
       "desktop": {
-        "columns": 12,
-        "column-gap": 16
+        "column-gap": 32
+      },
+      "desktop-large": {
+        "column-gap": 32
       }
     }
   }
