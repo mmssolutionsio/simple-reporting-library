@@ -1,7 +1,5 @@
 {
   "name": "paragraph-strong",
   "label": "Paragraph (strong)",
-  "properties": [
-    "pdf-spacer"
-  ]
+  "properties": ["pdf-spacer"]
 }

@@ -7,7 +7,7 @@
 
 @mixin media($breakpoint) {
   @if not map.has-key(variables.$breakpoints, $breakpoint) {
-    @error "Invalid breakpoint specified! Choose one of #{map.keys(variables.$breakpoints)}";
+    @error "Invalid breakpoint \"#{$breakpoint}\" specified! Choose one of #{map.keys(variables.$breakpoints)}";
   }
   @if $breakpoint == print {
     @media print {
@@ -43,7 +43,7 @@
 
 @mixin media-up($breakpoint) {
   @if not map.has-key(variables.$breakpoints, $breakpoint) {
-    @error "Invalid breakpoint specified! Choose one of #{map.keys(variables.$breakpoints)}";
+    @error "Invalid breakpoint \"#{$breakpoint}\" specified! Choose one of #{map.keys(variables.$breakpoints)}";
   }
   $min: map.get(variables.$breakpoints, $breakpoint);
 
@@ -58,7 +58,7 @@
 
 @mixin media-down($breakpoint) {
   @if not map.has-key(variables.$breakpoints, $breakpoint) {
-    @error "Invalid breakpoint specified! Choose one of #{map.keys(variables.$breakpoints)}";
+    @error "Invalid breakpoint \"#{$breakpoint}\" specified! Choose one of #{map.keys(variables.$breakpoints)}";
   }
   $next: system.map-get-next(variables.$breakpoints, $breakpoint);
   $max: false;
@@ -80,7 +80,7 @@
       map.has-key(variables.$breakpoints, $breakpoint-min) or not
       map.has-key(variables.$breakpoints, $breakpoint-max)
   ) {
-    @error "Invalid breakpoint specified! Choose one of #{map.keys(variables.$breakpoints)}";
+    @error "Invalid breakpoint \"#{$breakpoint-min}\" or \"#{$breakpoint-max}\" specified! Choose one of #{map.keys(variables.$breakpoints)}";
   }
   $min: map.get(variables.$breakpoints, $breakpoint-min);
   @if $min == 0 {
@@ -202,10 +202,7 @@
     );
   }
 
-  $columns: map.get($gutter, columns);
-  @if not $columns {
-    $columns: 1;
-  }
+  $columns: map.get(variables.$columns, $breakpoint);
 
   $gap: map.get($gutter, gap);
   $row-gap: unset;

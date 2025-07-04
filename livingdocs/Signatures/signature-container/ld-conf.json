@@ -1,14 +1,10 @@
 {
   "name": "signature-container",
   "label": "Signature container",
-  "properties": [
-    "pdf-spacer"
-  ],
+  "properties": ["pdf-spacer"],
   "directives": {
     "content": {
-      "allowedChildren": [
-        "signature-item"
-      ],
+      "allowedChildren": ["signature-item"],
       "defaultContent": [
         {
           "component": "signature-item"

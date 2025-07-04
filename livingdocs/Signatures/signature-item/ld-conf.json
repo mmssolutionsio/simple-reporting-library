@@ -1,9 +1,7 @@
 {
   "name": "signature-item",
   "label": "Signature item",
-  "allowedParents": [
-    "signature-container"
-  ],
+  "allowedParents": ["signature-container"],
   "directives": {
     "image": {
       "imageRatios": ["1:1", "4:3", "16:9"],

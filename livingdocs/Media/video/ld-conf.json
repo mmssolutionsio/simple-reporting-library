@@ -1,15 +1,10 @@
 {
   "name": "video",
   "label": "Video",
-  "properties": [
-    "width-all",
-    "pdf-spacer"
-  ],
+  "properties": ["width-all", "pdf-spacer"],
   "directives": {
     "background": {
-      "imageRatios": [
-        "16:9"
-      ],
+      "imageRatios": ["16:9"],
       "allowOriginalRatio": false
     },
     "showVideoLink": {

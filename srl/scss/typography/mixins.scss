@@ -39,7 +39,12 @@
   }
 }
 
-@mixin _register-typo-variables($typo, $map, $media: false) {
+@mixin _register-typo-variables(
+  $typo,
+  $map,
+  $media: false,
+  $mediaBehavior: false
+) {
   @if not $media {
     $defaults: map.merge(
       (
@@ -108,7 +113,31 @@
 
     @if map.has-key($map, media) {
       @each $breakpoint, $breakpointValue in map.get($map, media) {
-        @include _register-typo-variables($typo, $breakpointValue, $breakpoint);
+        @if $breakpoint == up {
+          @each $upBreakpoint, $upBreakpointValue in $breakpointValue {
+            @include _register-typo-variables(
+              $typo,
+              $upBreakpointValue,
+              $upBreakpoint,
+              up
+            );
+          }
+        } @else if $breakpoint == down {
+          @each $downBreakpoint, $downBreakpointValue in $breakpointValue {
+            @include _register-typo-variables(
+              $typo,
+              $downBreakpointValue,
+              $downBreakpoint,
+              down
+            );
+          }
+        } @else {
+          @include _register-typo-variables(
+            $typo,
+            $breakpointValue,
+            $breakpoint
+          );
+        }
       }
     }
   } @else {
@@ -116,7 +145,8 @@
       @include system.add-root-style(
         #{variables.$variable-prefix}typo-#{$typo}-font-family,
         string.unquote(map.get($map, font-family)),
-        $media
+        $media,
+        $mediaBehavior
       );
     }
 
@@ -124,7 +154,8 @@
       @include system.add-root-style(
         #{variables.$variable-prefix}typo-#{$typo}-font-size,
         system.size-unit(map.get($map, font-size)),
-        $media
+        $media,
+        $mediaBehavior
       );
     }
 
@@ -132,7 +163,8 @@
       @include system.add-root-style(
         #{variables.$variable-prefix}typo-#{$typo}-line-height,
         system.size-unit(map.get($map, line-height), em),
-        $media
+        $media,
+        $mediaBehavior
       );
     }
 
@@ -140,7 +172,8 @@
       @include system.add-root-style(
         #{variables.$variable-prefix}typo-#{$typo}-font-style,
         string.unquote(map.get($map, font-style)),
-        $media
+        $media,
+        $mediaBehavior
       );
     }
 
@@ -148,7 +181,8 @@
       @include system.add-root-style(
         #{variables.$variable-prefix}typo-#{$typo}-font-weight,
         map.get($map, font-weight),
-        $media
+        $media,
+        $mediaBehavior
       );
     }
 
@@ -156,7 +190,8 @@
       @include system.add-root-style(
         #{variables.$variable-prefix}typo-#{$typo}-letter-spacing,
         system.size-unit(map.get($defaults, letter-spacing)),
-        $media
+        $media,
+        $mediaBehavior
       );
     }
 
@@ -164,7 +199,8 @@
       @include system.add-root-style(
         #{variables.$variable-prefix}typo-#{$typo}-text-transform,
         map.get($defaults, text-transform),
-        $media
+        $media,
+        $mediaBehavior
       );
     }
 
@@ -173,13 +209,15 @@
         @include system.add-root-style(
           #{variables.$variable-prefix}typo-#{$typo}-margin-top,
           system.size-unit(map.get($map, margin-top), in),
-          $media
+          $media,
+          $mediaBehavior
         );
       } @else {
         @include system.add-root-style(
           #{variables.$variable-prefix}typo-#{$typo}-margin-top,
           system.size-unit(map.get($map, margin-top)),
-          $media
+          $media,
+          $mediaBehavior
         );
       }
     }
@@ -189,13 +227,15 @@
         @include system.add-root-style(
           #{variables.$variable-prefix}typo-#{$typo}-margin-bottom,
           system.size-unit(map.get($map, margin-bottom), in),
-          $media
+          $media,
+          $mediaBehavior
         );
       } @else {
         @include system.add-root-style(
           #{variables.$variable-prefix}typo-#{$typo}-margin-bottom,
           system.size-unit(map.get($map, margin-bottom)),
-          $media
+          $media,
+          $mediaBehavior
         );
       }
     }

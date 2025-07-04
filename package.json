@@ -1,6 +1,6 @@
 {
   "name": "@multivisio/nswow",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Manage nswow templates, build and publish",
   "bin": {
     "nswow": "cli.js"
@@ -13,27 +13,23 @@
   "scripts": {
     "preparePublish": "node preparePublish.cjs && prettier --write --list-different .",
     "lint": "prettier --check .",
-    "lint:fix": "prettier --write ."
+    "lint:fix": "prettier --write .",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "main": "cli.js",
   "dependencies": {
     "@kne/color-palette": "^0.1.0",
     "archiver": "^7.0.1",
     "chalk": "^5.4.1",
-    "cheerio": "^1.0.0",
     "colors": "^1.4.0",
     "commander": "^11.1.0",
     "enquirer": "^2.4.1",
     "fs": "^0.0.1-security",
     "fs-extra": "^11.2.0",
     "glob": "^10.4.5",
-    "globby": "^13.2.2",
-    "html-minifier": "^4.0.0",
-    "lodash": "^4.17.21",
     "modern-css-reset": "^1.4.0",
     "node-html-parser": "^7.0.1",
     "vite": "^5.4.11",
-    "winston": "^3.17.0",
     "write-json": "^3.0.1"
   },
   "keywords": [
@@ -46,6 +42,7 @@
   "author": "Michael Dörer",
   "license": "ISC",
   "devDependencies": {
+    "jest": "^30.0.2",
     "prettier": "^3.4.2",
     "typescript": "^5.7.2"
   }

@@ -1,4 +1,4 @@
-import { resolve, join } from 'node:path/posix';
+import { join } from 'node:path/posix';
 import {
   statSync,
   writeFileSync,
@@ -8,20 +8,22 @@ import {
   createWriteStream,
   rmSync,
   cpSync,
+  copyFileSync,
 } from 'node:fs';
 import { createRequire } from 'node:module';
 import { glob } from 'glob';
 import { beaver } from './beaver.js';
 import { build as viteBuild } from 'vite';
-import { build as finalizeLdd } from './migrate-livingdocs-build/bin/build.js';
 import {
   readPackageJson,
   writePackageJson,
   readLivingDocsJson,
   writeLivingDocsJson,
 } from './utils.js';
-import { camelCase } from 'cheerio/utils';
 import folders from './folders.js';
+import { mapLdd } from './ldd/mapLdd.js';
+import { LivingdocsDesignValidator } from './ldd/LivingdocsDesignValidator.js';
+import { camelCase } from './utils.js';
 
 const placeholderId = '6297EAFB-33A0-48B8-8D64-E61CDC3E9035';
 const nswowPath = folders.srlImports;
@@ -86,6 +88,13 @@ async function buildApp() {
     build: {
       copyPublicDir: false,
     },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+        },
+      },
+    },
     publicDir: false,
   });
 
@@ -129,10 +138,7 @@ async function buildApp() {
     [[meta-${placeholderId}]]`,
   );
 
-  await writeFileSync(
-    join(outputPath, 'app', 'index.html'),
-    index,
-  );
+  await writeFileSync(join(outputPath, 'app', 'index.html'), index);
 
   index = index.replace(
     /(<div\s+[^>]*id\s*=\s*["']app["'][^>]*>)([\s\S]*?)(<\/div>)/i,
@@ -231,6 +237,36 @@ async function zipApp() {
   archive.finalize();
 }
 
+async function zipLdd() {
+  await checkFolders();
+  const archiver = require('archiver');
+  const output = createWriteStream(join(outputPath, 'design.zip'));
+  const archive = archiver('zip', {
+    zlib: { level: 9 }, // Sets the compression level.
+  });
+  output.on('close', function () {
+    console.log('Create zip ' + outputPath + '/design.zip');
+    console.log(archive.pointer() + ' total bytes');
+  });
+  output.on('end', function () {
+    console.log('Data has been drained');
+  });
+  archive.on('warning', function (err) {
+    if (err.code === 'ENOENT') {
+      console.error(err);
+    } else {
+      // throw error
+      throw err;
+    }
+  });
+  archive.on('error', function (err) {
+    throw err;
+  });
+  archive.pipe(output);
+  archive.directory(join(outputPath, 'ldd', '/'), false);
+  archive.finalize();
+}
+
 /**
  * Builds a PDF using the provided HTML template.
  *
@@ -241,6 +277,13 @@ async function buildPdf() {
   await checkFolders();
 
   const config = {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+        },
+      },
+    },
     base: './',
     build: {
       outDir: join(folders.srlOutput, 'pdf'),
@@ -265,6 +308,13 @@ async function buildXbrl() {
   await checkFolders();
 
   const config = {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+        },
+      },
+    },
     base: './',
     build: {
       outDir: join(folders.srlOutput, 'xbrl'),
@@ -295,6 +345,7 @@ async function buildXbrl() {
 async function buildLdd(version) {
   let action = false;
   await checkFolders();
+  await mapLdd();
 
   const packageJson = await readPackageJson();
   const lddJson = await readLivingDocsJson();
@@ -309,6 +360,13 @@ async function buildLdd(version) {
   lddJson.version = packageJson.version;
 
   const config = {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+        },
+      },
+    },
     base: './',
     build: {
       outDir: join(folders.srlOutput, 'ldd', 'assets'),
@@ -353,73 +411,15 @@ async function buildLdd(version) {
         return true;
       })
       .then(async () => {
-        return await finalizeLdd();
+        copyFileSync(
+          join(folders.root, 'livingdocs.config.json'),
+          join(folders.srlOutput, 'ldd', 'design.json'),
+        );
       });
   } catch (e) {
     console.error(e);
     return false;
   }
-
-  /*
-
-  const input = resolve(CWD, 'ldd.html');
-  try {
-    await statSync(input);
-  } catch (e) {
-    return true;
-  }
-  try {
-    await writeFileSync(join( outputPath, `v${lddJson.version}.txt`), '');
-    return await viteBuild({
-      build: {
-        outDir: './.output/ldd',
-        rollupOptions: {
-          input: {
-            ldd: input,
-          },
-          output: {
-            entryFileNames: `assets/[name].js`,
-            chunkFileNames: `assets/[name].js`,
-            assetFileNames: `assets/[name].[ext]`,
-          },
-        },
-        copyPublicDir: false,
-      },
-    })
-      .then(async () => {
-        const assetsPath = join( outputPath, 'ldd', 'assets');
-        const assetsFiles = await readdirSync(assetsPath);
-        for (let i = 0; i < assetsFiles.length; i++) {
-          const file = assetsFiles[i];
-          if (file.endsWith('.css')) {
-            const path = './assets/' + file;
-            if (!lddJson.assets.css.includes(path)) {
-              action = true;
-              lddJson.assets.css.push(path);
-            }
-          }
-          if (file.endsWith('.js')) {
-            const path = './assets/' + file;
-            if (!lddJson.assets.js.includes(path)) {
-              action = true;
-              lddJson.assets.js.push(path);
-            }
-          }
-        }
-        if (action) {
-          await writeLivingDocsJson(lddJson);
-        }
-        return true;
-      })
-      .then(async () => {
-        return await finalizeLdd();
-      });
-  } catch (e) {
-    console.error(e);
-    return false;
-  }
-
-   */
 }
 
 /**
@@ -434,6 +434,13 @@ async function buildWord() {
   let configFile = false;
 
   const config = {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+        },
+      },
+    },
     base: './',
     build: {
       outDir: join(folders.srlOutput, 'word'),
@@ -458,24 +465,30 @@ async function buildWord() {
  * Builds the project sequentially by executing a series of asynchronous tasks in a specific order.
  * This method is used to build the project in a predetermined sequence.
  *
+ * @param {string} version
  * @return {Promise<void>} A Promise that resolves when the build process is completed or rejects if an error occurs.
  */
-async function build() {
+async function build(version) {
   try {
     await checkFolders();
     const packageJson = await readPackageJson();
-    const prompt = new Input({
-      message: 'Livingdocs version',
-      initial: packageJson.version,
-    });
-    const version = await prompt.run();
+
+    if (!version) {
+      const prompt = new Input({
+        message: 'Livingdocs version',
+        initial: packageJson.version,
+      });
+      version = await prompt.run();
+    }
     await cleanOutput();
     await buildApp();
     await buildPdf();
     await buildWord();
     await buildXbrl();
     await buildLdd(version);
+    new LivingdocsDesignValidator(await readLivingDocsJson()).IsDesignValid();
     await zipApp();
+    await zipLdd();
   } catch (error) {
     console.log(error);
   }
@@ -657,10 +670,9 @@ async function mapScss() {
 
     await writeFileSync(
       join(folders.srlImports, 'xbrl.scss'),
-      output.xbrl.length ?
-      `@use ` +
-        output.xbrl.join(';\n@use ') : '' +
-        `;\n@use "../scss/xbrl-core-styles.scss" as *;\n`,
+      output.xbrl.length
+        ? `@use ` + output.xbrl.join(';\n@use ')
+        : '' + `;\n@use "../scss/xbrl-core-styles.scss" as *;\n`,
     );
 
     return true;
@@ -711,141 +723,6 @@ export { ClassAutoLoader }`;
 }
 
 /**
- * Maps the livingdocs properties to components and groups.
- *
- * @returns {Promise<boolean>} Returns a promise that resolves to a boolean indicating the success or failure of the mapping.
- */
-async function mapLdd() {
-  await checkFolders();
-  try {
-    const lddJson = await readLivingDocsJson();
-
-    const propertiesFiles = await glob(
-      join(folders.ld, '**', 'properties.{json,js,ts}'),
-    );
-    const mapProperties = {};
-    for (let i = 0; i < propertiesFiles.length; i++) {
-      const file = propertiesFiles[i];
-      if (file.endsWith('.js') || file.endsWith('.ts')) {
-        const properties = require(propertiesFiles[i]).default;
-        const oKeys = Object.keys(properties);
-        for (let j = 0; j < oKeys.length; j++) {
-          mapProperties[oKeys[j]] = properties[oKeys[j]];
-        }
-      } else if (file.endsWith('.json')) {
-        const properties = JSON.parse(readFileSync(propertiesFiles[i]));
-        const oKeys = Object.keys(properties);
-        for (let j = 0; j < oKeys.length; j++) {
-          mapProperties[oKeys[j]] = properties[oKeys[j]];
-        }
-      }
-    }
-    lddJson.componentProperties = mapProperties;
-
-    const groupsPath = folders.ld;
-    const groups = readdirSync(groupsPath);
-    const keepGroups = [];
-    const vueComponents = [];
-
-    for (let x = 0; x < groups.length; x++) {
-      const group = groups[x];
-      const groupName = group.replace('_and_', ' / ').replace('_', ' ');
-      try {
-        const stat = statSync(`${groupsPath}/${group}`);
-        if (stat.isDirectory()) {
-          const components = [];
-          const c = readdirSync(`${groupsPath}/${group}`);
-          for (let j = 0; j < c.length; j++) {
-            const component = c[j];
-            try {
-              const stat = statSync(
-                `${groupsPath}/${group}/${component}/${component}.html`,
-              );
-              components.push(component);
-            } catch (e) {}
-
-            try {
-              const stat = statSync(
-                `${groupsPath}/${group}/${component}/${component}.vue`,
-              );
-              vueComponents.push({
-                name: `SrlArticle${toUpperCamelCase(component)}`,
-                path: join('#ld', group, component, `${component}.vue`),
-              });
-            } catch (e) {}
-          }
-          if (components.length) {
-            keepGroups.push(groupName);
-            const i = lddJson.groups.find((g) => {
-              return g.label === groupName;
-            });
-            if (i) {
-              const newComponents = [];
-              for (let j = 0; j < i.components.length; j++) {
-                const index = components.indexOf(i.components[j]);
-                if (index !== -1) {
-                  newComponents.push(components[index]);
-                  components.splice(index, 1);
-                }
-              }
-              for (let j = 0; j < components.length; j++) {
-                newComponents.push(components[j]);
-              }
-
-              i.components = newComponents;
-            } else {
-              lddJson.groups.push({
-                label: groupName,
-                components: components,
-              });
-            }
-          }
-        } else {
-          rmSync(`${groupsPath}/${group}`);
-        }
-      } catch (e) {
-        console.log(e);
-        return false;
-      }
-    }
-
-    const newMap = [];
-    for (let i = 0; i < lddJson.groups.length; i++) {
-      const c = lddJson.groups[i];
-      if (keepGroups.includes(c.label)) {
-        newMap.push(c);
-      }
-    }
-    lddJson.groups = newMap;
-
-    const asyncComponents = [
-      `import { defineAsyncComponent } from 'vue'`,
-      `export default function asyncLdComponent(app) {`,
-    ];
-
-    for (let i = 0; i < vueComponents.length; i++) {
-      const component = vueComponents[i];
-      asyncComponents.push(
-        ` app.component('${component.name}', defineAsyncComponent(() => import('${component.path}')))`,
-      );
-    }
-
-    asyncComponents.push('}');
-
-    await writeFileSync(
-      join(folders.srlPlugins, 'asyncLdComponent.ts'),
-      asyncComponents.join('\n'),
-    );
-
-    await writeLivingDocsJson(lddJson);
-    return true;
-  } catch (e) {
-    console.error(e);
-    return false;
-  }
-}
-
-/**
  * Maps the SCSS files and the LDD files in the project.
  *
  * @async
@@ -858,13 +735,6 @@ async function map() {
   await mapScss();
   await mapLdd();
   return true;
-}
-
-function toUpperCamelCase(input) {
-  return input
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join('');
 }
 
 export { build, ddev, map, mapScss, mapLdd, mapJs };

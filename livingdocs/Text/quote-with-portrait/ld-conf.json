@@ -1,15 +1,10 @@
 {
   "name": "quote-with-portrait",
   "label": "Quote with image",
-  "properties": [
-    "pdf-spacer",
-    "hide-quote-characters"
-  ],
+  "properties": ["pdf-spacer", "hide-quote-characters"],
   "directives": {
     "image": {
-      "imageRatios": [
-        "1:1"
-      ],
+      "imageRatios": ["1:1"],
       "allowOriginalRatio": false
     }
   }

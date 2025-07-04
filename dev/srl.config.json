@@ -669,7 +669,7 @@
         "size": 28,
         "media": {
           "up": {
-            "landscape": 32
+            "tablet-ls": 32
           }
         }
       },
@@ -677,7 +677,7 @@
         "size": 36,
         "media": {
           "up": {
-            "landscape": 48
+            "tablet-ls": 48
           }
         }
       },
@@ -685,7 +685,7 @@
         "size": 50,
         "media": {
           "up": {
-            "landscape": 64
+            "tablet-ls": 64
           }
         }
       }
