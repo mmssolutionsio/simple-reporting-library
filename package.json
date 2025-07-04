@@ -1,6 +1,6 @@
 {
   "name": "@multivisio/nswow",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Manage nswow templates, build and publish",
   "bin": {
     "nswow": "cli.js"
@@ -11,7 +11,7 @@
   },
   "type": "module",
   "scripts": {
-    "preparePublish": "node preparePublish.cjs && prettier --write --list-different .",
+    "preparePublish": "node preparePublish.js && prettier --write --list-different .",
     "lint": "prettier --check .",
     "lint:fix": "prettier --write .",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"

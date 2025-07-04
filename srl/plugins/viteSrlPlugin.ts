@@ -5,6 +5,7 @@ import path from 'node:path';
 import { execSync } from 'node:child_process';
 import folders from '@multivisio/nswow/scripts/folders.js';
 import { beaver } from '@multivisio/nswow/scripts/beaver.js';
+import { packageName } from '@multivisio/nswow/scripts/config';
 import {
   map,
   mapLdd,
@@ -14,8 +15,6 @@ import {
 import chalk from 'chalk';
 
 const msgBoxLength = 60;
-
-const packageName = '@multivisio/nswow';
 
 function centerText(text: string): string {
   const padding = Math.max(0, (msgBoxLength - text.length) / 2);

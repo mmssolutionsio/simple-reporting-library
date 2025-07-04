@@ -1,7 +1,8 @@
 import { join } from 'path/posix';
+import { packageName as configPackageName } from './config.js';
 
 export const root = process.cwd();
-export const packageName = join('@multivisio', 'nswow');
+export const packageName = join(...configPackageName.split('/'));
 export const packagePath = join(root, 'node_modules', packageName);
 export const packageSrl = join(packagePath, 'srl');
 export const packageLd = join(packagePath, 'livingdocs');
