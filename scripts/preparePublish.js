@@ -96,6 +96,8 @@ export async function preparePublish(version = null) {
     declaration: true,
     emitDeclarationOnly: true,
   });
+
+  return version;
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
