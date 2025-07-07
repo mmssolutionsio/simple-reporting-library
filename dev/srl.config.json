@@ -90,15 +90,18 @@
         "name": "title-h4",
         "font-family": "Inter",
         "font-size": 18,
-        "line-height": 0.9,
+        "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 600,
         "letter-spacing": 0,
         "media": {
+          "print": {
+            "font-size": 12,
+            "line-height": 1.333
+          },
           "up": {
             "tablet-pt": {
-              "font-size": 20,
-              "line-height": 1
+              "font-size": 20
             }
           }
         }
