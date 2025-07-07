@@ -5,7 +5,7 @@ import writeJson from 'write-json';
 import ts from 'typescript';
 import Enquirer from 'enquirer';
 import { packageName } from './config.js';
-import { getPackageVersion} from './utils.js';
+import { getPackageVersion } from './utils.js';
 
 const { Input } = Enquirer;
 
@@ -107,7 +107,9 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       if (/^\d+\.\d+\.\d+$/.test(newVersion)) {
         version = newVersion;
       } else {
-        throw new Error(`Invalid version format ${newVersion}. Use $number.$number.$number`);
+        throw new Error(
+          `Invalid version format ${newVersion}. Use $number.$number.$number`,
+        );
       }
     }
     preparePublish(version);

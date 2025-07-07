@@ -11,7 +11,7 @@
   },
   "type": "module",
   "scripts": {
-    "preparePublish": "node preparePublish.js && prettier --write --list-different .",
+    "preparePublish": "node scripts/preparePublish.js && prettier --write --list-different .",
     "lint": "prettier --check .",
     "lint:fix": "prettier --write .",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
