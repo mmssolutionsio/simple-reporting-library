@@ -20,7 +20,7 @@ function replaceInFile(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
   if (content.includes(search)) {
     const newContent = content.split(search).join(replace);
-    //fs.writeFileSync(filePath, newContent, 'utf8');
+    fs.writeFileSync(filePath, newContent, 'utf8');
     console.log(`Replaced in: ${filePath}`);
   }
 }
