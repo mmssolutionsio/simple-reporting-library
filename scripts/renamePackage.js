@@ -3,8 +3,8 @@ import path from 'path';
 
 const search = '@multivisio/nswow';
 const replace = '@simple-report/base';
-const excludeFile = 'renamePackage.js';
-const excludeDir = 'test-data';
+const excludeFiles = ['renamePackage.js'];
+const excludeDirs = ['test-data'];
 
 function replaceInFile(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
@@ -19,10 +19,11 @@ function walkDir(dir) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      if (entry.name === excludeDir) continue;
+      console.log(entry.name);
+      if (excludeDirs.includes(entry.name)) continue;
       walkDir(fullPath);
     } else if (entry.isFile()) {
-      if (entry.name === excludeFile) continue;
+      if (excludeFiles.includes(entry.name)) continue;
       replaceInFile(fullPath);
     }
   }
