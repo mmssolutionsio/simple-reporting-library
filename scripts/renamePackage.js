@@ -9,12 +9,10 @@ const excludes = [
   'scripts/renamePackage.d.ts',
   '.git',
   'node_modules',
-  'test-data'
+  'test-data',
 ];
 
-const excludePaths = [
-  ...excludes.map(f => path.join(CWD, ...f.split('/'))),
-];
+const excludePaths = [...excludes.map((f) => path.join(CWD, ...f.split('/')))];
 
 function replaceInFile(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
@@ -30,10 +28,10 @@ function walkDir(dir) {
     const fullPath = path.join(dir, entry.name);
     if (excludePaths.includes(fullPath)) continue;
     if (entry.isDirectory()) {
-      console.log(fullPath)
+      console.log(fullPath);
       walkDir(fullPath);
     } else if (entry.isFile()) {
-      console.log(fullPath)
+      console.log(fullPath);
       replaceInFile(fullPath);
     }
   }

@@ -1,6 +1,7 @@
 import { join } from 'node:path/posix';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
+import { exec } from 'child_process';
 
 const require = createRequire(import.meta.url);
 /**
@@ -103,6 +104,18 @@ function camelCase(str) {
   return str.replace(/[._-](\w|$)/g, (_, x) => x.toUpperCase());
 }
 
+function getPackageVersion(packageName) {
+  return new Promise((resolve, reject) => {
+    exec(`npm view ${packageName} version`, (error, stdout, stderr) => {
+      let version = stdout.trim();
+      if (version === '') {
+        version = '0.0.0';
+      }
+      resolve(version);
+    });
+  });
+}
+
 export {
   writeJson,
   lddGroupNames,
@@ -113,4 +126,5 @@ export {
   readNsWowJson,
   writeNsWowJson,
   camelCase,
+  getPackageVersion,
 };
