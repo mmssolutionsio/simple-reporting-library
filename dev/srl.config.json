@@ -291,26 +291,6 @@
         }
       },
       {
-        "name": "link-external",
-        "font-family": "Inter",
-        "font-size": 12,
-        "line-height": 1.5,
-        "font-style": "normal",
-        "font-weight": 400,
-        "letter-spacing": 0,
-        "media": {
-          "print": {
-            "font-size": 7,
-            "line-height": 1.429
-          },
-          "up": {
-            "tablet-pt": {
-              "font-size": 14
-            }
-          }
-        }
-      },
-      {
         "name": "quote",
         "font-family": "Inter",
         "font-size": 24,
@@ -372,10 +352,26 @@
       },
       {
         "name": "paragraph-strong",
-        "font-weight": 600
+        "font-family": "Inter",
+        "font-size": 14,
+        "line-height": 1.5,
+        "font-style": "normal",
+        "font-weight": 400,
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": 9,
+            "line-height": 1.444
+          },
+          "up": {
+            "tablet-pt": {
+              "font-size": 16
+            }
+          }
+        }
       },
       {
-        "name": "link-internal",
+        "name": "link",
         "font-family": "Inter",
         "font-size": 12,
         "line-height": 1.5,
