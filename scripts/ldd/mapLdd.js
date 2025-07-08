@@ -197,7 +197,7 @@ async function mapComponents(lddJson) {
         const vueStat = statSync(vuePath);
 
         vueComponents.push({
-          name: `SrlArticle${toUpperCamelCase(component)}`,
+          name: `SrlLd${toUpperCamelCase(component)}`,
           path: join('#ld', group, component, `${component}.vue`),
         });
       } catch (error) {}
