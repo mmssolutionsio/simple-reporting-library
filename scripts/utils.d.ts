@@ -53,4 +53,5 @@ export function writeNsWowJson(config: any): boolean;
  * @returns String in camel case notation.
  */
 export function camelCase(str: any): any;
+export function getPackageVersion(packageName: any): Promise<any>;
 export { writeJson };

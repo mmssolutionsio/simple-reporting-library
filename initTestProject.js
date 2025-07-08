@@ -2,6 +2,7 @@ import { init } from './scripts/init.js';
 import { execSync } from 'child_process';
 import { join, resolve } from 'path/posix';
 import { rmSync, existsSync, readFileSync, writeFileSync, cpSync } from 'fs';
+import { packageName } from './scripts/config.js';
 import chalk from 'chalk';
 
 const projectFolder = 'simple-reporting-library-test-project';
@@ -41,19 +42,18 @@ init(projectFolder)
     if (existsSync(packageJsonPath)) {
       console.log(msg.action('Updating package.json...'));
       const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
-      const searchKey = '@multivisio/nswow';
 
-      if (packageJson.dependencies && packageJson.dependencies[searchKey]) {
-        packageJson.dependencies[searchKey] =
+      if (packageJson.dependencies && packageJson.dependencies[packageName]) {
+        packageJson.dependencies[packageName] =
           'file:../simple-reporting-library';
         writeFileSync(
           packageJsonPath,
           JSON.stringify(packageJson, null, 2),
           'utf-8',
         );
-        console.log(msg.success(`Updated ${searchKey} in package.json.`));
+        console.log(msg.success(`Updated ${packageName} in package.json.`));
       } else {
-        console.log(msg.error(`${searchKey} not found in devDependencies.`));
+        console.log(msg.error(`${packageName} not found in devDependencies.`));
       }
     } else {
       console.error(msg.error('package.json not found.'));

@@ -2,7 +2,7 @@ export const packageName = '@multivisio/nswow';
 
 export const baseComponentsToInstall = [
   'Container/aside-content-container',
-  'Container/column-container',
+  'Container/columns-container',
   'CV/cv',
   'CV/cv-time-span',
   'Lists/alphanumeric-list',

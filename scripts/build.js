@@ -566,6 +566,11 @@ async function mapScss() {
           `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
         );
       }
+      if (mainFiles[x].name === 'editor.scss') {
+        output.ldd.push(
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
+        );
+      }
       if (mainFiles[x].name === 'pdf.scss') {
         output.pdf.push(
           `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
