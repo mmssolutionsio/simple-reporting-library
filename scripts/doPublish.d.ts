@@ -1,1 +1,1 @@
-export function doPublish(): Promise<void>;
+export function doPublish(version?: any): Promise<void>;

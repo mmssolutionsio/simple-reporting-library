@@ -3,29 +3,54 @@ import { preparePublish } from './preparePublish.js';
 import { packageName } from './config.js';
 import { getPackageVersion } from './utils.js';
 
-export async function doPublish() {
+export async function doPublish(version = null) {
   try {
-    const version = await preparePublish();
+    const publishVersion = await preparePublish(version);
     await execSync(`prettier --write --list-different .`, { stdio: 'inherit' });
 
-    const tag = `v${version.split('.')[0]}-lts`;
+    const tag = `v${publishVersion.split('.')[0]}-lts`;
 
     await execSync(`npm publish --tag ${tag}`, { stdio: 'inherit' });
 
     const latest = await getPackageVersion(packageName);
 
-    if (version > latest) {
-      await execSync(`npm dist-tag add ${packageName}@${version} latest`, {
-        stdio: 'inherit',
-      });
+    if (publishVersion > latest) {
+      await execSync(
+        `npm dist-tag add ${packageName}@${publishVersion} latest`,
+        {
+          stdio: 'inherit',
+        },
+      );
     }
 
-    console.log(`Package ${packageName}@${version} published successfully!`);
+    console.log(
+      `Package ${packageName}@${publishVersion} published successfully!`,
+    );
   } catch (error) {
     console.error('Error during publishing:', error);
   }
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  doPublish();
+  try {
+    let version = null;
+    const indexVersion = process.argv.indexOf('-v');
+    if (indexVersion !== -1) {
+      if (!process.argv[indexVersion + 1]) {
+        throw new Error('Version argument is missing after -v');
+      }
+
+      const newVersion = process.argv[indexVersion + 1];
+      if (/^\d+\.\d+\.\d+$/.test(newVersion)) {
+        version = newVersion;
+      } else {
+        throw new Error(
+          `Invalid version format ${newVersion}. Use $number.$number.$number`,
+        );
+      }
+    }
+    doPublish(version);
+  } catch (error) {
+    console.error(error);
+  }
 }
