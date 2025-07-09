@@ -36,10 +36,10 @@ export const baseComponentsToInstall = [
   '110.PDF/090.pdf-toc-item-title',
   '110.PDF/100.pdf-toc-item',
   '110.PDF/110.pdf-toc-item-blank',
-  'Properties/alignment',
-  'Properties/hide-quote-characters',
-  'Properties/pdf-spacer',
-  'Properties/width'
+  '999.Properties/alignment',
+  '999.Properties/hide-quote-characters',
+  '999.Properties/pdf-spacer',
+  '999.Properties/width'
 ];
 
 export default {
