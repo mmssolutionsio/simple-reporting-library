@@ -80,7 +80,7 @@ const pointer = ref<NsWowNavigationItem[]>([
   }
 
   button {
-    @include srl.typography-copy1();
+    @include srl.typography-paragraph();
     padding-block: srl.system-size-unit(5);
     padding-inline: srl.system-size-unit(15);
     background-color: transparent;

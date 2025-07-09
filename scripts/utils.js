@@ -18,6 +18,11 @@ const writeJson = require('write-json');
  * @return {string} The modified name with replaced placeholders.
  */
 function lddGroupNames(name) {
+  const arrName = name.split('.');
+  if (arrName.length > 1) {
+    arrName.shift();
+    name = arrName.join('.');
+  }
   return name.replace('_and_', ' / ').replace('_', ' ');
 }
 
