@@ -42,7 +42,10 @@ export const baseComponentsToInstall = [
   'Properties/width'
 ];
 
+export const nsWowInternalLddUrl = 'https://nswow-ld.nswow.ch/designs';
+
 export default {
   packageName,
   baseComponentsToInstall,
+  nsWowInternalLddUrl,
 };
