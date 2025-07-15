@@ -26,7 +26,7 @@ export async function mapLdd() {
   await mapComponents(lddJson);
   await mapProperties(lddJson);
 
-  await writeLivingDocsJson(lddJson);
+  await writeLivingDocsJson();
 }
 
 /**

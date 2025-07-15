@@ -358,7 +358,7 @@ async function buildLdd(version) {
 
   if (version) {
     packageJson.version = version;
-    await writePackageJson(packageJson);
+    await writePackageJson();
   }
 
   lddJson.name = packageJson.name;
@@ -475,7 +475,7 @@ async function buildLdd(version) {
         }
 
         console.log("\n\nBuild Livingdocs design.json");
-        await writeLivingDocsJson(lddJson);
+        await writeLivingDocsJson();
 
         return true;
       })
@@ -552,7 +552,7 @@ async function build(version) {
     }
 
     packageJson.version = version;
-    await writePackageJson(packageJson);
+    await writePackageJson();
 
     await cleanOutput();
     await buildApp();

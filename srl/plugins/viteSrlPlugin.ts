@@ -6,6 +6,7 @@ import { execSync } from 'node:child_process';
 import folders from '@multivisio/nswow/scripts/folders.js';
 import { beaver } from '@multivisio/nswow/scripts/beaver.js';
 import { packageName } from '@multivisio/nswow/scripts/config';
+import { updatePackageJson, updateLivingDocsJson, updateNsWowJson } from '@multivisio/nswow/scripts/utils';
 import {
   map,
   mapLdd,
@@ -126,8 +127,15 @@ export default function viteSrlPlugin(): Plugin {
     configureServer(server) {
       const fontPath = join(folders.srlAssets, 'fonts');
 
-      server.watcher.on('change', (path) => {
+      server.watcher.on('change', async (path) => {
+        if (path.endsWith('/package.json')) {
+          await updatePackageJson();
+        }
+        if (path.endsWith('/livingdocs.config.json')) {
+          await updateLivingDocsJson();
+        }
         if (path.endsWith('/srl.config.json')) {
+          await updateNsWowJson();
           triggerAction(beaver);
         }
       });
