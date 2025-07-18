@@ -1,0 +1,13 @@
+@use 'srl';
+
+.srl-quote__quote {
+  @include srl.typography-quote();
+}
+
+.srl-quote__name {
+  @include srl.typography-quote-name();
+}
+
+.srl-quote__position {
+    @include srl.typography-quote-position();
+}

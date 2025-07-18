@@ -1,0 +1,5 @@
+@use 'srl';
+
+.srl-link {
+  @include srl.typography-link();
+}

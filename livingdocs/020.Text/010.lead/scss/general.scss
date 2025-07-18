@@ -1,0 +1,5 @@
+@use 'srl';
+
+.srl-lead {
+  @include srl.typography-lead();
+}

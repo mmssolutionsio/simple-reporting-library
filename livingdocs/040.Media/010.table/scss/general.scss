@@ -1,0 +1,276 @@
+@use 'srl';
+
+.srl-table__container {
+  overflow: auto;
+  scroll-snap-type: x mandatory;
+  position: relative;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  margin: 0;
+  table-layout: fixed;
+}
+
+th,
+td {
+  /*
+  General cell styles
+  */
+  font-size: srl.typography-get-font-size('table-cell-regular');
+  line-height: srl.typography-get-line-height('table-cell-regular');
+  padding: srl.spacer-get(100) srl.spacer-get(50);
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+
+  /*
+  Font colors
+  */
+
+  /*
+  Font Sizes
+  */
+  &[class*="head"] {
+    font-size: srl.typography-get-font-size('table-head-strong');
+    line-height: srl.typography-get-line-height('table-head-strong');
+  }
+
+  /*
+  Font Weights
+  */
+  &[class*="head"]{
+    font-weight: srl.typography-get-font-weight('table-head-strong');
+  }
+
+  &[class*="bold"] {
+    font-weight: srl.typography-get-font-weight('table-cell-strong');
+  }
+
+  /*
+  Paddings
+  */
+  &[class*="nolinetop"],
+  &[class*="nolinebottom"],
+  &[class*="nolineleft"],
+  &[class*="nolineright"] {
+    padding: 0;
+  }
+
+
+  /*
+  First and last child paddings
+  has to be after the pdf paddings, to override
+  */
+  &:first-child {
+    padding-left: srl.spacer-get(50);
+  }
+
+  &:last-child {
+    padding-right: srl.spacer-get(50);
+
+    &[class*="background"] {
+      padding-right: srl.spacer-get(50);
+    }
+  }
+
+  /*
+  Borders
+  */
+  &[class*="head"] {
+    border-bottom: 2px solid black;
+  }
+
+  &[class*="linetop"] {
+    border-top: 1px solid black;
+  }
+
+  &[class*="blinetop"] {
+    border-top: 2px solid black;
+  }
+
+  &[class*="nolinetop"] {
+    border-top: 1px solid transparent;
+
+    &[class*="head"] {
+      border-top-width: 2px;
+    }
+  }
+
+  &[class*="linebottom"] {
+    border-bottom: 1px solid black;
+  }
+
+  &[class*="blinebottom"] {
+    border-bottom: 2px solid black;
+  }
+
+  &[class*="nolinebottom"] {
+    border-bottom: 1px solid transparent;
+
+    &[class*="head"] {
+      border-bottom-width: 2px;
+    }
+  }
+
+  &[class*="lineleft"] {
+    border-left: 1px solid black;
+  }
+
+  &[class*="blineleft"] {
+    border-left: 2px solid black;
+  }
+
+  &[class*="nolineleft"] {
+    border-left: 1px solid transparent;
+  }
+
+  &[class*="lineright"] {
+    border-right: 1px solid black;
+  }
+
+  &[class*="blineright"] {
+    border-right: 2px solid black;
+  }
+
+  &[class*="nolineleft"] {
+    border-right: 1px solid transparent;
+  }
+
+  /*
+  Indents
+  */
+  &[class*="_ind"] {
+    &:first-child {
+      padding-left: srl.spacer-get(200);
+    }
+  }
+
+  &[class*="_ind_ind"] {
+    &:first-child {
+      padding-left: srl.spacer-get(300);
+    }
+  }
+
+  /*
+  Cell Backgrounds
+  DEFINE HERE; DIFFERENT CSS CLASSES IN EVERY PROJECT
+  */
+  &[class*="background-01"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-02"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-03"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-04"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-05"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-06"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-07"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-08"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-09"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-10"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-01"],
+  &[class*="background-02"],
+  &[class*="background-03"],
+  &[class*="background-04"],
+  &[class*="background-05"],
+  &[class*="background-06"],
+  &[class*="background-07"],
+  &[class*="background-08"],
+  &[class*="background-09"],
+  &[class*="background-10"] {
+    &.head {
+      color: black;
+    }
+  }
+
+  /*
+  Alignments
+  */
+  &[class*="horizontal-left"] {
+    text-align: left;
+  }
+
+  &[class*="horizontal-center"] {
+    text-align: center;
+  }
+
+  &[class*="horizontal-right"] {
+    text-align: right;
+  }
+
+  &[class*="vertical-top"] {
+    vertical-align: top;
+  }
+
+  &[class*="vertical-middle"] {
+    vertical-align: middle;
+  }
+
+  &[class*="vertical-bottom"] {
+    vertical-align: bottom;
+  }
+
+  /*
+  Responsive CSS tables
+  */
+
+  /*
+  Paragraphs and spans
+  */
+  p span {
+    white-space: pre-line;
+
+    &[class*="bold"] {
+      font-weight: var(--global-font-weight-bold);
+    }
+
+    &[class*="srl-number"] {
+      white-space: nowrap;
+    }
+
+    &:empty {
+      &:before {
+        content: " ";
+      }
+    }
+
+    &.mms-notes-separator {
+      display: inline-block;
+
+      &:before {
+        content: ", ";
+        display: inline-block;
+      }
+    }
+  }
+  }
+}

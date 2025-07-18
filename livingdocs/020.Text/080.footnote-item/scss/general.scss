@@ -1,0 +1,5 @@
+@use 'srl';
+
+.srl-footnote__text {
+  @include srl.typography-footnote-text();
+}

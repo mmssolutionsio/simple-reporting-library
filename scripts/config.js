@@ -9,6 +9,7 @@ export const baseComponentsToInstall = [
   '010.Titles/060.title-h6',
   '020.Text/010.lead',
   '020.Text/020.paragraph',
+  '020.Text/040.link',
   '020.Text/050.quote',
   '020.Text/060.quote-with-portrait',
   '020.Text/070.footnote-container',

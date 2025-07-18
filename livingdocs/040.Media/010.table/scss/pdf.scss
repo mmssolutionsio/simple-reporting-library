@@ -1,0 +1,23 @@
+@use 'srl';
+
+th,
+td {
+  /*
+  PDF only Font Sizes
+  */
+  .srl-pdf-font-size-small & {
+    font-size: srl.typography-get-font-size('table-cell-small-regular');
+  }
+
+
+  /*
+  PDF only Paddings
+  */
+  .srl-pdf-padding-tiny & {
+    padding: 0 srl.spacer-get(25);
+  }
+
+  .srl-pdf-padding-small & {
+    padding: srl.spacer-get(25) srl.spacer-get(50);
+  }
+}
