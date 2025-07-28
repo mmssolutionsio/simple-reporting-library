@@ -1,4 +1,5 @@
 @use 'srl';
+@use 'sass:map';
 
 th,
 td {
@@ -14,10 +15,20 @@ td {
   PDF only Paddings
   */
   .srl-pdf-padding-tiny & {
-    padding: 0 srl.spacer-get(25);
+    padding: (
+            srl.system-size-unit(map.get(srl.$meta, table, padding, tiny, top))
+            srl.system-size-unit(map.get(srl.$meta, table, padding, tiny, right))
+            srl.system-size-unit(map.get(srl.$meta, table, padding, tiny, bottom))
+            srl.system-size-unit(map.get(srl.$meta, table, padding, tiny, left))
+    );
   }
 
   .srl-pdf-padding-small & {
-    padding: srl.spacer-get(25) srl.spacer-get(50);
+    padding: (
+            srl.system-size-unit(map.get(srl.$meta, table, padding, small, top))
+            srl.system-size-unit(map.get(srl.$meta, table, padding, small, right))
+            srl.system-size-unit(map.get(srl.$meta, table, padding, small, bottom))
+            srl.system-size-unit(map.get(srl.$meta, table, padding, small, left))
+    );
   }
 }

@@ -13,3 +13,16 @@ img {
     -ro-pdf-tag-alt: attr(alt);
   }
 }
+
+@page {
+  counter-increment: page 1;
+  -ro-bleed-width: 0mm;
+  -ro-media-size: A4;
+  -ro-crop-size: media;
+  -ro-truncate-margin-after-break: always;
+  -ro-truncate-margin-before-break: always;
+
+  @top-left-corner {
+    content: counter(page);
+  }
+}
