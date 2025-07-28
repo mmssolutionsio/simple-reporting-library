@@ -1,2 +1,15 @@
 @use 'srl';
 @use 'print';
+@use 'sass:map';
+
+$image-quality: map.get(srl.$meta, pdf, image-quality);
+
+img {
+  image-rendering: auto;
+  -ro-image-resampling: $image-quality;
+  -ro-pdf-tag-type: "Figure";
+
+  &[alt] {
+    -ro-pdf-tag-alt: attr(alt);
+  }
+}

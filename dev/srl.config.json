@@ -4,12 +4,75 @@
     "font-base-path": "./src/assets/fonts"
   },
   "meta": {
-    "padding": {
-      "tiny": 4,
-      "base": 8,
-      "small": 16,
-      "medium": 24,
-      "large": 32
+    "meta": {
+      "padding": {
+        "tiny": 4,
+        "base": 8,
+        "small": 16,
+        "medium": 24,
+        "large": 32
+      },
+      "table": {
+        "padding": {
+          "regular": {
+            "top": 100,
+            "bottom": 100,
+            "left": 50,
+            "right": 50
+          },
+          "tiny": {
+            "top": 0,
+            "bottom": 0,
+            "left": 50,
+            "right": 50
+          },
+          "small": {
+            "top": 25,
+            "bottom": 25,
+            "left": 50,
+            "right": 50
+          }
+        },
+        "border": {
+          "regular": {
+            "width": 1,
+            "style": "solid",
+            "color": "grey-800",
+            "media": {
+              "print": {
+                "width": "0.5pt"
+              }
+            }
+          },
+          "bold": {
+            "width": 2,
+            "style": "solid",
+            "color": "grey-800",
+            "media": {
+              "print": {
+                "width": "1pt"
+              }
+            }
+          }
+        },
+        "vertical-align": "bottom",
+        "notes-separator": ", "
+      },
+      "font": {
+        "weight": {
+          "regular": 400,
+          "bold": 600
+        }
+      },
+      "pdf": {
+        "image-quality": "150dpi",
+        "margin": {
+          "top": 73,
+          "right": 32,
+          "bottom": 38,
+          "left": 32
+        }
+      }
     }
   },
   "typography": {

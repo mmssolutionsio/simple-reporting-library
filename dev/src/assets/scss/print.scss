@@ -1,1 +1,12 @@
 @use 'srl';
+@use 'sass:map';
+
+
+@page {
+  margin: (
+          srl.spacer-get(map.get(srl.$meta, pdf, margin top))
+          srl.spacer-get(map.get(srl.$meta, pdf, margin right))
+          srl.spacer-get(map.get(srl.$meta, pdf, margin bottom))
+          srl.spacer-get(map.get(srl.$meta, pdf, margin left))
+  );
+}

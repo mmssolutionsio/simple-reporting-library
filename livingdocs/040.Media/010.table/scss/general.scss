@@ -1,4 +1,12 @@
 @use 'srl';
+@use 'sass:map';
+
+$table-border-regular: map.get(srl.$meta, table, border, regular);
+$table-border-bold: map.get(srl.$meta, table, border, bold);
+@include srl.system-add-root-style(srl-table-border-regular-width, srl.system-size-unit(map.get($table-border-regular, width)));
+@include srl.system-add-root-style(srl-table-border-regular-width, srl.system-size-unit(map.get($table-border-regular, media, print, width)), print);
+@include srl.system-add-root-style(srl-table-border-bold-width, srl.system-size-unit(map.get($table-border-bold, width)));
+@include srl.system-add-root-style(srl-table-border-bold-width, srl.system-size-unit(map.get($table-border-bold, media, print, width)), print);
 
 .srl-table__container {
   overflow: auto;
@@ -21,9 +29,18 @@ td {
   */
   font-size: srl.typography-get-font-size('table-cell-regular');
   line-height: srl.typography-get-line-height('table-cell-regular');
-  padding: srl.spacer-get(100) srl.spacer-get(50);
-  border-bottom: 1px solid black;
-  vertical-align: bottom;
+  padding: (
+          srl.spacer-get(map.get(srl.$meta, table, padding, regular, top))
+          srl.spacer-get(map.get(srl.$meta, table, padding, regular, right))
+          srl.spacer-get(map.get(srl.$meta, table, padding, regular, bottom))
+          srl.spacer-get(map.get(srl.$meta, table, padding, regular, left))
+  );
+  vertical-align: #{map.get(srl.$meta, table, vertical-align)};
+  border-bottom: (
+          var(--srl-table-border-regular-width)
+          map.get($table-border-regular, style)
+          srl.colors-get(map.get($table-border-regular, color))
+  );
 
   /*
   Font colors
@@ -40,7 +57,7 @@ td {
   /*
   Font Weights
   */
-  &[class*="head"]{
+  &[class*="head"] {
     font-weight: srl.typography-get-font-weight('table-head-strong');
   }
 
@@ -58,84 +75,121 @@ td {
     padding: 0;
   }
 
-
-  /*
-  First and last child paddings
-  has to be after the pdf paddings, to override
-  */
-  &:first-child {
-    padding-left: srl.spacer-get(50);
-  }
-
-  &:last-child {
-    padding-right: srl.spacer-get(50);
-
-    &[class*="background"] {
-      padding-right: srl.spacer-get(50);
-    }
-  }
-
   /*
   Borders
   */
   &[class*="head"] {
-    border-bottom: 2px solid black;
+    border-bottom: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-bold, style)
+            srl.colors-get(map.get($table-border-bold, color))
+    );
   }
 
   &[class*="linetop"] {
-    border-top: 1px solid black;
+    border-top: (
+            srl-table-border-regular-width
+            map.get($table-border-regular, style)
+            srl.colors-get(map.get($table-border-regular, color))
+    );
   }
 
   &[class*="blinetop"] {
-    border-top: 2px solid black;
+    border-top: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-bold, style)
+            srl.colors-get(map.get($table-border-bold, color))
+    );
   }
 
   &[class*="nolinetop"] {
-    border-top: 1px solid transparent;
+    border-top: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-regular, style)
+            transparent
+    );
 
     &[class*="head"] {
-      border-top-width: 2px;
+      border-top-width: (
+              var(--srl-table-border-regular-width)
+      );
     }
   }
 
   &[class*="linebottom"] {
-    border-bottom: 1px solid black;
+    border-bottom: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-regular, style)
+            srl.colors-get(map.get($table-border-regular, color))
+    );
   }
 
   &[class*="blinebottom"] {
-    border-bottom: 2px solid black;
+    border-bottom: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-bold, style)
+            srl.colors-get(map.get($table-border-bold, color))
+    );
   }
 
   &[class*="nolinebottom"] {
-    border-bottom: 1px solid transparent;
+    border-bottom: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-regular, style)
+            transparent
+    );
 
     &[class*="head"] {
-      border-bottom-width: 2px;
+      border-bottom-width: var(--srl-table-border-regular-width);
     }
   }
 
   &[class*="lineleft"] {
-    border-left: 1px solid black;
+    border-left: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-regular, style)
+            srl.colors-get(map.get($table-border-regular, color))
+    );
   }
 
   &[class*="blineleft"] {
-    border-left: 2px solid black;
+    border-left: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-bold, style)
+            srl.colors-get(map.get($table-border-bold, color))
+    );
   }
 
   &[class*="nolineleft"] {
-    border-left: 1px solid transparent;
+    border-left: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-regular, style)
+            transparent
+    );
   }
 
   &[class*="lineright"] {
-    border-right: 1px solid black;
+    border-right: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-regular, style)
+            srl.colors-get(map.get($table-border-regular, color))
+    );
   }
 
   &[class*="blineright"] {
-    border-right: 2px solid black;
+    border-right: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-bold, style)
+            srl.colors-get(map.get($table-border-bold, color))
+    );
   }
 
   &[class*="nolineleft"] {
-    border-right: 1px solid transparent;
+    border-right: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-regular, style)
+            transparent
+    );
   }
 
   /*
@@ -249,10 +303,6 @@ td {
   p span {
     white-space: pre-line;
 
-    &[class*="bold"] {
-      font-weight: var(--global-font-weight-bold);
-    }
-
     &[class*="srl-number"] {
       white-space: nowrap;
     }
@@ -267,10 +317,9 @@ td {
       display: inline-block;
 
       &:before {
-        content: ", ";
+        content: map.get(srl.$meta, table, notes-separator);
         display: inline-block;
       }
     }
-  }
   }
 }
