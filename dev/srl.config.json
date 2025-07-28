@@ -562,6 +562,10 @@
   "colors": {
     "colors": [
       {
+        "name": "grey-800",
+        "color": "#666666"
+      },
+      {
         "name": "light",
         "color": "#ffffff"
       },
@@ -633,6 +637,9 @@
   },
   "spacer": {
     "spacer": {
+      "0": {
+        "size": 0
+      },
       "25": {
         "size": 4,
         "media": {
