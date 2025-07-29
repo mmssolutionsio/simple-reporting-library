@@ -1,15 +1,1 @@
 @use 'srl';
-
-table {
-  @-moz-document url-prefix() {
-    border-collapse: inherit;
-  }
-}
-
-tr {
-  &:not([class*="head"]) {
-    &:hover td {
-      background-color: transparent;
-    }
-  }
-}

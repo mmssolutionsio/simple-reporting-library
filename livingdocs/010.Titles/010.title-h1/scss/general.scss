@@ -2,5 +2,4 @@
 
 .srl-title-h1 {
   @include srl.typography-title-h1();
-  @include srl.spacer-margin-bottom(300)
 }

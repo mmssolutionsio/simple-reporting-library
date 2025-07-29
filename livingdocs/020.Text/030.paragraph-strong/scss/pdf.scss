@@ -1,7 +1,1 @@
 @use 'srl';
-
-tr {
-  &[class*="pagebreak"] {
-    break-after: always;
-  }
-}

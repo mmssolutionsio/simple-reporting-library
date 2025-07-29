@@ -8,6 +8,10 @@ $table-border-bold: map.get(srl.$meta, table, border, bold);
 @include srl.system-add-root-style(srl-table-border-bold-width, srl.system-size-unit(map.get($table-border-bold, width)));
 @include srl.system-add-root-style(srl-table-border-bold-width, srl.system-size-unit(map.get($table-border-bold, media, print, width)), print);
 
+.srl-table {
+  @include srl.spacer-margin-top(300);
+}
+
 .srl-table__container {
   overflow: auto;
   scroll-snap-type: x mandatory;

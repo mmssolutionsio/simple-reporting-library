@@ -2,4 +2,5 @@
 
 .srl-paragraph {
   @include srl.typography-paragraph();
+  @include srl.spacer-margin-top(200);
 }

@@ -2,4 +2,5 @@
 
 .srl-title-h6 {
   @include srl.typography-title-h6();
+  @include srl.spacer-margin-top(200);
 }

@@ -2,4 +2,5 @@
 
 .srl-title-h3 {
   @include srl.typography-title-h3();
+  @include srl.spacer-margin-top(300);
 }

@@ -1,6 +1,5 @@
 @use 'srl';
 
-.srl-title-h2 {
-  @include srl.typography-title-h2();
+.srl-video {
   @include srl.spacer-margin-top(400);
 }
