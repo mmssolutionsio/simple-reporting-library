@@ -687,21 +687,23 @@
         "padding": 16
       },
       "phone-ls": {
-        "padding": 16
+        "padding": 32
       },
       "tablet-pt": {
-        "padding": 16
+        "padding": 64,
+        "max-width": 776
       },
       "tablet-ls": {
-        "padding": 16
+        "padding": 16,
+        "max-width": 1280
       },
       "desktop": {
         "padding": 32,
-        "max-width": 1280
+        "max-width": 1354
       },
       "desktop-large": {
         "padding": 32,
-        "max-width": 1280
+        "max-width": 1354
       }
     },
     "breakpoints": {
