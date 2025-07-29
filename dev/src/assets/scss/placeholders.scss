@@ -1,0 +1,89 @@
+@use "srl/helpers";
+@use "srl";
+
+%srl-trim-margins {
+  @include helpers.trim-margins;
+}
+
+%srl-grid-base {
+  margin-left: auto;
+  margin-right: auto;
+  @include srl.grid-container();
+  @include srl.grid-row();
+}
+
+%srl-grid-reset {
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
+  display: block;
+}
+
+%srl-regular-width {
+  // Mobile
+  @include srl.grid-col(4);
+
+  // Mobile landscape
+  @include srl.grid-col(4, phone-ls);
+
+  // Tablet portrait
+  @include srl.grid-col(8, tablet-pt);
+
+  // Tablet landscape
+  @include srl.grid-col(8, tablet-ls);
+  @include srl.grid-offset(2, tablet-ls);
+
+  // Desktop
+  @include srl.grid-col(6, desktop);
+  @include srl.grid-offset(3, desktop);
+
+  // Desktop large
+  @include srl.grid-col(6, desktop-large);
+  @include srl.grid-offset(3, desktop-large);
+}
+
+%srl-wide-width {
+  // Mobile
+  @include srl.grid-col(4);
+
+  // Mobile landscape
+  @include srl.grid-col(4, phone-ls);
+
+  // Tablet portrait
+  @include srl.grid-col(8, tablet-pt);
+
+  // Tablet landscape
+  @include srl.grid-col(12, tablet-ls);
+  @include srl.grid-offset(0, tablet-ls);
+
+  // Desktop
+  @include srl.grid-col(12, desktop);
+  @include srl.grid-offset(0, desktop);
+
+  // Desktop large
+  @include srl.grid-col(12, desktop-large);
+  @include srl.grid-offset(0, desktop-large);
+}
+
+%srl-aside-width {
+  // Mobile
+  @include srl.grid-col(4);
+
+  // Mobile landscape
+  @include srl.grid-col(4, phone-ls);
+
+  // Tablet portrait
+  @include srl.grid-col(8, tablet-pt);
+
+  // Tablet landscape
+  @include srl.grid-col(2, tablet-ls);
+
+  // Desktop
+  @include srl.grid-col(2, desktop);
+  @include srl.grid-offset(1, desktop);
+
+  // Desktop large
+  @include srl.grid-col(2, desktop-large);
+  @include srl.grid-offset(1, desktop-large);
+}

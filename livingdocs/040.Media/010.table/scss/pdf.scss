@@ -16,19 +16,19 @@ td {
   */
   .srl-pdf-padding-tiny & {
     padding: (
-            srl.system-size-unit(map.get(srl.$meta, table, padding, tiny, top))
-            srl.system-size-unit(map.get(srl.$meta, table, padding, tiny, right))
-            srl.system-size-unit(map.get(srl.$meta, table, padding, tiny, bottom))
-            srl.system-size-unit(map.get(srl.$meta, table, padding, tiny, left))
+            srl.spacer-get(map.get(srl.$meta, table, padding, tiny, top))
+            srl.spacer-get(map.get(srl.$meta, table, padding, tiny, right))
+            srl.spacer-get(map.get(srl.$meta, table, padding, tiny, bottom))
+            srl.spacer-get(map.get(srl.$meta, table, padding, tiny, left))
     );
   }
 
   .srl-pdf-padding-small & {
     padding: (
-            srl.system-size-unit(map.get(srl.$meta, table, padding, small, top))
-            srl.system-size-unit(map.get(srl.$meta, table, padding, small, right))
-            srl.system-size-unit(map.get(srl.$meta, table, padding, small, bottom))
-            srl.system-size-unit(map.get(srl.$meta, table, padding, small, left))
+            srl.spacer-get(map.get(srl.$meta, table, padding, small, top))
+            srl.spacer-get(map.get(srl.$meta, table, padding, small, right))
+            srl.spacer-get(map.get(srl.$meta, table, padding, small, bottom))
+            srl.spacer-get(map.get(srl.$meta, table, padding, small, left))
     );
   }
 }

@@ -1,0 +1,12 @@
+@use "srl";
+@use "assets/scss/placeholders";
+
+.srl-grid--media {
+  .srl-full-width & {
+    @extend %srl-grid-reset;
+  }
+}
+
+.srl-image__caption-text {
+  @extend %srl-regular-width;
+}
