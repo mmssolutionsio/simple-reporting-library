@@ -16,8 +16,7 @@
         "number-width": 400
       },
       "list": {
-        "marker-width": 40,
-        "unordered-marker": "-"
+        "marker-width": 40
       },
       "table": {
         "padding": {
