@@ -59,7 +59,7 @@ const pointer = ref<NsWowNavigationItem[]>([
 
   &:has(button:focus) {
     height: auto;
-    @include srl.spacer-padding-block(medium);
+    @include srl.spacer-padding-block(200);
   }
 
   ul {

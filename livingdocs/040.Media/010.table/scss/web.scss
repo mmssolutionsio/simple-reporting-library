@@ -1,0 +1,14 @@
+@use "srl";
+@use "assets/scss/placeholders";
+
+.srl-table__container > div {
+  @extend %srl-grid-base;
+}
+
+.srl-table-container {
+  @extend %srl-regular-width;
+
+  .srl-wide-width & {
+    @extend %srl-wide-width;
+  }
+}

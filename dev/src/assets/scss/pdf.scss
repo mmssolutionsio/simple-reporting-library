@@ -1,2 +1,34 @@
 @use 'srl';
 @use 'print';
+@use 'sass:map';
+
+$image-quality: map.get(srl.$meta, pdf, image-quality);
+
+img {
+  image-rendering: auto;
+  -ro-image-resampling: $image-quality;
+  -ro-pdf-tag-type: "Figure";
+
+  &[alt] {
+    -ro-pdf-tag-alt: attr(alt);
+  }
+}
+
+@page {
+  margin: (
+          srl.system-size-unit(map.get(srl.$meta, pdf, margin, top))
+          srl.system-size-unit(map.get(srl.$meta, pdf, margin, right))
+          srl.system-size-unit(map.get(srl.$meta, pdf, margin, bottom))
+          srl.system-size-unit(map.get(srl.$meta, pdf, margin, left))
+  );
+  counter-increment: page 1;
+  -ro-bleed-width: 0mm;
+  -ro-media-size: A4;
+  -ro-crop-size: media;
+  -ro-truncate-margin-after-break: always;
+  -ro-truncate-margin-before-break: always;
+
+  @top-left-corner {
+    content: counter(page);
+  }
+}

@@ -1,0 +1,9 @@
+@use 'srl';
+
+.srl-image {
+  @include srl.spacer-margin-top(400);
+}
+
+.srl-image__caption-text {
+  @include srl.typography-caption();
+}

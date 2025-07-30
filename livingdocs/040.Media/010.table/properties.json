@@ -7,12 +7,12 @@
         "caption": "Normal"
       },
       {
-        "caption": "Small",
-        "value": "srl-pdf-padding-small"
-      },
-      {
         "caption": "Tiny",
         "value": "srl-pdf-padding-tiny"
+      },
+      {
+        "caption": "Small",
+        "value": "srl-pdf-padding-small"
       }
     ]
   },

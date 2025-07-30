@@ -1,0 +1,17 @@
+@use 'srl';
+
+.srl-quote {
+  @include srl.spacer-margin-top(400);
+}
+
+.srl-quote__quote {
+  @include srl.typography-quote();
+}
+
+.srl-quote__name {
+  @include srl.typography-quote-name();
+}
+
+.srl-quote__position {
+    @include srl.typography-quote-position();
+}

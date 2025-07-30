@@ -1,5 +1,8 @@
 @use 'srl';
 @use 'sass:string';
+@use 'sass:map';
+
+$font-weight-bold: map.get(srl.$meta, font, weight, bold);
 
 @page {
   margin: 0;
@@ -11,5 +14,55 @@ body {
     font-family: string.unquote(srl.fonts-get-default());
   } @else {
     font-family: 'Comic Sans MS', sans-serif;
+  }
+}
+
+/*
+  Images
+*/
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/*
+  Bold styles
+*/
+[class*="bold"],
+strong,
+b {
+    font-weight: #{$font-weight-bold};
+}
+
+/*
+  Subscripts and superscripts
+*/
+.subscript,
+sub,
+.superscript,
+sup {
+  font-size: 60%;
+  font-variant-numeric: tabular-nums;
+  line-height: 0; // prevents normal text from getting too much height
+}
+
+.subscript,
+sub {
+  vertical-align: sub;
+}
+
+.superscript,
+sup {
+  vertical-align: super;
+}
+
+/*
+  Nowrap's
+*/
+span {
+  &[class*="nowrap"],
+  &[class*="key-figure"] {
+    white-space: nowrap;
   }
 }
