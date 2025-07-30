@@ -566,6 +566,11 @@ async function mapScss() {
           `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
         );
       }
+      if (mainFiles[x].name === 'editor.scss') {
+        output.ldd.push(
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
+        );
+      }
       if (mainFiles[x].name === 'pdf.scss') {
         output.pdf.push(
           `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
@@ -629,14 +634,15 @@ async function mapScss() {
         );
       } catch (e) {}
 
-      const types = ['app', 'ldd', 'pdf', 'word', 'xbrl'];
+      const types = ['app', 'ldd', 'editor', 'pdf', 'word', 'xbrl'];
 
       for (let i = 0; i < types.length; i++) {
         const type = types[i];
         try {
           const f = await statSync(join(p.fullpath(), 'scss', `${type}.scss`));
           const alias = cleanupScssAlias(`${p.relativePosix()}/${type}.scss`);
-          output[type].push(
+          const fileName = type === 'editor' ? 'ldd' : type;
+          output[fileName].push(
             `"${relativePathToRoot}${p.relativePosix()}/scss/${type}.scss" as *`,
           );
         } catch (e) {}
