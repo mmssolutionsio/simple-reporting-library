@@ -145,6 +145,7 @@ export default function viteSrlPlugin(): Plugin {
           path.endsWith('/general.scss') ||
           path.endsWith('/app.scss') ||
           path.endsWith('/ldd.scss') ||
+          path.endsWith('/editor.scss') ||
           path.endsWith('/pdf.scss') ||
           path.endsWith('/word.scss') ||
           path.endsWith('/xbrl.scss') ||
@@ -179,6 +180,7 @@ export default function viteSrlPlugin(): Plugin {
           path.endsWith('/general.scss') ||
           path.endsWith('/app.scss') ||
           path.endsWith('/ldd.scss') ||
+          path.endsWith('/editor.scss') ||
           path.endsWith('/pdf.scss') ||
           path.endsWith('/word.scss') ||
           path.endsWith('/xbrl.scss')||

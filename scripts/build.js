@@ -725,14 +725,15 @@ async function mapScss() {
         );
       } catch (e) {}
 
-      const types = ['app', 'ldd', 'pdf', 'word', 'xbrl'];
+      const types = ['app', 'ldd', 'editor', 'pdf', 'word', 'xbrl'];
 
       for (let i = 0; i < types.length; i++) {
         const type = types[i];
         try {
           const f = await statSync(join(p.fullpath(), 'scss', `${type}.scss`));
           const alias = cleanupScssAlias(`${p.relativePosix()}/${type}.scss`);
-          output[type].push(
+          const fileName = type === 'editor' ? 'ldd' : type;
+          output[fileName].push(
             `"${relativePathToRoot}${p.relativePosix()}/scss/${type}.scss" as *`,
           );
         } catch (e) {}
