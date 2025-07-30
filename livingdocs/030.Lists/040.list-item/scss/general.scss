@@ -1,0 +1,34 @@
+@use 'srl';
+@use "sass:map";
+
+$marker-width: srl.system-size-unit(map.get(srl.$meta, list, marker-width));
+$unordered-marker: "-";
+$ordered-marker-after: ".";
+$alphanumeric-marker-after: ")";
+
+.srl-list-group__item {
+  display: flex;
+
+  &:before {
+    width: $marker-width;
+
+    .srl-list-group--ul & {
+      content: "#{$unordered-marker}";
+    }
+
+    .srl-list-group--ol & {
+      counter-increment: ordered-list;
+      content: counter(ordered-list) $ordered-marker-after;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .srl-list-group--alphanumeric & {
+      counter-increment: alphanumeric-list;
+      content: counter(alphanumeric-list, lower-alpha) $alphanumeric-marker-after;
+    }
+  }
+}
+
+.srl-list-group__item-text {
+  width: calc(100% -  #{$marker-width});
+}
