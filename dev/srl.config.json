@@ -12,6 +12,13 @@
         "medium": 24,
         "large": 32
       },
+      "title": {
+        "number-width": 400
+      },
+      "list": {
+        "marker-width": 40,
+        "unordered-marker": "-"
+      },
       "table": {
         "padding": {
           "regular": {
@@ -57,6 +64,9 @@
         },
         "vertical-align": "bottom",
         "notes-separator": ", "
+      },
+      "footnote": {
+        "number-width": 30
       },
       "font": {
         "weight": {
