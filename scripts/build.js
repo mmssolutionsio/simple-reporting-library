@@ -12,7 +12,6 @@ import {
 } from 'node:fs';
 import { createRequire } from 'node:module';
 import { glob } from 'glob';
-import { beaver } from './beaver.js';
 import { build as viteBuild } from 'vite';
 import {
   readPackageJson,
@@ -20,6 +19,7 @@ import {
   readLivingDocsJson,
   writeLivingDocsJson,
 } from './utils.js';
+import { nsWowInternalLddUrl } from './config.js';
 import folders from './folders.js';
 import { mapLdd } from './ldd/mapLdd.js';
 import { LivingdocsDesignValidator } from './ldd/LivingdocsDesignValidator.js';
@@ -83,6 +83,7 @@ async function cleanOutput() {
  * @returns {Promise<void>} A Promise that resolves when the application is built.
  */
 async function buildApp() {
+  console.log("\n\nBuild application");
   await checkFolders();
   const build = await viteBuild({
     build: {
@@ -190,12 +191,13 @@ async function buildApp() {
  * @returns {Promise<void>} A Promise that resolves when the application is built.
  */
 async function buildDDev() {
+  console.log("\n\nBuild application for DDEV");
   await checkFolders();
   const build = await viteBuild({
     build: {
       outDir: './.output/ddev',
     },
-    publicDir: false,
+    publicDir: true,
   });
   return build;
 }
@@ -208,6 +210,7 @@ async function buildDDev() {
  * @returns {Promise<void>} - A Promise that resolves when the zip operation is complete, or rejects with an error.
  */
 async function zipApp() {
+  console.log("\n\nCreate zip file for app");
   await checkFolders();
   const archiver = require('archiver');
   const output = createWriteStream(join(outputPath, 'app.zip'));
@@ -238,6 +241,7 @@ async function zipApp() {
 }
 
 async function zipLdd() {
+  console.log("\n\nCreate zip file for LDD");
   await checkFolders();
   const archiver = require('archiver');
   const output = createWriteStream(join(outputPath, 'design.zip'));
@@ -274,6 +278,7 @@ async function zipLdd() {
  *                              false otherwise.
  */
 async function buildPdf() {
+  console.log("\n\nBuild PDF");
   await checkFolders();
 
   const config = {
@@ -305,6 +310,7 @@ async function buildPdf() {
 }
 
 async function buildXbrl() {
+  console.log("\n\nBuild XBRL");
   await checkFolders();
 
   const config = {
@@ -320,7 +326,7 @@ async function buildXbrl() {
       outDir: join(folders.srlOutput, 'xbrl'),
       lib: {
         fileName: 'xbrl',
-        entry: join(folders.srlEntries, 'xbrl.ts'),
+        entry: join(folders.srlImports, 'xbrl.scss'),
         formats: ['es'],
       },
     },
@@ -343,7 +349,7 @@ async function buildXbrl() {
  * @returns {Promise<boolean>} - A Promise that resolves to true if the LDD build is successful, false otherwise.
  */
 async function buildLdd(version) {
-  let action = false;
+  console.log("\n\nBuild Livingdocs");
   await checkFolders();
   await mapLdd();
 
@@ -352,8 +358,7 @@ async function buildLdd(version) {
 
   if (version) {
     packageJson.version = version;
-    await writePackageJson(packageJson);
-    action = true;
+    await writePackageJson();
   }
 
   lddJson.name = packageJson.name;
@@ -372,7 +377,7 @@ async function buildLdd(version) {
       outDir: join(folders.srlOutput, 'ldd', 'assets'),
       lib: {
         fileName: 'ldd',
-        entry: join(folders.srlEntries, 'ldd.ts'),
+        entry: join(folders.srlImports, 'ldd.scss'),
         formats: ['es'],
       },
     },
@@ -393,21 +398,85 @@ async function buildLdd(version) {
           if (file.endsWith('.css')) {
             const path = join('./assets/' + file);
             if (!lddJson.assets.css.includes(path)) {
-              action = true;
               lddJson.assets.css.push(path);
             }
           }
           if (file.endsWith('.js')) {
             const path = join('./assets/' + file);
             if (!lddJson.assets.js.includes(path)) {
-              action = true;
               lddJson.assets.js.push(path);
             }
           }
         }
-        if (action) {
-          await writeLivingDocsJson(lddJson);
+
+        const fontFiles = await glob(join(folders.srlAssets, 'fonts', '**', '*.scss'), {
+          withFileTypes: true,
+        });
+
+        if (fontFiles.length) {
+          console.log("\n\nBuild Livingdocs fonts");
+
+          const importPath = join(folders.srlImports, 'fonts');
+          try {
+            await statSync(importPath);
+          } catch (e) {
+            await mkdirSync(importPath, { recursive: true });
+          }
+          const importFile = join(importPath, 'style.scss');
+
+          const importFonts = [];
+          fontFiles.forEach( f => {
+            importFonts.push(`../../../${f.relativePosix()}`);
+          })
+          await writeFileSync(importFile, `@use "` + importFonts.join('" as *;\n@use "') + `" as *;\n`)
+
+          await viteBuild({
+            css: {
+              preprocessorOptions: {
+                scss: {
+                  api: 'modern-compiler',
+                },
+              },
+            },
+            base: './',
+            build: {
+              outDir: join(folders.srlOutput, 'ldd', 'fonts'),
+              assetsInlineLimit: 0,
+              assetsDir: '',
+              rollupOptions: {
+                input: importFile,
+                output: {
+                  assetFileNames: (assetInfo) => {
+                    if (/woff|woff2|ttf|otf|svg|jpe?g|png|gif|webp|avif|bmp|ico|apng/.test(assetInfo.name)) {
+                      return '[name]-[hash][extname]';
+                    }
+                    return '[name][extname]';
+                  }
+                }
+              }
+            },
+            resolve: {
+              alias: {
+                '~': folders.root,
+                '@': folders.srlSrc,
+                '#components': folders.srlComponents,
+                '#composables': folders.srlComposables,
+                '#plugins': folders.srlPlugins,
+                '#types': folders.srlTypes,
+                '#utils': folders.srlUtils,
+                '#imports': folders.srlImports,
+                '#ldd': folders.packageLd,
+                'assets': folders.srlAssets,
+                'srl': folders.srlSystem,
+              },
+            },
+            publicDir: false,
+          })
         }
+
+        console.log("\n\nBuild Livingdocs design.json");
+        await writeLivingDocsJson();
+
         return true;
       })
       .then(async () => {
@@ -430,6 +499,7 @@ async function buildLdd(version) {
  *                              or false if there was an error during the build process.
  */
 async function buildWord() {
+  console.log("\n\nBuild Word");
   await checkFolders();
   let configFile = false;
 
@@ -446,7 +516,7 @@ async function buildWord() {
       outDir: join(folders.srlOutput, 'word'),
       lib: {
         fileName: 'word',
-        entry: join(folders.srlEntries, 'word.ts'),
+        entry: join(folders.srlImports, 'word.scss'),
         formats: ['es'],
       },
     },
@@ -480,12 +550,16 @@ async function build(version) {
       });
       version = await prompt.run();
     }
+
+    packageJson.version = version;
+    await writePackageJson();
+
     await cleanOutput();
     await buildApp();
     await buildPdf();
     await buildWord();
     await buildXbrl();
-    await buildLdd(version);
+    await buildLdd();
     new LivingdocsDesignValidator(await readLivingDocsJson()).IsDesignValid();
     await zipApp();
     await zipLdd();
@@ -503,10 +577,6 @@ async function build(version) {
 async function ddev() {
   try {
     await checkFolders();
-    const packageJson = await readPackageJson();
-    await beaver(1);
-    await mapScss();
-    await mapLdd();
     await buildDDev();
   } catch (error) {
     console.error(error);
@@ -529,6 +599,8 @@ function cleanupScssAlias(string) {
 async function mapScss() {
   await checkFolders();
   try {
+    const packageJson = await readPackageJson();
+
     const relativePathToRoot = join('..', '..', '/');
 
     const output = {
@@ -538,6 +610,25 @@ async function mapScss() {
       word: [],
       xbrl: [],
     };
+
+    const fontFiles = await glob(join(folders.srlAssets, 'fonts', '**', '*.scss'), {
+      withFileTypes: true,
+    });
+
+    const fontsOutput = []
+
+    if (fontFiles.length) {
+      fontsOutput.push(`@import "${nsWowInternalLddUrl}/${packageJson.name}/${packageJson.version}/fonts/style.css";`);
+      fontFiles.forEach(f => {
+        output.app.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
+        output.xbrl.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
+      })
+      output.ldd.push(`"./fonts.scss" as *`);
+      output.pdf.push(`"./fonts.scss" as *`);
+      output.word.push(`"./fonts.scss" as *`);
+    }
+
+    await writeFileSync(join(folders.srlImports, 'fonts.scss'), fontsOutput.join('\n'));
 
     const mainFiles = await glob(join(folders.srlAssets, 'scss', '*.scss'), {
       withFileTypes: true,

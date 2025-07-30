@@ -1,57 +1,64 @@
 /**
- * Replaces underscore (_) placeholders with spaces and replaces '_and_' with a forward slash (/) separator.
- *
- * @param {string} name - The name to modify.
- * @return {string} The modified name with replaced placeholders.
+ * Formats a group name for Livingdocs.
+ * @param {string} name - The original group name.
+ * @returns {string} The formatted group name.
  */
 export function lddGroupNames(name: string): string;
 /**
- * Reads the contents of the package.json file.
- *
- * @returns {Promise<Object>} A Promise that resolves to the parsed contents of the package.json file.
+ * Reads and caches the package.json file.
+ * @returns {Promise<Object>} The parsed package.json object.
+ */
+export function updatePackageJson(): Promise<any>;
+/**
+ * Returns the cached package.json object or reads it if not cached.
+ * @returns {Promise<Object>} The package.json object.
  */
 export function readPackageJson(): Promise<any>;
 /**
- * Writes a package.json file with the given configuration object.
- *
- * @param {Object} config - The configuration object for the package.json file.
- * @return {Boolean} - Returns true if the package.json file is successfully written, else returns false.
+ * Writes the current package.json object to the file.
+ * @returns {Promise<boolean>} True if successful.
  */
-export function writePackageJson(config: any): boolean;
+export function writePackageJson(): Promise<boolean>;
 /**
- * Reads the contents of the "livingdocs.config.json" file and returns the parsed JSON.
- *
- * @return {Promise<Object>} A promise that resolves to the parsed JSON from the file.
+ * Reads and caches the livingdocs.config.json file.
+ * @returns {Promise<Object>} The parsed livingdocs.config.json object.
+ */
+export function updateLivingDocsJson(): Promise<any>;
+/**
+ * Returns the cached livingdocs.config.json object or reads it if not cached.
+ * @returns {Promise<Object>} The livingdocs.config.json object.
  */
 export function readLivingDocsJson(): Promise<any>;
 /**
- * Writes the given configuration object to a JSON file.
- *
- * @param {Object} config - The configuration object to write.
- * @returns {Promise<boolean>} - A Promise that resolves to true if the file was successfully written, otherwise false.
+ * Writes the current livingdocs.config.json object to the file.
+ * @returns {Promise<boolean>} True if successful.
  */
-export function writeLivingDocsJson(config: any): Promise<boolean>;
+export function writeLivingDocsJson(): Promise<boolean>;
 /**
- * Reads the contents of the `nswow.config.json` file and returns the parsed JSON object.
- *
- * @returns {Promise<Object>} - Resolves to the parsed JSON object from the `nswow.config.json` file.
+ * Reads and caches the srl.config.json file.
+ * @returns {Promise<Object>} The parsed srl.config.json object.
+ */
+export function updateNsWowJson(): Promise<any>;
+/**
+ * Returns the cached srl.config.json object or reads it if not cached.
+ * @returns {Promise<Object>} The srl.config.json object.
  */
 export function readNsWowJson(): Promise<any>;
 /**
- * Writes the given configuration object to an nswow.config.json file.
- * If no configuration object is provided, the method does nothing.
- *
- * @param {Object} config - The configuration object to write.
- *
- * @return {boolean} - Returns true if the configuration was successfully written, otherwise false.
+ * Writes the current srl.config.json object to the file.
+ * @returns {Promise<boolean>} True if successful.
  */
-export function writeNsWowJson(config: any): boolean;
+export function writeNsWowJson(): Promise<boolean>;
 /**
- * Convert a string to camel case notation.
- *
- * @param str - The string to be converted.
- * @returns String in camel case notation.
+ * Converts a string to camelCase.
+ * @param {string} str - The input string.
+ * @returns {string} The camelCase string.
  */
-export function camelCase(str: any): any;
-export function getPackageVersion(packageName: any): Promise<any>;
+export function camelCase(str: string): string;
+/**
+ * Gets the version of an npm package.
+ * @param {string} packageName - The name of the npm package.
+ * @returns {Promise<string>} The package version.
+ */
+export function getPackageVersion(packageName: string): Promise<string>;
 export { writeJson };

@@ -1,11 +1,12 @@
 import { type Plugin } from 'vite';
 import { fileURLToPath, URL } from 'node:url';
 import { readFileSync } from 'node:fs';
-import path from 'node:path';
+import { join } from 'node:path/posix';
 import { execSync } from 'node:child_process';
 import folders from '@multivisio/nswow/scripts/folders.js';
 import { beaver } from '@multivisio/nswow/scripts/beaver.js';
 import { packageName } from '@multivisio/nswow/scripts/config';
+import { updatePackageJson, updateLivingDocsJson, updateNsWowJson } from '@multivisio/nswow/scripts/utils';
 import {
   map,
   mapLdd,
@@ -25,7 +26,7 @@ function centerText(text: string): string {
 
 function checkSrlVersion() {
   try {
-    const pkgPath = path.join(folders.packagePath, 'package.json');
+    const pkgPath = join(folders.packagePath, 'package.json');
     const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
     const current = pkg.version;
     if (!current) return;
@@ -124,8 +125,17 @@ export default function viteSrlPlugin(): Plugin {
       config.resolve.alias['vue'] = 'vue/dist/vue.esm-bundler.js';
     },
     configureServer(server) {
-      server.watcher.on('change', (path) => {
+      const fontPath = join(folders.srlAssets, 'fonts');
+
+      server.watcher.on('change', async (path) => {
+        if (path.endsWith('/package.json')) {
+          await updatePackageJson();
+        }
+        if (path.endsWith('/livingdocs.config.json')) {
+          await updateLivingDocsJson();
+        }
         if (path.endsWith('/srl.config.json')) {
+          await updateNsWowJson();
           triggerAction(beaver);
         }
       });
@@ -137,7 +147,11 @@ export default function viteSrlPlugin(): Plugin {
           path.endsWith('/ldd.scss') ||
           path.endsWith('/pdf.scss') ||
           path.endsWith('/word.scss') ||
-          path.endsWith('/xbrl.scss')
+          path.endsWith('/xbrl.scss') ||
+          (
+            path.startsWith(fontPath) &&
+            path.endsWith('.scss')
+          )
         ) {
           triggerAction(mapScss);
         }
@@ -167,7 +181,11 @@ export default function viteSrlPlugin(): Plugin {
           path.endsWith('/ldd.scss') ||
           path.endsWith('/pdf.scss') ||
           path.endsWith('/word.scss') ||
-          path.endsWith('/xbrl.scss')
+          path.endsWith('/xbrl.scss')||
+          (
+            path.startsWith(fontPath) &&
+            path.endsWith('.scss')
+          )
         ) {
           triggerAction(mapScss);
         }
