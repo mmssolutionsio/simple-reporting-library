@@ -25,39 +25,7 @@ async function compile(fileNames, options) {
   }
 }
 
-export async function preparePublish(version = null) {
-  try {
-    if (version === null) {
-      const packageVersion = await getPackageVersion(packageName);
-
-      const currentVersion = packageVersion.split('.');
-      let major = parseInt(currentVersion[0]);
-      let minor = parseInt(currentVersion[1]);
-      let patch = parseInt(currentVersion[2]);
-
-      if (process.argv.includes('major')) {
-        major++;
-        minor = 0;
-        patch = 0;
-      } else if (process.argv.includes('minor')) {
-        minor++;
-        patch = 0;
-      } else {
-        patch++;
-      }
-
-      version = `${major}.${minor}.${patch}`;
-
-      const prompt = new Input({
-        message: 'Package version',
-        initial: version,
-      });
-      version = await prompt.run();
-    }
-  } catch (error) {
-    console.error('Error during preparePublish:', error);
-    return;
-  }
+export async function preparePublish(version) {
 
   if (version) {
     const packageJson = JSON.parse(
