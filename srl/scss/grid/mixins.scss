@@ -238,13 +238,7 @@
 }
 
 @mixin pdf-flex-col($span) {
-  $gaps-inside: $span - 1;
-  $columns: map.get(variables.$columns, print);
-  $gutter: functions.get-gutter-column-gap();
-
-  width: calc(
-          ((100% - (#{$columns - 1} * #{$gutter})) * #{$span} / #{$columns}) + (#{$gaps-inside} * #{$gutter})
-  );
+  width: functions.calculate-pdf-col-span-minus-one-gutter($span);
 }
 
 @mixin core-styles {

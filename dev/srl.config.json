@@ -86,7 +86,7 @@
         "media": {
           "print": {
             "font-size": "28pt",
-            "line-height": 1.46
+            "line-height": 1.14
           },
           "up": {
             "tablet-pt": {
@@ -371,6 +371,26 @@
         }
       },
       {
+        "name": "list",
+        "font-family": "Inter",
+        "font-size": 14,
+        "line-height": 1.5,
+        "font-style": "normal",
+        "font-weight": 400,
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "9pt",
+            "line-height": 1.444
+          },
+          "up": {
+            "tablet-pt": {
+              "font-size": 16
+            }
+          }
+        }
+      },
+      {
         "name": "caption",
         "font-family": "Inter",
         "font-size": 12,
@@ -473,6 +493,7 @@
       },
       {
         "name": "table-head-regular",
+        "font-family": "Inter",
         "font-size": 14,
         "line-height": 1.5,
         "font-style": "normal",
@@ -487,6 +508,7 @@
       },
       {
         "name": "table-head-strong",
+        "font-family": "Inter",
         "font-size": 14,
         "line-height": 1.5,
         "font-style": "normal",
@@ -501,6 +523,7 @@
       },
       {
         "name": "table-cell-regular",
+        "font-family": "Inter",
         "font-size": 14,
         "line-height": 1.5,
         "font-style": "normal",
@@ -515,6 +538,7 @@
       },
       {
         "name": "table-cell-strong",
+        "font-family": "Inter",
         "font-size": 14,
         "line-height": 1.5,
         "font-style": "normal",
@@ -529,6 +553,7 @@
       },
       {
         "name": "table-cell-small-regular",
+        "font-family": "Inter",
         "font-size": 14,
         "line-height": 1.5,
         "font-style": "normal",
@@ -543,6 +568,7 @@
       },
       {
         "name": "table-cell-small-strong",
+        "font-family": "Inter",
         "font-size": 14,
         "line-height": 1.5,
         "font-style": "normal",
@@ -552,6 +578,21 @@
           "print": {
             "font-size": "7pt",
             "line-height": 1.429
+          }
+        }
+      },
+      {
+        "name": "pdf-header",
+        "font-family": "Inter",
+        "font-size": 14,
+        "line-height": 1.5,
+        "font-style": "normal",
+        "font-weight": 400,
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "7pt",
+            "line-height": 1.28
           }
         }
       }

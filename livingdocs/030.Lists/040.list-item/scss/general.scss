@@ -8,6 +8,7 @@ $alphanumeric-marker-after: ")";
 
 .srl-list-group__item {
   display: flex;
+  @include srl.typography-list();
 
   &:before {
     width: $marker-width;
