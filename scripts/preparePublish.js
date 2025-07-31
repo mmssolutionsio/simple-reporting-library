@@ -5,7 +5,6 @@ import writeJson from 'write-json';
 import ts from 'typescript';
 import Enquirer from 'enquirer';
 import { packageName } from './config.js';
-import { getPackageVersion } from './utils.js';
 
 const { Input } = Enquirer;
 
