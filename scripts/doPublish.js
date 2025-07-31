@@ -1,7 +1,6 @@
 import { execSync } from 'child_process';
 import { preparePublish } from './preparePublish.js';
 import { packageName } from './config.js';
-import { getPackageVersion } from './utils.js';
 
 export async function doPublish(version = null) {
   try {
@@ -11,17 +10,6 @@ export async function doPublish(version = null) {
     const tag = `v${publishVersion.split('.')[0]}-lts`;
 
     await execSync(`npm publish --tag ${tag}`, { stdio: 'inherit' });
-
-    const latest = await getPackageVersion(packageName);
-
-    if (publishVersion > latest) {
-      await execSync(
-        `npm dist-tag add ${packageName}@${publishVersion} latest`,
-        {
-          stdio: 'inherit',
-        },
-      );
-    }
 
     console.log(
       `Package ${packageName}@${publishVersion} published successfully!`,
