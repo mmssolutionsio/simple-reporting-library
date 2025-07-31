@@ -18,7 +18,7 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org/
       - run: npm ci
-      - run: node scripts/renamePackage.js
-      - run: node scripts/doPublish.js -v ${{ github.ref_name }}
+      - run: node ../scripts/renamePackage.js
+      - run: node ../scripts/doPublish.js -v ${{ github.ref_name }}
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
