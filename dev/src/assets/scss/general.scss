@@ -4,19 +4,6 @@
 
 $font-weight-bold: map.get(srl.$meta, font, weight, bold);
 
-@page {
-  margin: 0;
-  size: A4;
-}
-
-body {
-  @if srl.fonts-is-default() {
-    font-family: string.unquote(srl.fonts-get-default());
-  } @else {
-    font-family: 'Comic Sans MS', sans-serif;
-  }
-}
-
 /*
   Images
 */
