@@ -21,4 +21,4 @@ jobs:
       - run: node scripts/renamePackage.js
       - run: node scripts/doPublish.js -v ${{ github.ref_name }}
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
