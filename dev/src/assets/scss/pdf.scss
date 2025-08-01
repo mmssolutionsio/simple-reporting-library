@@ -22,7 +22,6 @@ img {
   }
 }
 
-
 /*
   PDF chapter navigation and publication title
 */
@@ -80,6 +79,31 @@ img {
     top: srl.spacer-get(300);
     right: $page-margin-right;
     @include srl.typography-pdf-header()
+  }
+}
+
+/*
+  Page breaks for PDF
+*/
+.srl-chapter,
+.srl-article {
+  break-after: always;
+
+  &:last-child {
+    break-after: avoid;
+  }
+}
+
+.srl-pdf-pagebreak {
+  break-after: always;
+}
+
+[class*="category-note-"] {
+  break-after: unset;
+  margin-top: srl.spacer-get(400);
+
+  &:last-child {
+    break-after: always;
   }
 }
 

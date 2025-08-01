@@ -65,10 +65,10 @@
       "pdf": {
         "image-quality": "150dpi",
         "margin": {
-          "top": 73,
-          "right": 32,
-          "bottom": 38,
-          "left": 32
+          "top": "73pt",
+          "right": "32pt",
+          "bottom": "38pt",
+          "left": "32pt"
         }
       }
     }
@@ -729,7 +729,7 @@
     },
     "gutter": {
       "print": {
-        "column-gap": 16
+        "column-gap": "16pt"
       },
       "phone-pt": {
         "column-gap": 16
