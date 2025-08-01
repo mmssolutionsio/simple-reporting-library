@@ -1,17 +1,6 @@
 {
-  "fonts": {
-    "default-font": "Roboto, sans-serif",
-    "font-base-path": "./src/assets/fonts"
-  },
   "meta": {
     "meta": {
-      "padding": {
-        "tiny": 4,
-        "base": 8,
-        "small": 16,
-        "medium": 24,
-        "large": 32
-      },
       "title": {
         "number-width": 400
       },
@@ -76,10 +65,10 @@
       "pdf": {
         "image-quality": "150dpi",
         "margin": {
-          "top": 73,
-          "right": 32,
-          "bottom": 38,
-          "left": 32
+          "top": "73pt",
+          "right": "32pt",
+          "bottom": "38pt",
+          "left": "32pt"
         }
       }
     }
@@ -96,8 +85,8 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 28,
-            "line-height": 1.46
+            "font-size": "28pt",
+            "line-height": 1.14
           },
           "up": {
             "tablet-pt": {
@@ -120,7 +109,7 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 20,
+            "font-size": "20pt",
             "line-height": 1.2
           },
           "up": {
@@ -141,7 +130,7 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 20,
+            "font-size": "20pt",
             "line-height": 1.2
           },
           "up": {
@@ -162,7 +151,7 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 12,
+            "font-size": "12pt",
             "line-height": 1.333
           },
           "up": {
@@ -182,7 +171,7 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 9,
+            "font-size": "9pt",
             "line-height": 1.444
           },
           "up": {
@@ -205,7 +194,7 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 9,
+            "font-size": "9pt",
             "line-height": 1.444
           },
           "up": {
@@ -228,7 +217,7 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 18,
+            "font-size": "18pt",
             "line-height": 1.222
           },
           "up": {
@@ -251,7 +240,7 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 9,
+            "font-size": "9pt",
             "line-height": 1.444
           },
           "up": {
@@ -271,7 +260,7 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 9,
+            "font-size": "9pt",
             "line-height": 1.444
           },
           "up": {
@@ -291,7 +280,7 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 7,
+            "font-size": "7pt",
             "line-height": 1.429
           },
           "up": {
@@ -311,7 +300,7 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 7,
+            "font-size": "7pt",
             "line-height": 1.429
           },
           "up": {
@@ -331,7 +320,7 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 16,
+            "font-size": "16pt",
             "line-height": 1.25
           },
           "up": {
@@ -351,7 +340,7 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 7,
+            "font-size": "7pt",
             "line-height": 1.429
           },
           "up": {
@@ -371,12 +360,32 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 7,
+            "font-size": "7pt",
             "line-height": 1.429
           },
           "up": {
             "tablet-pt": {
               "font-size": 14
+            }
+          }
+        }
+      },
+      {
+        "name": "list",
+        "font-family": "Inter",
+        "font-size": 14,
+        "line-height": 1.5,
+        "font-style": "normal",
+        "font-weight": 400,
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "9pt",
+            "line-height": 1.444
+          },
+          "up": {
+            "tablet-pt": {
+              "font-size": 16
             }
           }
         }
@@ -391,7 +400,7 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 7,
+            "font-size": "7pt",
             "line-height": 1.429
           },
           "up": {
@@ -411,7 +420,7 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 9,
+            "font-size": "9pt",
             "line-height": 1.444
           },
           "up": {
@@ -431,7 +440,7 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 9,
+            "font-size": "9pt",
             "line-height": 1.444
           },
           "up": {
@@ -451,7 +460,7 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 7,
+            "font-size": "7pt",
             "line-height": 1.429
           },
           "up": {
@@ -484,6 +493,7 @@
       },
       {
         "name": "table-head-regular",
+        "font-family": "Inter",
         "font-size": 14,
         "line-height": 1.5,
         "font-style": "normal",
@@ -491,13 +501,14 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 7,
+            "font-size": "7pt",
             "line-height": 1.429
           }
         }
       },
       {
         "name": "table-head-strong",
+        "font-family": "Inter",
         "font-size": 14,
         "line-height": 1.5,
         "font-style": "normal",
@@ -505,13 +516,14 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 7,
+            "font-size": "7pt",
             "line-height": 1.429
           }
         }
       },
       {
         "name": "table-cell-regular",
+        "font-family": "Inter",
         "font-size": 14,
         "line-height": 1.5,
         "font-style": "normal",
@@ -519,13 +531,14 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 7,
+            "font-size": "7pt",
             "line-height": 1.429
           }
         }
       },
       {
         "name": "table-cell-strong",
+        "font-family": "Inter",
         "font-size": 14,
         "line-height": 1.5,
         "font-style": "normal",
@@ -533,13 +546,14 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 7,
+            "font-size": "7pt",
             "line-height": 1.429
           }
         }
       },
       {
         "name": "table-cell-small-regular",
+        "font-family": "Inter",
         "font-size": 14,
         "line-height": 1.5,
         "font-style": "normal",
@@ -547,13 +561,14 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 7,
+            "font-size": "7pt",
             "line-height": 1.429
           }
         }
       },
       {
         "name": "table-cell-small-strong",
+        "font-family": "Inter",
         "font-size": 14,
         "line-height": 1.5,
         "font-style": "normal",
@@ -561,8 +576,23 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": 7,
+            "font-size": "7pt",
             "line-height": 1.429
+          }
+        }
+      },
+      {
+        "name": "pdf-header",
+        "font-family": "Inter",
+        "font-size": 14,
+        "line-height": 1.5,
+        "font-style": "normal",
+        "font-weight": 400,
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "7pt",
+            "line-height": 1.28
           }
         }
       }
@@ -570,74 +600,38 @@
   },
   "colors": {
     "colors": [
-      {
-        "name": "grey-800",
-        "color": "#666666"
-      },
-      {
-        "name": "light",
-        "color": "#ffffff"
-      },
-      {
-        "name": "on-light",
-        "color": "#000000"
-      },
-      {
-        "name": "dark",
-        "color": "#000000"
-      },
-      {
-        "name": "on-dark",
-        "color": "#ffffff"
-      },
-      {
-        "name": "primary",
-        "color": "#E50000"
-      },
-      {
-        "name": "on-primary",
-        "color": "#ffffff"
-      },
-      {
-        "name": "primary-dark",
-        "color": "#5227CC"
-      },
-      {
-        "name": "on-primary-dark",
-        "color": "#ffffff"
-      },
-      {
-        "name": "secondary-light",
-        "color": "#EBE5FC"
-      },
-      {
-        "name": "on-secondary-light",
-        "color": "#000000"
-      },
-      {
-        "name": "secondary",
-        "color": "#6C757D"
-      },
-      {
-        "name": "on-secondary",
-        "color": "#ffffff"
-      },
-      {
-        "name": "secondary-dark",
-        "color": "#54595E"
-      },
-      {
-        "name": "on-secondary-dark",
-        "color": "#ffffff"
-      },
-      {
-        "name": "secondary-light",
-        "color": "#ABB5BE"
-      },
-      {
-        "name": "on-secondary-light",
-        "color": "#000000"
-      },
+      { "name": "white-1000", "color": "#ffffff" },
+      { "name": "grey-200", "color": "#cccccc" },
+      { "name": "grey-400", "color": "#999999" },
+      { "name": "grey-600", "color": "#666666" },
+      { "name": "grey-800", "color": "#333333" },
+      { "name": "black-1000", "color": "#000000" },
+
+      { "name": "primary-200", "color": "#ffe5cc" },
+      { "name": "primary-400", "color": "#ffcb99" },
+      { "name": "primary-600", "color": "#ffb166" },
+      { "name": "primary-800", "color": "#ff9733" },
+      { "name": "primary-1000", "color": "#ff7d00" },
+
+      { "name": "blue-200", "color": "#ccd1e7" },
+      { "name": "blue-400", "color": "#99a3cf" },
+      { "name": "blue-600", "color": "#6675b7" },
+      { "name": "blue-800", "color": "#33479f" },
+      { "name": "blue-1000", "color": "#001987" },
+
+      { "name": "yellow-200", "color": "#fff7dc" },
+      { "name": "yellow-400", "color": "#ffefb9" },
+      { "name": "yellow-600", "color": "#ffe796" },
+      { "name": "yellow-800", "color": "#ffdf73" },
+      { "name": "yellow-1000", "color": "#ffd750" },
+
+      { "name": "sand-200", "color": "#fcfcfa" },
+      { "name": "sand-400", "color": "#f9f9f5" },
+      { "name": "sand-600", "color": "#f5f5f1" },
+      { "name": "sand-800", "color": "#f2f2ec" },
+      { "name": "sand-1000", "color": "#efefe7" },
+
+      { "name": "opacity-30", "color": "#ffffff" },
       {
         "name": "shade",
         "color": "#6C757D"
@@ -725,7 +719,7 @@
       "desktop-large": 1400
     },
     "columns": {
-      "print": 12,
+      "print": 8,
       "phone-pt": 4,
       "phone-ls": 4,
       "tablet-pt": 8,
@@ -735,7 +729,7 @@
     },
     "gutter": {
       "print": {
-        "column-gap": 16
+        "column-gap": "16pt"
       },
       "phone-pt": {
         "column-gap": 16

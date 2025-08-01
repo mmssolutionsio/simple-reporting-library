@@ -114,7 +114,7 @@ export default function viteSrlPlugin(): Plugin {
         new URL('../imports', import.meta.url),
       );
       config.resolve.alias['#ld'] = fileURLToPath(
-        new URL('../..//livingdocs', import.meta.url),
+        new URL('../../livingdocs', import.meta.url),
       );
       config.resolve.alias['assets'] = fileURLToPath(
         new URL('../../src/assets', import.meta.url),

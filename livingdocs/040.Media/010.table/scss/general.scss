@@ -31,8 +31,7 @@ td {
   /*
   General cell styles
   */
-  font-size: srl.typography-get-font-size('table-cell-regular');
-  line-height: srl.typography-get-line-height('table-cell-regular');
+  @include srl.typography-table-cell-regular();
   padding: (
           srl.spacer-get(map.get(srl.$meta, table, padding, regular, top))
           srl.spacer-get(map.get(srl.$meta, table, padding, regular, right))

@@ -15,6 +15,10 @@
   .srl-wide-width & {
     @extend %srl-wide-width;
   }
+
+  .srl-quote.srl-wide-width & {
+    @extend %srl-quote-wide-width;
+  }
 }
 
 .srl-grid__aside {

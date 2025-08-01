@@ -1,0 +1,26 @@
+@use 'srl';
+@use 'sass:map';
+
+$page-margin-right: srl.system-size-unit(map.get(srl.$meta, pdf, margin, right));
+$page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
+
+.srl-grid--media {
+  .srl-full-width & {
+    max-width: 210mm;
+    margin-left: calc(#{$page-margin-left} * -1);
+    margin-right: calc(#{$page-margin-right} * -1);
+  }
+}
+
+.srl-image__image-container {
+  .srl-full-width & {
+    width: 100%;
+  }
+}
+
+.srl-image__img {
+  .srl-full-width & {
+    width: 210mm;
+    min-width: 210mm;
+  }
+}

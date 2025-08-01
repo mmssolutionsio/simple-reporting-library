@@ -1,9 +1,17 @@
 @use 'srl';
+@use "assets/scss/placeholders";
 
 .srl-image {
   @include srl.spacer-margin-top(400);
 }
 
+.srl-grid--media {
+  .srl-full-width & {
+    @extend %srl-grid-reset;
+  }
+}
+
 .srl-image__caption-text {
   @include srl.typography-caption();
+  @extend %srl-regular-width;
 }

@@ -11,7 +11,7 @@ const pointer = ref<NsWowNavigationItem[]>([
       id: 'srl-to-main-navigation'
     },
     callback: () => {
-      const elem: HTMLDivElement | null = document.querySelector('#srl-page__navigation')
+      const elem: HTMLDivElement | null = document.querySelector('#srl-page-navigation')
       if (elem) {
         elem.querySelector('button')?.focus()
       }
@@ -23,7 +23,7 @@ const pointer = ref<NsWowNavigationItem[]>([
       id: 'srl-to-main-content'
     },
     callback: () => {
-      const elem: HTMLDivElement | null = document.querySelector('#srl-page__main')
+      const elem: HTMLDivElement | null = document.querySelector('#srl-page-main')
       if (elem) {
         elem.focus()
       }
@@ -35,7 +35,7 @@ const pointer = ref<NsWowNavigationItem[]>([
       id: 'srl-to-footer'
     },
     callback: () => {
-      const elem: HTMLDivElement | null = document.querySelector('#srl-page__footer')
+      const elem: HTMLDivElement | null = document.querySelector('#srl-page-footer')
       if (elem) {
         elem.focus()
       }
@@ -45,7 +45,7 @@ const pointer = ref<NsWowNavigationItem[]>([
 </script>
 
 <template>
-  <nav class="srl-page__keyboardpointer" id="srl-page__keyboardpointer" tabindex="-1">
+  <nav class="srl-page__keyboardpointer" id="srl-page-keyboardpointer" tabindex="-1">
     <SrlMenu name="keyboardpointer" :menu="pointer" />
   </nav>
 </template>

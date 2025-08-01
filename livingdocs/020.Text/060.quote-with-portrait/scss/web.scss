@@ -1,0 +1,24 @@
+@use 'srl';
+@use "assets/scss/placeholders";
+
+.srl-quote__figure {
+  .srl-quote--with-image & {
+    @extend %srl-quote-with-image-image-regular-width;
+  }
+
+  .srl-quote--with-image.srl-wide-width & {
+    @extend %srl-quote-with-image-image-wide-width;
+  }
+}
+
+.srl-quote__text {
+  .srl-quote--with-image & {
+    @extend %srl-quote-with-image-text-regular-width;
+  }
+
+  .srl-quote--with-image.srl-wide-width & {
+    @extend %srl-quote-with-image-text-wide-width;
+  }
+}
+
+
