@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 const search = '@multivisio/nswow';
-const replace = '@simple-report/base';
+const replace = '@simple-reporting/base';
 const CWD = process.cwd();
 const excludes = [
   'scripts/renamePackage.js',
