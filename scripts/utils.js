@@ -1,116 +1,163 @@
 import { join } from 'node:path/posix';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
+import { exec } from 'child_process';
 
 const require = createRequire(import.meta.url);
-/**
- * A module for writing JSON data to a file.
- *
- * @module writeJson
- */
+
 const writeJson = require('write-json');
 
+const data = {
+  packageJson: null,
+  livingDocsJson: null,
+  nsWowJson: null,
+}
+
 /**
- * Replaces underscore (_) placeholders with spaces and replaces '_and_' with a forward slash (/) separator.
- *
- * @param {string} name - The name to modify.
- * @return {string} The modified name with replaced placeholders.
+ * Formats a group name for Livingdocs.
+ * @param {string} name - The original group name.
+ * @returns {string} The formatted group name.
  */
 function lddGroupNames(name) {
+  const arrName = name.split('.');
+  if (arrName.length > 1) {
+    arrName.shift();
+    name = arrName.join('.');
+  }
   return name.replace('_and_', ' / ').replace('_', ' ');
 }
 
 /**
- * Reads the contents of the package.json file.
- *
- * @returns {Promise<Object>} A Promise that resolves to the parsed contents of the package.json file.
+ * Reads and caches the package.json file.
+ * @returns {Promise<Object>} The parsed package.json object.
+ */
+async function updatePackageJson() {
+  data.packageJson = JSON.parse(
+    await readFileSync(
+      join(process.cwd(), 'package.json')
+    )
+  );
+  return data.packageJson;
+}
+
+/**
+ * Returns the cached package.json object or reads it if not cached.
+ * @returns {Promise<Object>} The package.json object.
  */
 async function readPackageJson() {
-  const file = join(process.cwd(), 'package.json');
-  return JSON.parse(await readFileSync(file));
+  return data.packageJson || updatePackageJson();
 }
 
 /**
- * Writes a package.json file with the given configuration object.
- *
- * @param {Object} config - The configuration object for the package.json file.
- * @return {Boolean} - Returns true if the package.json file is successfully written, else returns false.
+ * Writes the current package.json object to the file.
+ * @returns {Promise<boolean>} True if successful.
  */
-async function writePackageJson(config) {
-  if (config) {
-    const file = join(process.cwd(), 'package.json');
-    writeJson.sync(file, config);
-  }
+async function writePackageJson() {
+  const file = join(process.cwd(), 'package.json');
+  await writeJson.sync(file, data.packageJson);
   return true;
 }
 
 /**
- * Reads the contents of the "livingdocs.config.json" file and returns the parsed JSON.
- *
- * @return {Promise<Object>} A promise that resolves to the parsed JSON from the file.
+ * Reads and caches the livingdocs.config.json file.
+ * @returns {Promise<Object>} The parsed livingdocs.config.json object.
+ */
+async function updateLivingDocsJson() {
+  data.livingDocsJson = JSON.parse(
+    await readFileSync(
+      join(process.cwd(), 'livingdocs.config.json')
+    )
+  );
+  return data.livingDocsJson;
+}
+
+/**
+ * Returns the cached livingdocs.config.json object or reads it if not cached.
+ * @returns {Promise<Object>} The livingdocs.config.json object.
  */
 async function readLivingDocsJson() {
-  const file = join(process.cwd(), 'livingdocs.config.json');
-  return JSON.parse(await readFileSync(file));
+  return data.livingDocsJson || updateLivingDocsJson();
 }
 
 /**
- * Writes the given configuration object to a JSON file.
- *
- * @param {Object} config - The configuration object to write.
- * @returns {Promise<boolean>} - A Promise that resolves to true if the file was successfully written, otherwise false.
+ * Writes the current livingdocs.config.json object to the file.
+ * @returns {Promise<boolean>} True if successful.
  */
-async function writeLivingDocsJson(config) {
-  if (config) {
-    const file = join(process.cwd(), 'livingdocs.config.json');
-    writeJson.sync(file, config);
-  }
+async function writeLivingDocsJson() {
+  const file = join(process.cwd(), 'livingdocs.config.json');
+  await writeJson.sync(file, data.livingDocsJson);
   return true;
 }
 
 /**
- * Reads the contents of the `nswow.config.json` file and returns the parsed JSON object.
- *
- * @returns {Promise<Object>} - Resolves to the parsed JSON object from the `nswow.config.json` file.
+ * Reads and caches the srl.config.json file.
+ * @returns {Promise<Object>} The parsed srl.config.json object.
+ */
+async function updateNsWowJson() {
+  data.nsWowJson = JSON.parse(
+    await readFileSync(
+      join(process.cwd(), 'srl.config.json')
+    )
+  );
+  return data.nsWowJson;
+}
+
+/**
+ * Returns the cached srl.config.json object or reads it if not cached.
+ * @returns {Promise<Object>} The srl.config.json object.
  */
 async function readNsWowJson() {
-  const file = join(process.cwd(), 'srl.config.json');
-  return JSON.parse(await readFileSync(file));
+  return data.nsWowJson || updateNsWowJson();
 }
 
 /**
- * Writes the given configuration object to an nswow.config.json file.
- * If no configuration object is provided, the method does nothing.
- *
- * @param {Object} config - The configuration object to write.
- *
- * @return {boolean} - Returns true if the configuration was successfully written, otherwise false.
+ * Writes the current srl.config.json object to the file.
+ * @returns {Promise<boolean>} True if successful.
  */
-async function writeNsWowJson(config) {
-  if (config) {
-    const file = join(process.cwd(), 'srl.config.json');
-    writeJson.sync(file, config);
-  }
+async function writeNsWowJson() {
+  const file = join(process.cwd(), 'srl.config.json');
+  await writeJson.sync(file, data.nsWowJson);
   return true;
 }
+
 /**
- * Convert a string to camel case notation.
- *
- * @param str - The string to be converted.
- * @returns String in camel case notation.
+ * Converts a string to camelCase.
+ * @param {string} str - The input string.
+ * @returns {string} The camelCase string.
  */
 function camelCase(str) {
   return str.replace(/[._-](\w|$)/g, (_, x) => x.toUpperCase());
 }
 
+/**
+ * Gets the version of an npm package.
+ * @param {string} packageName - The name of the npm package.
+ * @returns {Promise<string>} The package version.
+ */
+function getPackageVersion(packageName) {
+  return new Promise((resolve, reject) => {
+    exec(`npm view ${packageName} version`, (error, stdout, stderr) => {
+      let version = stdout.trim();
+      if (version === '') {
+        version = '0.0.0';
+      }
+      resolve(version);
+    });
+  });
+}
+
 export {
   writeJson,
   lddGroupNames,
+  updatePackageJson,
   readPackageJson,
   writePackageJson,
+  updateLivingDocsJson,
   readLivingDocsJson,
   writeLivingDocsJson,
+  updateNsWowJson,
   readNsWowJson,
   writeNsWowJson,
   camelCase,
+  getPackageVersion,
 };

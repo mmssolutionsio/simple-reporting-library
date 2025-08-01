@@ -3,4 +3,7 @@
     <inspectableSettings>
         <enabled>true</enabled>
     </inspectableSettings>
+    <debugSettings>
+        <all>true</all>
+    </debugSettings>
 </configuration>

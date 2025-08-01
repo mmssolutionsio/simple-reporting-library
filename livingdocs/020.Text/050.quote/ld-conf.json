@@ -1,0 +1,5 @@
+{
+  "name": "quote",
+  "label": "Quote",
+  "properties": ["width-reduced","pdf-spacer", "hide-quote-characters"]
+}

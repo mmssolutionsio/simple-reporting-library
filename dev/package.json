@@ -9,17 +9,17 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "nswow build",
+    "build": "srl build",
     "build-type-check": "run-p type-check \"build {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
-    "postinstall": "nswow prepare"
+    "postinstall": "srl prepare"
   },
   "dependencies": {
-    "@multivisio/nswow": "^1.0.12",
+    "@multivisio/nswow": "^1.0.17",
     "axios": "^1.9.0",
     "chalk": "^5.4.1",
     "exceljs": "^4.4.0",

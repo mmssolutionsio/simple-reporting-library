@@ -1,0 +1,9 @@
+@use 'srl';
+
+.srl-list-group {
+  @include srl.spacer-margin-top(200);
+}
+
+.srl-list-group--ol {
+  counter-reset: ordered-list;
+}

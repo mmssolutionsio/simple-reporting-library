@@ -1,0 +1,9 @@
+@use 'srl';
+
+.srl-signature__name {
+  @include srl.typography-signature-name();
+}
+
+.srl-signature__position {
+  @include srl.typography-signature-position();
+}

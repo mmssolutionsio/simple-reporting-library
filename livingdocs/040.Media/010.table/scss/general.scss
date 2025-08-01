@@ -1,0 +1,328 @@
+@use 'srl';
+@use 'sass:map';
+
+$table-border-regular: map.get(srl.$meta, table, border, regular);
+$table-border-bold: map.get(srl.$meta, table, border, bold);
+@include srl.system-add-root-style(srl-table-border-regular-width, srl.system-size-unit(map.get($table-border-regular, width)));
+@include srl.system-add-root-style(srl-table-border-regular-width, srl.system-size-unit(map.get($table-border-regular, media, print, width)), print);
+@include srl.system-add-root-style(srl-table-border-bold-width, srl.system-size-unit(map.get($table-border-bold, width)));
+@include srl.system-add-root-style(srl-table-border-bold-width, srl.system-size-unit(map.get($table-border-bold, media, print, width)), print);
+
+.srl-table {
+  @include srl.spacer-margin-top(300);
+}
+
+.srl-table__container {
+  overflow: auto;
+  scroll-snap-type: x mandatory;
+  position: relative;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  margin: 0;
+  table-layout: fixed;
+}
+
+th,
+td {
+  /*
+  General cell styles
+  */
+  @include srl.typography-table-cell-regular();
+  padding: (
+          srl.spacer-get(map.get(srl.$meta, table, padding, regular, top))
+          srl.spacer-get(map.get(srl.$meta, table, padding, regular, right))
+          srl.spacer-get(map.get(srl.$meta, table, padding, regular, bottom))
+          srl.spacer-get(map.get(srl.$meta, table, padding, regular, left))
+  );
+  vertical-align: #{map.get(srl.$meta, table, vertical-align)};
+  border-bottom: (
+          var(--srl-table-border-regular-width)
+          map.get($table-border-regular, style)
+          srl.colors-get(map.get($table-border-regular, color))
+  );
+
+  /*
+  Font colors
+  */
+
+  /*
+  Font Sizes
+  */
+  &[class*="head"] {
+    font-size: srl.typography-get-font-size('table-head-strong');
+    line-height: srl.typography-get-line-height('table-head-strong');
+  }
+
+  /*
+  Font Weights
+  */
+  &[class*="head"] {
+    font-weight: srl.typography-get-font-weight('table-head-strong');
+  }
+
+  &[class*="bold"] {
+    font-weight: srl.typography-get-font-weight('table-cell-strong');
+  }
+
+  /*
+  Paddings
+  */
+  &[class*="nolinetop"],
+  &[class*="nolinebottom"],
+  &[class*="nolineleft"],
+  &[class*="nolineright"] {
+    padding: 0;
+  }
+
+  /*
+  Borders
+  */
+  &[class*="head"] {
+    border-bottom: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-bold, style)
+            srl.colors-get(map.get($table-border-bold, color))
+    );
+  }
+
+  &[class*="linetop"] {
+    border-top: (
+            srl-table-border-regular-width
+            map.get($table-border-regular, style)
+            srl.colors-get(map.get($table-border-regular, color))
+    );
+  }
+
+  &[class*="blinetop"] {
+    border-top: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-bold, style)
+            srl.colors-get(map.get($table-border-bold, color))
+    );
+  }
+
+  &[class*="nolinetop"] {
+    border-top: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-regular, style)
+            transparent
+    );
+
+    &[class*="head"] {
+      border-top-width: (
+              var(--srl-table-border-regular-width)
+      );
+    }
+  }
+
+  &[class*="linebottom"] {
+    border-bottom: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-regular, style)
+            srl.colors-get(map.get($table-border-regular, color))
+    );
+  }
+
+  &[class*="blinebottom"] {
+    border-bottom: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-bold, style)
+            srl.colors-get(map.get($table-border-bold, color))
+    );
+  }
+
+  &[class*="nolinebottom"] {
+    border-bottom: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-regular, style)
+            transparent
+    );
+
+    &[class*="head"] {
+      border-bottom-width: var(--srl-table-border-regular-width);
+    }
+  }
+
+  &[class*="lineleft"] {
+    border-left: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-regular, style)
+            srl.colors-get(map.get($table-border-regular, color))
+    );
+  }
+
+  &[class*="blineleft"] {
+    border-left: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-bold, style)
+            srl.colors-get(map.get($table-border-bold, color))
+    );
+  }
+
+  &[class*="nolineleft"] {
+    border-left: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-regular, style)
+            transparent
+    );
+  }
+
+  &[class*="lineright"] {
+    border-right: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-regular, style)
+            srl.colors-get(map.get($table-border-regular, color))
+    );
+  }
+
+  &[class*="blineright"] {
+    border-right: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-bold, style)
+            srl.colors-get(map.get($table-border-bold, color))
+    );
+  }
+
+  &[class*="nolineleft"] {
+    border-right: (
+            var(--srl-table-border-regular-width)
+            map.get($table-border-regular, style)
+            transparent
+    );
+  }
+
+  /*
+  Indents
+  */
+  &[class*="_ind"] {
+    &:first-child {
+      padding-left: srl.spacer-get(200);
+    }
+  }
+
+  &[class*="_ind_ind"] {
+    &:first-child {
+      padding-left: srl.spacer-get(300);
+    }
+  }
+
+  /*
+  Cell Backgrounds
+  DEFINE HERE; DIFFERENT CSS CLASSES IN EVERY PROJECT
+  */
+  &[class*="background-01"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-02"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-03"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-04"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-05"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-06"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-07"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-08"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-09"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-10"] {
+    background-color: transparent;
+  }
+
+  &[class*="background-01"],
+  &[class*="background-02"],
+  &[class*="background-03"],
+  &[class*="background-04"],
+  &[class*="background-05"],
+  &[class*="background-06"],
+  &[class*="background-07"],
+  &[class*="background-08"],
+  &[class*="background-09"],
+  &[class*="background-10"] {
+    &.head {
+      color: black;
+    }
+  }
+
+  /*
+  Alignments
+  */
+  &[class*="horizontal-left"] {
+    text-align: left;
+  }
+
+  &[class*="horizontal-center"] {
+    text-align: center;
+  }
+
+  &[class*="horizontal-right"] {
+    text-align: right;
+  }
+
+  &[class*="vertical-top"] {
+    vertical-align: top;
+  }
+
+  &[class*="vertical-middle"] {
+    vertical-align: middle;
+  }
+
+  &[class*="vertical-bottom"] {
+    vertical-align: bottom;
+  }
+
+  /*
+  Responsive CSS tables
+  */
+
+  /*
+  Paragraphs and spans
+  */
+  p span {
+    white-space: pre-line;
+
+    &[class*="srl-number"] {
+      white-space: nowrap;
+    }
+
+    &:empty {
+      &:before {
+        content: " ";
+      }
+    }
+
+    &.mms-notes-separator {
+      display: inline-block;
+
+      &:before {
+        content: map.get(srl.$meta, table, notes-separator);
+        display: inline-block;
+      }
+    }
+  }
+}

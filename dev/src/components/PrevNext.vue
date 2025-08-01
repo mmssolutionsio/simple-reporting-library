@@ -67,7 +67,7 @@ const nextItem = computed(() => {
 
 function toTop() {
   window.scrollTo(0, 0)
-  document.querySelector('#srl-page__main')?.focus()
+  document.querySelector('#srl-page-main')?.focus()
 }
 </script>
 <template>

@@ -1,0 +1,34 @@
+@use 'srl';
+@use 'sass:map';
+
+th,
+td {
+  /*
+  PDF only Font Sizes
+  */
+  .srl-pdf-font-size-small & {
+    font-size: srl.typography-get-font-size('table-cell-small-regular');
+  }
+
+
+  /*
+  PDF only Paddings
+  */
+  .srl-pdf-padding-tiny & {
+    padding: (
+            srl.spacer-get(map.get(srl.$meta, table, padding, tiny, top))
+            srl.spacer-get(map.get(srl.$meta, table, padding, tiny, right))
+            srl.spacer-get(map.get(srl.$meta, table, padding, tiny, bottom))
+            srl.spacer-get(map.get(srl.$meta, table, padding, tiny, left))
+    );
+  }
+
+  .srl-pdf-padding-small & {
+    padding: (
+            srl.spacer-get(map.get(srl.$meta, table, padding, small, top))
+            srl.spacer-get(map.get(srl.$meta, table, padding, small, right))
+            srl.spacer-get(map.get(srl.$meta, table, padding, small, bottom))
+            srl.spacer-get(map.get(srl.$meta, table, padding, small, left))
+    );
+  }
+}

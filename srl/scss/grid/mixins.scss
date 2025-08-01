@@ -237,5 +237,10 @@
   );
 }
 
+@mixin pdf-flex-col($span) {
+  width: functions.calculate-pdf-col-span-minus-one-gutter($span);
+}
+
 @mixin core-styles {
 }
+

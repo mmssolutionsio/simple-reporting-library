@@ -1,0 +1,5 @@
+@use "srl";
+
+.srl-signature__item {
+  @include srl.grid-col(3);
+}

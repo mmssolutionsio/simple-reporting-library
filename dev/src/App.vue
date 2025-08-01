@@ -26,7 +26,7 @@ const mainNavigation = useMenu('menuMain')
   display: flex;
   flex-direction: column;
 
-  #srl-page__main {
+  #srl-page-main {
     flex: 1 1 auto;
   }
 }

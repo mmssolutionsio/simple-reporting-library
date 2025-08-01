@@ -1,0 +1,28 @@
+@use 'srl';
+@use "sass:map";
+
+$number-width: srl.system-size-unit(map.get(srl.$meta, footnote, number-width));
+
+.srl-footnote:not(.srl-grid),
+.srl-footnote__item {
+  display: flex;
+  @include srl.spacer-margin-top(100);
+  @include srl.typography-footnote-text();
+}
+
+.srl-footnote__key,
+.srl-footnote__number {
+  width: $number-width;
+}
+
+.srl-footnote__key {
+  font-size: 60%;
+  font-variant-numeric: tabular-nums;
+  line-height: 1; // prevents normal text from getting too much height
+  vertical-align: super;
+}
+
+.srl-footnote__text,
+.srl-footnote__text {
+  width: calc(100% - #{$number-width});
+}

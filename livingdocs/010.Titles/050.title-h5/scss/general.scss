@@ -1,0 +1,6 @@
+@use 'srl';
+
+.srl-title-h5 {
+  @include srl.typography-title-h5();
+  @include srl.spacer-margin-top(200);
+}

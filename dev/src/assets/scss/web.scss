@@ -1,1 +1,32 @@
-@use 'srl';
+@use "srl";
+@use "placeholders";
+
+.srl-grid {
+  @extend %srl-grid-base;
+
+  .srl-grid {
+    @extend %srl-grid-reset;
+  }
+}
+
+.srl-grid__inner {
+  @extend %srl-regular-width;
+
+  .srl-wide-width & {
+    @extend %srl-wide-width;
+  }
+
+  .srl-quote.srl-wide-width & {
+    @extend %srl-quote-wide-width;
+  }
+}
+
+.srl-grid__aside {
+  @extend %srl-trim-margins;
+  @extend %srl-aside-width;
+}
+
+.srl-grid__content {
+  @extend %srl-trim-margins;
+  @extend %srl-regular-width;
+}
