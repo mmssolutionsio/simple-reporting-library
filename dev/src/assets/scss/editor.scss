@@ -2,7 +2,7 @@
 @use 'web';
 
 .ns-temp-highlight {
-  background: srl.colors-primary();
+  background: srl.colors-primary-1000();
 }
 
 $editor-color-srl: srl.colors-shade-200();
@@ -22,6 +22,6 @@ span.ns-nowrap {
 }
 
 span.ns-key-figure {
-  color: srl.colors-on-primary();
-  background-color: srl.colors-primary();
+  color: srl.colors-white-1000();
+  background-color: srl.colors-primary-1000();
 }

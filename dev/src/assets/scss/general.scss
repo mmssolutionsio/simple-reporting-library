@@ -4,6 +4,10 @@
 
 $font-weight-bold: map.get(srl.$meta, font, weight, bold);
 
+body {
+  color: srl.colors-black-1000();
+}
+
 /*
   Images
 */
