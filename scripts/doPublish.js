@@ -6,7 +6,6 @@ import { getPackageVersion } from './utils.js';
 export async function doPublish(version = null) {
   try {
     const publishVersion = await preparePublish(version);
-    await execSync(`prettier --write --list-different .`, { stdio: 'inherit' });
 
     const tag = `v${publishVersion.split('.')[0]}-lts`;
 
