@@ -1,2 +1,138 @@
 @use 'srl';
+@use 'placeholders';
 @use 'print';
+@use 'sass:map';
+
+$image-quality: map.get(srl.$meta, pdf, image-quality);
+$page-margin-top: srl.system-size-unit(map.get(srl.$meta, pdf, margin, top));
+$page-margin-right: srl.system-size-unit(map.get(srl.$meta, pdf, margin, right));
+$page-margin-bottom: srl.system-size-unit(map.get(srl.$meta, pdf, margin, bottom));
+$page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
+
+/*
+  Basic styles for PDF
+*/
+img {
+  image-rendering: auto;
+  -ro-image-resampling: $image-quality;
+  -ro-pdf-tag-type: "Figure";
+
+  &[alt] {
+    -ro-pdf-tag-alt: attr(alt);
+  }
+}
+
+/*
+  PDF chapter navigation and publication title
+*/
+.srl-publication-title {
+  position: running(publicationTitle);
+  @include srl.typography-pdf-header()
+}
+
+.srl-chapter-navigation {
+  position: running(chapterNavigation);
+}
+
+.srl-chapter-navigation__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  @include srl.typography-pdf-header()
+}
+
+/*
+  Basic layout for PDF
+*/
+@page {
+  margin: (
+          $page-margin-top
+          $page-margin-right
+          $page-margin-bottom
+          $page-margin-left
+  );
+  counter-increment: page 1;
+  -ro-bleed-width: 0mm;
+  -ro-media-size: A4;
+  -ro-crop-size: media;
+  -ro-truncate-margin-after-break: always;
+  -ro-truncate-margin-before-break: always;
+
+  @top-left-corner {
+    content: element(publicationTitle);
+    position: absolute;
+    top: srl.spacer-get(300);
+    left: $page-margin-left;
+  }
+
+  @top-left {
+    content: element(chapterNavigation);
+    position: absolute;
+    top: srl.spacer-get(300);
+    left: srl.grid-calculate-pdf-col-span-plus-one-gutter(2);
+  }
+
+  @top-right-corner {
+    content: counter(page);
+    position: absolute;
+    top: srl.spacer-get(300);
+    right: $page-margin-right;
+    @include srl.typography-pdf-header()
+  }
+}
+
+/*
+  Page breaks for PDF
+*/
+.srl-chapter,
+.srl-article {
+  break-after: always;
+
+  &:last-child {
+    break-after: avoid;
+  }
+}
+
+.srl-pdf-pagebreak {
+  break-after: always;
+}
+
+[class*="category-note-"] {
+  break-after: unset;
+  margin-top: srl.spacer-get(400);
+
+  &:last-child {
+    break-after: always;
+  }
+}
+
+/*
+  Layout
+*/
+.srl-grid {
+  display: flex;
+  justify-content: flex-end;
+
+  .srl-grid {
+    display: block;
+  }
+}
+
+.srl-grid__inner {
+  @include srl.grid-pdf-flex-col(6);
+
+  .srl-wide-width & {
+    @include srl.grid-pdf-flex-col(8);
+  }
+}
+
+.srl-grid__aside {
+  @extend %srl-trim-margins;
+  @include srl.grid-pdf-flex-col(2);
+}
+
+.srl-grid__content {
+  @extend %srl-trim-margins;
+  @include srl.grid-pdf-flex-col(6);
+}

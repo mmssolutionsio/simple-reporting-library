@@ -1,0 +1,226 @@
+@use "srl/helpers";
+@use "srl";
+
+%srl-trim-margins {
+  @include helpers.trim-margins;
+}
+
+%srl-grid-base {
+  margin-left: auto;
+  margin-right: auto;
+  @include srl.grid-container();
+  @include srl.grid-row();
+}
+
+%srl-grid-reset {
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
+  display: block;
+}
+
+%srl-regular-width {
+  // Mobile
+  @include srl.grid-col(4);
+
+  // Mobile landscape
+  @include srl.grid-col(4, phone-ls);
+
+  // Tablet portrait
+  @include srl.grid-col(8, tablet-pt);
+
+  // Tablet landscape
+  @include srl.grid-col(8, tablet-ls);
+  @include srl.grid-offset(2, tablet-ls);
+
+  // Desktop
+  @include srl.grid-col(6, desktop);
+  @include srl.grid-offset(3, desktop);
+
+  // Desktop large
+  @include srl.grid-col(6, desktop-large);
+  @include srl.grid-offset(3, desktop-large);
+}
+
+%srl-wide-width {
+  // Mobile
+  @include srl.grid-col(4);
+
+  // Mobile landscape
+  @include srl.grid-col(4, phone-ls);
+
+  // Tablet portrait
+  @include srl.grid-col(8, tablet-pt);
+
+  // Tablet landscape
+  @include srl.grid-col(12, tablet-ls);
+  @include srl.grid-offset(0, tablet-ls);
+
+  // Desktop
+  @include srl.grid-col(12, desktop);
+  @include srl.grid-offset(0, desktop);
+
+  // Desktop large
+  @include srl.grid-col(12, desktop-large);
+  @include srl.grid-offset(0, desktop-large);
+}
+
+/*
+  Quote without an image wide with
+*/
+%srl-quote-wide-width {
+  // Mobile
+  @include srl.grid-col(4);
+
+  // Mobile landscape
+  @include srl.grid-col(4, phone-ls);
+
+  // Tablet portrait
+  @include srl.grid-col(8, tablet-pt);
+
+  // Tablet landscape
+  @include srl.grid-col(10, tablet-ls);
+  @include srl.grid-offset(1, tablet-ls);
+
+  // Desktop
+  @include srl.grid-col(8, desktop);
+  @include srl.grid-offset(2, desktop);
+
+  // Desktop large
+  @include srl.grid-col(8, desktop-large);
+  @include srl.grid-offset(2, desktop-large);
+}
+
+/*
+  Quote with an image regular with
+  Just the image
+*/
+%srl-quote-with-image-image-regular-width {
+  // Mobile
+  @include srl.grid-col(4);
+
+  // Mobile landscape
+  @include srl.grid-col(4, phone-ls);
+
+  // Tablet portrait
+  @include srl.grid-col(3, tablet-pt);
+
+  // Tablet landscape
+  @include srl.grid-col(3, tablet-ls);
+  @include srl.grid-offset(2, tablet-ls);
+
+  // Desktop
+  @include srl.grid-col(2, desktop);
+  @include srl.grid-offset(3, desktop);
+
+  // Desktop large
+  @include srl.grid-col(2, desktop-large);
+  @include srl.grid-offset(3, desktop-large);
+}
+
+/*
+  Quote with an image regular with
+  Just the text
+*/
+%srl-quote-with-image-text-regular-width {
+  // Mobile
+  @include srl.grid-col(4);
+
+  // Mobile landscape
+  @include srl.grid-col(4, phone-ls);
+
+  // Tablet portrait
+  @include srl.grid-col(5, tablet-pt);
+
+  // Tablet landscape
+  @include srl.grid-col(5, tablet-ls);
+  @include srl.grid-offset(5, tablet-ls);
+
+  // Desktop
+  @include srl.grid-col(4, desktop);
+  @include srl.grid-offset(5, desktop);
+
+  // Desktop large
+  @include srl.grid-col(4, desktop-large);
+  @include srl.grid-offset(5, desktop-large);
+}
+
+/*
+  Quote with an image wide with
+  Just the image
+*/
+%srl-quote-with-image-image-wide-width {
+  // Mobile
+  @include srl.grid-col(4);
+
+  // Mobile landscape
+  @include srl.grid-col(4, phone-ls);
+
+  // Tablet portrait
+  @include srl.grid-col(3, tablet-pt);
+
+  // Tablet landscape
+  @include srl.grid-col(3, tablet-ls);
+  @include srl.grid-offset(1, tablet-ls);
+
+  // Desktop
+  @include srl.grid-col(2, desktop);
+  @include srl.grid-offset(2, desktop);
+
+  // Desktop large
+  @include srl.grid-col(2, desktop-large);
+  @include srl.grid-offset(2, desktop-large);
+}
+
+/*
+  Quote with an image wide with
+  Just the text
+*/
+%srl-quote-with-image-text-wide-width {
+  // Mobile
+  @include srl.grid-col(4);
+
+  // Mobile landscape
+  @include srl.grid-col(4, phone-ls);
+
+  // Tablet portrait
+  @include srl.grid-col(5, tablet-pt);
+
+  // Tablet landscape
+  @include srl.grid-col(7, tablet-ls);
+  @include srl.grid-offset(4, tablet-ls);
+
+  // Desktop
+  @include srl.grid-col(6, desktop);
+  @include srl.grid-offset(4, desktop);
+
+  // Desktop large
+  @include srl.grid-col(6, desktop-large);
+  @include srl.grid-offset(4, desktop-large);
+}
+
+/*
+  Aside width
+*/
+%srl-aside-width {
+  // Mobile
+  @include srl.grid-col(4);
+
+  // Mobile landscape
+  @include srl.grid-col(4, phone-ls);
+
+  // Tablet portrait
+  @include srl.grid-col(8, tablet-pt);
+
+  // Tablet landscape
+  @include srl.grid-col(2, tablet-ls);
+
+  // Desktop
+  @include srl.grid-col(2, desktop);
+  @include srl.grid-offset(1, desktop);
+
+  // Desktop large
+  @include srl.grid-col(2, desktop-large);
+  @include srl.grid-offset(1, desktop-large);
+}

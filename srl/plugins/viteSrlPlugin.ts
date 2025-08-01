@@ -1,10 +1,12 @@
 import { type Plugin } from 'vite';
 import { fileURLToPath, URL } from 'node:url';
 import { readFileSync } from 'node:fs';
-import path from 'node:path';
+import { join } from 'node:path/posix';
 import { execSync } from 'node:child_process';
 import folders from '@multivisio/nswow/scripts/folders.js';
 import { beaver } from '@multivisio/nswow/scripts/beaver.js';
+import { packageName } from '@multivisio/nswow/scripts/config';
+import { updatePackageJson, updateLivingDocsJson, updateNsWowJson } from '@multivisio/nswow/scripts/utils';
 import {
   map,
   mapLdd,
@@ -15,8 +17,6 @@ import chalk from 'chalk';
 
 const msgBoxLength = 60;
 
-const packageName = '@multivisio/nswow';
-
 function centerText(text: string): string {
   const padding = Math.max(0, (msgBoxLength - text.length) / 2);
   return (
@@ -26,16 +26,18 @@ function centerText(text: string): string {
 
 function checkSrlVersion() {
   try {
-    const pkgPath = path.join(folders.packagePath, 'package.json');
+    const pkgPath = join(folders.packagePath, 'package.json');
     const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
-    const current =
-      pkg.dependencies?.[packageName] || pkg.devDependencies?.[packageName];
+    const current = pkg.version;
     if (!current) return;
 
-    const latest = execSync(`npm view ${packageName} version`)
+    const tag = `v${current.split('.')[0]}-lts`;
+
+    const latest = execSync(`npm view ${packageName}@${tag} version`)
       .toString()
       .trim();
-    if (current.replace(/^[^\d]*/, '') !== latest) {
+
+    if (current < latest) {
       console.log('');
       console.log(chalk.bgWhiteBright(centerText('')));
       console.log(
@@ -112,7 +114,7 @@ export default function viteSrlPlugin(): Plugin {
         new URL('../imports', import.meta.url),
       );
       config.resolve.alias['#ld'] = fileURLToPath(
-        new URL('../..//livingdocs', import.meta.url),
+        new URL('../../livingdocs', import.meta.url),
       );
       config.resolve.alias['assets'] = fileURLToPath(
         new URL('../../src/assets', import.meta.url),
@@ -123,8 +125,17 @@ export default function viteSrlPlugin(): Plugin {
       config.resolve.alias['vue'] = 'vue/dist/vue.esm-bundler.js';
     },
     configureServer(server) {
-      server.watcher.on('change', (path) => {
+      const fontPath = join(folders.srlAssets, 'fonts');
+
+      server.watcher.on('change', async (path) => {
+        if (path.endsWith('/package.json')) {
+          await updatePackageJson();
+        }
+        if (path.endsWith('/livingdocs.config.json')) {
+          await updateLivingDocsJson();
+        }
         if (path.endsWith('/srl.config.json')) {
+          await updateNsWowJson();
           triggerAction(beaver);
         }
       });
@@ -134,9 +145,14 @@ export default function viteSrlPlugin(): Plugin {
           path.endsWith('/general.scss') ||
           path.endsWith('/app.scss') ||
           path.endsWith('/ldd.scss') ||
+          path.endsWith('/editor.scss') ||
           path.endsWith('/pdf.scss') ||
           path.endsWith('/word.scss') ||
-          path.endsWith('/xbrl.scss')
+          path.endsWith('/xbrl.scss') ||
+          (
+            path.startsWith(fontPath) &&
+            path.endsWith('.scss')
+          )
         ) {
           triggerAction(mapScss);
         }
@@ -164,9 +180,14 @@ export default function viteSrlPlugin(): Plugin {
           path.endsWith('/general.scss') ||
           path.endsWith('/app.scss') ||
           path.endsWith('/ldd.scss') ||
+          path.endsWith('/editor.scss') ||
           path.endsWith('/pdf.scss') ||
           path.endsWith('/word.scss') ||
-          path.endsWith('/xbrl.scss')
+          path.endsWith('/xbrl.scss')||
+          (
+            path.startsWith(fontPath) &&
+            path.endsWith('.scss')
+          )
         ) {
           triggerAction(mapScss);
         }

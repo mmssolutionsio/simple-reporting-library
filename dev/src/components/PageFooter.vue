@@ -2,8 +2,8 @@
 
 <template>
   <footer
-    id="srl-page__footer"
-    class="srl-bg-secondary-light srl-color-on-secondary-light"
+    id="srl-page-footer"
+    class="srl-footer srl-bg-primary-1000 srl-color-white-1000"
     tabindex="-1"
   >
     <div class="srl-footer__inner">

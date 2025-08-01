@@ -1,0 +1,21 @@
+@use 'srl';
+@use "sass:map";
+
+$number-width: srl.spacer-get(map.get(srl.$meta, title, number-width));
+
+.srl-title-h2 {
+  @include srl.typography-title-h2();
+  @include srl.spacer-margin-top(400);
+}
+
+.srl-title-h2__number-text-container {
+  display: flex;
+}
+
+.srl-title-h2__number {
+  width: $number-width;
+}
+
+.srl-title-h2__text {
+  width: calc(100% - #{$number-width});
+}

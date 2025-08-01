@@ -1,0 +1,29 @@
+@use 'srl';
+
+.srl-quote--with-image.srl-wide-width {
+  justify-content: space-between;
+}
+
+.srl-quote__figure {
+  .srl-quote--with-image & {
+    margin-right: srl.grid-get-gutter-column-gap();
+    @include srl.grid-pdf-flex-col(2);
+  }
+
+  .srl-quote--with-image.srl-wide-width & {
+    margin-right: 0;
+    @include srl.grid-pdf-flex-col(2);
+  }
+}
+
+.srl-quote__text {
+  .srl-quote--with-image & {
+    @include srl.grid-pdf-flex-col(4);
+  }
+
+  .srl-quote--with-image.srl-wide-width & {
+    @include srl.grid-pdf-flex-col(6);
+  }
+}
+
+

@@ -49,7 +49,7 @@ const languages = computed<NsWowNavigationItem[]>(() => {
     margin: 0;
   }
   a {
-    color: srl.colors-light();
+    color: srl.colors-white-1000();
     text-decoration: none;
     text-transform: uppercase;
   }

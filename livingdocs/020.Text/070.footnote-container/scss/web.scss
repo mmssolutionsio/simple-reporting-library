@@ -1,0 +1,6 @@
+@use "srl";
+@use "assets/scss/placeholders";
+
+.srl-footnote-container:not(.srl-grid) {
+  @extend %srl-regular-width;
+}

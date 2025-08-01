@@ -1,5 +1,5 @@
 import { join } from 'node:path/posix';
-import { glob } from 'glob';
+import { glob, globSync } from 'glob';
 import { createRequire } from 'node:module';
 import folders from '../folders.js';
 import {
@@ -26,7 +26,7 @@ export async function mapLdd() {
   await mapComponents(lddJson);
   await mapProperties(lddJson);
 
-  await writeLivingDocsJson(lddJson);
+  await writeLivingDocsJson();
 }
 
 /**
@@ -68,7 +68,8 @@ async function mapProperties(lddJson) {
 async function mapGroups(lddJson) {
   const groupsPath = folders.ld;
   const groups = readdirSync(groupsPath);
-  const keepGroups = [];
+
+  lddJson.groups = [];
 
   for (let x = 0; x < groups.length; x++) {
     const group = groups[x];
@@ -80,40 +81,10 @@ async function mapGroups(lddJson) {
 
       if (stat.isDirectory()) {
         const components = getGroupComponents(groupFolderPath);
-
-        if (components.length) {
-          keepGroups.push(groupName);
-        }
-
-        const existingGroupDeclaration = lddJson.groups.find((g) => {
-          return g.label === groupName;
-        });
-
-        if (existingGroupDeclaration) {
-          const newGroupComponents = [];
-
-          for (let j = 0; j < existingGroupDeclaration.components.length; j++) {
-            const index = components.indexOf(
-              existingGroupDeclaration.components[j],
-            );
-
-            if (index !== -1) {
-              newGroupComponents.push(components[index]);
-              components.splice(index, 1);
-            }
-          }
-
-          for (let j = 0; j < components.length; j++) {
-            newGroupComponents.push(components[j]);
-          }
-
-          existingGroupDeclaration.components = newGroupComponents;
-        } else {
           lddJson.groups.push({
             label: groupName,
             components: components,
           });
-        }
       } else {
         rmSync(groupFolderPath);
       }
@@ -122,17 +93,6 @@ async function mapGroups(lddJson) {
       return false;
     }
   }
-
-  const newMap = [];
-
-  for (let i = 0; i < lddJson.groups.length; i++) {
-    const c = lddJson.groups[i];
-    if (keepGroups.includes(c.label)) {
-      newMap.push(c);
-    }
-  }
-
-  lddJson.groups = newMap;
 }
 
 /**
@@ -148,13 +108,17 @@ function getGroupComponents(groupFolderPath) {
     const component = componentFolders[j];
 
     try {
-      const htmlPath = join(groupFolderPath, component, `${component}.html`);
+      const htmlPath = globSync(join(groupFolderPath, component, `*.html`));
       const ldConfPath = join(groupFolderPath, component, `ld-conf.json`);
 
-      const htmlStat = statSync(htmlPath);
+      const htmlStat = statSync(htmlPath[0]);
       const ldConfStat = statSync(ldConfPath);
 
-      components.push(component);
+      const arrComponent = component.split('.');
+      if (arrComponent.length > 1) {
+        arrComponent.shift()
+      }
+      components.push(arrComponent.join('.'));
     } catch (e) {}
   }
 
@@ -177,38 +141,41 @@ async function mapComponents(lddJson) {
     components.forEach((component) => {
       // ldd static component
       try {
-        const htmlPath = join(groupPath, component, `${component}.html`);
-        const ldConfPath = join(groupPath, component, `ld-conf.json`);
+        const htmlFile =  globSync(join(groupPath, component, '*.html'));
+        if (htmlFile.length) {
+          const htmlPath = htmlFile[0];
+          const ldConfPath = join(groupPath, component, `ld-conf.json`);
+          const ldConfStat = statSync(ldConfPath);
 
-        const htmlStat = statSync(htmlPath);
-        const ldConfStat = statSync(ldConfPath);
+          const componentDeclaration = JSON.parse(
+            readFileSync(ldConfPath, { encoding: 'utf-8' }),
+          );
+          const componentHtml = readFileSync(htmlPath, { encoding: 'utf-8' });
 
-        const componentDeclaration = JSON.parse(
-          readFileSync(ldConfPath, { encoding: 'utf-8' }),
-        );
-        const componentHtml = readFileSync(htmlPath, { encoding: 'utf-8' });
-
-        lddComponents.push({ ...componentDeclaration, html: componentHtml });
+          lddComponents.push({ ...componentDeclaration, html: componentHtml });
+        }
       } catch (error) {}
 
       //   vue async component
       try {
-        const vuePath = join(groupFolderPath, component, `${component}.vue`);
-        const vueStat = statSync(vuePath);
-
-        vueComponents.push({
-          name: `SrlArticle${toUpperCamelCase(component)}`,
-          path: join('#ld', group, component, `${component}.vue`),
-        });
+        const vueFiles = globSync(join(groupPath, component, '*.vue'));
+        if (vueFiles.length) {
+          vueFiles.forEach( c => {
+            const vueName = c.split('/').pop().substring(0, -4);
+            vueComponents.push({
+              name: `SrlLd${toUpperCamelCase(vueName)}`,
+              path: join('#ld', group, component, `${vueName}.vue`),
+            });
+          })
+        }
       } catch (error) {}
     });
   }
 
-  // write async components
-
   // write ldd components
   lddJson.components = lddComponents;
 
+  // write async components
   const asyncComponents = [
     `import { defineAsyncComponent } from 'vue'`,
     `export default function asyncLdComponent(app) {`,
