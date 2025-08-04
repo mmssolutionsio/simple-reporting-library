@@ -3,6 +3,11 @@
   "label": "Image",
   "properties": ["width-all", "pdf-spacer"],
   "directives": {
+    "show-alt-text": {
+      "type": "toggle",
+      "label": "Show alt text",
+      "default": false
+    },
     "show-mobile-image": {
       "type": "toggle",
       "label": "Show mobile image",
