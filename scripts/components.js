@@ -354,8 +354,8 @@ async function writeComponent(group, name) {
     await mkdirSync(join(folders.ld, group, name, 'scss'));
     await writeFileSync(
       join(folders.ld, group, name, `${name}.html`),
-      `<p class="srl-${name} srl-article__grid srl-article__grid--content">
-  <span class="srl-article__grid--inner" doc-editable="text">
+      `<p class="srl-grid srl-${name} srl-linkable">
+  <span class="srl-grid__inner srl-${name}__text" doc-editable="paragraph">
     Editable Text
   </span>
 </p>
