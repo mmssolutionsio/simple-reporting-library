@@ -369,40 +369,37 @@ async function writeComponent(group, name) {
 }`,
     );
     await writeFileSync(
+      join(folders.ld, group, name, 'scss', `app.scss`),
+      '@use "web";',
+    );
+    await writeFileSync(
+      join(folders.ld, group, name, 'scss', `editor.scss`),
+      '@use "web";',
+    );
+    await writeFileSync(
       join(folders.ld, group, name, 'scss', `general.scss`),
       `@use "srl";
-
-.srl-${name} {
-
-}`,
-    );
-    await writeFileSync(
-      join(folders.ld, group, name, 'scss', `_web.scss`),
-      '@use "srl";',
-    );
-    await writeFileSync(
-      join(folders.ld, group, name, 'scss', `_print.scss`),
-      '@use "srl";',
-    );
-    await writeFileSync(
-      join(folders.ld, group, name, 'scss', `ldd.scss`),
-      '@use "_web";',
-    );
-    await writeFileSync(
-      join(folders.ld, group, name, 'scss', `app.scss`),
-      '@use "_web";',
+      .srl-${name} {
+      
+      }`,
     );
     await writeFileSync(
       join(folders.ld, group, name, 'scss', `pdf.scss`),
-      '@use "_print";',
+      '@use "srl";',
+    );
+    await writeFileSync(
+      join(folders.ld, group, name, 'scss', `web.scss`),
+      '@use "srl";',
     );
     await writeFileSync(
       join(folders.ld, group, name, 'scss', `word.scss`),
-      '@use "_print";',
+      '@use "pdf";',
     );
     await writeFileSync(
       join(folders.ld, group, name, 'scss', `xbrl.scss`),
-      '@use "srl";',
+      `@use "srl";
+      @use "general";
+      `,
     );
     await writeFileSync(join(folders.ld, group, name, `properties.json`), '{}');
     await map();
