@@ -83,7 +83,7 @@ td {
   */
   &[class*="head"] {
     border-bottom: (
-            var(--srl-table-border-regular-width)
+            var(--srl-table-border-bold-width)
             map.get($table-border-bold, style)
             srl.colors-get(map.get($table-border-bold, color))
     );
@@ -99,7 +99,7 @@ td {
 
   &[class*="blinetop"] {
     border-top: (
-            var(--srl-table-border-regular-width)
+            var(--srl-table-border-bold-width)
             map.get($table-border-bold, style)
             srl.colors-get(map.get($table-border-bold, color))
     );
@@ -129,7 +129,7 @@ td {
 
   &[class*="blinebottom"] {
     border-bottom: (
-            var(--srl-table-border-regular-width)
+            var(--srl-table-border-bold-width)
             map.get($table-border-bold, style)
             srl.colors-get(map.get($table-border-bold, color))
     );
@@ -157,7 +157,7 @@ td {
 
   &[class*="blineleft"] {
     border-left: (
-            var(--srl-table-border-regular-width)
+            var(--srl-table-border-bold-width)
             map.get($table-border-bold, style)
             srl.colors-get(map.get($table-border-bold, color))
     );
@@ -181,7 +181,7 @@ td {
 
   &[class*="blineright"] {
     border-right: (
-            var(--srl-table-border-regular-width)
+            var(--srl-table-border-bold-width)
             map.get($table-border-bold, style)
             srl.colors-get(map.get($table-border-bold, color))
     );
