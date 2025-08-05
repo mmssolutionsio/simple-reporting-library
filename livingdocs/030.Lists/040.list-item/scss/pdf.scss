@@ -1,0 +1,14 @@
+@use 'srl';
+@use "sass:map";
+
+$marker-width: srl.system-size-unit(map.get(srl.$meta, list, marker-width-pdf));
+
+.srl-list-group__item {
+  &:before {
+    width: $marker-width;
+  }
+}
+
+.srl-list-group__item-text {
+  width: calc(100% -  #{$marker-width});
+}
