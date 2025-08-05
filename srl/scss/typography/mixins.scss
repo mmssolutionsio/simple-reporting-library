@@ -2,6 +2,7 @@
 @use 'functions';
 @use '../system';
 @use '../grid';
+@use '../colors';
 @use 'sass:map';
 @use 'sass:string';
 
@@ -24,6 +25,10 @@
     font-style: functions.get-font-style($typo);
   }
   font-weight: functions.get-font-weight($typo);
+
+  @if map.has-key($map, color) {
+    color: functions.get-font-color($typo);
+  }
 
   @if map.has-key($map, letter-spacing) {
     letter-spacing: functions.get-letter-spacing($typo);
@@ -86,6 +91,13 @@
       #{variables.$variable-prefix}typo-#{$typo}-font-weight,
       map.get($defaults, font-weight)
     );
+
+    @if (map.has-key($map, color)) {
+      @include system.add-root-style(
+                      #{variables.$variable-prefix}typo-#{$typo}-font-color,
+                      colors.get(map.get($defaults, color))
+      );
+    }
 
     @if (map.has-key($map, letter-spacing)) {
       @include system.add-root-style(
@@ -267,6 +279,10 @@
 
 @mixin set-font-weight($typo, $value) {
   --#{variables.$variable-prefix}typo-#{$typo}-font-weight: #{$value};
+}
+
+@mixin set-font-color($typo, $value) {
+  --#{variables.$variable-prefix}typo-#{$typo}-font-color: #{$value};
 }
 
 @mixin set-letter-spacing($typo, $value) {
