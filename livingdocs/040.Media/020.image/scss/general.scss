@@ -11,6 +11,10 @@
   }
 }
 
+.srl-image__caption {
+  @include srl.spacer-margin-top(100);
+}
+
 .srl-image__caption-text {
   @include srl.typography-caption();
   @extend %srl-regular-width;
