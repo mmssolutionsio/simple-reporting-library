@@ -98,6 +98,7 @@ img {
   break-after: always;
 }
 
+[class*="category-notes-"],
 [class*="category-note-"] {
   break-after: unset;
   margin-top: srl.spacer-get(400);
