@@ -17,5 +17,4 @@
 
 .srl-image__caption-text {
   @include srl.typography-caption();
-  @extend %srl-regular-width;
 }
