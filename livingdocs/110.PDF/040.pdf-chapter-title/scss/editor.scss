@@ -1,0 +1,17 @@
+@use "srl";
+@use "web";
+
+.srl-pdf-chapter-title {
+  border-bottom: 1px solid #{srl.colors-primary-1000()};
+  @include srl.spacer-padding-block(200);
+  @extend %srl-grid-base;
+}
+
+.srl-pdf-chapter-title__editor-text {
+  color: srl.colors-primary-1000();
+  @extend %srl-regular-width;
+}
+
+.srl-pdf-chapter-title__text {
+  @extend %srl-regular-width;
+}
