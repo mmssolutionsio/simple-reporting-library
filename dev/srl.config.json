@@ -20,14 +20,14 @@
           "tiny": {
             "top": 0,
             "bottom": 0,
-            "left": 50,
-            "right": 50
+            "left": 100,
+            "right": 100
           },
           "small": {
             "top": 25,
             "bottom": 25,
-            "left": 50,
-            "right": 50
+            "left": 100,
+            "right": 100
           }
         },
         "border": {
@@ -676,37 +676,57 @@
       "25": {
         "size": 4,
         "media": {
-          "print": 1
+          "print": {
+            "size": "1pt"
+          }
         }
       },
       "50": {
-        "size": 4
+        "size": 4,
+        "media": {
+          "print": {
+            "size": "2pt"
+          }
+        }
       },
       "100": {
-        "size": 8
+        "size": 8,
+        "media": {
+          "print": {
+            "size": "4pt"
+          }
+        }
       },
       "200": {
         "size": 16,
         "media": {
-          "print": 12
+          "print": {
+            "size": "8pt"
+          }
         }
       },
       "300": {
         "size": 32,
         "media": {
-          "print": 16
+          "print": {
+            "size": "16pt"
+          }
         }
       },
       "400": {
         "size": 64,
         "media": {
-          "print": 24
+          "print": {
+            "size": "32pt"
+          }
         }
       },
       "500": {
         "size": 128,
         "media": {
-          "print": 32
+          "print": {
+            "size": "48pt"
+          }
         }
       }
     }
