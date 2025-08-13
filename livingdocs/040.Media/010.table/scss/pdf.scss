@@ -1,6 +1,26 @@
 @use 'srl';
 @use 'sass:map';
 
+.srl-table__container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.srl-table-container {
+  @include srl.grid-pdf-flex-col(6);
+
+  .srl-wide-width & {
+    @include srl.grid-pdf-flex-col(8);
+  }
+}
+
+tr {
+  &[class*="pagebreak"] {
+    break-after: always;
+  }
+}
+
 th,
 td {
   /*
