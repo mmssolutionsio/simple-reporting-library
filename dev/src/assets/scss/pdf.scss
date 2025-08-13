@@ -30,18 +30,6 @@ img {
   @include srl.typography-pdf-header()
 }
 
-.srl-chapter-navigation {
-  position: running(chapterNavigation);
-}
-
-.srl-chapter-navigation__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  @include srl.typography-pdf-header()
-}
-
 /*
   Basic layout for PDF
 */
@@ -98,8 +86,10 @@ img {
   break-after: always;
 }
 
-[class*="category-notes-"],
-[class*="category-note-"] {
+[class*="srl-category-notes_"],
+[class*="srl-category-notes-"],
+[class*="srl-category-note_"],
+[class*="srl-category-note-"] {
   break-after: unset;
   margin-top: srl.spacer-get(400);
 
@@ -113,7 +103,8 @@ img {
 */
 .srl-grid {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
 
   .srl-grid {
     display: block;
