@@ -71,12 +71,6 @@ td {
   /*
   Paddings
   */
-  &[class*="nolinetop"],
-  &[class*="nolinebottom"],
-  &[class*="nolineleft"],
-  &[class*="nolineright"] {
-    padding: 0;
-  }
 
   /*
   Borders
@@ -325,4 +319,9 @@ td {
       }
     }
   }
+}
+
+.note-link {
+  color: srl.colors-primary-1000();
+  text-decoration: none;
 }
