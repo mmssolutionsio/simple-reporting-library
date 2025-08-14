@@ -23,14 +23,6 @@ img {
 }
 
 /*
-  PDF chapter navigation and publication title
-*/
-.srl-publication-title {
-  position: running(publicationTitle);
-  @include srl.typography-pdf-header()
-}
-
-/*
   Basic layout for PDF
 */
 @page {

@@ -9,7 +9,7 @@
 }
 
 .srl-pdf-chapter-title__editor-text {
-  color: srl.colors-primary-1000();
+  @include srl.typography-editor-label-text();
   @extend %srl-regular-width;
 }
 

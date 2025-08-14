@@ -625,6 +625,38 @@
             "line-height": 1.28
           }
         }
+      },
+      {
+        "name": "editor-label-text",
+        "font-family": "Inter",
+        "font-size": 14,
+        "line-height": 1.5,
+        "font-style": "normal",
+        "font-weight": 400,
+        "color": "primary-1000",
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "7pt",
+            "line-height": 1.28
+          }
+        }
+      },
+      {
+        "name": "editor-input-text",
+        "font-family": "Inter",
+        "font-size": 14,
+        "line-height": 1.5,
+        "font-style": "normal",
+        "font-weight": 400,
+        "color": "black-1000",
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "7pt",
+            "line-height": 1.28
+          }
+        }
       }
     ]
   },

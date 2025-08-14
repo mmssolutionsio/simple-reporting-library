@@ -1,5 +1,5 @@
 @use 'srl';
 
-.srl-pdf-chapter-title__text {
+.srl-pdf-pagebreak__text {
   @include srl.typography-pdf-header()
 }
