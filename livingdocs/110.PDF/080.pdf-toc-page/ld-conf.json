@@ -9,7 +9,14 @@
         "pdf-toc-item",
         "pdf-toc-item-blank"
       ],
-      "defaultContent": [{ "component": "pdf-toc-item" }]
+      "defaultComponents": {
+        "paragraph": "pdf-toc-item"
+      },
+      "defaultContent": [
+        {
+          "component": "pdf-toc-item"
+        }
+      ]
     }
   }
 }
