@@ -1,11 +1,19 @@
 @use 'srl';
 @use 'web';
 
-.ns-temp-highlight {
-  background: srl.colors-primary-1000();
+$editor-color-srl: srl.colors-shade-200();
+$editor-background-color-srl: srl.colors-primary-1000();
+
+/*
+  Overruling Livingdocs editor styles
+*/
+.srl-article-root .doc-component-highlight {
+  outline: 1px solid $editor-color-srl;
 }
 
-$editor-color-srl: srl.colors-shade-200();
+.ns-temp-highlight {
+  background: $editor-background-color-srl;
+}
 
 span.ns-nowrap {
   --b: 1px; /* thickness of the border */
@@ -23,5 +31,10 @@ span.ns-nowrap {
 
 span.ns-key-figure {
   color: srl.colors-white-1000();
-  background-color: srl.colors-primary-1000();
+  background-color: $editor-background-color-srl;
+}
+
+// Set width of placeholder image to 100%
+img[src^="data:image/svg+xml"] {
+  width: 100%
 }
