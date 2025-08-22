@@ -2,7 +2,7 @@
 @use "sass:map";
 
 $marker-width: srl.system-size-unit(map.get(srl.$meta, list, marker-width));
-$unordered-marker: "-";
+$unordered-marker: "–";
 $ordered-marker-after: ".";
 $alphanumeric-marker-after: ")";
 
