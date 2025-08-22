@@ -3,6 +3,7 @@
 
 $table-border-regular: map.get(srl.$meta, table, border, regular);
 $table-border-bold: map.get(srl.$meta, table, border, bold);
+
 @include srl.system-add-root-style(srl-table-border-regular-width, srl.system-size-unit(map.get($table-border-regular, width)));
 @include srl.system-add-root-style(srl-table-border-regular-width, srl.system-size-unit(map.get($table-border-regular, media, print, width)), print);
 @include srl.system-add-root-style(srl-table-border-bold-width, srl.system-size-unit(map.get($table-border-bold, width)));
@@ -192,13 +193,13 @@ td {
   /*
   Indents
   */
-  &[class*="_ind"] {
+  &[class*="ind"] {
     &:first-child {
       padding-left: srl.spacer-get(200);
     }
   }
 
-  &[class*="_ind_ind"] {
+  &[class*="ind_ind"] {
     &:first-child {
       padding-left: srl.spacer-get(300);
     }
