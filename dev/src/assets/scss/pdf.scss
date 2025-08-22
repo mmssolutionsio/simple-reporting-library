@@ -23,26 +23,6 @@ img {
 }
 
 /*
-  PDF chapter navigation and publication title
-*/
-.srl-publication-title {
-  position: running(publicationTitle);
-  @include srl.typography-pdf-header()
-}
-
-.srl-chapter-navigation {
-  position: running(chapterNavigation);
-}
-
-.srl-chapter-navigation__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  @include srl.typography-pdf-header()
-}
-
-/*
   Basic layout for PDF
 */
 @page {
@@ -94,15 +74,13 @@ img {
   }
 }
 
-.srl-pdf-pagebreak {
-  break-after: always;
-}
-
-[class*="category-note-"] {
+[class*="srl-category-notes_"],
+[class*="srl-category-notes-"],
+[class*="srl-category-note_"],
+[class*="srl-category-note-"] {
   break-after: unset;
-  margin-top: srl.spacer-get(400);
 
-  &:last-child {
+  &.last-note {
     break-after: always;
   }
 }
@@ -112,7 +90,8 @@ img {
 */
 .srl-grid {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
 
   .srl-grid {
     display: block;

@@ -1,5 +1,9 @@
 {
   "name": "title-h5",
   "label": "Title (h5)",
-  "properties": ["h5-as", "width-reduced", "pdf-spacer"]
+  "properties": [
+    "h5-as",
+    "width-reduced",
+    "pdf-spacer"
+  ]
 }

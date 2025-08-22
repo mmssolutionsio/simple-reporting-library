@@ -1,4 +1,9 @@
 {
   "name": "anchor",
-  "label": "Anchor"
+  "label": "Anchor",
+  "directives": {
+    "anchor-text": {
+      "plainText": true
+    }
+  }
 }

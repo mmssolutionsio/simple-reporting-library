@@ -1,0 +1,15 @@
+@use 'srl';
+@use 'sass:map';
+
+.srl-chapter-navigation__list-item {
+  a {
+    text-decoration: none;
+    @include srl.typography-pdf-header();
+  }
+}
+
+.srl-chapter-navigation__list-item--current {
+  a {
+    color: srl.colors-primary-1000();
+  }
+}

@@ -3,6 +3,12 @@
   "label": "Signature item",
   "allowedParents": ["signature-container"],
   "directives": {
+    "signature-item-name": {
+      "plainText": true
+    },
+    "signature-item-position": {
+      "plainText": true
+    },
     "image": {
       "imageRatios": ["1:1", "4:3", "16:9"],
       "allowOriginalRatio": true

@@ -1,0 +1,7 @@
+@use 'srl';
+@use 'sass:map';
+
+.srl-signature__content {
+  display: flex;
+  column-gap: srl.grid-get-gutter-column-gap();
+}

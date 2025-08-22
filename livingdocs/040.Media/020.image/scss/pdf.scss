@@ -24,3 +24,7 @@ $page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
     min-width: 210mm;
   }
 }
+
+.srl-image__caption-text {
+  @include srl.grid-pdf-flex-col(6);
+}

@@ -1,11 +1,40 @@
 @use 'srl';
+@use "sass:map";
+@use "assets/scss/margins";
+@use "spacing-variations";
+
+$quote-open: map.get(srl.$meta, quote, quote-open);
+$quote-close: map.get(srl.$meta, quote, quote-close);
+
 
 .srl-quote {
+  align-items: center;
   @include srl.spacer-margin-top(400);
 }
 
 .srl-quote__quote {
   @include srl.typography-quote();
+
+  &:before {
+    content: "#{$quote-open}";
+
+    .srl-hide-quote-characters & {
+      content: "";
+    }
+  }
+
+  &:after {
+    content: "#{$quote-close}";
+
+    .srl-hide-quote-characters & {
+      content: "";
+    }
+  }
+}
+
+.srl-quote__cite {
+  display: block;
+  @include srl.spacer-margin-top(200);
 }
 
 .srl-quote__name {

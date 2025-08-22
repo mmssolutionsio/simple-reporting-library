@@ -1,5 +1,17 @@
 @use 'srl';
 
-.srl-video {
-  @include srl.spacer-margin-top(400);
+.srl-video__video-link-container {
+  @include srl.spacer-margin-top(100);
+}
+
+.srl-video__video-link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none;
+  @include srl.typography-video-link();
+}
+
+.srl-video__video-link-text {
+  padding-left: srl.spacer-get(100);
 }

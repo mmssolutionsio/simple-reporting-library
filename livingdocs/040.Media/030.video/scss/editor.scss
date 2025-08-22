@@ -1,1 +1,6 @@
 @use "web";
+
+.srl-video__thumbnail {
+  max-width: 192px;
+  max-height: 108px;
+}

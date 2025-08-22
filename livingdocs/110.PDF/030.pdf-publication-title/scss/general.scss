@@ -1,0 +1,5 @@
+@use 'srl';
+
+.srl-pdf-publication-title__text {
+  @include srl.typography-pdf-header()
+}

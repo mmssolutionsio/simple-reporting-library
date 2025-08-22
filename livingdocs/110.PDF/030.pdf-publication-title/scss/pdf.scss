@@ -1,0 +1,6 @@
+@use 'srl';
+@use 'sass:map';
+
+.srl-pdf-publication-title {
+  position: running(publicationTitle);
+}
