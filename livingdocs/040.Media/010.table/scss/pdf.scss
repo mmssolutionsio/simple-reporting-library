@@ -23,6 +23,13 @@ tr {
 
 th,
 td {
+  padding: (
+          srl.spacer-get(map.get(srl.$meta, table, padding, regular-pdf, top))
+          srl.spacer-get(map.get(srl.$meta, table, padding, regular-pdf, right))
+          srl.spacer-get(map.get(srl.$meta, table, padding, regular-pdf, bottom))
+          srl.spacer-get(map.get(srl.$meta, table, padding, regular-pdf, left))
+  );
+
   /*
   PDF only Font Sizes
   */
