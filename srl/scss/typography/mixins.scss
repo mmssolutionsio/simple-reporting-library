@@ -94,8 +94,8 @@
 
     @if (map.has-key($map, color)) {
       @include system.add-root-style(
-          #{variables.$variable-prefix}typo-#{$typo}-font-color,
-          colors.get(map.get($defaults, color))
+        #{variables.$variable-prefix}typo-#{$typo}-font-color,
+        colors.get(map.get($defaults, color))
       );
     }
 
