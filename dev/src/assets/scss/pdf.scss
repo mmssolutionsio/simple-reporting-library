@@ -74,18 +74,13 @@ img {
   }
 }
 
-.srl-pdf-pagebreak {
-  break-after: always;
-}
-
 [class*="srl-category-notes_"],
 [class*="srl-category-notes-"],
 [class*="srl-category-note_"],
 [class*="srl-category-note-"] {
   break-after: unset;
-  margin-top: srl.spacer-get(400);
 
-  &:last-child {
+  &.last-note {
     break-after: always;
   }
 }
