@@ -1,4 +1,6 @@
 @use 'srl';
+@use "assets/scss/margins";
+@use "spacing-variations";
 
 .srl-quote--with-image {
   flex-direction: row;
@@ -10,11 +12,13 @@
 
 .srl-quote__figure {
   .srl-quote--with-image & {
+    margin-left: srl.grid-calculate-pdf-col-start(3);
     margin-right: srl.grid-get-gutter-column-gap();
-    @include srl.grid-pdf-flex-col(2);
+    width: srl.grid-calculate-pdf-col-span-minus-one-gutter(2);
   }
 
   .srl-quote--with-image.srl-wide-width & {
+    margin-left: 0;
     margin-right: 0;
     @include srl.grid-pdf-flex-col(2);
   }
@@ -22,7 +26,7 @@
 
 .srl-quote__text {
   .srl-quote--with-image & {
-    @include srl.grid-pdf-flex-col(4);
+    width: srl.grid-calculate-pdf-col-span-minus-one-gutter(4);
   }
 
   .srl-quote--with-image.srl-wide-width & {
