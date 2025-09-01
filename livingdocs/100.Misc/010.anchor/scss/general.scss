@@ -1,0 +1,5 @@
+@use 'srl';
+
+.srl-anchor__editor-text {
+  @include srl.typography-editor-label-text()
+}

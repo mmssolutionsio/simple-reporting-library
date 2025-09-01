@@ -6,10 +6,16 @@
     "toc": {
       "allowedChildren": [
         "pdf-toc-item-title",
-        "pdf-toc-item",
-        "pdf-toc-item-blank"
+        "pdf-toc-item"
       ],
-      "defaultContent": [{ "component": "pdf-toc-item" }]
+      "defaultComponents": {
+        "paragraph": "pdf-toc-item"
+      },
+      "defaultContent": [
+        {
+          "component": "pdf-toc-item"
+        }
+      ]
     }
   }
 }

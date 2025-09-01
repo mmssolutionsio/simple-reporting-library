@@ -1,0 +1,20 @@
+@use 'srl';
+@use 'web';
+@use 'assets/scss/placeholders';
+
+.srl-pdf-pagebreak {
+  border-top: 1px solid #{srl.colors-burgundy-1000()};
+  border-bottom: 1px solid #{srl.colors-burgundy-1000()};
+  text-align: center;
+  @include srl.spacer-padding-block(200);
+  @extend %srl-grid-base;
+}
+
+.srl-pdf-pagebreak__editor-text {
+  @include srl.typography-editor-label-text();
+  @extend %srl-regular-width;
+}
+
+.srl-pdf-pagebreak__text {
+  @extend %srl-regular-width;
+}

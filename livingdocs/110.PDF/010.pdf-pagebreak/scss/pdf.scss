@@ -1,0 +1,6 @@
+@use 'srl';
+@use 'sass:map';
+
+.srl-pdf-pagebreak {
+  break-after: always;
+}

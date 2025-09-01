@@ -1,0 +1,5 @@
+@use 'srl';
+
+.srl-signature__item {
+  max-width: calc(50% - (#{srl.grid-get-gutter-column-gap()} / 2));
+}

@@ -2,7 +2,7 @@
 @use "sass:map";
 
 $marker-width: srl.system-size-unit(map.get(srl.$meta, list, marker-width));
-$unordered-marker: "-";
+$unordered-marker: "–";
 $ordered-marker-after: ".";
 $alphanumeric-marker-after: ")";
 
@@ -11,8 +11,6 @@ $alphanumeric-marker-after: ")";
   @include srl.typography-list();
 
   &:before {
-    width: $marker-width;
-
     .srl-list-group--ul & {
       content: "#{$unordered-marker}";
     }
@@ -28,8 +26,4 @@ $alphanumeric-marker-after: ")";
       content: counter(alphanumeric-list, lower-alpha) $alphanumeric-marker-after;
     }
   }
-}
-
-.srl-list-group__item-text {
-  width: calc(100% -  #{$marker-width});
 }

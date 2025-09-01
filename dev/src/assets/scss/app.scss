@@ -24,16 +24,3 @@
 .fade-leave-active {
   transition: opacity 300ms linear;
 }
-
-.srl-article-root,
-.ns-article {
-  > .srl-article__grid {
-    margin-right: auto;
-    margin-left: auto;
-  }
-}
-
-[class^='srl-pdf-'],
-[class*=' srl-pdf-'] {
-  display: none;
-}
