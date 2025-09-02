@@ -454,7 +454,7 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "green-1000",
+        "color": "primary-1000",
         "letter-spacing": 0,
         "media": {
           "print": {

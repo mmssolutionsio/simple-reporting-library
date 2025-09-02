@@ -49,16 +49,16 @@
   border-radius: 50%;
   transition: background-color 0.3s ease;
   -webkit-appearance: none;
-  border: 1px solid srl.colors-green-1000();
-  color: srl.colors-green-1000();
+  border: 1px solid srl.colors-primary-1000();
+  color: srl.colors-primary-1000();
 
   @media (prefers-reduced-motion: reduce) {
     transition-duration: 0s;
   }
 
   &:hover {
-    background-color: srl.colors-green-1000();
-    border-color: srl.colors-green-1000();
+    background-color: srl.colors-primary-1000();
+    border-color: srl.colors-primary-1000();
     color: srl.colors-white-1000();
   }
 
