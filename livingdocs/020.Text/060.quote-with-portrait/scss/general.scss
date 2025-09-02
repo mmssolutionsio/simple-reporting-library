@@ -1,7 +1,5 @@
 @use 'srl';
 @use "sass:map";
-@use "assets/scss/margins";
-@use "spacing-variations";
 
 $quote-open: map.get(srl.$meta, quote, quote-open);
 $quote-close: map.get(srl.$meta, quote, quote-close);
