@@ -1,5 +1,6 @@
 import { isRouterPath } from '#utils/uri.ts';
-import { useArticles, useLocale, useRoot } from '#composables';
+import { useArticles, useLocale, addCssStyles } from '#composables';
+
 function attributesToString(attributes: Record<string, string | null>): string {
   return Object.entries(attributes)
     .map(([key, value]) => (value !== null ? `${key}="${value}"` : key))
@@ -7,7 +8,6 @@ function attributesToString(attributes: Record<string, string | null>): string {
 }
 
 export function prepareHtmlContent(text: string): string {
-  const rootComponent = useRoot();
   const articles = useArticles();
   const locale = useLocale();
 
@@ -34,7 +34,6 @@ export function prepareHtmlContent(text: string): string {
       const arrLink = attrObj.href.split('#');
 
       if (isRouterPath(arrLink[0])) {
-        console.log(arrLink);
         delete attrObj.href;
         if (arrLink[0].startsWith('./')) {
           arrLink[0] = arrLink[0].substring(1);
@@ -70,7 +69,7 @@ export function prepareHtmlContent(text: string): string {
   text = text.replaceAll('../', `./`);
 
   text = text.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, (match, p1) => {
-    rootComponent.addCssStyles(p1);
+    addCssStyles(p1);
     return '';
   });
 

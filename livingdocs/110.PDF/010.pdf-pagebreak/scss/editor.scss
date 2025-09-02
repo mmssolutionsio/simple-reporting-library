@@ -3,8 +3,8 @@
 @use 'assets/scss/placeholders';
 
 .srl-pdf-pagebreak {
-  border-top: 1px solid #{srl.colors-burgundy-1000()};
-  border-bottom: 1px solid #{srl.colors-burgundy-1000()};
+  border-top: 1px solid #{srl.colors-secondary-1000()};
+  border-bottom: 1px solid #{srl.colors-secondary-1000()};
   text-align: center;
   @include srl.spacer-padding-block(200);
   @extend %srl-grid-base;

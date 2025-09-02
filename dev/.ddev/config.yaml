@@ -1,4 +1,4 @@
-name: nassauische-ld
+name: standard-ld
 type: php
 docroot: .output/ddev
 php_version: '8.3'

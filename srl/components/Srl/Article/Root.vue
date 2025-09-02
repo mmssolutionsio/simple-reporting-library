@@ -32,7 +32,7 @@ import { nextTick, ref, onMounted } from 'vue';
 import VRuntimeTemplate from 'vue3-runtime-template';
 import Autoload from '@/Autoload.ts';
 import { useRoute } from 'vue-router';
-import { useArticle, useArticles, useConfig, useRoot } from '#composables';
+import { useArticle, useArticles, useConfig } from '#composables';
 import { prepareHtmlContent } from '#utils';
 
 const articleRoot = ref<HTMLDivElement | null>(null);
