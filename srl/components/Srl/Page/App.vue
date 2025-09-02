@@ -36,15 +36,13 @@
  * to other components in the application.
  */
 import App from '@/App.vue';
-import { ref, watch } from 'vue';
+import { watch } from 'vue'
+import { useCssStyles } from '#composables'
 
 const styleElement = document.createElement('style');
 document.head.appendChild(styleElement);
 
-const styleContent = ref<string[]>([]);
-function addCssStyles(styles: string) {
-  styleContent.value.includes(styles) || styleContent.value.push(styles);
-}
+const styleContent = useCssStyles();
 watch(
   styleContent.value,
   (newStyles) => {
@@ -52,10 +50,6 @@ watch(
   },
   { immediate: true },
 );
-
-defineExpose({
-  addCssStyles,
-});
 </script>
 
 <template>

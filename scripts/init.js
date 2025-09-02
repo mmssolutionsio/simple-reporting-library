@@ -51,6 +51,11 @@ async function init(folder, options) {
         );
       });
 
+      const ddevConfigPath = join(projectPath, '.ddev', 'config.yaml');
+      let ddevConfig = await readFileSync(ddevConfigPath, 'utf8');
+      ddevConfig = ddevConfig.replace(/name: .*/, `name: ${folder.replaceAll(/[^a-zA-Z0-9-]/g, '-').toLowerCase()}`);
+      await writeFileSync(ddevConfigPath, ddevConfig, 'utf8');
+
       await writeFileSync(
         `${projectPath}/.gitignore`,
         `/.output/\n/.srl/\n/node_modules/\n/public/downloads/\n/public/html/\n/public/images/\n/public/json/\n/public/exclude/\n/dev-dist/`,
