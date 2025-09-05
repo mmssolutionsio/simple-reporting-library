@@ -50,18 +50,41 @@
  *   @link="handleNavigation"
  * />
  */
-import { ref } from 'vue';
+import { computed, ref } from 'vue'
 import MenuItem from './Item.vue';
+
+type BackButtonItem = {
+  title?: string;
+  img?: {
+    src: string;
+    alt?: string;
+  };
+  imgBefore?: {
+    src: string;
+    alt?: string;
+  };
+  imgAfter?: {
+    src: string;
+    alt?: string;
+  };
+  attributes?: {
+    [key: string]: string;
+  };
+};
 
 const props = withDefaults(
   defineProps<{
     name: string;
     menu: NsWowNavigationItem[];
+    id?: string;
     disableTab?: boolean;
     disableTabIndex?: boolean;
     initOpen?: number;
     singleOpen?: boolean;
     depth?: number;
+    backButonEnabled?: boolean;
+    backButtonItem?: BackButtonItem;
+    backButtonLabel?: string;
   }>(),
   {
     disableTab: false,
@@ -69,6 +92,7 @@ const props = withDefaults(
     initOpen: 0,
     singleOpen: true,
     depth: 0,
+    backButtonItem: {}
   },
 );
 
@@ -149,6 +173,34 @@ function closeAll(keep?: number | string) {
 
 const $el = ref<HTMLUListElement>();
 
+const menuItems = computed<NsWowNavigationItem[]>(() => {
+  return props.backButonEnabled && props.depth ? [
+      {
+        label: props.backButtonLabel,
+        title: props.backButtonItem.title,
+        img: props.backButtonItem.img,
+        imgBefore: props.backButtonItem.imgBefore,
+        imgAfter: props.backButtonItem.imgAfter,
+        attributes: props.backButtonItem.attributes ?
+          Object.assign(props.backButtonItem.attributes,
+            {
+              'aria-controls': props.id,
+              'aria-expanded': opened.value
+            }
+          ):
+          {
+            'aria-controls': props.id,
+            'aria-expanded': opened.value
+          },
+        callback: () => {
+          opened.value = false
+          emit('back')
+        },
+      },
+      ...props.menu,
+    ] : props.menu
+});
+
 defineExpose({
   closeAll,
   $el,
@@ -157,8 +209,8 @@ defineExpose({
 </script>
 
 <template>
-  <ul ref="$el" :hidden="!opened">
-    <template v-for="(item, index) in props.menu" :key="index">
+  <ul ref="$el" :id="props.id" :hidden="!opened">
+    <template v-for="(item, index) in menuItems" :key="index">
       <MenuItem
         ref="items"
         :item="item"
@@ -168,6 +220,9 @@ defineExpose({
         :disableTabIndex="props.disableTabIndex"
         :initOpen="props.initOpen"
         :depth="props.depth"
+        :backButonEnabled="props.backButonEnabled"
+        :backButtonLabel="props.backButtonLabel"
+        :backButtonItem="props.backButtonItem"
         @open="open"
         @close="close"
         @next="next"
