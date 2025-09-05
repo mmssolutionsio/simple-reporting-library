@@ -161,10 +161,11 @@ async function mapComponents(lddJson) {
         const vueFiles = globSync(join(groupPath, component, '*.vue'));
         if (vueFiles.length) {
           vueFiles.forEach( c => {
-            const vueName = c.split('/').pop().substring(0, -4);
+            const vueFile = c.split('/').pop();
+            const vueName = toUpperCamelCase(vueFile.substring(0, vueFile.length - 4));
             vueComponents.push({
-              name: `SrlLd${toUpperCamelCase(vueName)}`,
-              path: join('#ld', group, component, `${vueName}.vue`),
+              name: `SrlLd${vueName}`,
+              path: join('#ld', group, component, vueFile),
             });
           })
         }

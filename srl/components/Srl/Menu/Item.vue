@@ -5,6 +5,25 @@ import MenuList from './List.vue';
 import type { RouterLink } from 'vue-router';
 import { isExternalPath } from '#utils/uri';
 
+type BackButtonItem = {
+  title?: string;
+  img?: {
+    src: string;
+    alt?: string;
+  };
+  imgBefore?: {
+    src: string;
+    alt?: string;
+  };
+  imgAfter?: {
+    src: string;
+    alt?: string;
+  };
+  attributes?: {
+    [key: string]: string;
+  };
+};
+
 const props = defineProps<{
   name: string;
   item: NsWowNavigationItem;
@@ -13,6 +32,9 @@ const props = defineProps<{
   disableTabIndex: boolean;
   initOpen: number;
   depth: number;
+  backButonEnabled?: boolean;
+  backButtonLabel?: string;
+  backButtonItem: BackButtonItem
 }>();
 
 const emit = defineEmits([
@@ -198,6 +220,9 @@ const dynamicAttributes = computed(() => {
       :disableTab="props.disableTab"
       :initOpen="props.initOpen"
       :depth="props.depth + 1"
+      :backButonEnabled="props.backButonEnabled"
+      :backButtonLabel="props.backButonEnabled ? props.item.label : undefined"
+      :backButtonItem="props.backButtonItem"
       v-model:opened="opened"
       @link="link"
       @routerChange="emit('routerChange')"
