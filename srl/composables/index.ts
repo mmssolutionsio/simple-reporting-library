@@ -7,6 +7,7 @@ import _useMenu from './menu';
 import _useSearch from './search';
 import _useSettings from './settings';
 import _useViewPort from './viewPort';
+import _useLanguageSwitch from './languageSwitch';
 import * as cssStyles from './cssStyles.ts'
 
 export const useArticle = _useArticle;
@@ -18,6 +19,7 @@ export const useMenu = _useMenu;
 export const useSearch = _useSearch;
 export const useSettings = _useSettings;
 export const useViewPort = _useViewPort;
+export const useLanguageSwitch = _useLanguageSwitch;
 export const addCssStyles = cssStyles.addCssStyles;
 export const useCssStyles = cssStyles.useCssStyles;
 
@@ -31,6 +33,7 @@ export default {
   useSearch,
   useSettings,
   useViewPort,
+  useLanguageSwitch,
   addCssStyles,
   useCssStyles,
 };

@@ -5,5 +5,5 @@ const pops = defineProps<{
 </script>
 
 <template>
-  {{ pops.item.label }}
+  <span>{{ pops.item.label }}</span>
 </template>

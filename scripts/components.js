@@ -339,6 +339,13 @@ async function writeComponent(group, name) {
     return false;
   }
 
+  const componentNameArray = name.split('.');
+  let componentName = name;
+  if (componentNameArray[1]) {
+    componentNameArray.shift()
+    componentName = componentNameArray.join(('.'));
+  }
+
   try {
     const stat = await statSync(join(folders.ld, group, name));
     console.error(`Component ${group}/${name} already exist!`);
@@ -353,9 +360,9 @@ async function writeComponent(group, name) {
     await mkdirSync(join(folders.ld, group, name));
     await mkdirSync(join(folders.ld, group, name, 'scss'));
     await writeFileSync(
-      join(folders.ld, group, name, `${name}.html`),
-      `<p class="srl-grid srl-${name} srl-linkable">
-  <span class="srl-grid__inner srl-${name}__text" doc-editable="paragraph">
+      join(folders.ld, group, name, `${componentName}.html`),
+      `<p class="srl-grid srl-${componentName} srl-linkable">
+  <span class="srl-grid__inner srl-${componentName}__text" doc-editable="paragraph">
     Editable Text
   </span>
 </p>
@@ -364,8 +371,8 @@ async function writeComponent(group, name) {
     await writeFileSync(
       join(folders.ld, group, name, `ld-conf.json`),
       `{
-  "name": "${name}",
-  "label": "${name.charAt(0).toUpperCase()}${name.slice(1)}"
+  "name": "${componentName}",
+  "label": "${componentName.charAt(0).toUpperCase()}${componentName.slice(1)}"
 }`,
     );
     await writeFileSync(
@@ -379,9 +386,9 @@ async function writeComponent(group, name) {
     await writeFileSync(
       join(folders.ld, group, name, 'scss', `general.scss`),
       `@use "srl";
-      .srl-${name} {
-      
-      }`,
+.srl-${componentName} {
+
+}`,
     );
     await writeFileSync(
       join(folders.ld, group, name, 'scss', `pdf.scss`),

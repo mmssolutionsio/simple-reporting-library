@@ -192,10 +192,7 @@ const menuItems = computed<NsWowNavigationItem[]>(() => {
             'aria-controls': props.id,
             'aria-expanded': opened.value
           },
-        callback: () => {
-          opened.value = false
-          emit('back')
-        },
+        callback: close,
       },
       ...props.menu,
     ] : props.menu
