@@ -66,6 +66,8 @@ function toggle() {
       const item = menu.value?.items[0].$el;
       item.$el ? item.$el.focus() : item.focus();
     });
+  } else {
+    menu.value.closeAll();
   }
 }
 
@@ -124,6 +126,16 @@ defineExpose({
   menu,
 });
 
+function internalLinkClick(event: Event) {
+  !props.item.callback || props.item.callback(event);
+  routerChange()
+}
+
+function externalLinkClick(event: Event) {
+  !props.item.callback || props.item.callback(event);
+  link()
+}
+
 const dynamicAttributes = computed(() => {
   return props.item.attributes ?? {};
 });
@@ -139,7 +151,7 @@ const dynamicAttributes = computed(() => {
       :class="{ active: item.active }"
       :title="props.item.title ?? props.item.label"
       v-bind="dynamicAttributes"
-      @click="routerChange"
+      @click="internalLinkClick"
       @keydown.left.stop.prevent="prev"
       @keydown.up.stop.prevent="prev"
       @keydown.down.stop.prevent="next"
@@ -147,7 +159,6 @@ const dynamicAttributes = computed(() => {
       @keydown.tab.exact="tab"
       @keydown.shift.tab.exact="back"
       @keydown.esc.stop.prevent="close"
-      @keydown.enter="link"
     >
       <MenuItemContent :item="props.item" />
     </router-link>
@@ -157,9 +168,10 @@ const dynamicAttributes = computed(() => {
       ref="$el"
       :href="props.item.href"
       :title="props.item.title ?? props.item.label"
+      :aria-label="props.item.icon ? props.item.title ?? props.item.label : undefined"
       :target="props.item.href?.startsWith('http') ? '_blank' : undefined"
       v-bind="dynamicAttributes"
-      @click="link"
+      @click="externalLinkClick"
       @keydown.left.stop.prevent="prev"
       @keydown.up.stop.prevent="prev"
       @keydown.down.stop.prevent="next"
@@ -177,6 +189,7 @@ const dynamicAttributes = computed(() => {
       ref="$el"
       :tabindex="props.index === 0 && !props.disableTabIndex ? 0 : -1"
       :title="props.item.title ?? props.item.label"
+      :aria-label="props.item.icon ? props.item.title ?? props.item.label : undefined"
       v-bind="dynamicAttributes"
       @click="props.item.callback"
       @keydown.left.stop.prevent="prev"
@@ -199,8 +212,9 @@ const dynamicAttributes = computed(() => {
       :aria-expanded="opened"
       :aria-controls="`${props.name}-${id}`"
       :title="props.item.title ?? props.item.label"
+      :aria-label="props.item.icon ? props.item.title ?? props.item.label : undefined"
       v-bind="dynamicAttributes"
-      @click="toggle"
+      @click.stop="toggle"
       @keydown.left.stop.prevent="prev"
       @keydown.up.stop.prevent="prev"
       @keydown.down.stop.prevent="next"
