@@ -38,6 +38,7 @@
  */
 import { computed, type ComputedRef, ref } from 'vue';
 import { HTMLElement, parse as parseHtml } from 'node-html-parser';
+import { useConfig, useArticles } from '#composables';
 
 const storage = ref<{
   [locale: string]: NsWowSearchList[];
