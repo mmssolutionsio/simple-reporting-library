@@ -38,6 +38,7 @@
  */
 import { computed, type ComputedRef, ref } from 'vue';
 import { HTMLElement, parse as parseHtml } from 'node-html-parser';
+import { useConfig, useArticles } from '#composables';
 
 const storage = ref<{
   [locale: string]: NsWowSearchList[];
@@ -68,7 +69,7 @@ function makeWords(html: string) {
     .replace(/\s{2,}/g, ' ');
 }
 
-export default async function useSearch(): ComputedRef<NsWowSearchList[]> {
+export default async function useSearch(): Promise<ComputedRef<NsWowSearchList[]>> {
   const config = useConfig();
   if (!storage.value || !storage.value[config.value.locale]) {
     !storage.value ? (storage.value = {}) : null;

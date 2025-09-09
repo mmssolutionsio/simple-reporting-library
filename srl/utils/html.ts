@@ -7,6 +7,8 @@ function attributesToString(attributes: Record<string, string | null>): string {
     .join(' ');
 }
 
+type AttrObj = { [key: string]: string | null };
+
 export function prepareHtmlContent(text: string): string {
   const articles = useArticles();
   const locale = useLocale();
@@ -14,8 +16,8 @@ export function prepareHtmlContent(text: string): string {
   const regex = /<a\s+([^>]+)>(.*?)<\/a>/gis;
   text = text.replace(regex, (match, attrString, innerText) => {
     // Attribute in ein Array umwandeln
-    const attrObj = {};
-    attrString.replace(/([a-zA-Z0-9\-_]+)(?:="([^"]*)")?/g, (m, key, value) => {
+    const attrObj: AttrObj = {};
+    attrString.replace(/([a-zA-Z0-9\-_]+)(?:="([^"]*)")?/g, (m, key: string, value: string | null) => {
       attrObj[key] = value || null;
       return m;
     });
@@ -65,6 +67,11 @@ export function prepareHtmlContent(text: string): string {
 
     return match;
   });
+
+  text = text.replace(
+    /<template-([a-z]+)>([\s\S]*?)<\/template-\1>/g,
+    (_match, name, content) => `<template #${name}>${content}</template>`
+  );
 
   text = text.replaceAll('../', `./`);
 
