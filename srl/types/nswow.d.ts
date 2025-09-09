@@ -92,6 +92,9 @@ declare global {
   export type NsWowNavigationItem = {
     label: string;
     title?: string;
+    icon?: string;
+    iconBefore?: string;
+    iconAfter?: string;
     img?: {
       src: string;
       alt?: string;
