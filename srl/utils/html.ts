@@ -66,6 +66,11 @@ export function prepareHtmlContent(text: string): string {
     return match;
   });
 
+  text = text.replace(
+    /<template-([a-z]+)>([\s\S]*?)<\/template-\1>/g,
+    (_match, name, content) => `<template #${name}>${content}</template>`
+  );
+
   text = text.replaceAll('../', `./`);
 
   text = text.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, (match, p1) => {
