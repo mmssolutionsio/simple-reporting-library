@@ -36,7 +36,7 @@ function replaceAccordionContainer(text: string): string {
     const innerContent = replaceAccordionContainer(text.slice(openTagRegex.lastIndex, end - 6));
 
     result += text.slice(lastIndex, start);
-    result += `<srl-note-accordion${attrs}>${innerContent}</srl-note-accordion>`;
+    result += `<srl-note-accordion v-slot="{ id, open, toggle }"${attrs}>${innerContent}</srl-note-accordion>`;
     lastIndex = end;
     openTagRegex.lastIndex = end;
   }
@@ -61,7 +61,7 @@ function replaceAccordionToggle(text: string): string {
     const innerContent = text.slice(contentStart, end);
 
     result += text.slice(lastIndex, start);
-    result += `<srl-note-accordion-toggle${attrs}>${innerContent}</srl-note-accordion-toggle>`;
+    result += `<srl-note-accordion-toggle :id="id" :open="open" :toggle="toggle"${attrs}>${innerContent}</srl-note-accordion-toggle>`;
     lastIndex = end + closeTag.length;
     openTagRegex.lastIndex = lastIndex;
   }
@@ -97,7 +97,7 @@ function replaceAccordionContent(text: string): string {
     const innerContent = replaceAccordionContent(text.slice(openTagRegex.lastIndex, end - 6));
 
     result += text.slice(lastIndex, start);
-    result += `<srl-note-accordion-content${attrs}>${innerContent}</srl-note-accordion-content>`;
+    result += `<srl-note-accordion-content :id="id" :open="open"${attrs}>${innerContent}</srl-note-accordion-content>`;
     lastIndex = end;
     openTagRegex.lastIndex = end;
   }
@@ -169,9 +169,9 @@ export function prepareHtmlContent(text: string): string {
     (_match, name, content) => `<template #${name}>${content}</template>`
   );
 
-  text = replaceAccordionContainer(text)
-  text = replaceAccordionToggle(text)
-  text = replaceAccordionContent(text)
+  text = replaceAccordionContainer(text);
+  text = replaceAccordionToggle(text);
+  text = replaceAccordionContent(text);
 
   text = text.replaceAll('../', `./`);
 

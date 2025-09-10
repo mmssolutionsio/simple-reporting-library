@@ -24,6 +24,16 @@ function centerText(text: string): string {
   );
 }
 
+function isVersionGreater(v1, v2) {
+  const a = v1.split('.').map(Number);
+  const b = v2.split('.').map(Number);
+  for (let i = 0; i < 3; i++) {
+    if (a[i] > b[i]) return true;
+    if (a[i] < b[i]) return false;
+  }
+  return false; // gleich
+}
+
 function checkSrlVersion() {
   try {
     const pkgPath = join(folders.packagePath, 'package.json');
@@ -37,7 +47,7 @@ function checkSrlVersion() {
       .toString()
       .trim();
 
-    if (current < latest) {
+    if (isVersionGreater(latest, current)) {
       console.log('');
       console.log(chalk.bgWhiteBright(centerText('')));
       console.log(
