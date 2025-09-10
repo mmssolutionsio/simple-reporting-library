@@ -3,6 +3,16 @@ import { preparePublish } from './preparePublish.js';
 import { packageName } from './config.js';
 import { getPackageVersion } from './utils.js';
 
+function isVersionGreater(v1, v2) {
+  const a = v1.split('.').map(Number);
+  const b = v2.split('.').map(Number);
+  for (let i = 0; i < 3; i++) {
+    if (a[i] > b[i]) return true;
+    if (a[i] < b[i]) return false;
+  }
+  return false;
+}
+
 export async function doPublish(version = null) {
   try {
     const publishVersion = await preparePublish(version);
@@ -13,7 +23,7 @@ export async function doPublish(version = null) {
 
     const latest = await getPackageVersion(packageName);
 
-    if (publishVersion > latest) {
+    if (isVersionGreater(publishVersion, latest)) {
       await execSync(
         `npm dist-tag add ${packageName}@${publishVersion} latest`,
         {
