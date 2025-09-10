@@ -16,7 +16,7 @@
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
-    "postinstall": "srl prepare"
+    "postinstall": "npx srl prepare"
   },
   "dependencies": {
     "@multivisio/nswow": "^1.0.0",

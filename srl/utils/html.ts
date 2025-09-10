@@ -1,13 +1,109 @@
 import { isRouterPath } from '#utils/uri.ts';
 import { useArticles, useLocale, addCssStyles } from '#composables';
 
+type AttrObj = { [key: string]: string | null };
 function attributesToString(attributes: Record<string, string | null>): string {
   return Object.entries(attributes)
     .map(([key, value]) => (value !== null ? `${key}="${value}"` : key))
     .join(' ');
 }
 
-type AttrObj = { [key: string]: string | null };
+function replaceAccordionContainer(text: string): string {
+  const openTagRegex = /<div([^>]*\bclass\s*=\s*["']lc-accordion\s[^"']*["'][^>]*)>/gi;
+  let result = '';
+  let lastIndex = 0;
+  let match;
+
+  while ((match = openTagRegex.exec(text)) !== null) {
+    const start = match.index;
+    const attrs = match[1];
+    let depth = 1;
+    let end = openTagRegex.lastIndex;
+
+    while (depth > 0) {
+      const nextOpen = text.indexOf('<div', end);
+      const nextClose = text.indexOf('</div>', end);
+      if (nextClose === -1) break;
+      if (nextOpen !== -1 && nextOpen < nextClose) {
+        depth++;
+        end = nextOpen + 4;
+      } else {
+        depth--;
+        end = nextClose + 6;
+      }
+    }
+
+    const innerContent = replaceAccordionContainer(text.slice(openTagRegex.lastIndex, end - 6));
+
+    result += text.slice(lastIndex, start);
+    result += `<srl-note-accordion${attrs}>${innerContent}</srl-note-accordion>`;
+    lastIndex = end;
+    openTagRegex.lastIndex = end;
+  }
+  result += text.slice(lastIndex);
+  return result;
+}
+
+function replaceAccordionToggle(text: string): string {
+  const openTagRegex = /<div([^>]*\bclass\s*=\s*["']lc-accordion__head\s[^"']*["'][^>]*)>/gi;
+  let result = '';
+  let lastIndex = 0;
+  let match;
+
+  while ((match = openTagRegex.exec(text)) !== null) {
+    const start = match.index;
+    const attrs = match[1];
+    const contentStart = openTagRegex.lastIndex;
+    const closeTag = '</div>';
+    const end = text.indexOf(closeTag, contentStart);
+    if (end === -1) break;
+
+    const innerContent = text.slice(contentStart, end);
+
+    result += text.slice(lastIndex, start);
+    result += `<srl-note-accordion-toggle${attrs}>${innerContent}</srl-note-accordion-toggle>`;
+    lastIndex = end + closeTag.length;
+    openTagRegex.lastIndex = lastIndex;
+  }
+  result += text.slice(lastIndex);
+  return result;
+}
+
+function replaceAccordionContent(text: string): string {
+  const openTagRegex = /<div([^>]*\bclass\s*=\s*["']lc-accordion__content(?:\s[^"']*)?["'][^>]*)>/gi;
+  let result = '';
+  let lastIndex = 0;
+  let match;
+
+  while ((match = openTagRegex.exec(text)) !== null) {
+    const start = match.index;
+    const attrs = match[1];
+    let depth = 1;
+    let end = openTagRegex.lastIndex;
+
+    while (depth > 0) {
+      const nextOpen = text.indexOf('<div', end);
+      const nextClose = text.indexOf('</div>', end);
+      if (nextClose === -1) break;
+      if (nextOpen !== -1 && nextOpen < nextClose) {
+        depth++;
+        end = nextOpen + 4;
+      } else {
+        depth--;
+        end = nextClose + 6;
+      }
+    }
+
+    const innerContent = replaceAccordionContent(text.slice(openTagRegex.lastIndex, end - 6));
+
+    result += text.slice(lastIndex, start);
+    result += `<srl-note-accordion-content${attrs}>${innerContent}</srl-note-accordion-content>`;
+    lastIndex = end;
+    openTagRegex.lastIndex = end;
+  }
+  result += text.slice(lastIndex);
+  return result;
+}
 
 export function prepareHtmlContent(text: string): string {
   const articles = useArticles();
@@ -72,6 +168,10 @@ export function prepareHtmlContent(text: string): string {
     /<template-([a-z]+)>([\s\S]*?)<\/template-\1>/g,
     (_match, name, content) => `<template #${name}>${content}</template>`
   );
+
+  text = replaceAccordionContainer(text)
+  text = replaceAccordionToggle(text)
+  text = replaceAccordionContent(text)
 
   text = text.replaceAll('../', `./`);
 
