@@ -7,7 +7,13 @@ const props = defineProps<{
 </script>
 
 <template>
-  <button @click="props.toggle()" :aria-expanded="props.open" :aria-controls="props.id">
+  <button
+    class="srl-note-accordion__toggle"
+    type="button"
+    :aria-expanded="props.open"
+    :aria-controls="props.id"
+    @click="props.toggle()"
+  >
     <slot/>
   </button>
 </template>

@@ -11,7 +11,7 @@ function toggle() {
 </script>
 
 <template>
-  <div ref="accordion">
+  <div class="srl-note-accordion" ref="accordion">
     <slot :id="id" :open="open" :toggle="toggle"/>
   </div>
 </template>
