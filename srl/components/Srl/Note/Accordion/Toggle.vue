@@ -1,13 +1,23 @@
 <script setup lang="ts">
 const props = defineProps<{
-  id: string
-  open: boolean
-  toggle: () => void
+  accordion: {
+    id: string;
+    state: boolean;
+    toggle: () => void;
+    open: () => void;
+    close: () => void;
+  };
 }>()
+
 </script>
 
 <template>
-  <button @click="props.toggle()" :aria-expanded="props.open" :aria-controls="props.id">
+  <button
+    type="button"
+    :aria-expanded="props.accordion.state"
+    :aria-controls="props.accordion.id"
+    @click="props.accordion.toggle()"
+  >
     <slot/>
   </button>
 </template>

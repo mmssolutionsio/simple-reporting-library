@@ -8,7 +8,9 @@ import MenuItemContentIconBefore from './Content/IconBefore.vue';
 import MenuItemContentIconAfter from './Content/IconAfter.vue';
 
 const props = defineProps<{
-  item: NsWowNavigationItem;
+  item: NsWowNavigationItem
+  depth: number
+  disableClasses: boolean
 }>();
 </script>
 
@@ -16,26 +18,43 @@ const props = defineProps<{
   <MenuItemContentIcon
     v-if="props.item.icon"
     :item="props.item"
+    :depth="props.depth"
+    :disableClasses="props.disableClasses"
   />
   <MenuItemContentIconBefore
     v-else-if="props.item.iconBefore"
     :item="props.item"
+    :depth="props.depth"
+    :disableClasses="props.disableClasses"
   />
   <MenuItemContentIconAfter
     v-else-if="props.item.iconAfter"
     :item="props.item"
+    :depth="props.depth"
+    :disableClasses="props.disableClasses"
   />
   <MenuItemContentImage
     v-else-if="props.item.img"
     :item="props.item"
+    :depth="props.depth"
+    :disableClasses="props.disableClasses"
   />
   <MenuItemContentImageBefore
     v-else-if="props.item.imgBefore"
     :item="props.item"
+    :depth="props.depth"
+    :disableClasses="props.disableClasses"
   />
   <MenuItemContentImageAfter
     v-else-if="props.item.imgAfter"
     :item="props.item"
+    :depth="props.depth"
+    :disableClasses="props.disableClasses"
   />
-  <MenuItemContentText v-else :item="props.item" />
+  <MenuItemContentText
+    v-else
+    :item="props.item"
+    :depth="props.depth"
+    :disableClasses="props.disableClasses"
+  />
 </template>

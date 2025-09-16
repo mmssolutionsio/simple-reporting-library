@@ -2,6 +2,7 @@ export function isRouterPath(path: string): boolean {
   return (
     (path.startsWith('/') || path.startsWith('./')) &&
     !path.startsWith('//') &&
+    !path.startsWith('javascript:') &&
     !path.endsWith('.html') &&
     !path.endsWith('.htm') &&
     !path.endsWith('.php') &&
@@ -42,7 +43,8 @@ export function isExternalPath(path: string): boolean {
     path.startsWith('wss') ||
     path.startsWith('irc') ||
     path.startsWith('gopher') ||
-    path.startsWith('whatsapp')
+    path.startsWith('whatsapp') ||
+    path.startsWith('javascript:')
   );
 }
 
