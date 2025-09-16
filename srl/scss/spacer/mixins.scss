@@ -82,7 +82,7 @@
   @if not (map.has-key($spacerValue, media) and map.has-key(map.get($spacerValue, media), print)) {
     @include system.add-root-style(
       $varName,
-      system.size-unit(map.get($spacerValue, size), in),
+      system.size-unit(map.get($spacerValue, size)),
       print
     );
   }

@@ -152,7 +152,13 @@ async function mapComponents(lddJson) {
           );
           const componentHtml = readFileSync(htmlPath, { encoding: 'utf-8' });
 
-          lddComponents.push({ ...componentDeclaration, html: componentHtml });
+          lddComponents.push({ 
+            ...componentDeclaration, 
+            html: componentHtml
+                    .replaceAll(/>\s+/g, ">")
+                    .replaceAll(/\s+</g, "<")
+                    .trim()
+          });
         }
       } catch (error) {}
 

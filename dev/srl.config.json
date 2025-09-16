@@ -454,7 +454,7 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "green-1000",
+        "color": "primary-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -746,23 +746,23 @@
         "color": "#ff7d00"
       },
       {
-        "name": "blue-200",
+        "name": "secondary-200",
         "color": "#ccd1e7"
       },
       {
-        "name": "blue-400",
+        "name": "secondary-400",
         "color": "#99a3cf"
       },
       {
-        "name": "blue-600",
+        "name": "secondary-600",
         "color": "#6675b7"
       },
       {
-        "name": "blue-800",
+        "name": "secondary-800",
         "color": "#33479f"
       },
       {
-        "name": "blue-1000",
+        "name": "secondary-1000",
         "color": "#001987"
       },
       {
