@@ -99,6 +99,8 @@ export default function viteSrlPlugin(): Plugin {
       config.base = './';
 
       config.resolve = config.resolve || {};
+      config.resolve.alias = config.resolve.alias || {};
+
       config.resolve.alias['~'] = fileURLToPath(
         new URL('../..', import.meta.url),
       );

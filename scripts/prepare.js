@@ -41,6 +41,7 @@ function prepare() {
   }
   fs.cpSync(folders.packageSrl, folders.srlRoot, { recursive: true });
 
+  /*
   const tsConfigPath = path.join(folders.root, 'tsconfig.app.json');
   if (fs.existsSync(tsConfigPath)) {
     const tsConfig = JSON.parse(fs.readFileSync(tsConfigPath, 'utf-8'));
@@ -61,6 +62,7 @@ function prepare() {
 
     fs.writeFileSync(tsConfigPath, JSON.stringify(tsConfig, null, 2));
   }
+   */
 }
 
 export default prepare;
