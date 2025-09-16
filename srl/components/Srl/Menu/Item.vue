@@ -1,41 +1,42 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, useId } from 'vue';
-import MenuItemContent from './Item/Content.vue';
-import MenuList from './List.vue';
-import type { RouterLink } from 'vue-router';
-import { isExternalPath } from '#utils/uri';
+import { computed, nextTick, ref, useId } from 'vue'
+import MenuItemContent from './Item/Content.vue'
+import MenuList from './List.vue'
+import type { RouterLink } from 'vue-router'
+import { isExternalPath } from '#utils/uri'
 
 type BackButtonItem = {
-  title?: string;
+  title?: string
   img?: {
-    src: string;
-    alt?: string;
-  };
+    src: string
+    alt?: string
+  }
   imgBefore?: {
-    src: string;
-    alt?: string;
-  };
+    src: string
+    alt?: string
+  }
   imgAfter?: {
-    src: string;
-    alt?: string;
-  };
+    src: string
+    alt?: string
+  }
   attributes?: {
-    [key: string]: string;
-  };
-};
+    [key: string]: string
+  }
+}
 
 const props = defineProps<{
-  name: string;
-  item: NsWowNavigationItem;
-  index: number | string;
-  disableTab: boolean;
-  disableTabIndex: boolean;
-  initOpen: number;
-  depth: number;
-  backButonEnabled?: boolean;
-  backButtonLabel?: string;
+  name: string
+  item: NsWowNavigationItem
+  index: number | string
+  disableTab: boolean
+  disableTabIndex: boolean
+  initOpen: number
+  depth: number
+  disableClasses: boolean
+  backButonEnabled?: boolean
+  backButtonLabel?: string
   backButtonItem: BackButtonItem
-}>();
+}>()
 
 const emit = defineEmits([
   'open',
@@ -46,109 +47,135 @@ const emit = defineEmits([
   'prev',
   'tab',
   'back',
-]);
-const id = ref<number | string | undefined>();
+])
+const id = ref<number | string | undefined>()
 if (props.item.children) {
-  id.value = useId();
+  id.value = useId()
 }
 
-const external = ref(props.item.href && isExternalPath(props.item.href));
+const external = ref(props.item.href && isExternalPath(props.item.href))
 
-const menu = ref();
-const $el = ref<HTMLButtonElement | HTMLAnchorElement | typeof RouterLink>();
-const opened = ref(false);
+const menu = ref()
+const $el = ref<HTMLButtonElement | HTMLAnchorElement | typeof RouterLink>()
+const opened = ref(false)
 
 function toggle() {
-  opened.value = !opened.value;
+  opened.value = !opened.value
   if (opened.value) {
-    emit('open', { index: props.index });
+    emit('open', { index: props.index })
     nextTick(() => {
-      const item = menu.value?.items[0].$el;
-      item.$el ? item.$el.focus() : item.focus();
-    });
+      menu.value.$el.focus()
+    })
   } else {
-    menu.value.closeAll();
+    menu.value.closeAll()
   }
 }
-
 function close() {
-  emit('close', { index: props.index });
+  emit('close', { index: props.index })
 }
 
 function closeSub() {
-  $el.value?.focus();
+  $el.value?.focus()
 }
 
 function next() {
-  emit('next', { index: props.index });
+  emit('next', { index: props.index })
 }
 
 function prev() {
-  emit('prev', { index: props.index });
+  emit('prev', { index: props.index })
 }
 
 function tab(event: KeyboardEvent) {
   if (props.disableTab && event) {
-    event.stopPropagation();
-    event.preventDefault();
-    opened.value = false;
+    event.stopPropagation()
+    event.preventDefault()
+    opened.value = false
   }
-  emit('tab');
+  emit('tab')
 }
 
 function back(event: KeyboardEvent) {
   if (props.disableTab && event) {
-    event.stopPropagation();
-    event.preventDefault();
+    event.stopPropagation()
+    event.preventDefault()
   }
-  emit('back');
+  emit('back')
 }
 
 function link() {
-  !props.item.callback || props.item.callback();
-  emit('link');
+  !props.item.callback || props.item.callback()
+  emit('link')
 }
 
 function routerChange() {
-  !props.item.callback || props.item.callback();
-  emit('link');
-  emit('routerChange');
+  !props.item.callback || props.item.callback()
+  emit('link')
+  emit('routerChange')
 }
 
 function closeItem() {
-  opened.value = false;
-  menu.value?.closeAll();
+  opened.value = false
+  menu.value?.closeAll()
 }
 
 defineExpose({
   closeItem,
   $el,
   menu,
-});
+})
 
 function internalLinkClick(event: Event) {
-  !props.item.callback || props.item.callback(event);
+  !props.item.callback || props.item.callback(event)
   routerChange()
 }
 
 function externalLinkClick(event: Event) {
-  !props.item.callback || props.item.callback(event);
+  !props.item.callback || props.item.callback(event)
   link()
 }
 
 const dynamicAttributes = computed(() => {
-  return props.item.attributes ?? {};
-});
+  return props.item.attributes ?? {}
+})
+
+const classListLi = computed(() => {
+  if (props.disableClasses) return []
+
+  const res = [
+    'srl-menu__item'
+  ]
+  res.push(`srl-menu__item--level-${props.depth}`)
+  if (props.item.children) {
+    res.push('srl-menu__item--has-children')
+  } else {
+    res.push('srl-menu__item--has-no-children')
+  }
+  return res
+})
+
+const classListItem = computed(() => {
+  const res = []
+
+  !props.item.active || res.push('srl-menu__link--active')
+
+  if (!props.disableClasses) {
+    res.push('srl-menu__link')
+    res.push(`srl-menu__link--level-${props.depth}`)
+  }
+  return res
+})
+
 </script>
 
 <template>
-  <li v-if="!item.children && props.item.href">
+  <li v-if="!item.children && props.item.href" :class="classListLi">
     <router-link
       v-if="!external"
       ref="$el"
-      :tabindex="props.index === 0 && !props.disableTabIndex ? 0 : -1"
+      tabindex="-1"
       :to="props.item.href"
-      :class="{ active: item.active }"
+      :class="classListItem"
       :title="props.item.title ?? props.item.label"
       v-bind="dynamicAttributes"
       @click="internalLinkClick"
@@ -160,14 +187,19 @@ const dynamicAttributes = computed(() => {
       @keydown.shift.tab.exact="back"
       @keydown.esc.stop.prevent="close"
     >
-      <MenuItemContent :item="props.item" />
+      <MenuItemContent
+        :item="props.item"
+        :depth="props.depth"
+        :disableClasses="props.disableClasses"
+      />
     </router-link>
     <a
       v-else
-      :tabindex="props.index === 0 && !props.disableTabIndex ? 0 : -1"
+      tabindex="-1"
       ref="$el"
       :href="props.item.href"
       :title="props.item.title ?? props.item.label"
+      :class="classListItem"
       :aria-label="props.item.icon ? props.item.title ?? props.item.label : undefined"
       :target="props.item.href?.startsWith('http') ? '_blank' : undefined"
       v-bind="dynamicAttributes"
@@ -180,14 +212,19 @@ const dynamicAttributes = computed(() => {
       @keydown.shift.tab.exact="back"
       @keydown.esc.stop.prevent="close"
     >
-      <MenuItemContent :item="props.item" />
+      <MenuItemContent
+        :item="props.item"
+        :depth="props.depth"
+        :disableClasses="props.disableClasses"
+      />
     </a>
   </li>
-  <li v-else-if="props.item.callback">
+  <li v-else-if="props.item.callback" :class="classListLi">
     <button
       type="button"
       ref="$el"
-      :tabindex="props.index === 0 && !props.disableTabIndex ? 0 : -1"
+      tabindex="-1"
+      :class="classListItem"
       :title="props.item.title ?? props.item.label"
       :aria-label="props.item.icon ? props.item.title ?? props.item.label : undefined"
       v-bind="dynamicAttributes"
@@ -200,17 +237,22 @@ const dynamicAttributes = computed(() => {
       @keydown.shift.tab.exact="back"
       @keydown.esc.stop.prevent="close"
     >
-      <MenuItemContent :item="props.item" />
+      <MenuItemContent
+        :item="props.item"
+        :depth="props.depth"
+        :disableClasses="props.disableClasses"
+      />
     </button>
   </li>
-  <li v-else>
+  <li v-else :class="classListLi">
     <button
       type="button"
       ref="$el"
-      :tabindex="props.index === 0 ? 0 : -1"
+      tabindex="-1"
       :aria-haspopup="props.item.children ? 'true' : 'false'"
       :aria-expanded="opened"
       :aria-controls="`${props.name}-${id}`"
+      :class="classListItem"
       :title="props.item.title ?? props.item.label"
       :aria-label="props.item.icon ? props.item.title ?? props.item.label : undefined"
       v-bind="dynamicAttributes"
@@ -223,7 +265,11 @@ const dynamicAttributes = computed(() => {
       @keydown.shift.tab.exact="back"
       @keydown.esc.stop.prevent="close"
     >
-      <MenuItemContent :item="props.item" />
+      <MenuItemContent
+        :item="props.item"
+        :depth="props.depth"
+        :disableClasses="props.disableClasses"
+      />
     </button>
     <MenuList
       v-if="props.item.children"
@@ -234,6 +280,7 @@ const dynamicAttributes = computed(() => {
       :disableTab="props.disableTab"
       :initOpen="props.initOpen"
       :depth="props.depth + 1"
+      :disableClasses="props.disableClasses"
       :backButonEnabled="props.backButonEnabled"
       :backButtonLabel="props.backButonEnabled ? props.item.label : undefined"
       :backButtonItem="props.backButtonItem"

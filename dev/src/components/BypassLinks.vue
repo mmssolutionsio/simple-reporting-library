@@ -11,10 +11,8 @@ const pointer = ref<NsWowNavigationItem[]>([
       id: 'srl-to-main-navigation'
     },
     callback: () => {
-      const elem: HTMLDivElement | null = document.querySelector('#srl-page-navigation')
-      if (elem) {
-        elem.querySelector('button')?.focus()
-      }
+      const elem: HTMLDivElement | null = document.querySelector('#srl-page-navigation > ul')
+      elem?.focus()
     }
   },
   {
@@ -57,7 +55,7 @@ const pointer = ref<NsWowNavigationItem[]>([
   overflow: hidden;
   height: 0;
 
-  &:has(button:focus) {
+  &:has(*:focus) {
     height: auto;
     @include srl.spacer-padding-block(200);
   }

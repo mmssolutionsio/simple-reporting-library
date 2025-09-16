@@ -1,0 +1,108 @@
+@use "srl";
+@use "assets/scss/placeholders";
+
+$transition-duration: .3s;
+
+.lc-accordion
+{
+  @extend %srl-grid-base;
+  @include srl.spacer-margin-top(400);
+
+  &__inner {
+    @extend %srl-regular-width;
+    border-top: 1px solid srl.colors-black-1000();
+    border-bottom: 1px solid srl.colors-black-1000();
+  }
+
+  & + & {
+    margin-block-start: 0;
+    > .lc-accordion__inner {
+      border-top: none;
+    }
+  }
+
+  &__head {
+    @include srl.typography-title-h3();
+    width: calc(100% + (var(--srl-container-padding) * 2));
+    border: 0;
+    text-align: left;
+    margin-inline: calc(var(--srl-container-padding) * -1);
+    background-color: transparent;
+    padding: srl.spacer-get(300) var(--srl-container-padding);
+    @include srl.spacer-gap(200);
+    cursor: pointer;
+    display: flex;
+    @extend %srl-regular-width;
+
+    .lc-title-h3__number {
+      width: srl.spacer-get(400);
+      color: srl.colors-black-1000();
+    }
+
+    .lc-accordion__icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 48px;
+      height: 48px;
+      margin-left: auto;
+      color: srl.colors-black-1000();
+      border: srl.system-size-unit(1) solid srl.colors-black-1000();
+      border-radius: 24px;
+      transition: all $transition-duration ease;
+
+      &:before {
+        content: "+";
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: srl.system-size-unit(20);
+        height: srl.system-size-unit(20);
+        transition: all $transition-duration ease;
+      }
+    }
+
+    &[aria-expanded="true"] {
+      .lc-accordion__icon {
+        background-color: srl.colors-black-1000();
+        color: srl.colors-white-1000();
+        border-color: srl.colors-black-1000();
+        &:before {
+          content: "-";
+        }
+      }
+    }
+  }
+
+  &__content {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: padding-bottom $transition-duration ease, grid-template-rows $transition-duration ease;
+    overflow: hidden;
+
+    &[hidden] {
+      grid-template-rows: 0fr;
+      padding-bottom: 0;
+    }
+
+    &:not([hidden]) {
+      padding-bottom: srl.spacer-get(300);
+    }
+
+    &-inner {
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      overflow: hidden;
+
+      .lc-accordion:last-child {
+        > .lc-accordion__inner {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}

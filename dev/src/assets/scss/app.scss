@@ -1,5 +1,6 @@
 @use 'srl';
 @use 'web';
+@use "./components/note/accordion";
 
 .fade-enter-from {
   opacity: 0;
