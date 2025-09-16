@@ -3,7 +3,7 @@
   "label": "Video",
   "properties": ["width-all", "pdf-spacer"],
   "directives": {
-    "background": {
+    "video-thumbnail": {
       "imageRatios": ["16:9"],
       "allowOriginalRatio": false
     },

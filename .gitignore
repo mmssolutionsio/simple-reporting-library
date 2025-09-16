@@ -2,3 +2,4 @@
 /node_modules/
 /test-data/
 /test-project/
+.DS_Store
