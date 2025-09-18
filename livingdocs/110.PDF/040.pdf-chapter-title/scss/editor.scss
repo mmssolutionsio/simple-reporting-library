@@ -8,11 +8,6 @@
   @extend %srl-grid-base;
 }
 
-.srl-pdf-chapter-title__editor-text {
-  @include srl.typography-editor-label-text();
-  @extend %srl-regular-width;
-}
-
 .srl-pdf-chapter-title__text {
   @extend %srl-regular-width;
 }

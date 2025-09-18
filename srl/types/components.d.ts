@@ -10,6 +10,9 @@ interface _GlobalComponents {
   SrlArticleRoot: (typeof import('../components/Srl/Article/Root.vue'))['default'];
   SrlMenu: (typeof import('../components/Srl/Menu/List.vue'))['default'];
   SrlPageDialog: (typeof import('../components/Srl/Page/Dialog.vue'))['default'];
+  SrlNoteAccordion: (typeof import('../components/Srl/Note/Accordion.vue'))['default'];
+  SrlNoteAccordionToggle: (typeof import('../components/Srl/Note/Accordion/Toggle.vue'))['default'];
+  SrlNoteAccordionContent: (typeof import('../components/Srl/Note/Accordion/Content.vue'))['default'];
 }
 
 declare module '@vue/runtime-core' {
