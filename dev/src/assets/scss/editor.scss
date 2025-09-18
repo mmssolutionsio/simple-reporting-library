@@ -1,5 +1,6 @@
 @use 'srl';
 @use 'web';
+@use "placeholders";
 
 $editor-color-srl: srl.colors-shade-200();
 $editor-background-color-srl: srl.colors-primary-1000();
@@ -37,4 +38,48 @@ span.ns-key-figure {
 // Set width of placeholder image to 100%
 img[src^="data:image/svg+xml"] {
   width: 100%
+}
+
+.srl-editor-component {
+  @include srl.spacer-padding-block(200);
+  @extend %srl-grid-base;
+
+  &.srl-pdf-pagebreak,
+  &.srl-anchor {
+    border-top: 1px solid #{srl.colors-primary-1000()};
+    border-bottom: 1px solid #{srl.colors-primary-1000()};
+  }
+
+  &.srl-pdf-publication-title,
+  &.srl-pdf-chapter-title {
+    border-bottom: 1px solid #{srl.colors-primary-1000()};
+  }
+
+  .doc-editable.doc-no-placeholder:before {
+    display: none !important;
+  }
+}
+
+.srl-editor-component__text {
+  @extend %srl-regular-width;
+  display: flex;
+  flex-direction: column;
+
+  &:after {
+    order: -1;
+    display: block;
+    @include srl.typography-editor-label-text();
+
+    .srl-anchor & {
+      content: "Anchor:";
+    }
+
+    .srl-pdf-publication-title & {
+      content: "PDF publication title:"
+    }
+
+    .srl-pdf-chapter-title & {
+      content: "PDF chapter title:"
+    }
+  }
 }
