@@ -1,2 +1,2 @@
 export default prepare;
-declare function prepare(): void;
+declare function prepare(): Promise<void>;
