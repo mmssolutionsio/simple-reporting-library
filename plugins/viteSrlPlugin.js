@@ -1,5 +1,4 @@
-import { fileURLToPath, URL } from 'node:url';
-import { existsSync, readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path/posix';
 import { execSync } from 'node:child_process';
 import folders from '../scripts/folders.js';
@@ -14,6 +13,7 @@ import {
   mapScss,
 } from '../scripts/build.js';
 import chalk from 'chalk';
+import { vueComponents } from '../scripts/vue/components.js';
 
 
 /**
@@ -36,10 +36,8 @@ function printPromptsMessage(messages) {
   console.log('');
 }
 
-
 const data = {
-  version: null,
-  components:{}
+  version: null
 };
 const srlConfig = readConfigJson();
 
@@ -95,39 +93,9 @@ function checkForUpdates() {
     }
   } catch (e) {}
 }
-
-function findVueFilesInSrl() {
-  const componentsPath = join(folders.srlSrc, 'components');
-  const baseDir = join(componentsPath, 'Srl');
-  const result = {};
-
-  function search(dir) {
-    for (const entry of readdirSync(dir)) {
-      const fullPath = join(dir, entry);
-      if (statSync(fullPath).isDirectory()) {
-        search(fullPath);
-      } else if (entry.endsWith('.vue')) {
-        const path = relative(componentsPath, fullPath);
-        const name = path.slice(0, -4)
-          .replaceAll('/', '')
-          .replaceAll('\\', '');
-
-        result[name] = `@/components/${path}`;
-      }
-    }
-  }
-
-  if (existsSync(baseDir) && statSync(baseDir).isDirectory()) {
-    search(baseDir);
-  }
-
-  return result;
-}
-
 async function startActions() {
   data.version = getPackageVersion();
   checkForUpdates();
-  data.components = findVueFilesInSrl();
   if (!srlConfig || JSON.stringify(srlConfig) !== JSON.stringify(data)) {
     writeConfigJson(data);
   }
@@ -139,6 +107,7 @@ async function startActions() {
     ]);
   }
 
+  await vueComponents();
   await beaver(0);
   await map();
   await mapJs();
@@ -160,7 +129,6 @@ export default function viteSrlPlugin() {
   return {
     name: 'vite-srl-plugin',
     config(config) {
-
       startActions();
 
       config.base = './';
@@ -229,6 +197,13 @@ export default function viteSrlPlugin() {
         ) {
           triggerAction(mapLdd);
         }
+
+        if (
+          path.includes('src/components/Srl') &&
+          path.endsWith('.vue')
+        ) {
+          triggerAction(vueComponents);
+        }
       });
 
       server.watcher.on('unlink', (path) => {
@@ -263,6 +238,13 @@ export default function viteSrlPlugin() {
             path.endsWith('.vue'))
         ) {
           triggerAction(mapLdd);
+        }
+
+        if (
+          path.includes('src/components/Srl') &&
+          path.endsWith('.vue')
+        ) {
+          triggerAction(vueComponents);
         }
       });
     },
