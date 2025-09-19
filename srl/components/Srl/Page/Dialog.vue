@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import SrlPageCustomDialog from '@//Dialog.vue';
+import SrlPageCustomDialog from '@/Dialog.vue';
 import Autoload from '@/Autoload.ts';
 
 const props = withDefaults(

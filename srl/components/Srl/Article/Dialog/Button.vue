@@ -11,7 +11,7 @@ const config = useConfig();
 const articles = useArticles();
 const id = ref<string>(`srl-page__dialog-${useId()}`);
 const content = ref<string>('');
-const dialog = ref<typeof SrlPageDialog | null>(null);
+const dialog = ref<SrlPageDialog | null>(null);
 async function loadContent() {
   const article = articles.value.find((article) => article.uuid === props.uuid);
   if (article) {
