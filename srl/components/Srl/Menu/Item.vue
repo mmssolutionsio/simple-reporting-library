@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, useId } from 'vue'
-import MenuItemContent from './Item/Content.vue'
-import MenuList from './List.vue'
 import type { RouterLink } from 'vue-router'
 import { isExternalPath } from '#utils/uri'
 
@@ -187,7 +185,7 @@ const classListItem = computed(() => {
       @keydown.shift.tab.exact="back"
       @keydown.esc.stop.prevent="close"
     >
-      <MenuItemContent
+      <SrlMenuItemContent
         :item="props.item"
         :depth="props.depth"
         :disableClasses="props.disableClasses"
@@ -212,7 +210,7 @@ const classListItem = computed(() => {
       @keydown.shift.tab.exact="back"
       @keydown.esc.stop.prevent="close"
     >
-      <MenuItemContent
+      <SrlMenuItemContent
         :item="props.item"
         :depth="props.depth"
         :disableClasses="props.disableClasses"
@@ -237,7 +235,7 @@ const classListItem = computed(() => {
       @keydown.shift.tab.exact="back"
       @keydown.esc.stop.prevent="close"
     >
-      <MenuItemContent
+      <SrlMenuItemContent
         :item="props.item"
         :depth="props.depth"
         :disableClasses="props.disableClasses"
@@ -265,13 +263,13 @@ const classListItem = computed(() => {
       @keydown.shift.tab.exact="back"
       @keydown.esc.stop.prevent="close"
     >
-      <MenuItemContent
+      <SrlMenuItemContent
         :item="props.item"
         :depth="props.depth"
         :disableClasses="props.disableClasses"
       />
     </button>
-    <MenuList
+    <SrlMenu
       v-if="props.item.children"
       ref="menu"
       :id="`${props.name}-${id}`"

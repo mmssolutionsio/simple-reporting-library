@@ -1,6 +1,6 @@
 export {};
 declare global {
-  export type NsWowSettings = {
+  type NsWowSettings = {
     languages: string[];
     defaultLanguage: string;
     shortBreadcrumb: boolean;
@@ -10,7 +10,7 @@ declare global {
     categories: string[];
   };
 
-  export interface NsWowArticle {
+  interface NsWowArticle {
     uuid: string;
     name: string;
     translatedTitle: string;
@@ -23,11 +23,11 @@ declare global {
     status: string;
   }
 
-  export interface NsWowArticles {
+  interface NsWowArticles {
     [locale: string]: NsWowArticle[];
   }
 
-  export type NsWowConfig = {
+  type NsWowConfig = {
     locale: string;
     settings: NsWowSettings;
     articles: NsWowArticles;
@@ -40,15 +40,15 @@ declare global {
     };
   };
 
-  export type NsWowTranslations = {
+  type NsWowTranslations = {
     [locale: string]: NsWowTranslation;
   };
 
-  export type NsWowTranslation = {
+  type NsWowTranslation = {
     [key: string]: string;
   };
 
-  export interface NsWowMenu {
+  interface NsWowMenu {
     label: string;
     type: string;
     page?: string;
@@ -57,11 +57,11 @@ declare global {
     submenuEntries?: NsWowMenu[];
   }
 
-  export interface NsWowMenus {
+  interface NsWowMenus {
     [menu: string]: NsWowMenu[];
   }
 
-  export interface NsWowResponseRouting {
+  interface NsWowResponseRouting {
     version: string;
     pages: NsWowArticle[];
     menu: {
@@ -69,7 +69,7 @@ declare global {
     };
   }
 
-  export interface NsWowDownload {
+  interface NsWowDownload {
     type: string;
     title: string;
     fileType: string;
@@ -77,19 +77,19 @@ declare global {
     artifact: string;
   }
 
-  export type NsWowDownloads = {
+  type NsWowDownloads = {
     version?: string;
     structure: NsWowDownload[];
     annualReport?: NsWowDownload;
   };
 
-  export type NsWowSearchList = {
+  type NsWowSearchList = {
     article: NsWowArticle;
     href: string;
     words: string;
   };
 
-  export type NsWowNavigationItem = {
+  type NsWowNavigationItem = {
     label: string;
     title?: string;
     icon?: string;
@@ -116,7 +116,7 @@ declare global {
     children?: NsWowNavigationItem[];
   };
 
-  export type NsWowPageData = {
+  type NsWowPageData = {
     time: number;
     article: NsWowArticle | null;
     content: string;
