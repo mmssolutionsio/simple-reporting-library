@@ -1,9 +1,4 @@
 <script setup lang="ts">
-import PageHeader from '@/components/PageHeader.vue'
-import PageMain from '@/components/PageMain.vue'
-import PageFooter from '@/components/PageFooter.vue'
-import MainNavigation from '@/components/MainNavigation.vue'
-import BypassLinks from '@/components/BypassLinks.vue'
 import { useMenu } from '#composables'
 
 const mainNavigation = useMenu('menuMain')
@@ -11,9 +6,9 @@ const mainNavigation = useMenu('menuMain')
 
 <template>
   <div class="srl-page__wrap">
-    <BypassLinks />
+    <PageBypassLinks />
     <PageHeader />
-    <MainNavigation :mainNavigation="mainNavigation" />
+    <PageMainNavigation :mainNavigation="mainNavigation" />
     <PageMain :mainNavigation="mainNavigation" />
     <PageFooter />
   </div>

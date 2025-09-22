@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import NavLanguages from '@/components/NavLanguages.vue'
 import { useLocale } from '#composables'
 
 const locale = useLocale()
@@ -12,7 +11,7 @@ const locale = useLocale()
         <img class="srl-logo__img" src="@/assets/images/mms-logo-white.svg" alt="MMS Solutions" />
       </router-link>
     </div>
-    <NavLanguages />
+    <PageNavLanguages />
   </header>
 </template>
 

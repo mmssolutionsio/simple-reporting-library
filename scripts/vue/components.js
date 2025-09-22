@@ -7,7 +7,6 @@ function toPascalAfterSlash(str) {
 }
 function readVueDir(entryPath, prefix = '') {
   const componentsPath = join(entryPath, 'components');
-  const baseDir = join(componentsPath, 'Srl');
   const result = {};
 
   function search(dir) {
@@ -29,47 +28,47 @@ function readVueDir(entryPath, prefix = '') {
     }
   }
 
-  if (existsSync(baseDir) && statSync(baseDir).isDirectory()) {
-    search(baseDir);
+  if (existsSync(componentsPath) && statSync(componentsPath).isDirectory()) {
+    search(componentsPath);
   }
 
   return result;
 }
 
 export async function vueComponents() {
-  const srlComponents = readVueDir(folders.srlRoot, '#');
   const appComponents = readVueDir(folders.srlSrc, '@/');
+  const srlComponents = readVueDir(folders.srlRoot, '#');
 
   const components = []
   const types = []
 
-  for (const [name, info] of Object.entries(srlComponents)) {
-    const componentPath = appComponents[name] ? appComponents[name].component : info.component
-    const typePath = appComponents[name] ? appComponents[name].type : info.type
+  for (const [name, info] of Object.entries(appComponents)) {
     components.push(
-      `app.component('${name}', defineAsyncComponent(() => import('${componentPath}')));`,
+      `app.component('${name}', defineAsyncComponent(() => import('${info.component}')));`,
     )
     types.push({
       name: name,
-      type: `  type ${name} = typeof import('${typePath}')['default'];`,
+      type: `  type ${name} = typeof import('${info.type}')['default'];`,
     })
   }
 
-  for (const [name, info] of Object.entries(appComponents)) {
-    if (!srlComponents[name]) {
+  for (const [name, info] of Object.entries(srlComponents)) {
+    const componentPath = appComponents[name] ? appComponents[name].component : info.component
+    const typePath = appComponents[name] ? appComponents[name].type : info.type
+    if (!appComponents[name]) {
       components.push(
-        `app.component('${name}', defineAsyncComponent(() => import('${info.component}')));`,
+        `app.component('${name}', defineAsyncComponent(() => import('${componentPath}')));`,
       )
       types.push({
         name: name,
-        type: `  type ${name} = typeof import('${info.type}')['default'];`,
+        type: `  type ${name} = typeof import('${typePath}')['default'];`,
       })
     }
   }
 
   writeFileSync(join(folders.srlPlugins, 'asyncSrlComponents.ts'),
-`import { defineAsyncComponent } from 'vue';
-export default function asyncSrlComponents(app) {
+`import { defineAsyncComponent, type App } from 'vue';
+export default function asyncSrlComponents(app: App): void {
   ${components.join('\n  ')}
 }
 `, 'utf8');

@@ -5,7 +5,7 @@ import srlVuePlugin from '#plugins/vueSrlPlugin';
 
 import '#imports/app.scss';
 
-import SrlPageApp from '#components/App.vue';
+import SrlPageApp from '../App.vue';
 import router from '@/router';
 
 export default async function initProject() {
