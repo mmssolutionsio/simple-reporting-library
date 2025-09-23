@@ -50,17 +50,18 @@ type ViewPorts = {
 };
 
 const { breakpoints } = grid;
+const bp = breakpoints as Breakpoints;
 const innerWidth = ref<number>(window.innerWidth);
 
 const viewPorts = computed<ViewPorts>(() => {
   const res: ViewPorts = {
-    breakPoints: breakpoints,
+    breakPoints: bp,
     innerWidth: window.innerWidth,
     viewPort: null,
   };
 
-  for (const key in breakpoints) {
-    if (breakpoints[key] <= innerWidth.value) {
+  for (const key in bp) {
+    if (bp[key] <= innerWidth.value) {
       res.viewPort = key;
     } else {
       break;

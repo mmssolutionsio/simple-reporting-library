@@ -243,6 +243,23 @@ async function zipApp() {
 async function zipLdd() {
   console.log("\n\nCreate zip file for LDD");
   await checkFolders();
+
+  const lddPdfDir = join(folders.srlOutput, 'ldd', 'pdf');
+
+  try {
+    const pdfDir = join(folders.srlOutput, 'pdf');
+    statSync(pdfDir);
+    await cpSync(pdfDir, lddPdfDir, { recursive: true });
+    console.log('PDF folder has been copied to ' + lddPdfDir);
+  } catch (e) {}
+
+  try {
+    const customerDir = join(folders.root, 'pdf', 'customer');
+    statSync(customerDir);
+    await cpSync(customerDir, lddPdfDir, { recursive: true });
+    console.log('Contents of pdf/customer have been copied to ' + lddPdfDir);
+  } catch (e) {}
+
   const archiver = require('archiver');
   const output = createWriteStream(join(outputPath, 'design.zip'));
   const archive = archiver('zip', {
