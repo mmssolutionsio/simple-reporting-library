@@ -35,8 +35,12 @@ import {
 import { isRouterPath } from '#utils/uri';
 import useConfig from './config';
 
+type Menus = {
+  [key: string]: ComputedRef<NsWowNavigationItem[]>;
+}
+
 const config = useConfig();
-const menus = {};
+const menus: Menus = {};
 
 function buildNav(
   item: NsWowMenu,
