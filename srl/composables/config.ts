@@ -61,11 +61,6 @@ async function setConfig(): Promise<Ref<NsWowConfig>> {
   await loadSettings();
   await loadTranslations();
 
-  const defaultMessages = import.meta.glob('@/locales/*.json', {
-    eager: true,
-    import: 'default',
-  });
-
   for (const locale of config.value.settings.languages) {
     await loadRouting(locale);
     await loadDownloads(locale);
@@ -97,7 +92,8 @@ async function loadSettings() {
     config.value.locale = data.defaultLanguage;
     document.documentElement.lang = data.defaultLanguage;
   } catch (e) {
-    errorLog(`"${file}" could not be loaded.`, e);
+    const o = e as Error;
+    errorLog(`"${file}" could not be loaded.`, o);
   }
 }
 
@@ -105,10 +101,10 @@ async function loadTranslations() {
   const file = `./json/translations_hosting.json`;
   try {
     const response: Response = await fetch(file);
-    const data: NsWowTranslations = await response.json();
-    config.value.translations = data;
+    config.value.translations = await response.json() as NsWowTranslations;
   } catch (e) {
-    errorLog(`"${file}" could not be loaded.`, e);
+    const o = e as Error;
+    errorLog(`"${file}" could not be loaded.`, o);
   }
 }
 
@@ -120,19 +116,22 @@ async function loadRouting(locale: string) {
     config.value.articles[locale] = routing.pages;
     config.value.menus[locale] = routing.menu;
   } catch (e) {
-    errorLog(`"${file}" could not be loaded.`, e);
+    const o = e as Error;
+    errorLog(`"${file}" could not be loaded.`, o);
   }
 }
 
 async function loadDownloads(locale: string) {
-  config.value.downloads[locale] = {};
+  config.value.downloads[locale] = {
+    structure: [],
+  };
   const file: string = `./downloads/downloads_${locale}.json`;
   try {
     const response: Response = await fetch(file);
-    const data = await response.json();
-    config.value.downloads[locale] = data;
+    config.value.downloads[locale] = await response.json();
   } catch (e) {
-    errorLog(`"${file}" could not be loaded.`, e);
+    const o = e as Error;
+    errorLog(`"${file}" could not be loaded.`, o);
   }
 }
 

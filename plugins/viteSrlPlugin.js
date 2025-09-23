@@ -137,6 +137,7 @@ export default function viteSrlPlugin() {
       config.resolve.alias = config.resolve.alias || {};
       config.resolve.alias['~'] = folders.root;
       config.resolve.alias['@'] = folders.srlSrc;
+      config.resolve.alias['#srl'] = folders.srlRoot;
       config.resolve.alias['#components'] = folders.srlComponents;
       config.resolve.alias['#composables'] = folders.srlComposables;
       config.resolve.alias['#plugins'] = folders.srlPlugins;
@@ -199,7 +200,7 @@ export default function viteSrlPlugin() {
         }
 
         if (
-          path.includes('src/components/Srl') &&
+          path.includes('src/components/') &&
           path.endsWith('.vue')
         ) {
           triggerAction(vueComponents);
@@ -241,7 +242,7 @@ export default function viteSrlPlugin() {
         }
 
         if (
-          path.includes('src/components/Srl') &&
+          path.includes('src/components/') &&
           path.endsWith('.vue')
         ) {
           triggerAction(vueComponents);

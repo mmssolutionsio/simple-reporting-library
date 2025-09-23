@@ -6,7 +6,7 @@ export function addCssStyles(cssString: string): void {
   cssStyles.value.includes(cssString) || cssStyles.value.push(cssString);
 }
 
-export function useCssStyles(): string[] {
+export function useCssStyles(): typeof cssStyles {
   return cssStyles;
 }
 

@@ -167,7 +167,7 @@ function routerChange() {
 }
 
 function closeAll(keep?: number | string) {
-  items.value.forEach((item: typeof MenuItem, index: number) => {
+  items.value.forEach((item: SrlMenuItem, index: number) => {
     if (keep !== index) item.closeItem()
   })
 }
