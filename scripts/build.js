@@ -1,4 +1,4 @@
-import { join } from 'node:path/posix';
+import { join, relative } from 'node:path/posix';
 import {
   statSync,
   writeFileSync,
@@ -244,22 +244,6 @@ async function zipLdd() {
   console.log("\n\nCreate zip file for LDD");
   await checkFolders();
 
-  const lddPdfDir = join(folders.srlOutput, 'ldd', 'pdf');
-
-  try {
-    const pdfDir = join(folders.srlOutput, 'pdf');
-    statSync(pdfDir);
-    await cpSync(pdfDir, lddPdfDir, { recursive: true });
-    console.log('PDF folder has been copied to ' + lddPdfDir);
-  } catch (e) {}
-
-  try {
-    const customerDir = join(folders.root, 'pdf', 'customer');
-    statSync(customerDir);
-    await cpSync(customerDir, lddPdfDir, { recursive: true });
-    console.log('Contents of pdf/customer have been copied to ' + lddPdfDir);
-  } catch (e) {}
-
   const archiver = require('archiver');
   const output = createWriteStream(join(outputPath, 'design.zip'));
   const archive = archiver('zip', {
@@ -472,21 +456,6 @@ async function buildLdd(version) {
                 }
               }
             },
-            resolve: {
-              alias: {
-                '~': folders.root,
-                '@': folders.srlSrc,
-                '#components': folders.srlComponents,
-                '#composables': folders.srlComposables,
-                '#plugins': folders.srlPlugins,
-                '#types': folders.srlTypes,
-                '#utils': folders.srlUtils,
-                '#imports': folders.srlImports,
-                '#ldd': folders.packageLd,
-                'assets': folders.srlAssets,
-                'srl': folders.srlSystem,
-              },
-            },
             publicDir: false,
           })
         }
@@ -501,11 +470,123 @@ async function buildLdd(version) {
           join(folders.root, 'livingdocs.config.json'),
           join(folders.srlOutput, 'ldd', 'design.json'),
         );
+        buildPdfCustomer()
       });
   } catch (e) {
     console.error(e);
     return false;
   }
+}
+
+async function buildPdfCustomer() {
+  const lddPdfDir = join(folders.srlOutput, 'ldd', 'pdf');
+  const lddJson = await readLivingDocsJson();
+
+  try {
+    const pdfDir = join(folders.srlOutput, 'pdf');
+    statSync(pdfDir);
+    await cpSync(pdfDir, lddPdfDir, { recursive: true });
+    console.log('PDF folder has been copied to ' + lddPdfDir);
+  } catch (e) {
+    console.error(e)
+  }
+
+  try {
+    const customerDir = join(folders.root, 'pdf', 'customer');
+    statSync(customerDir);
+    const customerFolders = readdirSync(customerDir, { withFileTypes: true })
+      .filter(dirent => dirent.isDirectory())
+      .map(dirent => dirent.name);
+
+    try {
+      for (let i = 0; i < customerFolders.length; i++) {
+        const customer = customerFolders[i];
+        const customerFolder = join(customerDir, customer);
+        const customerTarget = join(lddPdfDir, customer);
+
+        const jsReferences = [];
+        const cssReferences = [];
+
+        try {
+          const scssPath = join(customerFolder, 'custom.ts');
+          statSync(scssPath);
+          const config = {
+            css: {
+              preprocessorOptions: {
+                scss: {
+                  api: 'modern-compiler',
+                },
+              },
+            },
+            base: './',
+            build: {
+              outDir: customerTarget,
+              lib: {
+                fileName: 'custom',
+                entry: scssPath,
+                formats: ['es'],
+              },
+            },
+            publicDir: false,
+          };
+          await viteBuild(config)
+
+          try {
+            statSync(join(customerTarget, 'custom.js'));
+            jsReferences.push(`${customer}/custom.js`);
+          } catch (e) {}
+
+          try {
+            statSync(join(customerTarget, 'custom.css'));
+            cssReferences.push(`${customer}/custom.css`);
+          } catch (e) {}
+
+
+        } catch (e) {}
+
+        const files = await glob(join(customerFolder, '**', '*'), { withFileTypes: true });
+        for (const file of files) {
+          if (file.isFile()) {
+            if (!file.name.endsWith('.scss') && !file.name.endsWith('.ts') && !file.name.endsWith('.tsx')) {
+              const from = file.fullpath();
+              const to = join(customerTarget, relative(customerFolder, file.fullpath()));
+              await cpSync(from, to);
+              console.log(`Copy /${relative(folders.root, from)} to /${relative(folders.root, to)}`);
+            }
+            if (file.name.endsWith('.css')) {
+              cssReferences.push(`${relative(customerDir, file.fullpath())}`);
+            }
+            if (file.name.endsWith('.js')) {
+              jsReferences.push(`${relative(customerDir, file.fullpath())}`);
+            }
+          }
+        }
+
+        const ns = `${nsWowInternalLddUrl}/${lddJson.name}/${lddJson.version}`;
+
+        const pdfConfig = [
+          '<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">'
+        ];
+        cssReferences.forEach( p => {
+          pdfConfig.push(`  <userStyleSheets><uri>${ns}/${p}</uri></userStyleSheets>`);
+        })
+
+        jsReferences.forEach( p => {
+          pdfConfig.push(`  <userScripts><uri>${ns}/${p}</uri></userScripts>`);
+        })
+
+        pdfConfig.push(`</configuration>`);
+
+        const pdfConfigPath = join(customerTarget, 'pdf-configuration.xml');
+        await writeFileSync(pdfConfigPath, pdfConfig.join('\n'));
+        console.log(`Create PDF configuration file /${relative(folders.root, pdfConfigPath)}`);
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  } catch (e) {}
+
+  return true;
 }
 
 /**
@@ -518,7 +599,6 @@ async function buildLdd(version) {
 async function buildWord() {
   console.log("\n\nBuild Word");
   await checkFolders();
-  let configFile = false;
 
   const config = {
     css: {
