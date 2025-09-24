@@ -1,6 +1,8 @@
 @use 'srl';
 @use 'sass:string';
 @use 'sass:map';
+@use 'components/round-button';
+@use 'components/icons';
 
 $font-weight-bold: map.get(srl.$meta, font, weight, bold);
 

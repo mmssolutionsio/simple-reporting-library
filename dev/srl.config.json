@@ -203,9 +203,6 @@
           "up": {
             "tablet-pt": {
               "font-size": 16
-            },
-            "desktop": {
-              "font-size": 16
             }
           }
         }
@@ -226,9 +223,6 @@
           },
           "up": {
             "tablet-pt": {
-              "font-size": 16
-            },
-            "desktop": {
               "font-size": 16
             }
           }
@@ -514,7 +508,7 @@
         "name": "button-text",
         "font-family": "Inter",
         "font-size": 12,
-        "line-height": 1.5,
+        "line-height": 1,
         "font-style": "normal",
         "font-weight": 400,
         "color": "black-1000",
@@ -522,7 +516,7 @@
         "media": {
           "print": {
             "font-size": "7pt",
-            "line-height": 1.429
+            "line-height": 1
           },
           "up": {
             "tablet-pt": {
@@ -763,6 +757,27 @@
       },
       {
         "name": "secondary-1000",
+        "color": "#001987"
+      },
+
+      {
+        "name": "tertiary-200",
+        "color": "#ccd1e7"
+      },
+      {
+        "name": "tertiary-400",
+        "color": "#99a3cf"
+      },
+      {
+        "name": "tertiary-600",
+        "color": "#6675b7"
+      },
+      {
+        "name": "tertiary-800",
+        "color": "#33479f"
+      },
+      {
+        "name": "tertiary-1000",
         "color": "#001987"
       },
       {

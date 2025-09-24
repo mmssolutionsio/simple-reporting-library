@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const props = withDefaults(defineProps<{
   responsive?: boolean
   download?: boolean
