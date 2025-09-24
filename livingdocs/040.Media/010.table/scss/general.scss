@@ -10,6 +10,7 @@ $table-border-bold: map.get(srl.$meta, table, border, bold);
 @include srl.system-add-root-style(srl-table-border-bold-width, srl.system-size-unit(map.get($table-border-bold, media, print, width)), print);
 
 .srl-table {
+  display: block;
   @include srl.spacer-margin-top(300);
 }
 
@@ -22,9 +23,17 @@ $table-border-bold: map.get(srl.$meta, table, border, bold);
 table {
   border-collapse: collapse;
   border-spacing: 0;
-  width: 100%;
+  min-width: 100%;
   margin: 0;
   table-layout: fixed;
+
+  .responsive-table & {
+    table-layout: auto;
+  }
+
+  @-moz-document url-prefix() {
+    border-collapse: inherit;
+  }
 }
 
 th,
@@ -294,6 +303,31 @@ td {
   /*
   Responsive CSS tables
   */
+  &:first-child {
+    .responsive-table & {
+      background: white;
+      position: sticky;
+      left: 0;
+      z-index: 2;
+    }
+
+    &:not(:first-child) {
+      .responsive-table & {
+        position: relative;
+        z-index: 1;
+      }
+    }
+
+    .has-shadow & {
+      box-shadow: 0 15px 15px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &:nth-child(2) {
+    .has-shadow & {
+      padding-left: calc(#{srl.spacer-get(map.get(srl.$meta, table, padding, regular, left))} + 24px);
+    }
+  }
 
   /*
   Paragraphs and spans
@@ -325,4 +359,22 @@ td {
 .note-link {
   color: srl.colors-primary-1000();
   text-decoration: none;
+  -webkit-appearance: none;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: 0s;
+  }
+
+  &:hover {
+    color: srl.colors-primary-1000();
+  }
+
+  &:focus {
+    color: srl.colors-primary-1000();
+  }
 }

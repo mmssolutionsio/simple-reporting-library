@@ -1,0 +1,19 @@
+{
+  "name": "button-container",
+  "label": "Button container",
+  "directives": {
+    "button-container": {
+      "allowedChildren": [
+        "button"
+      ],
+      "defaultComponents": {
+        "paragraph": "button"
+      },
+      "defaultContent": [
+        {
+          "component": "button"
+        }
+      ]
+    }
+  }
+}

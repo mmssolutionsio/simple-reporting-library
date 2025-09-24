@@ -1,0 +1,15 @@
+{
+  "name": "button",
+  "label": "Button",
+  "properties": [
+    "icon"
+  ],
+  "allowedParents": [
+    "button-container"
+  ],
+  "directives": {
+    "button-text": {
+      "plainText": true
+    }
+  }
+}

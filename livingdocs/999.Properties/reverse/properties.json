@@ -1,0 +1,7 @@
+{
+  "reverse": {
+    "label": "Reverse",
+    "type": "option",
+    "value": "srl-reverse"
+  }
+}

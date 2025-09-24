@@ -1,0 +1,19 @@
+{
+  "icon": {
+    "label": "Icon",
+    "type": "select",
+    "options": [
+      {
+        "caption": "None"
+      },
+      {
+        "caption": "Arrow right",
+        "value": "srl-icon-arrow-right-after"
+      },
+      {
+        "caption": "Download",
+        "value": "srl-icon-download-after"
+      }
+    ]
+  }
+}

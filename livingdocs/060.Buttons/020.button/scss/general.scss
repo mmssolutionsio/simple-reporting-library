@@ -1,0 +1,89 @@
+@use "srl";
+@use "assets/scss/placeholders";
+
+.srl-button {
+  display: flex;
+  gap: srl.spacer-get(100);
+  align-items: center;
+  padding: srl.spacer-get(200);
+  background-color: srl.colors-white-1000();
+  border: 1px solid srl.colors-primary-1000();
+  text-decoration: none;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  border-radius: srl.system-size-unit(24);
+  cursor: pointer;
+  @include srl.typography-button-text();
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: 0s;
+  }
+
+  &.srl-has-icon,
+  [class*="-after"] &,
+  .srl-header__meta-navigation &,
+  &[class*="-before"],
+  &[class*="-after"] {
+    padding:  srl.system-size-unit(11) srl.spacer-get(200);
+  }
+
+ [class*="-after"] &,
+  &[class*="-after"] {
+    flex-direction: row-reverse;
+  }
+
+  &[aria-expanded="true"] {
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &:hover {
+      background-color: srl.colors-primary-1000();
+    //border-color: srl.colors-white-1000();
+    color: srl.colors-white-1000();
+
+    &[aria-expanded="true"] {
+      border-color: srl.colors-primary-1000();
+    }
+
+    .srl-bg-primary-1000 & {
+      border-color: srl.colors-secondary-1000();
+      background-color: srl.colors-secondary-1000();
+    }
+  }
+
+  &:focus {
+    background-color: srl.colors-primary-1000();
+    border-color: srl.colors-primary-1000();
+    color: srl.colors-white-1000();
+
+    .srl-bg-primary-1000 & {
+      background-color: srl.colors-primary-1000();
+      border-color: srl.colors-primary-1000();
+      color: srl.colors-white-1000();
+    }
+  }
+}
+
+.srl-button__icon {
+  display: none;
+
+  [class*="srl-icon-"][class*="-before"] &,
+  [class*="srl-icon-"][class*="-after"] & {
+    display: block;
+    @extend %srl-icon;
+    @extend %srl-icon-mask;
+  }
+
+  .srl-icon-arrow-left-before & {
+    @extend %srl-icon-arrow-left;
+  }
+
+  .srl-icon-arrow-right-after & {
+    @extend %srl-icon-arrow-right;
+  }
+
+  .srl-icon-download-after & {
+    @extend %srl-icon-download;
+  }
+}
