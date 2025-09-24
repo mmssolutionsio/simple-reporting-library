@@ -492,7 +492,7 @@ async function buildPdfCustomer() {
   }
 
   try {
-    const customerDir = join(folders.root, 'pdf', 'customer');
+    const customerDir = join(folders.root, 'pdf', 'customers');
     statSync(customerDir);
     const customerFolders = readdirSync(customerDir, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory())
