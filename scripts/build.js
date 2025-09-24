@@ -504,8 +504,12 @@ async function buildPdfCustomer() {
         const customerFolder = join(customerDir, customer);
         const customerTarget = join(lddPdfDir, customer);
 
-        const jsReferences = [];
-        const cssReferences = [];
+        const jsReferences = [
+          'pdf.js'
+        ];
+        const cssReferences = [
+          'pdf.css'
+        ];
 
         try {
           const scssPath = join(customerFolder, 'custom.ts');
@@ -562,7 +566,7 @@ async function buildPdfCustomer() {
           }
         }
 
-        const ns = `${nsWowInternalLddUrl}/${lddJson.name}/${lddJson.version}`;
+        const ns = `${nsWowInternalLddUrl}/${lddJson.name}/${lddJson.version}/pdf`;
 
         const pdfConfig = [
           '<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">'
