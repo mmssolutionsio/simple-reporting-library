@@ -236,6 +236,7 @@ defineExpose({
   <ul
     ref="$el"
     tabindex="0"
+    :role="props.depth === 0 ? 'menubar' : 'menu'"
     :id="props.id"
     :class="classList"
     :hidden="!opened"
