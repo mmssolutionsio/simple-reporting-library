@@ -51,7 +51,6 @@
  * />
  */
 import { computed, ref } from 'vue'
-import MenuItem from './Item.vue'
 
 type BackButtonItem = {
   title?: string
@@ -108,7 +107,7 @@ const emit = defineEmits([
   'tab',
   'back',
 ])
-const items = ref<Array<typeof MenuItem>>([])
+const items = ref<SrlMenuItem[]>([])
 
 const opened = defineModel('opened', { type: Boolean, default: true })
 
@@ -168,7 +167,7 @@ function routerChange() {
 }
 
 function closeAll(keep?: number | string) {
-  items.value.forEach((item: typeof MenuItem, index: number) => {
+  items.value.forEach((item: SrlMenuItem, index: number) => {
     if (keep !== index) item.closeItem()
   })
 }
@@ -247,7 +246,7 @@ defineExpose({
     @keydown.left.prevent.stop="focusClickable(menuItems.length - 1)"
   >
     <template v-for="(item, index) in menuItems" :key="index">
-      <MenuItem
+      <SrlMenuItem
         ref="items"
         :item="item"
         :name="props.name"

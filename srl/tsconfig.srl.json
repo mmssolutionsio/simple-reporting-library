@@ -1,0 +1,89 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": [
+    "../env.d.ts",
+    "../src/**/*",
+    "../src/**/*.vue",
+    "./**/*",
+    "./**/*.vue",
+    "../livingdocs/**/*",
+    "../livingdocs/**/*.vue",
+    "./**/*.d.ts"
+  ],
+  "exclude": [
+    "../src/**/__tests__/*"
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": "../node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "../src/*"
+      ],
+      "~/*": [
+        "../*"
+      ],
+      "#srl": [
+        "./"
+      ],
+      "#srl/*": [
+        "./*"
+      ],
+      "#components": [
+        "./components"
+      ],
+      "#components/*": [
+        "./components/*"
+      ],
+      "#composables": [
+        "./composables"
+      ],
+      "#composables/*": [
+        "./composables/*"
+      ],
+      "#utils": [
+        "./utils"
+      ],
+      "#utils/*": [
+        "./utils/*"
+      ],
+      "#plugins": [
+        "./plugins"
+      ],
+      "#plugins/*": [
+        "./plugins/*"
+      ],
+      "#types": [
+        "./types"
+      ],
+      "#types/*": [
+        "./types/*"
+      ],
+      "#imports": [
+        "./imports"
+      ],
+      "#imports/*": [
+        "./imports/*"
+      ],
+      "#ld": [
+        "../livingdocs"
+      ],
+      "#ld/*": [
+        "../livingdocs/*"
+      ],
+      "assets": [
+        "../src/assets"
+      ],
+      "assets/*": [
+        "../src/assets/*"
+      ],
+      "srl": [
+        "./srl"
+      ],
+      "srl/*": [
+        "./srl/*"
+      ]
+    }
+  }
+}

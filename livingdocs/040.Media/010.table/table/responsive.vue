@@ -50,6 +50,7 @@ function hasRowSpan() {
 function updateClasses() {
   const hasScroll = hasHorizontalScrollbar()
   const hasRowspan = hasRowSpan()
+
   if (hasScroll && !hasRowspan) {
     component.value?.classList.add('has-shadow', 'responsive-table')
     component.value?.classList.remove('responsive-table-alternative')

@@ -184,8 +184,8 @@ async function mapComponents(lddJson) {
 
   // write async components
   const asyncComponents = [
-    `import { defineAsyncComponent } from 'vue'`,
-    `export default function asyncLdComponent(app) {`,
+    `import { defineAsyncComponent, type App } from 'vue'`,
+    `export default function asyncLdComponent(app: App): void {`,
   ];
 
   for (let i = 0; i < vueComponents.length; i++) {

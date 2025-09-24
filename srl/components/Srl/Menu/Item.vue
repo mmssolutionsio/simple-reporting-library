@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, useId } from 'vue'
-import MenuItemContent from './Item/Content.vue'
-import MenuList from './List.vue'
 import type { RouterLink } from 'vue-router'
 import { isExternalPath } from '#utils/uri'
 
@@ -169,11 +167,12 @@ const classListItem = computed(() => {
 </script>
 
 <template>
-  <li v-if="!item.children && props.item.href" :class="classListLi">
+  <li v-if="!item.children && props.item.href" role="none" :class="classListLi">
     <router-link
       v-if="!external"
       ref="$el"
       tabindex="-1"
+      role="menuitem"
       :to="props.item.href"
       :class="classListItem"
       :title="props.item.title ?? props.item.label"
@@ -187,7 +186,7 @@ const classListItem = computed(() => {
       @keydown.shift.tab.exact="back"
       @keydown.esc.stop.prevent="close"
     >
-      <MenuItemContent
+      <SrlMenuItemContent
         :item="props.item"
         :depth="props.depth"
         :disableClasses="props.disableClasses"
@@ -197,6 +196,7 @@ const classListItem = computed(() => {
       v-else
       tabindex="-1"
       ref="$el"
+      role="menuitem"
       :href="props.item.href"
       :title="props.item.title ?? props.item.label"
       :class="classListItem"
@@ -212,18 +212,19 @@ const classListItem = computed(() => {
       @keydown.shift.tab.exact="back"
       @keydown.esc.stop.prevent="close"
     >
-      <MenuItemContent
+      <SrlMenuItemContent
         :item="props.item"
         :depth="props.depth"
         :disableClasses="props.disableClasses"
       />
     </a>
   </li>
-  <li v-else-if="props.item.callback" :class="classListLi">
+  <li v-else-if="props.item.callback" role="none" :class="classListLi">
     <button
       type="button"
       ref="$el"
       tabindex="-1"
+      role="menuitem"
       :class="classListItem"
       :title="props.item.title ?? props.item.label"
       :aria-label="props.item.icon ? props.item.title ?? props.item.label : undefined"
@@ -237,18 +238,19 @@ const classListItem = computed(() => {
       @keydown.shift.tab.exact="back"
       @keydown.esc.stop.prevent="close"
     >
-      <MenuItemContent
+      <SrlMenuItemContent
         :item="props.item"
         :depth="props.depth"
         :disableClasses="props.disableClasses"
       />
     </button>
   </li>
-  <li v-else :class="classListLi">
+  <li v-else :class="classListLi" role="none">
     <button
       type="button"
       ref="$el"
       tabindex="-1"
+      role="menuitem"
       :aria-haspopup="props.item.children ? 'true' : 'false'"
       :aria-expanded="opened"
       :aria-controls="`${props.name}-${id}`"
@@ -265,13 +267,13 @@ const classListItem = computed(() => {
       @keydown.shift.tab.exact="back"
       @keydown.esc.stop.prevent="close"
     >
-      <MenuItemContent
+      <SrlMenuItemContent
         :item="props.item"
         :depth="props.depth"
         :disableClasses="props.disableClasses"
       />
     </button>
-    <MenuList
+    <SrlMenu
       v-if="props.item.children"
       ref="menu"
       :id="`${props.name}-${id}`"
