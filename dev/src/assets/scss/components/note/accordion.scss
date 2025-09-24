@@ -5,30 +5,66 @@ $transition-duration: .3s;
 
 .lc-accordion
 {
-  @extend %srl-grid-base;
   @include srl.spacer-margin-top(400);
 
   &__inner {
-    @extend %srl-regular-width;
-    border-top: 1px solid srl.colors-black-1000();
-    border-bottom: 1px solid srl.colors-black-1000();
+
+    @include srl.grid-media-up(tablet-pt) {
+      display: grid;
+      column-gap: var(--srl-container-padding);
+      grid-template-columns:
+        [start] minmax(0, 1fr)
+        [content] minmax(0, calc(var(--srl-container-max-width) - var(--srl-container-padding) * 2))
+        [end] minmax(0, 1fr)
+        [full-end];
+    }
+
+    &-head {
+      width: 100%;
+      grid-column: content / end;
+      @extend %srl-grid-base;
+      @include srl.grid-media-up(tablet-pt) {
+        padding-inline: 0;
+      }
+    }
+
+    &:after {
+      content: "";
+      display: block;
+      border-bottom: 1px solid srl.colors-primary-1000();
+      grid-column: content / end;
+      margin-inline: var(--srl-container-padding);
+      @include srl.grid-media(tablet-pt) {
+        margin-inline: 0;
+      }
+      @include srl.grid-media(tablet-ls) {
+        margin-inline: calc(100% / var(--srl-gutter-columns) * 2 + 7px);
+      }
+      @include srl.grid-media-up(desktop) {
+        margin-inline: calc(100% / var(--srl-gutter-columns) * 3 + 7px);
+      }
+    }
   }
 
   & + & {
     margin-block-start: 0;
-    > .lc-accordion__inner {
-      border-top: none;
+  }
+
+  &:has(+ .lc-accordion) {
+    .lc-accordion__inner:after {
+      display: none;
     }
   }
 
   &__head {
     @include srl.typography-title-h3();
-    width: calc(100% + (var(--srl-container-padding) * 2));
-    border: 0;
+    width: 100%;
+    border-style: solid;
+    border-color: srl.colors-primary-1000();
+    border-width: srl.system-size-unit(1) 0 0 0;
     text-align: left;
-    margin-inline: calc(var(--srl-container-padding) * -1);
     background-color: transparent;
-    padding: srl.spacer-get(300) var(--srl-container-padding);
+    padding: srl.spacer-get(300) 0;
     @include srl.spacer-gap(200);
     cursor: pointer;
     display: flex;
@@ -52,12 +88,13 @@ $transition-duration: .3s;
       transition: all $transition-duration ease;
 
       &:before {
-        content: "+";
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        content: "";
+        display: block;
         width: srl.system-size-unit(20);
         height: srl.system-size-unit(20);
+        @extend %srl-icon;
+        @extend %srl-icon-mask;
+        @extend %srl-icon-plus;
         transition: all $transition-duration ease;
       }
     }
@@ -68,7 +105,7 @@ $transition-duration: .3s;
         color: srl.colors-white-1000();
         border-color: srl.colors-black-1000();
         &:before {
-          content: "-";
+          @extend %srl-icon-minus;
         }
       }
     }
@@ -78,7 +115,7 @@ $transition-duration: .3s;
     display: grid;
     grid-template-rows: 1fr;
     transition: padding-bottom $transition-duration ease, grid-template-rows $transition-duration ease;
-    overflow: hidden;
+    grid-column: start / full-end;
 
     &[hidden] {
       grid-template-rows: 0fr;
@@ -90,17 +127,13 @@ $transition-duration: .3s;
     }
 
     &-inner {
-      width: 100vw;
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
+      width: 100%;
+      padding: 0;
       overflow: hidden;
 
       .lc-accordion:last-child {
-        > .lc-accordion__inner {
-          border-bottom: none;
+        > .lc-accordion__inner:after {
+          display: none;
         }
       }
     }

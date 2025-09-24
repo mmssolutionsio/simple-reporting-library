@@ -1,5 +1,6 @@
 @use "srl";
 @use "placeholders";
+@use "./components/note/accordion";
 
 .srl-grid {
   @extend %srl-grid-base;

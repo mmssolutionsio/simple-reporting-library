@@ -1,5 +1,9 @@
 @use 'srl';
 
+.srl-video {
+  display: block;
+}
+
 .srl-video__video-link-container {
   @include srl.spacer-margin-top(100);
 }

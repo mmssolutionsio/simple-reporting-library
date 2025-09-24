@@ -2,6 +2,6 @@
   "hide-quote-characters": {
     "label": "Hide quote characters before and after",
     "type": "option",
-    "value": "hide-quote-characters"
+    "value": "srl-hide-quote-characters"
   }
 }

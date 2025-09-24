@@ -1,17 +1,18 @@
-<div class="srl-video" data-autoload="video">
+<div class="srl-video">
   <div class="srl-grid srl-grid--media">
     <div class="srl-grid__inner srl-video__inner">
-      <div class="srl-video__video-container" doc-html="free-html"  data-remove-from-pdf="complete"></div>
-      <img class="srl-video__thumbnail" doc-image="video-thumbnail"></img>
-      <div class="srl-video__play" data-remove-from-pdf="complete">
-        <button class="srl-video__play-button" type="button">
-          <div class="srl-video__play-button-inner">
-            <svg class="svg svg-play" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M5 3L19 12L5 21V3Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </button>
-      </div>
+      <srl-ld-video data-remove-from-xbrl="transient" data-remove-from-pdf="transient">
+        <div class="srl-video__video-container" doc-html="free-html"  data-remove-from-pdf="complete"></div>
+        <img class="srl-video__thumbnail" doc-image="video-thumbnail"></img>
+        <div class="srl-video__play" data-remove-from-pdf="complete">
+          <button class="srl-button srl-has-icon" type="button">
+              <svg class="svg svg-play" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 3L19 12L5 21V3Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            <span doc-editable="text">Video abspielen</span>
+          </button>
+        </div>
+      </srl-ld-video>
     </div>
   </div>
   <div class="srl-grid">
