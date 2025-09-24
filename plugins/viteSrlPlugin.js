@@ -125,7 +125,7 @@ function triggerAction(callback) {
   }, 200);
 }
 
-export default function viteSrlPlugin() {
+function viteSrlPlugin() {
   return {
     name: 'vite-srl-plugin',
     config(config) {
@@ -251,3 +251,6 @@ export default function viteSrlPlugin() {
     },
   };
 }
+
+export default viteSrlPlugin;
+export { viteSrlPlugin };

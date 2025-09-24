@@ -12,11 +12,12 @@ function toggle() {
 
 function open() {
   state.value = true
-  rootEl.value.querySelector<HTMLDivElement>(`#${id.value}`)?.focus()
+  rootEl.value?.querySelector<HTMLDivElement>(`#${id.value}`)?.focus()
 }
 
 function close() {
   state.value = false
+  rootEl.value?.querySelector<HTMLDivElement>(`[aria-controls="${id.value}"]`)?.focus()
 }
 
 const accordion = computed(() => {

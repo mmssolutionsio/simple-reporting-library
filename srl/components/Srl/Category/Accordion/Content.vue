@@ -57,7 +57,13 @@ onMounted(() => {
 </script>
 
 <template>
-<div ref="rootEl" :id="props.accordion.id" :hidden="!props.accordion.state">
+<div
+  ref="rootEl"
+  :id="props.accordion.id"
+  :hidden="!props.accordion.state"
+  tabindex="-1"
+  @keydown.esc.stop.prevent="accordion.close()"
+>
   <slot/>
 </div>
 </template>
