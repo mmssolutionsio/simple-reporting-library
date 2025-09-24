@@ -512,8 +512,8 @@ async function buildPdfCustomer() {
         ];
 
         try {
-          const scssPath = join(customerFolder, 'custom.ts');
-          statSync(scssPath);
+          const tsPath = join(customerFolder, 'custom.ts');
+          statSync(tsPath);
           const config = {
             css: {
               preprocessorOptions: {
@@ -527,13 +527,18 @@ async function buildPdfCustomer() {
               outDir: customerTarget,
               lib: {
                 fileName: 'custom',
-                entry: scssPath,
+                entry: tsPath,
                 formats: ['es'],
               },
             },
             publicDir: false,
           };
-          await viteBuild(config)
+
+          try {
+            await viteBuild(config);
+          } catch (e) {
+            console.error(e);
+          }
 
           try {
             statSync(join(customerTarget, 'custom.js'));
@@ -566,22 +571,28 @@ async function buildPdfCustomer() {
           }
         }
 
-        const ns = `${nsWowInternalLddUrl}/${lddJson.name}/${lddJson.version}/pdf`;
+        const nsWowUrl = `${nsWowInternalLddUrl}/${lddJson.name}/${lddJson.version}/pdf`;
 
         const pdfConfig = [
           '<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">'
         ];
         cssReferences.forEach( p => {
-          pdfConfig.push(`  <userStyleSheets><uri>${ns}/${p}</uri></userStyleSheets>`);
+          pdfConfig.push(`  <userStyleSheets><uri>${nsWowUrl}/${p}</uri></userStyleSheets>`);
         })
 
         jsReferences.forEach( p => {
-          pdfConfig.push(`  <userScripts><uri>${ns}/${p}</uri></userScripts>`);
+          pdfConfig.push(`  <userScripts><uri>${nsWowUrl}/${p}</uri></userScripts>`);
         })
 
         pdfConfig.push(`</configuration>`);
 
         const pdfConfigPath = join(customerTarget, 'pdf-configuration.xml');
+        try {
+          statSync(customerTarget);
+        } catch (e) {
+          mkdirSync(customerTarget, { recursive: true });
+        }
+
         await writeFileSync(pdfConfigPath, pdfConfig.join('\n'));
         console.log(`Create PDF configuration file /${relative(folders.root, pdfConfigPath)}`);
       }
