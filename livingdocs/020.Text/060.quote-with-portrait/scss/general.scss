@@ -7,8 +7,8 @@ $quote-close: map.get(srl.$meta, quote, quote-close);
 
 .srl-quote {
   align-items: center;
-  row-gap: srl.spacer-get(300);
-  @include srl.spacer-margin-top(400);
+  row-gap: srl.spacer-get(400);
+  @include srl.spacer-margin-top(800);
 }
 
 .srl-quote__quote {

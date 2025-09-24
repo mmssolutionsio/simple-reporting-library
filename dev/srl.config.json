@@ -2,7 +2,7 @@
   "meta": {
     "meta": {
       "title": {
-        "number-width": 400,
+        "number-width": 800,
         "number-width-pdf": 400
       },
       "list": {
@@ -867,7 +867,7 @@
           }
         }
       },
-      "300": {
+      "400": {
         "size": 32,
         "media": {
           "print": {
@@ -875,7 +875,7 @@
           }
         }
       },
-      "400": {
+      "800": {
         "size": 64,
         "media": {
           "print": {
@@ -883,7 +883,7 @@
           }
         }
       },
-      "500": {
+      "1600": {
         "size": 128,
         "media": {
           "print": {

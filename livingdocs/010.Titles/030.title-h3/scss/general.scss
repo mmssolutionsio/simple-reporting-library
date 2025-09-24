@@ -5,7 +5,7 @@ $number-width: srl.spacer-get(map.get(srl.$meta, title, number-width));
 
 .srl-title-h3 {
   @include srl.typography-title-h3();
-  @include srl.spacer-margin-top(300);
+  @include srl.spacer-margin-top(400);
 }
 
 .srl-title-h3__number-text-container {
