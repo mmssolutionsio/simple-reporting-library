@@ -862,32 +862,32 @@ async function mapScss() {
       join(folders.srlImports, 'app.scss'),
       `@use ` +
         output.app.join(';\n@use ') +
-        `;\n@use "../scss/core-styles.scss" as *;\n`,
+        `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'ldd.scss'),
       `@use ` +
         output.ldd.join(';\n@use ') +
-        `;\n@use "../scss/core-styles.scss" as *;\n`,
+        `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'pdf.scss'),
       `@use ` +
         output.pdf.join(';\n@use ') +
-        `;\n@use "../scss/core-styles.scss" as *;\n`,
+        `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'word.scss'),
       `@use ` +
         output.word.join(';\n@use ') +
-        `;\n@use "../scss/core-styles.scss" as *;\n`,
+        `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
     );
 
     await writeFileSync(
       join(folders.srlImports, 'xbrl.scss'),
       output.xbrl.length
         ? `@use ` + output.xbrl.join(';\n@use ')
-        : '' + `;\n@use "../scss/xbrl-core-styles.scss" as *;\n`,
+        : '' + `;\n@use "@multivisio/nswow/scss/xbrl-core-styles.scss" as *;\n`,
     );
 
     return true;
