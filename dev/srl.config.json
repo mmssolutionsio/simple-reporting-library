@@ -154,8 +154,8 @@
         "letter-spacing": 0,
         "media": {
           "print": {
-            "font-size": "20pt",
-            "line-height": 1.2
+            "font-size": "16pt",
+            "line-height": 1.25
           },
           "up": {
             "tablet-pt": {

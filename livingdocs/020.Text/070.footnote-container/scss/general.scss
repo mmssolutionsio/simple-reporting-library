@@ -1,5 +1,6 @@
 @use "srl";
 
 .srl-footnote-container {
+  overflow: hidden;
   @include srl.spacer-margin-top(200);
 }
