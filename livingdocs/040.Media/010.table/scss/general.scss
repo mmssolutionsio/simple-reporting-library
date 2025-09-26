@@ -11,7 +11,7 @@ $table-border-bold: map.get(srl.$meta, table, border, bold);
 
 .srl-table {
   display: block;
-  @include srl.spacer-margin-top(300);
+  @include srl.spacer-margin-top(400);
 }
 
 .srl-table__container {
@@ -210,7 +210,7 @@ td {
 
   &[class*="ind_ind"] {
     &:first-child {
-      padding-left: srl.spacer-get(300);
+      padding-left: srl.spacer-get(400);
     }
   }
 

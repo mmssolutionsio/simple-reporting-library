@@ -42,21 +42,21 @@ img {
   @top-left-corner {
     content: element(publicationTitle);
     position: absolute;
-    top: srl.spacer-get(300);
+    top: srl.spacer-get(400);
     left: $page-margin-left;
   }
 
   @top-left {
     content: element(chapterNavigation);
     position: absolute;
-    top: srl.spacer-get(300);
+    top: srl.spacer-get(400);
     left: srl.grid-calculate-pdf-col-span-plus-one-gutter(2);
   }
 
   @top-right-corner {
     content: counter(page);
     position: absolute;
-    top: srl.spacer-get(300);
+    top: srl.spacer-get(400);
     right: $page-margin-right;
     @include srl.typography-pdf-header()
   }

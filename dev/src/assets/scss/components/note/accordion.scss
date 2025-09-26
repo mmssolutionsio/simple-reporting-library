@@ -5,7 +5,7 @@ $transition-duration: .3s;
 
 .lc-accordion
 {
-  @include srl.spacer-margin-top(400);
+  @include srl.spacer-margin-top(800);
 
   &__inner {
 
@@ -64,14 +64,14 @@ $transition-duration: .3s;
     border-width: srl.system-size-unit(1) 0 0 0;
     text-align: left;
     background-color: transparent;
-    padding: srl.spacer-get(300) 0;
+    padding: srl.spacer-get(400) 0;
     @include srl.spacer-gap(200);
     cursor: pointer;
     display: flex;
     @extend %srl-regular-width;
 
     .lc-title-h3__number {
-      width: srl.spacer-get(400);
+      width: srl.spacer-get(800);
       color: srl.colors-black-1000();
     }
 
@@ -123,7 +123,7 @@ $transition-duration: .3s;
     }
 
     &:not([hidden]) {
-      padding-bottom: srl.spacer-get(300);
+      padding-bottom: srl.spacer-get(400);
     }
 
     &-inner {

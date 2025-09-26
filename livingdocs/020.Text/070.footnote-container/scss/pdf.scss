@@ -1,0 +1,9 @@
+@use 'srl';
+
+.srl-footnote-container:not(.srl-grid) {
+  @include srl.grid-pdf-flex-col(6);
+
+  .srl-wide-width & {
+    @include srl.grid-pdf-flex-col(8);
+  }
+}
