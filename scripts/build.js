@@ -470,7 +470,6 @@ async function buildLdd(version) {
           join(folders.root, 'livingdocs.config.json'),
           join(folders.srlOutput, 'ldd', 'design.json'),
         );
-        buildPdfCustomer()
       });
   } catch (e) {
     console.error(e);
@@ -478,7 +477,17 @@ async function buildLdd(version) {
   }
 }
 
-async function buildPdfCustomer() {
+async function buildPdfCustomer(customer) {
+  const customerDir = join(folders.root, 'pdf', 'customers', customer);
+
+  try {
+    statSync(customerDir);
+  } catch (e) {
+    console.error(`Customer ${customer} does not exist in: ` + customerDir);
+  }
+
+  console.log(`\nBuild PDF for customer ${customer}`);
+
   const lddPdfDir = join(folders.srlOutput, 'ldd', 'pdf');
   const lddJson = await readLivingDocsJson();
 
@@ -486,108 +495,114 @@ async function buildPdfCustomer() {
     const pdfDir = join(folders.srlOutput, 'pdf');
     statSync(pdfDir);
     await cpSync(pdfDir, lddPdfDir, { recursive: true });
-    console.log('PDF folder has been copied to ' + lddPdfDir);
+    console.log(`PDF folder has been copied to ${relative(folders.root, lddPdfDir)}`);
   } catch (e) {
     console.error(e)
   }
 
   try {
-    const customerDir = join(folders.root, 'pdf', 'customers');
     statSync(customerDir);
-    const customerFolders = readdirSync(customerDir, { withFileTypes: true })
-      .filter(dirent => dirent.isDirectory())
-      .map(dirent => dirent.name);
+    const customerTarget = join(lddPdfDir, customer);
+    mkdirSync(customerTarget, { recursive: true });
+    const jsReferences = [
+      'pdf.js'
+    ];
+    const cssReferences = [
+      'pdf.css'
+    ];
 
     try {
-      for (let i = 0; i < customerFolders.length; i++) {
-        const customer = customerFolders[i];
-        const customerFolder = join(customerDir, customer);
-        const customerTarget = join(lddPdfDir, customer);
-
-        const jsReferences = [
-          'pdf.js'
-        ];
-        const cssReferences = [
-          'pdf.css'
-        ];
-
-        try {
-          const scssPath = join(customerFolder, 'custom.ts');
-          statSync(scssPath);
-          const config = {
-            css: {
-              preprocessorOptions: {
-                scss: {
-                  api: 'modern-compiler',
-                },
-              },
+      const tsPath = join(customerDir, 'custom.ts');
+      statSync(tsPath);
+      const config = {
+        css: {
+          preprocessorOptions: {
+            scss: {
+              api: 'modern-compiler',
             },
-            base: './',
-            build: {
-              outDir: customerTarget,
-              lib: {
-                fileName: 'custom',
-                entry: scssPath,
-                formats: ['es'],
-              },
-            },
-            publicDir: false,
-          };
-          await viteBuild(config)
+          },
+        },
+        base: './',
+        build: {
+          outDir: customerTarget,
+          lib: {
+            fileName: 'custom',
+            entry: tsPath,
+            formats: ['es'],
+          },
+        },
+        publicDir: false,
+      };
 
-          try {
-            statSync(join(customerTarget, 'custom.js'));
-            jsReferences.push(`${customer}/custom.js`);
-          } catch (e) {}
+      try {
+        await viteBuild(config);
+      } catch (e) {
+        console.error(e);
+      }
+      jsReferences.push(join(customer, 'custom.js'));
+    } catch (e) {}
 
-          try {
-            statSync(join(customerTarget, 'custom.css'));
-            cssReferences.push(`${customer}/custom.css`);
-          } catch (e) {}
+    try {
+      const cssPath = join(customerTarget, 'custom.css');
+      statSync(cssPath);
+      cssReferences.push(join(customer, 'custom.css'));
+    } catch (e) {}
 
+    try {
+      const publicDir = join(customerDir, 'public');
+      statSync(publicDir);
+      const publicTarget = join(customerTarget, 'public');
+      await cpSync(publicDir, publicTarget, { recursive: true });
+      console.log(`Customer ${customer} public folder has been copied to ${relative(folders.root, publicTarget)}`);
 
-        } catch (e) {}
+      const publicFiles = await glob(join(publicTarget, '**', '*'), { withFileTypes: true });
 
-        const files = await glob(join(customerFolder, '**', '*'), { withFileTypes: true });
-        for (const file of files) {
-          if (file.isFile()) {
-            if (!file.name.endsWith('.scss') && !file.name.endsWith('.ts') && !file.name.endsWith('.tsx')) {
-              const from = file.fullpath();
-              const to = join(customerTarget, relative(customerFolder, file.fullpath()));
-              await cpSync(from, to);
-              console.log(`Copy /${relative(folders.root, from)} to /${relative(folders.root, to)}`);
-            }
-            if (file.name.endsWith('.css')) {
-              cssReferences.push(`${relative(customerDir, file.fullpath())}`);
-            }
-            if (file.name.endsWith('.js')) {
-              jsReferences.push(`${relative(customerDir, file.fullpath())}`);
-            }
+      for (const publicFile of publicFiles) {
+        if (publicFile.isFile()) {
+          if (publicFile.name.endsWith('.css')) {
+            cssReferences.push(`${relative(lddPdfDir, publicFile.fullpath())}`);
+          }
+          if (publicFile.name.endsWith('.js')) {
+            jsReferences.push(`${relative(lddPdfDir, publicFile.fullpath())}`);
           }
         }
-
-        const ns = `${nsWowInternalLddUrl}/${lddJson.name}/${lddJson.version}/pdf`;
-
-        const pdfConfig = [
-          '<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">'
-        ];
-        cssReferences.forEach( p => {
-          pdfConfig.push(`  <userStyleSheets><uri>${ns}/${p}</uri></userStyleSheets>`);
-        })
-
-        jsReferences.forEach( p => {
-          pdfConfig.push(`  <userScripts><uri>${ns}/${p}</uri></userScripts>`);
-        })
-
-        pdfConfig.push(`</configuration>`);
-
-        const pdfConfigPath = join(customerTarget, 'pdf-configuration.xml');
-        await writeFileSync(pdfConfigPath, pdfConfig.join('\n'));
-        console.log(`Create PDF configuration file /${relative(folders.root, pdfConfigPath)}`);
       }
-    } catch (e) {
-      console.error(e)
-    }
+    } catch (e) {}
+
+    const pdfXmlStart = `<configuration xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n`;
+    const pdfXmlEnd = `\n</configuration>`;
+    const nsWowUrl = `${nsWowInternalLddUrl}/${lddJson.name}/${lddJson.version}/pdf`;
+
+    const pdfConfig = [];
+    cssReferences.forEach( p => {
+      pdfConfig.push(`  <userStyleSheets><uri>${nsWowUrl}/${p}</uri></userStyleSheets>`);
+    })
+
+    jsReferences.forEach( p => {
+      pdfConfig.push(`  <userScripts><uri>${nsWowUrl}/${p}</uri></userScripts>`);
+    })
+
+    const pdfConfigContent = pdfXmlStart
+      + `  <appendLog>false</appendLog>\n`
+      + pdfConfig.join('\n')
+      + pdfXmlEnd;
+    const pdfConfigPath = join(customerTarget, 'pdf-configuration.xml');
+    writeFileSync(pdfConfigPath, pdfConfigContent);
+    console.log(`Customer ${customer} PDF configuration file has been built to ${relative(folders.root, pdfConfigPath)}`);
+
+    const pdfConfigDebugContent = pdfXmlStart
+      + `  <appendLog>true</appendLog>\n`
+      + `  <inspectableSettings><enabled>true</enabled></inspectableSettings>\n`
+      + `  <debugSettings><all>true</all></debugSettings>\n`
+      + pdfConfig.join('\n')
+      + pdfXmlEnd;
+    const pdfConfigDebugPath = join(customerTarget, 'pdf-configuration-debug.xml');
+    writeFileSync(pdfConfigDebugPath, pdfConfigDebugContent);
+    console.log(`Customer ${customer} PDF debug configuration file has been built to ${relative(folders.root, pdfConfigDebugPath)}`);
+
+    console.log(`Customer ${customer} PDF files has been built to ${relative(folders.root, customerTarget)}`);
+
+    console.log("\n");
   } catch (e) {}
 
   return true;
@@ -639,7 +654,8 @@ async function buildWord() {
  * @param {string} version
  * @return {Promise<void>} A Promise that resolves when the build process is completed or rejects if an error occurs.
  */
-async function build(version) {
+async function build(version, options) {
+
   try {
     await checkFolders();
     const packageJson = await readPackageJson();
@@ -661,6 +677,7 @@ async function build(version) {
     await buildWord();
     await buildXbrl();
     await buildLdd();
+    !options.customer || await buildPdfCustomer(options.customer);
     new LivingdocsDesignValidator(await readLivingDocsJson()).IsDesignValid();
     await zipApp();
     await zipLdd();

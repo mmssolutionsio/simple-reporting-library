@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 import { Command } from 'commander';
 import { readFile } from 'fs/promises';
 import {
@@ -79,8 +80,9 @@ commander
   .command('build')
   .description('Build ldd, app, pdf and word for production')
   .argument('[version]', 'The name of component or group.')
-  .action(async (version) => {
-    await build(version);
+  .option('-c, --customer <customer>', 'The customer to build for')
+  .action(async (version, options) => {
+    await build(version, options);
   });
 
 commander
