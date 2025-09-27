@@ -448,10 +448,10 @@ async function buildLdd(version) {
                 input: importFile,
                 output: {
                   assetFileNames: (assetInfo) => {
-                    if (/woff|woff2|ttf|otf|svg|jpe?g|png|gif|webp|avif|bmp|ico|apng/.test(assetInfo.name)) {
-                      return '[name]-[hash][extname]';
+                    if (/css/.test(assetInfo.name)) {
+                      return '[name][extname]';
                     }
-                    return '[name][extname]';
+                    return '[name]-[hash][extname]';
                   }
                 }
               }
@@ -514,6 +514,7 @@ async function buildPdfCustomer(customer) {
     try {
       const tsPath = join(customerDir, 'custom.ts');
       statSync(tsPath);
+
       const config = {
         css: {
           preprocessorOptions: {
@@ -524,12 +525,22 @@ async function buildPdfCustomer(customer) {
         },
         base: './',
         build: {
+          assetsInlineLimit: 0,
           outDir: customerTarget,
-          lib: {
-            fileName: 'custom',
-            entry: tsPath,
-            formats: ['es'],
-          },
+          assetsDir: '',
+          rollupOptions: {
+            input: tsPath,
+            output: {
+              entryFileNames: '[name].js',
+              chunkFileNames: '[name].js',
+              assetFileNames: (assetInfo) => {
+                if (/css/.test(assetInfo.name)) {
+                  return '[name][extname]';
+                }
+                return '[name]-[hash][extname]';
+              }
+            }
+          }
         },
         publicDir: false,
       };
