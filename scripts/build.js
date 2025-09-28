@@ -537,7 +537,7 @@ async function buildPdfCustomer(customer) {
                 if (/css/.test(assetInfo.name)) {
                   return '[name][extname]';
                 }
-                return '[name]-[hash][extname]';
+                return 'assets/[name]-[hash][extname]';
               }
             }
           }
