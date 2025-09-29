@@ -448,10 +448,10 @@ async function buildLdd(version) {
                 input: importFile,
                 output: {
                   assetFileNames: (assetInfo) => {
-                    if (/woff|woff2|ttf|otf|svg|jpe?g|png|gif|webp|avif|bmp|ico|apng/.test(assetInfo.name)) {
-                      return '[name]-[hash][extname]';
+                    if (/css/.test(assetInfo.name)) {
+                      return '[name][extname]';
                     }
-                    return '[name][extname]';
+                    return '[name]-[hash][extname]';
                   }
                 }
               }
@@ -478,7 +478,19 @@ async function buildLdd(version) {
 }
 
 async function buildPdfCustomer(customer) {
-  const customerDir = join(folders.root, 'pdf', 'customers', customer);
+
+  const customersDir = join(folders.root, 'pdf', 'customers');
+
+  if (customer === 'all') {
+    const customers = readdirSync(customersDir);
+    for (let i = 0; i < customers.length; i++) {
+      await buildPdfCustomer(customers[i]);
+    }
+    return true;
+  }
+
+  const customerDir = join(customersDir, customer);
+  const customerName = customer.split('-')[0];
 
   try {
     statSync(customerDir);
@@ -502,7 +514,7 @@ async function buildPdfCustomer(customer) {
 
   try {
     statSync(customerDir);
-    const customerTarget = join(lddPdfDir, customer);
+    const customerTarget = join(lddPdfDir, customerName);
     mkdirSync(customerTarget, { recursive: true });
     const jsReferences = [
       'pdf.js'
@@ -514,6 +526,7 @@ async function buildPdfCustomer(customer) {
     try {
       const tsPath = join(customerDir, 'custom.ts');
       statSync(tsPath);
+
       const config = {
         css: {
           preprocessorOptions: {
@@ -524,12 +537,22 @@ async function buildPdfCustomer(customer) {
         },
         base: './',
         build: {
+          assetsInlineLimit: 0,
           outDir: customerTarget,
-          lib: {
-            fileName: 'custom',
-            entry: tsPath,
-            formats: ['es'],
-          },
+          assetsDir: '',
+          rollupOptions: {
+            input: tsPath,
+            output: {
+              entryFileNames: '[name].js',
+              chunkFileNames: '[name].js',
+              assetFileNames: (assetInfo) => {
+                if (/css/.test(assetInfo.name)) {
+                  return '[name][extname]';
+                }
+                return 'assets/[name]-[hash][extname]';
+              }
+            }
+          }
         },
         publicDir: false,
       };
