@@ -478,7 +478,19 @@ async function buildLdd(version) {
 }
 
 async function buildPdfCustomer(customer) {
-  const customerDir = join(folders.root, 'pdf', 'customers', customer);
+
+  const customersDir = join(folders.root, 'pdf', 'customers');
+
+  if (customer === 'all') {
+    const customers = readdirSync(customersDir);
+    for (let i = 0; i < customers.length; i++) {
+      await buildPdfCustomer(customers[i]);
+    }
+    return true;
+  }
+
+  const customerDir = join(customersDir, customer);
+  const customerName = customer.split('-')[0];
 
   try {
     statSync(customerDir);
@@ -502,7 +514,7 @@ async function buildPdfCustomer(customer) {
 
   try {
     statSync(customerDir);
-    const customerTarget = join(lddPdfDir, customer);
+    const customerTarget = join(lddPdfDir, customerName);
     mkdirSync(customerTarget, { recursive: true });
     const jsReferences = [
       'pdf.js'
