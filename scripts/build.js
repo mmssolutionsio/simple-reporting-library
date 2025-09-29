@@ -562,13 +562,13 @@ async function buildPdfCustomer(customer) {
       } catch (e) {
         console.error(e);
       }
-      jsReferences.push(join(customer, 'custom.js'));
+      jsReferences.push(join(customerName, 'custom.js'));
     } catch (e) {}
 
     try {
       const cssPath = join(customerTarget, 'custom.css');
       statSync(cssPath);
-      cssReferences.push(join(customer, 'custom.css'));
+      cssReferences.push(join(customerName, 'custom.css'));
     } catch (e) {}
 
     try {
@@ -602,7 +602,7 @@ async function buildPdfCustomer(customer) {
     })
 
     jsReferences.forEach( p => {
-      pdfConfig.push(`  <userScripts><uri>${nsWowUrl}/${p}</uri></userScripts>`);
+      pdfConfig.push(`  <userScripts><beforeDocumentScripts>true</beforeDocumentScripts><uri>${nsWowUrl}/${p}</uri></userScripts>`);
     })
 
     const pdfConfigContent = pdfXmlStart
