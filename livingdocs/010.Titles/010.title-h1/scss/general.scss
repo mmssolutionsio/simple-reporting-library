@@ -2,4 +2,16 @@
 
 .srl-title-h1 {
   @include srl.typography-title-h1();
+
+  .srl-pdf-cover & {
+    @include srl.typography-title-h1-pdf();
+  }
+
+  .srl-cover--font-color-black & {
+    color: srl.colors-black-1000();
+  }
+
+  .srl-cover--font-color-primary & {
+    color: srl.colors-primary-1000();
+  }
 }

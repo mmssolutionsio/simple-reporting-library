@@ -6,9 +6,16 @@ $number-width: srl.system-size-unit(map.get(srl.$meta, footnote, number-width));
 .srl-footnote__key,
 .srl-footnote__number {
   width: $number-width;
+
+  &:empty {
+    width: 0;
+
+    & + .srl-footnote__text {
+      width: 100%;
+    }
+  }
 }
 
-.srl-footnote__text,
 .srl-footnote__text {
   width: calc(100% - #{$number-width});
 }

@@ -1,0 +1,10 @@
+@use 'srl';
+@use "sass:map";
+
+.srl-cv-time-span {
+  @include srl.typography-cv-time-span();
+}
+
+.srl-cv-time-span__inner {
+  display: flex;
+}

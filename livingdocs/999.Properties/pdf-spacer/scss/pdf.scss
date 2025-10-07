@@ -1,0 +1,29 @@
+@use "srl";
+
+.srl-spacer-25 {
+  margin-top: srl.spacer-get(25) !important;
+}
+
+.srl-spacer-50 {
+    margin-top: srl.spacer-get(50) !important;
+}
+
+.srl-spacer-100 {
+    margin-top: srl.spacer-get(100) !important;
+}
+
+.srl-spacer-200 {
+    margin-top: srl.spacer-get(200) !important;
+}
+
+.srl-spacer-400 {
+  margin-top: srl.spacer-get(400) !important;
+}
+
+.srl-spacer-800 {
+  margin-top: srl.spacer-get(800) !important;
+}
+
+.srl-spacer-1600 {
+  margin-top: srl.spacer-get(1600) !important;
+}

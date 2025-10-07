@@ -1,10 +1,6 @@
 @use 'srl';
 @use "assets/scss/placeholders";
 
-.srl-image {
-  @include srl.spacer-margin-top(800);
-}
-
 .srl-grid--media {
   .srl-full-width & {
     @extend %srl-grid-reset;

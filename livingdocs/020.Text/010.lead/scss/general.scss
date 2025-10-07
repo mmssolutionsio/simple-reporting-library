@@ -2,5 +2,4 @@
 
 .srl-lead {
   @include srl.typography-lead();
-  @include srl.spacer-margin-top(400);
 }

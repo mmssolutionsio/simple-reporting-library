@@ -1,0 +1,5 @@
+@use 'srl';
+
+.srl-pdf-toc-page__title {
+  @include srl.typography-toc-title();
+}

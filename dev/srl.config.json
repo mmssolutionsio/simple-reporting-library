@@ -122,6 +122,22 @@
         }
       },
       {
+        "name": "title-h1-pdf",
+        "font-family": "Inter",
+        "font-size": "16pt",
+        "line-height": 1.2,
+        "font-style": "normal",
+        "font-weight": 600,
+        "color": "white-1000",
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "16pt",
+            "line-height": 1.2
+          }
+        }
+      },
+      {
         "name": "title-h2",
         "font-family": "Inter",
         "font-size": 26,
@@ -140,6 +156,22 @@
               "font-size": 28,
               "line-height": 1.5
             }
+          }
+        }
+      },
+      {
+        "name": "title-h2-pdf",
+        "font-family": "Inter",
+        "font-size": "28pt",
+        "line-height": 0.875,
+        "font-style": "normal",
+        "font-weight": 600,
+        "color": "white-1000",
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "28pt",
+            "line-height": 0.875
           }
         }
       },
@@ -644,6 +676,27 @@
         }
       },
       {
+        "name": "cv-time-span",
+        "font-family": "Inter",
+        "font-size": 14,
+        "line-height": 1.5,
+        "font-style": "normal",
+        "font-weight": 400,
+        "color": "black-1000",
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "9pt",
+            "line-height": 1.444
+          },
+          "up": {
+            "tablet-pt": {
+              "font-size": 16
+            }
+          }
+        }
+      },
+      {
         "name": "pdf-header",
         "font-family": "Inter",
         "font-size": 14,
@@ -656,6 +709,38 @@
           "print": {
             "font-size": "7pt",
             "line-height": 1.28
+          }
+        }
+      },
+      {
+        "name": "toc-title",
+        "font-family": "Inter",
+        "font-size": "28pt",
+        "line-height": 1.14,
+        "font-style": "normal",
+        "font-weight": 600,
+        "color": "black-1000",
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "28pt",
+            "line-height": 1.14
+          }
+        }
+      },
+      {
+        "name": "toc-item-title",
+        "font-family": "Inter",
+        "font-size": "20pt",
+        "line-height": 1.2,
+        "font-style": "normal",
+        "font-weight": 600,
+        "color": "black-1000",
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "20pt",
+            "line-height": 1.2
           }
         }
       },

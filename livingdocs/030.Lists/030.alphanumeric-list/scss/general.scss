@@ -1,9 +1,6 @@
 @use 'srl';
 
-.srl-list-group {
-  @include srl.spacer-margin-top(200);
-}
-
-.srl-list-group--alphanumeric {
+.srl-list-group--alphanumeric,
+.srl-table-list--alphanumeric {
   counter-reset: alphanumeric-list;
 }

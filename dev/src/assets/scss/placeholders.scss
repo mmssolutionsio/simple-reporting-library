@@ -225,6 +225,54 @@
   @include srl.grid-offset(1, desktop-large);
 }
 
+/*
+  Quote with an image regular with
+  Just the image
+*/
+%srl-cv-header-portrait {
+  // Mobile
+  @include srl.grid-col(4);
+
+  // Mobile landscape
+  @include srl.grid-col(4, phone-ls);
+
+  // Tablet portrait
+  @include srl.grid-col(3, tablet-pt);
+
+  // Tablet landscape
+  @include srl.grid-col(3, tablet-ls);
+
+  // Desktop
+  @include srl.grid-col(2, desktop);
+
+  // Desktop large
+  @include srl.grid-col(2, desktop-large);
+}
+
+/*
+  Quote with an image regular with
+  Just the text
+*/
+%srl-cv-header-content {
+  // Mobile
+  @include srl.grid-col(4);
+
+  // Mobile landscape
+  @include srl.grid-col(4, phone-ls);
+
+  // Tablet portrait
+  @include srl.grid-col(5, tablet-pt);
+
+  // Tablet landscape
+  @include srl.grid-col(5, tablet-ls);
+
+  // Desktop
+  @include srl.grid-col(4, desktop);
+
+  // Desktop large
+  @include srl.grid-col(4, desktop-large);
+}
+
 %srl-icon {
   display: block;
   width: srl.system-size-unit(24);

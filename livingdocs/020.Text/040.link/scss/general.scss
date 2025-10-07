@@ -2,5 +2,4 @@
 
 .srl-link {
   @include srl.typography-link();
-  @include srl.spacer-margin-top(100);
 }

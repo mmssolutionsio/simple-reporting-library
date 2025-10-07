@@ -1,0 +1,19 @@
+{
+  "invert-cover": {
+    "label": "Font color scheme",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Normal"
+      },
+      {
+        "caption": "Black",
+        "value": "srl-cover--font-color-black"
+      },
+      {
+        "caption": "Primary",
+        "value": "srl-cover--font-color-primary"
+      }
+    ]
+  }
+}

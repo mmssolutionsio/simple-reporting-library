@@ -1,0 +1,15 @@
+@use 'srl';
+@use "assets/scss/placeholders";
+
+.srl-cv__inner {
+  display: grid;
+  grid-template-columns: subgrid;
+}
+
+.srl-cv__header-portrait {
+  @extend %srl-cv-header-portrait;
+}
+
+.srl-cv__header-content {
+  @extend %srl-cv-header-content;
+}

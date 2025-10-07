@@ -1,0 +1,35 @@
+@use 'srl';
+@use 'web';
+@use 'sass:map';
+
+$page-margin-top: srl.system-size-unit(map.get(srl.$meta, pdf, margin, top));
+$page-margin-right: srl.system-size-unit(map.get(srl.$meta, pdf, margin, right));
+$page-margin-bottom: srl.system-size-unit(map.get(srl.$meta, pdf, margin, bottom));
+$page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
+
+.srl-pdf-toc-page {
+  width: 595pt;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #{srl.colors-primary-1000()};
+}
+
+.srl-pdf-toc-page__inner {
+  padding: (
+    $page-margin-top
+    $page-margin-right
+    $page-margin-bottom
+    $page-margin-left
+  );
+
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  column-gap: var(--srl-gutter-column-gap);
+  row-gap: var(--srl-gutter-row-gap);
+}
+
+.srl-pdf-toc-page__title,
+.srl-pdf-toc-page__toc-container {
+  grid-column: auto / span 6;
+  grid-column-start: 3;
+}

@@ -1,9 +1,5 @@
 @use 'srl';
 
-.srl-quote {
-  @include srl.spacer-margin-top(800);
-}
-
 .srl-quote__quote {
   @include srl.typography-quote();
 }

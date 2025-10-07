@@ -10,17 +10,24 @@ $alphanumeric-marker-after: ")";
   display: flex;
   @include srl.typography-list();
 
+  .srl-footnote-container .srl-table-list & {
+    @include srl.typography-footnote-text();
+  }
+
   &:before {
+    .srl-table-list--ul &,
     .srl-list-group--ul & {
       content: "#{$unordered-marker}";
     }
 
+    .srl-table-list--ol &,
     .srl-list-group--ol & {
       counter-increment: ordered-list;
       content: counter(ordered-list) $ordered-marker-after;
       font-variant-numeric: tabular-nums;
     }
 
+    .srl-table-list--alphanumeric &,
     .srl-list-group--alphanumeric & {
       counter-increment: alphanumeric-list;
       content: counter(alphanumeric-list, lower-alpha) $alphanumeric-marker-after;

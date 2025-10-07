@@ -11,7 +11,6 @@ $table-border-bold: map.get(srl.$meta, table, border, bold);
 
 .srl-table {
   display: block;
-  @include srl.spacer-margin-top(400);
 }
 
 .srl-table__container {
@@ -58,6 +57,9 @@ td {
   /*
   Font colors
   */
+  &[class*="fcprimary"] {
+    color: srl.colors-primary-1000();
+  }
 
   /*
   Font Sizes
@@ -72,6 +74,10 @@ td {
   */
   &[class*="head"] {
     font-weight: srl.typography-get-font-weight('table-head-strong');
+  }
+
+  &[class*="regular"] {
+    font-weight: srl.typography-get-font-weight('table-cell-regular');
   }
 
   &[class*="bold"] {
@@ -214,48 +220,21 @@ td {
     }
   }
 
+  &[class*="ind_ind_ind"] {
+    &:first-child {
+      padding-left: srl.spacer-get(800);
+    }
+  }
+
   /*
   Cell Backgrounds
   DEFINE HERE; DIFFERENT CSS CLASSES IN EVERY PROJECT
   */
-  &[class*="background-01"] {
-    background-color: transparent;
-  }
-
-  &[class*="background-02"] {
-    background-color: transparent;
-  }
-
-  &[class*="background-03"] {
-    background-color: transparent;
-  }
-
-  &[class*="background-04"] {
-    background-color: transparent;
-  }
-
-  &[class*="background-05"] {
-    background-color: transparent;
-  }
-
-  &[class*="background-06"] {
-    background-color: transparent;
-  }
-
-  &[class*="background-07"] {
-    background-color: transparent;
-  }
-
-  &[class*="background-08"] {
-    background-color: transparent;
-  }
-
-  &[class*="background-09"] {
-    background-color: transparent;
-  }
-
-  &[class*="background-10"] {
-    background-color: transparent;
+  @for $i from 1 through 10 {
+    $suffix: if($i < 10, "0#{$i}", "#{$i}");
+    &[class*="background-#{$suffix}"] {
+      background-color: var(--srl-table-background-#{$suffix}, transparent);
+    }
   }
 
   &[class*="background-01"],

@@ -1,6 +1,9 @@
 {
   "name": "pdf-cover",
   "label": "PDF cover",
+  "properties": [
+    "invert-cover"
+  ],
   "directives": {
     "show-logo": {
       "type": "toggle",
