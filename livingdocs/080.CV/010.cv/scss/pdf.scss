@@ -1,0 +1,14 @@
+@use 'srl';
+
+.srl-cv__inner {
+  display: flex;
+}
+
+.srl-cv__header-portrait {
+  margin-right: srl.grid-get-gutter-column-gap();
+  width: srl.grid-calculate-pdf-col-span-minus-one-gutter(2);
+}
+
+.srl-cv__header-content {
+  width: srl.grid-calculate-pdf-col-span-minus-one-gutter(4);
+}

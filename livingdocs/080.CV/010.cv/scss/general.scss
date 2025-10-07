@@ -1,0 +1,15 @@
+@use 'srl';
+@use "sass:map";
+
+.srl-cv__inner {
+  display: flex;
+  align-items: center;
+}
+
+.srl-cv__img {
+  border-radius: 50%;
+}
+
+.srl-cv__content {
+  margin-top: srl.spacer-get(400);
+}

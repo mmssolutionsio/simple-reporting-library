@@ -2,13 +2,26 @@
 @use "sass:map";
 
 $marker-width: srl.system-size-unit(map.get(srl.$meta, list, marker-width));
+$number-width: srl.system-size-unit(map.get(srl.$meta, footnote, number-width));
 
 .srl-list-group__item {
   &:before {
     width: $marker-width;
+
+    .srl-table-list--ul &,
+    .srl-table-list--ol &,
+    .srl-table-list--alphanumeric & {
+      padding-left: $number-width;
+    }
   }
 }
 
 .srl-list-group__item-text {
   width: calc(100% -  #{$marker-width});
+
+  .srl-table-list--ul &,
+  .srl-table-list--ol &,
+  .srl-table-list--alphanumeric & {
+    width: calc(100% -  #{$marker-width} - #{$number-width});
+  }
 }

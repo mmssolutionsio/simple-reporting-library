@@ -1,0 +1,5 @@
+@use 'srl';
+
+.srl-pdf-toc-item-title {
+  @include srl.typography-toc-item-title();
+}

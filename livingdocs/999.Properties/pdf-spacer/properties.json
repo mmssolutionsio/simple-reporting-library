@@ -7,36 +7,32 @@
         "caption": "Default"
       },
       {
-        "caption": "XXXS spacer",
-        "value": "srl-spacer-xs"
-      },
-      {
         "caption": "XXS spacer",
-        "value": "srl-spacer-xs"
+        "value": "srl-spacer-25"
       },
       {
         "caption": "XS spacer",
-        "value": "srl-spacer-xs"
+        "value": "srl-spacer-50"
       },
       {
         "caption": "S spacer",
-        "value": "srl-spacer-sm"
+        "value": "srl-spacer-100"
       },
       {
         "caption": "M spacer",
-        "value": "srl-spacer-md"
+        "value": "srl-spacer-200"
       },
       {
         "caption": "L spacer",
-        "value": "srl-spacer-lg"
+        "value": "srl-spacer-400"
       },
       {
         "caption": "XL spacer",
-        "value": "srl-spacer-xl"
+        "value": "srl-spacer-800"
       },
       {
         "caption": "XXL spacer",
-        "value": "srl-spacer-xxl"
+        "value": "srl-spacer-1600"
       }
     ]
   }

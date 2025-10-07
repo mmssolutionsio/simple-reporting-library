@@ -1,0 +1,7 @@
+@use 'srl';
+@use 'web';
+
+.srl-pdf-cover {
+  border: 1px solid #{srl.colors-primary-1000()};
+  margin-inline: auto;
+}

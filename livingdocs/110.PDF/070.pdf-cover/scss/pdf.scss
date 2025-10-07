@@ -1,0 +1,22 @@
+@page cover {
+  margin: 0;
+
+  @top-left-corner {
+    content: "";
+    display: none;
+  }
+
+  @top-left {
+    content: "";
+    display: none;
+  }
+
+  @top-right-corner {
+    content: "";
+    display: none;
+  }
+}
+
+.srl-pdf-cover {
+  page: cover;
+}

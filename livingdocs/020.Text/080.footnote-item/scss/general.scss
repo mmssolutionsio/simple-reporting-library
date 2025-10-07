@@ -4,13 +4,5 @@
 .srl-footnote:not(.srl-grid),
 .srl-footnote__item {
   display: flex;
-  @include srl.spacer-margin-top(100);
   @include srl.typography-footnote-text();
-}
-
-.srl-footnote__key {
-  font-size: 60%;
-  font-variant-numeric: tabular-nums;
-  line-height: 1; // prevents normal text from getting too much height
-  vertical-align: super;
 }

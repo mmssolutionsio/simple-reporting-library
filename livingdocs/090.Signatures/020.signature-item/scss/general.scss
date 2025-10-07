@@ -1,6 +1,7 @@
 @use 'srl';
 
 .srl-signature__name {
+  margin-top: srl.spacer-get(100);
   @include srl.typography-signature-name();
 }
 

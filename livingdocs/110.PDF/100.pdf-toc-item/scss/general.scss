@@ -1,0 +1,23 @@
+@use 'srl';
+
+.srl-pdf-toc__item {
+  padding-block: srl.spacer-get(100);
+  display: flex;
+  justify-content: space-between;
+  border-top: srl.system-size-unit(1pt) solid srl.colors-black-1000();
+  text-decoration: none;
+  @include srl.typography-title-h5();
+}
+
+.srl-pdf-toc__text {
+  width: calc(100% - srl.system-size-unit(24pt) - srl.spacer-get(100));
+}
+
+.srl-pdf-toc__number {
+  text-align: right;
+  width: srl.system-size-unit(24pt);
+
+  &:after {
+    content: target-counter(attr(data-page-number), page);
+  }
+}

@@ -1,1 +1,9 @@
 @use 'srl';
+
+.srl-chapter-navigation__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  column-gap: srl.grid-get-gutter-column-gap();
+}

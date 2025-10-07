@@ -1,8 +1,8 @@
 @use 'srl';
-@use "sass:map";
 
-.srl-list-group {
-  @include srl.spacer-margin-top(200);
+.srl-table-list {
+  list-style: none;
+  padding: 0;
 }
 
 .srl-list-group__list {

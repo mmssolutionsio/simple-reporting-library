@@ -1,0 +1,10 @@
+@use 'srl';
+
+
+.srl-cv-time-span__years {
+  width: srl.system-size-unit(80);
+}
+
+.srl-cv-time-span__position {
+  width: calc(100% - srl.system-size-unit(80));
+}

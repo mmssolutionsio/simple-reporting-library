@@ -5,7 +5,18 @@ $number-width: srl.spacer-get(map.get(srl.$meta, title, number-width));
 
 .srl-title-h2 {
   @include srl.typography-title-h2();
-  @include srl.spacer-margin-top(800);
+
+  .srl-pdf-cover & {
+    @include srl.typography-title-h2-pdf();
+  }
+
+  .srl-cover--font-color-black & {
+    color: srl.colors-black-1000();
+  }
+
+  .srl-cover--font-color-primary & {
+    color: srl.colors-primary-1000();
+  }
 }
 
 .srl-title-h2__number-text-container {
