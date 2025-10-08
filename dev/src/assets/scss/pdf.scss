@@ -10,6 +10,15 @@ $page-margin-bottom: srl.system-size-unit(map.get(srl.$meta, pdf, margin, bottom
 $page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
 
 /*
+Initializes pdf view to page height and changes to next page after 1 scroll
+Read about more settings here: https://www.pdfreactor.com/product/doc/manual-ws.html#DocumentSpecificPreferences
+*/
+@-ro-preferences {
+  initial-zoom: fit-page-height;
+  page-layout: 1 page;
+}
+
+/*
   Basic styles for PDF
 */
 img {

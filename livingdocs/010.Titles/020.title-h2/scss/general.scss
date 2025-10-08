@@ -27,6 +27,6 @@ $number-width: srl.spacer-get(map.get(srl.$meta, title, number-width));
   width: $number-width;
 }
 
-.srl-title-h2__text {
+.srl-title-h2__number + .srl-title-h2__text {
   width: calc(100% - #{$number-width});
 }
