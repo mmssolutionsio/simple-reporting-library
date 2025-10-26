@@ -24,6 +24,7 @@ import folders from './folders.js';
 import { mapLdd } from './ldd/mapLdd.js';
 import { LivingdocsDesignValidator } from './ldd/LivingdocsDesignValidator.js';
 import { camelCase } from './utils.js';
+import { getExtensions } from './extensions.js';
 
 const placeholderId = '6297EAFB-33A0-48B8-8D64-E61CDC3E9035';
 const nswowPath = folders.srlImports;
@@ -115,7 +116,7 @@ async function buildApp() {
         return false;
       } else {
         src === join(folders.srlPublic, '/') ||
-          console.log(`Copy ${src} to ${outputPath}/app`);
+        console.log(`Copy ${src} to ${outputPath}/app`);
         return true;
       }
     },
@@ -745,12 +746,14 @@ async function mapScss() {
     const relativePathToRoot = join('..', '..', '/');
 
     const output = {
-      app: [],
-      ldd: [],
-      pdf: [],
-      word: [],
-      xbrl: [],
+      app: ['"sass:meta"'],
+      ldd: ['"sass:meta"'],
+      pdf: ['"sass:meta"'],
+      word: ['"sass:meta"'],
+      xbrl: ['"sass:meta"'],
     };
+
+    const coreStyles = [];
 
     const fontFiles = await glob(join(folders.srlAssets, 'fonts', '**', '*.scss'), {
       withFileTypes: true,
@@ -761,15 +764,35 @@ async function mapScss() {
     if (fontFiles.length) {
       fontsOutput.push(`@import "${nsWowInternalLddUrl}/${packageJson.name}/${packageJson.version}/fonts/style.css";`);
       fontFiles.forEach(f => {
-        output.app.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
-        output.xbrl.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
+        const alias = cleanupScssAlias(f.relativePosix());
+        output.app.push(`"${relativePathToRoot}${f.relativePosix()}" as ${alias}`);
+        output.xbrl.push(`"${relativePathToRoot}${f.relativePosix()}" as ${alias}`);
       })
-      output.ldd.push(`"./fonts.scss" as *`);
-      output.pdf.push(`"./fonts.scss" as *`);
-      output.word.push(`"./fonts.scss" as *`);
+      const fontFilePath = join(folders.srlImports, 'fonts.scss');
+      const fontAlias = cleanupScssAlias(relative(folders.root, fontFilePath));
+      output.ldd.push(`"./fonts.scss" as ${fontAlias}`);
+      output.pdf.push(`"./fonts.scss" as ${fontAlias}`);
+      output.word.push(`"./fonts.scss" as ${fontAlias}`);
     }
 
     await writeFileSync(join(folders.srlImports, 'fonts.scss'), fontsOutput.join('\n'));
+
+    const extensions = await getExtensions();
+
+    for (const ext of extensions) {
+      const extScssPath = join(ext.package.path, 'scss');
+      const entries = await glob('**/index.scss', {cwd: extScssPath});
+      for (const entry of entries) {
+        const relativePath = relative(folders.root, join(extScssPath, entry));
+        const alias = cleanupScssAlias(relativePath);
+        output.app.push(`"${relativePathToRoot}${relativePath}" as ${alias}`);
+        output.ldd.push(`"${relativePathToRoot}${relativePath}" as ${alias}`);
+        output.pdf.push(`"${relativePathToRoot}${relativePath}" as ${alias}`);
+        output.word.push(`"${relativePathToRoot}${relativePath}" as ${alias}`);
+        output.xbrl.push(`"${relativePathToRoot}${relativePath}" as ${alias}`);
+        coreStyles.push(`@if meta.mixin-exists(core-styles, ${alias}) { @include ${alias}.core-styles(); }`);
+      }
+    }
 
     const mainFiles = await glob(join(folders.srlAssets, 'scss', '*.scss'), {
       withFileTypes: true,
@@ -780,42 +803,43 @@ async function mapScss() {
     });
 
     if (f) {
-      output.app.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
-      output.ldd.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
-      output.pdf.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
-      output.word.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
+      const alias = cleanupScssAlias(f.relativePosix());
+      output.app.push(`"${relativePathToRoot}${f.relativePosix()}" as ${alias}`);
+      output.ldd.push(`"${relativePathToRoot}${f.relativePosix()}" as ${alias}`);
+      output.pdf.push(`"${relativePathToRoot}${f.relativePosix()}" as ${alias}`);
+      output.word.push(`"${relativePathToRoot}${f.relativePosix()}" as ${alias}`);
     }
 
     for (let x = 0; x < mainFiles.length; x++) {
       const alias = cleanupScssAlias(mainFiles[x].relativePosix());
       if (mainFiles[x].name === 'app.scss') {
         output.app.push(
-          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as ${alias}`,
         );
       }
       if (mainFiles[x].name === 'ldd.scss') {
         output.ldd.push(
-          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as ${alias}`,
         );
       }
       if (mainFiles[x].name === 'editor.scss') {
         output.ldd.push(
-          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as ${alias}`,
         );
       }
       if (mainFiles[x].name === 'pdf.scss') {
         output.pdf.push(
-          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as ${alias}`,
         );
       }
       if (mainFiles[x].name === 'word.scss') {
         output.word.push(
-          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as ${alias}`,
         );
       }
       if (mainFiles[x].name === 'xbrl.scss') {
         output.xbrl.push(
-          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as *`,
+          `"${relativePathToRoot}${mainFiles[x].relativePosix()}" as ${alias}`,
         );
       }
     }
@@ -852,17 +876,19 @@ async function mapScss() {
         const general = await statSync(
           join(p.fullpath(), 'scss', 'general.scss'),
         );
+        const generalPath = `${p.relativePosix()}/scss/general.scss`;
+        const alias = cleanupScssAlias(generalPath);
         output.app.push(
-          `"${relativePathToRoot}${p.relativePosix()}/scss/general.scss" as *`,
+          `"${relativePathToRoot}${generalPath}" as ${alias}`,
         );
         output.ldd.push(
-          `"${relativePathToRoot}${p.relativePosix()}/scss/general.scss" as *`,
+          `"${relativePathToRoot}${generalPath}" as ${alias}`,
         );
         output.pdf.push(
-          `"${relativePathToRoot}${p.relativePosix()}/scss/general.scss" as *`,
+          `"${relativePathToRoot}${generalPath}" as ${alias}`,
         );
         output.word.push(
-          `"${relativePathToRoot}${p.relativePosix()}/scss/general.scss" as *`,
+          `"${relativePathToRoot}${generalPath}" as ${alias}`,
         );
       } catch (e) {}
 
@@ -875,42 +901,56 @@ async function mapScss() {
           const alias = cleanupScssAlias(`${p.relativePosix()}/${type}.scss`);
           const fileName = type === 'editor' ? 'ldd' : type;
           output[fileName].push(
-            `"${relativePathToRoot}${p.relativePosix()}/scss/${type}.scss" as *`,
+            `"${relativePathToRoot}${p.relativePosix()}/scss/${type}.scss" as ${alias}`,
           );
         } catch (e) {}
       }
     }
 
+    const coreStylesPath = relative(folders.srlImports, join(folders.srlSystem, 'core-styles.scss'));
+    const coreStylesAlias = cleanupScssAlias(coreStylesPath);
+
+    const xbrlCoreStylesPath = relative(folders.srlImports, join(folders.srlSystem, 'xbrl-core-styles.scss'));
+    const xbrlCoreStylesAlias = cleanupScssAlias(xbrlCoreStylesPath);
+
     await writeFileSync(
       join(folders.srlImports, 'app.scss'),
       `@use ` +
-        output.app.join(';\n@use ') +
-        `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
+      output.app.join(';\n@use ') +
+      `;\n@use "${coreStylesPath}" as ${coreStylesAlias};\n` +
+      coreStyles.join('\n')
     );
     await writeFileSync(
       join(folders.srlImports, 'ldd.scss'),
       `@use ` +
-        output.ldd.join(';\n@use ') +
-        `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
+      output.ldd.join(';\n@use ') +
+      `;\n@use "${coreStylesPath}" as ${coreStylesAlias};\n` +
+      coreStyles.join('\n')
     );
     await writeFileSync(
       join(folders.srlImports, 'pdf.scss'),
       `@use ` +
-        output.pdf.join(';\n@use ') +
-        `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
+      output.pdf.join(';\n@use ') +
+      `;\n@use "${coreStylesPath}" as ${coreStylesAlias};\n` +
+      coreStyles.join('\n')
     );
     await writeFileSync(
       join(folders.srlImports, 'word.scss'),
       `@use ` +
-        output.word.join(';\n@use ') +
-        `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
+      output.word.join(';\n@use ') +
+      `;\n@use "${coreStylesPath}" as ${coreStylesAlias};\n` +
+      coreStyles.join('\n')
     );
+
+    const xbrlContent = output.xbrl.length
+      ? `@use ` + output.xbrl.join(';\n@use ') + ";\n"
+      : ''
 
     await writeFileSync(
       join(folders.srlImports, 'xbrl.scss'),
-      output.xbrl.length
-        ? `@use ` + output.xbrl.join(';\n@use ')
-        : '' + `;\n@use "@multivisio/nswow/scss/xbrl-core-styles.scss" as *;\n`,
+      xbrlContent +
+      `@use "${xbrlCoreStylesPath}" as ${xbrlCoreStylesAlias};\n`+
+      coreStyles.join('\n')
     );
 
     return true;

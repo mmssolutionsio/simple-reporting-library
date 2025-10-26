@@ -14,6 +14,7 @@ import {
 } from '../scripts/build.js';
 import chalk from 'chalk';
 import { vueComponents } from '../scripts/vue/components.js';
+import extensions from '../../../../.srl/extensions.js';
 
 
 /**
@@ -128,10 +129,8 @@ function triggerAction(callback) {
 function viteSrlPlugin() {
   return {
     name: 'vite-srl-plugin',
-    config(config) {
-      startActions();
-
-      config.base = './';
+    async config(config) {
+      await startActions();
 
       config.resolve = config.resolve || {};
       config.resolve.alias = config.resolve.alias || {};
@@ -148,8 +147,14 @@ function viteSrlPlugin() {
       config.resolve.alias['assets'] = folders.srlAssets;
       config.resolve.alias['srl'] = folders.srlSystem;
       config.resolve.alias['vue'] = 'vue/dist/vue.esm-bundler.js';
+
+      extensions.forEach(extension => {
+        if (extension.vitePlugin && typeof extension.vitePlugin.config === 'function') {
+          extension.vitePlugin.config(config);
+        }
+      })
     },
-    async configureServer(server) {
+    configureServer(server) {
       const fontPath = join(folders.srlAssets, 'fonts');
 
       server.watcher.on('change', async (path) => {
@@ -248,6 +253,12 @@ function viteSrlPlugin() {
           triggerAction(vueComponents);
         }
       });
+
+      extensions.forEach(extension => {
+        if (extension.vitePlugin && typeof extension.vitePlugin.configureServer === 'function') {
+          extension.vitePlugin.configureServer(server);
+        }
+      })
     },
   };
 }

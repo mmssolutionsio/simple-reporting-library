@@ -1,9 +1,11 @@
-import { writeFileSync, readFileSync } from 'node:fs';
+import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import path from 'node:path/posix';
 import { colors } from './colors.js';
 import { readNsWowJson } from './utils.js';
 import colorPalette from '@kne/color-palette';
 import folders from './folders.js';
+import { getExtensions } from './extensions.js';
+import { glob } from 'glob';
 /**
  * Maps the values of an object or array recursively.
  *
@@ -172,6 +174,8 @@ async function beaver(verbose = 0) {
   const configJson = await readNsWowJson();
   const nswowPath = folders.srlSystem;
 
+  const extensions = await getExtensions();
+
   if (typeof verbose === 'boolean') {
     verbose = verbose ? 1 : 0;
   }
@@ -275,6 +279,26 @@ async function beaver(verbose = 0) {
     }
   });
 
+
+  for (const ext of extensions) {
+    if (
+      existsSync(path.join(ext.package.path, 'scss', 'variables.scss')) &&
+      typeof configJson[ext.name] !== 'undefined'
+    ) {
+      const o = [];
+      o.push(
+        `@use "${ext.package.name}/scss/variables.scss" as ${ext.name}Variables with (`,
+      );
+      let v = [];
+      for (const variable in configJson[ext.name]) {
+        v.push(`  $${variable}: ${makeScssVariables(configJson[ext.name][variable])}`);
+      }
+      o.push(v.join(`,\n`));
+      o.push(');\n');
+      configOutput.push(o.join(`\n`));
+    }
+  }
+
   configOutput = configOutput.join(`\n`);
   const configFile = path.join(nswowPath, 'config.scss');
   writeFileSync(configFile, configOutput);
@@ -286,6 +310,32 @@ async function beaver(verbose = 0) {
   const colorsFile = path.join(nswowPath, 'colors.scss');
   const colorsOutput = writeColorsScss(map.colors);
   writeFileSync(colorsFile, colorsOutput);
+
+  const indexContents = [
+    `@use './config';`,
+    `@forward './system' as system-*;`,
+    `@forward './fonts' as fonts-*;`,
+    `@forward './grid' as grid-*;`,
+    `@forward './colors' as colors-*;`,
+    `@forward './typography' as typography-*;`,
+    `@forward './helpers' as helpers-*;`,
+    `@forward './spacer' as spacer-*;`,
+    `@forward './meta';`,
+  ]
+
+  for (const ext of extensions) {
+    const scssPath = path.join(ext.package.path, 'scss');
+    const indexFiles = await glob(`**/index.scss`, { cwd: scssPath })
+    for (const indexFile of indexFiles) {
+      const relativePath = path.relative(nswowPath, path.join(scssPath, indexFile)).replaceAll('\\', '/');
+      const indexAlias = indexFile.split('/').slice(0, -1);
+      indexAlias.unshift(ext.name);
+      indexContents.push(`@forward '${relativePath}' as ${indexAlias.join('-')}-*;`);
+    }
+  }
+
+
+  writeFileSync(path.join(nswowPath, 'index.scss'), indexContents.join(`\n`));
 
   if (verbose > 0) {
     console.log(colors.info(`\nThe following files has been written.\n`));

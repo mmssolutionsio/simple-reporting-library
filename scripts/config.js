@@ -1,4 +1,6 @@
 export const packageName = '@multivisio/nswow';
+export const packageNamespace = packageName.split('/')[0];
+export const packageBaseName = packageName.split('/')[1];
 
 export const baseComponentsToInstall = [
   '010.Titles/010.title-h1',
@@ -43,6 +45,8 @@ export const nsWowInternalLddUrl = 'https://nswow-ld.nswow.ch/designs';
 
 export default {
   packageName,
+  packageNamespace,
+  packageBaseName,
   baseComponentsToInstall,
   nsWowInternalLddUrl,
 };

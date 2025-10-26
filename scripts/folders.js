@@ -4,6 +4,7 @@ import { packageName as configPackageName } from './config.js';
 export const root = process.cwd();
 export const packageName = join(...configPackageName.split('/'));
 export const packagePath = join(root, 'node_modules', packageName);
+export const packageGroupPath = join(packagePath, '..');
 export const packageSrl = join(packagePath, 'srl');
 export const packageLd = join(packagePath, 'livingdocs');
 export const srlRoot = join(root, '.srl');
@@ -26,6 +27,7 @@ export default {
   root,
   packageName,
   packagePath,
+  packageGroupPath,
   packageSrl,
   packageLd,
   srlRoot,

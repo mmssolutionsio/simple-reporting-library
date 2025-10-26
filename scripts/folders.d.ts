@@ -1,6 +1,7 @@
 export const root: string;
 export const packageName: string;
 export const packagePath: string;
+export const packageGroupPath: string;
 export const packageSrl: string;
 export const packageLd: string;
 export const srlRoot: string;
@@ -22,6 +23,7 @@ declare namespace _default {
     export { root };
     export { packageName };
     export { packagePath };
+    export { packageGroupPath };
     export { packageSrl };
     export { packageLd };
     export { srlRoot };
