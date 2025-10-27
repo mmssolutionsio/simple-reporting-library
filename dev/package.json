@@ -19,7 +19,7 @@
     "postinstall": "srl prepare"
   },
   "dependencies": {
-    "@multivisio/nswow": "^1.0.50",
+    "@multivisio/nswow": "^1.0.53",
     "axios": "^1.12.2",
     "chalk": "^5.6.2",
     "exceljs": "^4.4.0",

@@ -14,7 +14,7 @@ import {
 } from '../scripts/build.js';
 import chalk from 'chalk';
 import { vueComponents } from '../scripts/vue/components.js';
-import extensions from '../../../../.srl/extensions.js';
+import { getExtensions } from '../scripts/extensions.js';
 
 
 /**
@@ -148,13 +148,15 @@ function viteSrlPlugin() {
       config.resolve.alias['srl'] = folders.srlSystem;
       config.resolve.alias['vue'] = 'vue/dist/vue.esm-bundler.js';
 
+      const extensions = await getExtensions();
+
       extensions.forEach(extension => {
         if (extension.vitePlugin && typeof extension.vitePlugin.config === 'function') {
           extension.vitePlugin.config(config);
         }
       })
     },
-    configureServer(server) {
+    async configureServer(server) {
       const fontPath = join(folders.srlAssets, 'fonts');
 
       server.watcher.on('change', async (path) => {
@@ -253,6 +255,8 @@ function viteSrlPlugin() {
           triggerAction(vueComponents);
         }
       });
+
+      const extensions = await getExtensions();
 
       extensions.forEach(extension => {
         if (extension.vitePlugin && typeof extension.vitePlugin.configureServer === 'function') {

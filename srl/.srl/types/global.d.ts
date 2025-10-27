@@ -17,8 +17,3 @@ declare global {
     vuePlugin?: (app: App) => void;
   }
 }
-
-declare module '../extensions.js' {
-  const extensions: Extension[];
-  export default extensions;
-}

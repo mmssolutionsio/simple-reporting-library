@@ -46,10 +46,10 @@ async function prepare() {
   }
 
   const extensionsFileContent = `${extImports.join('\n')}` + `\n` +
-    `export const extensions = [\n  ${extConfigs.join(',\n  ')}\n];\n` +
+    `export const extensions: Extension[] = [\n  ${extConfigs.join(',\n  ')}\n];\n` +
     `export default extensions;\n`;
 
-  fs.writeFileSync(join(folders.srlRoot, 'extensions.js'), extensionsFileContent);
+  fs.writeFileSync(join(folders.srlRoot, 'extensions.ts'), extensionsFileContent);
 
   const srlIgnoreContent = [];
   for (const srlIgnoreFile of srlIgnoresFiles) {

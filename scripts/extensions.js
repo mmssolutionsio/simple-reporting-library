@@ -1,6 +1,7 @@
 import folders from './folders.js'
 import fs from 'fs'
 import { join } from 'path/posix'
+import config from './config.js';
 
 const extensions = {}
 async function getExtensions() {
@@ -12,12 +13,11 @@ async function getExtensions() {
 
 async function registerExtensions() {
   extensions.ext = []
-  const groupFolders = fs.readdirSync(extensions.group);
-  const groupName = extensions.group.split('/').pop()
+  const groupFolders = fs.readdirSync(folders.packageGroupPath);
   for (const groupFolder of groupFolders) {
-    const extFolderPath = join(extensions.group, groupFolder)
+    const extFolderPath = join(folders.packageGroupPath, groupFolder)
     if (extFolderPath !== folders.packagePath) {
-      const packageName = `${groupName}/${groupFolder}`
+      const packageName = `${config.packageNamespace}/${groupFolder}`
       const i = await import(packageName);
       extensions.ext.push({
         name: groupFolder,
