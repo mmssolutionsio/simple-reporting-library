@@ -1,7 +1,7 @@
 import '#imports/pdf.scss'
-import * as Awesomizr from 'srl/Awesomizr.js'
-import PDFNotes from '@/entries/pdf/PDFNotes.ts'
-import PDFSetPageNumbers from '@/entries/pdf/PDFSetPageNumbers.ts';
+import * as Awesomizr from 'srl/pdf/Awesomizr.js'
+import * as PDFNotes from 'srl/pdf/PDFNotes.ts'
+import * as PDFSetPageNumbers from 'srl/pdf/PDFSetPageNumbers.ts';
 
 document.addEventListener('DOMContentLoaded', () => {
   new PDFNotes({
