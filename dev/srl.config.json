@@ -745,6 +745,27 @@
         }
       },
       {
+        "name": "toc-item",
+        "font-family": "Inter",
+        "font-size": 14,
+        "line-height": 1.5,
+        "font-style": "normal",
+        "font-weight": 600,
+        "color": "black-1000",
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "9pt",
+            "line-height": 1.444
+          },
+          "up": {
+            "tablet-pt": {
+              "font-size": 16
+            }
+          }
+        }
+      },
+      {
         "name": "editor-label-text",
         "font-family": "Inter",
         "font-size": 14,
