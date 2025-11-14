@@ -7,6 +7,7 @@
 $font-weight-bold: map.get(srl.$meta, font, weight, bold);
 
 body {
+  background: srl.colors-white-1000();
   color: srl.colors-black-1000();
 }
 
