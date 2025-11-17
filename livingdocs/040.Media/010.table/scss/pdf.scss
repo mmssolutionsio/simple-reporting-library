@@ -1,6 +1,8 @@
 @use 'srl';
 @use 'sass:map';
 
+$table-cells-width-in-mm: false;
+
 .srl-table__container > div {
   display: flex;
   flex-direction: column;
@@ -12,6 +14,20 @@
 
   .srl-wide-width & {
     @include srl.grid-pdf-flex-col(8);
+  }
+}
+
+@if $table-cells-width-in-mm == true {
+  .srl-table-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  table {
+    width: fit-content;
+    min-width: unset;
   }
 }
 
