@@ -3,6 +3,10 @@
 
 $table-cells-width-in-mm: false;
 
+.srl-table {
+  break-inside: avoid;
+}
+
 .srl-table__container > div {
   display: flex;
   flex-direction: column;
