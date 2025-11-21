@@ -5,6 +5,7 @@ import { prepareHtmlContent } from '#utils';
 
 const props = defineProps<{
   uuid: string;
+  anchor?: string;
 }>();
 
 const config = useConfig();
@@ -20,6 +21,14 @@ async function loadContent() {
       const req = await fetch(file);
       const text = await req.text();
       content.value = prepareHtmlContent(text);
+      // Do something with anchor if provided
+      /*
+      if (props.anchor) {
+        nextTick(() => {
+          // Do action
+        });
+      }
+       */
     } catch (error) {
       console.error(`Failed to load article content from ${file}:`, error);
     }
