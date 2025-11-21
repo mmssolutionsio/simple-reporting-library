@@ -6,7 +6,7 @@
   justify-content: space-between;
   border-top: srl.system-size-unit(1pt) solid srl.colors-black-1000();
   text-decoration: none;
-  @include srl.typography-title-h5();
+  @include srl.typography-toc-item();
 }
 
 .srl-pdf-toc__text {

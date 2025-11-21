@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { computed, ref, useId } from 'vue'
+import { computed, nextTick, onMounted, ref, useId } from 'vue'
+import { useRoute } from 'vue-router'
+import { isAccordionAnchored, setAccordionAnchored } from '#utils'
 
 const rootEl = ref<HTMLElement | null>(null)
 const id = ref(useId())
 const state = ref(false)
+const route = useRoute()
 function toggle() {
   state.value ?
-    close() :
-    open()
+      close() :
+      open()
 }
 
 function open() {
@@ -32,10 +35,35 @@ const accordion = computed(() => {
   }
 })
 
+onMounted(() => {
+  if (route.hash) {
+    if (rootEl.value.id && rootEl.value.id === route.hash) {
+      open()
+      isAccordionAnchored() || setAccordionAnchored(true)
+    } else {
+      const targetEl = rootEl.value?.querySelector<HTMLElement>(route.hash)
+      if (targetEl) {
+        open()
+        if (!isAccordionAnchored()) {
+          setAccordionAnchored(true)
+          nextTick(() => {
+            setTimeout(() => {
+              rootEl.value.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+              })
+            }, 200)
+          })
+        }
+      }
+    }
+  }
+})
+
 </script>
 
 <template>
-  <div ref="rootEl">
+  <div ref="rootEl" tabindex="-1">
     <slot :accordion="accordion"/>
   </div>
 </template>

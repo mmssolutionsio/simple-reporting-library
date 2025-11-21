@@ -3,83 +3,92 @@ import { useArticles, useLocale, addCssStyles } from '#composables';
 
 type AttrObj = { [key: string]: string | null };
 function attributesToString(attributes: Record<string, string | null>): string {
-  return Object.entries(attributes)
-    .map(([key, value]) => (value !== null ? `${key}="${value}"` : key))
-    .join(' ');
+    return Object.entries(attributes)
+        .map(([key, value]) => (value !== null ? `${key}="${value}"` : key))
+        .join(' ');
 }
 
 export function prepareHtmlContent(text: string): string {
-  const articles = useArticles();
-  const locale = useLocale();
+    const articles = useArticles();
+    const locale = useLocale();
 
-  const regex = /<a\s+([^>]+)>(.*?)<\/a>/gis;
-  text = text.replace(regex, (match, attrString, innerText) => {
+    const regex = /<a\s+([^>]+)>(.*?)<\/a>/gis;
+    text = text.replace(regex, (match, attrString, innerText) => {
 
-    const attrObj: AttrObj = {};
-    attrString.replace(/([a-zA-Z0-9\-_]+)(?:="([^"]*)")?/g, (m, key: string, value: string | null) => {
-      attrObj[key] = value || null;
-      return m;
+        const attrObj: AttrObj = {};
+        attrString.replace(/([a-zA-Z0-9\-_]+)(?:="([^"]*)")?/g, (m, key: string, value: string | null) => {
+            attrObj[key] = value || null;
+            return m;
+        });
+
+        if (
+            attrObj['data-note-target'] &&
+            attrObj['data-note-target'] === 'popup'
+        ) {
+            attrObj.uuid = attrObj.href;
+            delete attrObj.href;
+            if (attrObj['data-article-name']) {
+                attrObj.uuid = attrObj['data-article-name'];
+                delete attrObj['data-article-name'];
+            }
+            const arrUuid = attrObj.uuid.split('#');
+            attrObj.uuid = arrUuid[0];
+            if (arrUuid[1]) {
+                attrObj.anchor = arrUuid[1];
+            }
+            const attrs = attributesToString(attrObj);
+            return `<srl-article-dialog-button ${attrs}>${innerText}</srl-article-dialog-button>`;
+        }
+
+        if (attrObj.href) {
+            const arrLink = attrObj.href.split('#');
+
+            if (isRouterPath(arrLink[0])) {
+                delete attrObj.href;
+                if (arrLink[0].startsWith('./')) {
+                    arrLink[0] = arrLink[0].substring(1);
+                }
+                if (arrLink[0] === `/${locale.value}/home`) {
+                    arrLink[0] = `/${locale.value}`;
+                }
+                attrObj.to = arrLink[0];
+                if (arrLink[1]) {
+                    attrObj.to += `#${arrLink[1]}`;
+                }
+                const attrs = attributesToString(attrObj);
+                return `<router-link ${attrs}>${innerText}</router-link>`;
+            }
+
+            const a = articles.value.find((i) => i.uuid === arrLink[0]);
+            if (a) {
+                delete attrObj.href;
+                attrObj.to = a.index
+                    ? `/${locale.value}`
+                    : `/${locale.value}/${a.slug}`;
+                if (arrLink[1]) {
+                    attrObj.to += `#${arrLink[1]}`;
+                }
+                const attrs = attributesToString(attrObj);
+                return `<router-link ${attrs}>${innerText}</router-link>`;
+            }
+        }
+
+        return match;
     });
 
-    if (
-      attrObj['data-note-target'] &&
-      attrObj['data-note-target'] === 'popup'
-    ) {
-      attrObj.uuid = attrObj.href;
-      delete attrObj.href;
-      const attrs = attributesToString(attrObj);
-      return `<srl-article-dialog-button ${attrs}>${innerText}</srl-article-dialog-button>`;
-    }
+    text = text.replace(
+        /<template-([a-z]+)>([\s\S]*?)<\/template-\1>/g,
+        (_match, name, content) => `<template #${name}>${content}</template>`
+    );
 
-    if (attrObj.href) {
-      const arrLink = attrObj.href.split('#');
+    text = text.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, (match, p1) => {
+        addCssStyles(p1);
+        return '';
+    });
 
-      if (isRouterPath(arrLink[0])) {
-        delete attrObj.href;
-        if (arrLink[0].startsWith('./')) {
-          arrLink[0] = arrLink[0].substring(1);
-        }
-        if (arrLink[0] === `/${locale.value}/home`) {
-          arrLink[0] = `/${locale.value}`;
-        }
-        attrObj.to = arrLink[0];
-        if (arrLink[1]) {
-          attrObj.to += `#${arrLink[1]}`;
-        }
-        const attrs = attributesToString(attrObj);
-        return `<router-link ${attrs}>${innerText}</router-link>`;
-      }
-
-      const a = articles.value.find((i) => i.uuid === arrLink[0]);
-      if (a) {
-        delete attrObj.href;
-        attrObj.to = a.index
-          ? `/${locale.value}`
-          : `/${locale.value}/${a.slug}`;
-        if (arrLink[1]) {
-          attrObj.to += `#${arrLink[1]}`;
-        }
-        const attrs = attributesToString(attrObj);
-        return `<router-link ${attrs}>${innerText}</router-link>`;
-      }
-    }
-
-    return match;
-  });
-
-  text = text.replace(
-    /<template-([a-z]+)>([\s\S]*?)<\/template-\1>/g,
-    (_match, name, content) => `<template #${name}>${content}</template>`
-  );
-
-  text = text.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, (match, p1) => {
-    addCssStyles(p1);
-    return '';
-  });
-
-  return text;
+    return text;
 }
 
 export default {
-  prepareHtmlContent,
+    prepareHtmlContent,
 };

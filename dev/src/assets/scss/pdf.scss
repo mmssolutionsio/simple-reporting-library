@@ -86,6 +86,19 @@ img {
 }
 
 /*
+  Hold titles and the following component on the same page
+*/
+.srl-title-h1,
+.srl-title-h2,
+.srl-title-h3,
+.srl-title-h4,
+.srl-title-h5 {
+  & + * {
+    break-before: avoid;
+  }
+}
+
+/*
   Layout
 */
 .srl-grid {
