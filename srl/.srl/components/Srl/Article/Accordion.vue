@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import {computed, onMounted, ref, useId} from 'vue'
+import { useRoute } from 'vue-router'
+import { isAccordionAnchored, setAccordionAnchored } from '#utils'
 
 const props = withDefaults(defineProps<{
   toggleSelector?: string
@@ -15,6 +17,8 @@ const props = withDefaults(defineProps<{
   duration: 300,
 })
 
+const route = useRoute()
+
 const id = useId()
 const rootEl = ref<HTMLDivElement>()
 const toggle = ref<HTMLButtonElement>()
@@ -23,6 +27,21 @@ const wrapper = ref<HTMLDivElement>()
 const transition = computed<string>(() => {
   return props.duration + 'ms'
 })
+
+function open() {
+  toggle.value?.setAttribute('aria-expanded', 'true')
+  wrapper.value?.removeAttribute('hidden')
+  content.value?.classList.add(props.openClass)
+  content.value.focus()
+}
+
+function close() {
+  toggle.value?.setAttribute('aria-expanded', 'false')
+  content.value?.classList.remove(props.openClass)
+  setTimeout(() => {
+    wrapper.value?.setAttribute('hidden', 'true')
+  }, props.duration)
+}
 
 onMounted(() => {
   toggle.value = rootEl.value?.querySelector( props.toggleSelector ) || undefined
@@ -36,25 +55,35 @@ onMounted(() => {
     toggle.value.setAttribute('aria-controls', id)
 
     toggle.value.addEventListener('click', () => {
-      const isExpanded = toggle.value?.getAttribute('aria-expanded') === 'true'
-      toggle.value?.setAttribute('aria-expanded', String(!isExpanded))
-      if (!isExpanded) {
-        wrapper.value?.removeAttribute('hidden')
-        content.value?.classList.add(props.openClass)
-        content.value.focus()
-      } else {
-        content.value?.classList.remove(props.openClass)
-        setTimeout(() => {
-          wrapper.value?.setAttribute('hidden', 'true')
-        }, props.duration)
-      }
+      toggle.value?.getAttribute('aria-expanded') === 'true' ? close() : open()
     })
+
+    if (route.hash) {
+      if (rootEl.value.id && rootEl.value.id === route.hash) {
+        open()
+        isAccordionAnchored() || setAccordionAnchored(true)
+      } else {
+        const targetEl = rootEl.value?.querySelector<HTMLElement>(route.hash)
+        if (targetEl) {
+          open()
+          if (!isAccordionAnchored()) {
+            setAccordionAnchored(true)
+            setTimeout(() => {
+              rootEl.value?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+              })
+            }, 200)
+          }
+        }
+      }
+    }
   }
 })
 </script>
 
 <template>
-  <div class="srl-article-accordion" ref="rootEl">
+  <div class="srl-article-accordion" ref="rootEl" tabindex="-1">
     <slot/>
   </div>
 </template>

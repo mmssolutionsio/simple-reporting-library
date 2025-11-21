@@ -36,20 +36,24 @@
  * to other components in the application.
  */
 import App from '@/App.vue';
-import { watch } from 'vue'
+import { onMounted, watch } from 'vue'
 import { useCssStyles } from '#composables'
+import { setMounted } from '#utils'
 
-const styleElement = document.createElement('style');
-document.head.appendChild(styleElement);
+const styleElement = document.createElement('style')
+document.head.appendChild(styleElement)
 
-const styleContent = useCssStyles();
+const styleContent = useCssStyles()
 watch(
   styleContent.value,
   (newStyles) => {
-    styleElement.innerHTML = newStyles.join('');
+    styleElement.innerHTML = newStyles.join('')
   },
   { immediate: true },
 );
+onMounted(() => {
+  setMounted(true)
+});
 </script>
 
 <template>

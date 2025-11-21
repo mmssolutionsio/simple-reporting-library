@@ -909,8 +909,8 @@ async function mapScss() {
     await writeFileSync(
       join(folders.srlImports, 'xbrl.scss'),
       output.xbrl.length
-        ? `@use ` + output.xbrl.join(';\n@use ')
-        : '' + `;\n@use "@multivisio/nswow/scss/xbrl-core-styles.scss" as *;\n`,
+        ? `@use ` + output.xbrl.join(`;\n@use `)
+        : `;\n` + `;\n@use "@multivisio/nswow/scss/xbrl-core-styles.scss" as *;\n`,
     );
 
     return true;
