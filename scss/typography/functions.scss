@@ -42,15 +42,15 @@
 }
 
 @function get-letter-spacing($typo) {
-  @return var(
-    --#{variables.$variable-prefix}typo-#{$typo}-letter-spacing,
+  @return system.root-style(
+    #{variables.$variable-prefix}typo-#{$typo}-letter-spacing,
     unset
   );
 }
 
 @function get-text-transform($typo) {
-  @return var(
-    --#{variables.$variable-prefix}typo-#{$typo}-text-transform,
+  @return system.root-style(
+    #{variables.$variable-prefix}typo-#{$typo}-text-transform,
     unset
   );
 }
