@@ -24,6 +24,8 @@ import folders from './folders.js';
 import { mapLdd } from './ldd/mapLdd.js';
 import { LivingdocsDesignValidator } from './ldd/LivingdocsDesignValidator.js';
 import { camelCase } from './utils.js';
+import { buildVariables } from "./build/variables.js";
+import './dotenv.js';
 
 const placeholderId = '6297EAFB-33A0-48B8-8D64-E61CDC3E9035';
 const nswowPath = folders.srlImports;
@@ -84,6 +86,10 @@ async function cleanOutput() {
  */
 async function buildApp() {
   console.log("\n\nBuild application");
+  buildVariables.system.environment = 'production';
+  buildVariables.system.build = 'app';
+  buildVariables.system['size-unit'] = 'rem';
+  
   await checkFolders();
   const build = await viteBuild({
     build: {
@@ -101,7 +107,7 @@ async function buildApp() {
 
   // Copy public folder exclude nswow folders
   console.log(
-    '\n\nCopy public folder exclude nswow folders and exclude folder',
+    '\n\nCopy public folder exclude nswow folders and assets, template, exclude folder and index.html',
   );
   await cpSync(join(folders.srlPublic, '/'), join(outputPath, 'app'), {
     filter: (src) => {
@@ -110,7 +116,10 @@ async function buildApp() {
         src.startsWith(join(folders.srlPublic, 'html')) ||
         src.startsWith(join(folders.srlPublic, 'images')) ||
         src.startsWith(join(folders.srlPublic, 'json')) ||
-        src.startsWith(join(folders.srlPublic, 'exclude'))
+        src.startsWith(join(folders.srlPublic, 'exclude')) ||
+        src.startsWith(join(folders.srlPublic, 'assets')) ||
+        src.startsWith(join(folders.srlPublic, 'template')) ||
+        src.startsWith(join(folders.srlPublic, 'index.html'))
       ) {
         return false;
       } else {
@@ -144,9 +153,7 @@ async function buildApp() {
   index = index.replace(
     /(<div\s+[^>]*id\s*=\s*["']app["'][^>]*>)([\s\S]*?)(<\/div>)/i,
     `$1
-      <template>
-        [[content-${placeholderId}]]
-      </template>
+      [[content-${placeholderId}]]
     $3`,
   );
 
@@ -192,6 +199,10 @@ async function buildApp() {
  */
 async function buildDDev() {
   console.log("\n\nBuild application for DDEV");
+  buildVariables.system.environment = 'production';
+  buildVariables.system.build = 'app';
+  buildVariables.system['size-unit'] = 'rem';
+
   await checkFolders();
   const build = await viteBuild({
     build: {
@@ -280,6 +291,10 @@ async function zipLdd() {
  */
 async function buildPdf() {
   console.log("\n\nBuild PDF");
+  buildVariables.system.environment = 'production';
+  buildVariables.system.build = 'pdf';
+  buildVariables.system['size-unit'] = 'rem';
+
   await checkFolders();
 
   const config = {
@@ -312,6 +327,10 @@ async function buildPdf() {
 
 async function buildXbrl() {
   console.log("\n\nBuild XBRL");
+  buildVariables.system.environment = 'production';
+  buildVariables.system.build = 'xbrl';
+  buildVariables.system['size-unit'] = 'rem';
+
   await checkFolders();
 
   const config = {
@@ -351,6 +370,10 @@ async function buildXbrl() {
  */
 async function buildLdd(version) {
   console.log("\n\nBuild Livingdocs");
+  buildVariables.system.environment = 'production';
+  buildVariables.system.build = 'ldd';
+  buildVariables.system['size-unit'] = 'rem';
+
   await checkFolders();
   await mapLdd();
 
@@ -478,7 +501,7 @@ async function buildLdd(version) {
 }
 
 async function buildPdfCustomer(customer) {
-
+  const internalLddUrl = process.env.INTERNAL_LDD_URL ?? nsWowInternalLddUrl;
   const customersDir = join(folders.root, 'pdf', 'customers');
 
   if (customer === 'all') {
@@ -594,7 +617,7 @@ async function buildPdfCustomer(customer) {
 
     const pdfXmlStart = `<configuration xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n`;
     const pdfXmlEnd = `\n</configuration>`;
-    const nsWowUrl = `${nsWowInternalLddUrl}/${lddJson.name}/${lddJson.version}/pdf`;
+    const nsWowUrl = `${internalLddUrl}/${lddJson.name}/${lddJson.version}/pdf`;
 
     const pdfConfig = [];
     cssReferences.forEach( p => {
@@ -640,6 +663,9 @@ async function buildPdfCustomer(customer) {
  */
 async function buildWord() {
   console.log("\n\nBuild Word");
+  buildVariables.system.environment = 'production';
+  buildVariables.system.build = 'word';
+  buildVariables.system['size-unit'] = 'pt';
   await checkFolders();
 
   const config = {
@@ -740,16 +766,32 @@ function cleanupScssAlias(string) {
 async function mapScss() {
   await checkFolders();
   try {
+    const internalLddUrl = process.env.INTERNAL_LDD_URL ?? nsWowInternalLddUrl;
     const packageJson = await readPackageJson();
 
     const relativePathToRoot = join('..', '..', '/');
 
     const output = {
-      app: [],
-      ldd: [],
-      pdf: [],
-      word: [],
-      xbrl: [],
+      app: [
+          `"../../srl/config" as *`,
+          `"@multivisio/nswow/scss/init-root.scss" as *`
+      ],
+      ldd: [
+            `"../../srl/config" as *`,
+          `"@multivisio/nswow/scss/init-root.scss" as *`
+      ],
+      pdf: [
+          `"../../srl/config" as *`,
+          `"@multivisio/nswow/scss/init-root.scss" as *`
+      ],
+      word: [
+          `"../../srl/config" as *`,
+          `"@multivisio/nswow/scss/init-root.scss" as *`
+      ],
+      xbrl: [
+          `"../../srl/config" as *`,
+          `"@multivisio/nswow/scss/init-root.scss" as *`
+      ],
     };
 
     const fontFiles = await glob(join(folders.srlAssets, 'fonts', '**', '*.scss'), {
@@ -759,7 +801,7 @@ async function mapScss() {
     const fontsOutput = []
 
     if (fontFiles.length) {
-      fontsOutput.push(`@import "${nsWowInternalLddUrl}/${packageJson.name}/${packageJson.version}/fonts/style.css";`);
+      fontsOutput.push(`@import "${internalLddUrl}/${packageJson.name}/${packageJson.version}/fonts/style.css";`);
       fontFiles.forEach(f => {
         output.app.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
         output.xbrl.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
@@ -908,9 +950,7 @@ async function mapScss() {
 
     await writeFileSync(
       join(folders.srlImports, 'xbrl.scss'),
-      output.xbrl.length
-        ? `@use ` + output.xbrl.join(`;\n@use `)
-        : `;\n` + `;\n@use "@multivisio/nswow/scss/xbrl-core-styles.scss" as *;\n`,
+      `@use ` + output.xbrl.join(`;\n@use `) + `;\n@use "@multivisio/nswow/scss/xbrl-core-styles.scss" as *;\n`,
     );
 
     return true;

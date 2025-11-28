@@ -3,9 +3,6 @@
 @use '../grid';
 
 @mixin core-styles {
-  @each $key, $value in variables.$root-styles {
-    @include add-root-style($key, $value);
-  }
   @at-root {
     :root {
       @each $key, $value in mixins.$styles {

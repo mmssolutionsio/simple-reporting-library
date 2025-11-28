@@ -1,0 +1,10 @@
+@use "variables";
+@use "../system";
+@use "sass:map";
+
+@each $colorName, $colors in variables.$colors {
+  @include system.add-root-style(
+    #{variables.$variable-prefix}color-#{'' + $colorName},
+    map.get($colors, color)
+  );
+}
