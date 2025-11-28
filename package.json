@@ -1,6 +1,6 @@
 {
   "name": "@multivisio/nswow",
-  "version": "1.0.39",
+  "version": "1.0.55",
   "description": "Manage srl templates, build and publish",
   "bin": {
     "srl": "cli.js"
