@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, useId } from 'vue'
+import { computed, ref } from 'vue'
 import { useArticles, useConfig } from '#composables';
 import { prepareHtmlContent, isDialogStored, addDialogToStorage, getDialogFromStorage } from '#utils';
 
@@ -10,10 +10,22 @@ const props = defineProps<{
 
 const config = useConfig();
 const articles = useArticles();
-const id = ref<string>(`srl-page__dialog-${useId()}`);
+const id = ref<string>(`srl-page__dialog-${props.uuid.replaceAll(' ', '_')}`);
 const content = ref<string>('');
-const dialog = ref<SrlPageDialog | null>(null);
-let dialogStored = false
+
+const dialog = isDialogStored(props.uuid)?
+    getDialogFromStorage(props.uuid):
+    ref<SrlPageDialog | null>(null);
+
+if (!isDialogStored(props.uuid)) {
+  addDialogToStorage(props.uuid, dialog);
+  loadContent();
+}
+
+const state = computed<boolean>(() => {
+  return dialog.value ?
+      dialog.value.dialogState : false
+});
 
 async function loadContent() {
   const article = articles.value.find((article) => article.uuid === props.uuid);
@@ -37,22 +49,8 @@ async function loadContent() {
   }
 }
 
-if (isDialogStored(props.uuid)) {
-  dialogStored = true;
-} else {
-  addDialogToStorage(props.uuid, dialog);
-  loadContent();
-}
-
 async function open() {
-  if (dialog.value) {
-    dialog.value.open();
-  } else {
-    const storage = getDialogFromStorage(props.uuid);
-    storage ?
-        storage.open():
-        console.warn(`Dialog with uuid ${props.uuid} not found in storage.`);
-  }
+  dialog.value?.open();
 }
 </script>
 
@@ -62,7 +60,7 @@ async function open() {
       type="button"
       :aria-controls="id"
       aria-haspopup="dialog"
-      :aria-expanded="dialog?.dialogState ?? false"
+      :aria-expanded="state"
       @click="open"
   >
     <slot />

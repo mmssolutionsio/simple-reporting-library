@@ -57,6 +57,9 @@ body:has(.srl-page__dialog[open]) {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s;
+  position: fixed;
+  inset: 0;
+  margin: 10vh auto 0;
 
   &::backdrop {
     background-color: rgba(0, 0, 0, 0.3);
