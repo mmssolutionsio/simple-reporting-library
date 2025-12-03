@@ -1,0 +1,6 @@
+@use "srl";
+
+.srl-title-h4__number:after {
+  content: " ";
+  display: block;
+}

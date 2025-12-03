@@ -1,0 +1,6 @@
+@use "srl";
+
+.srl-title-h2__number:after {
+  content: " ";
+  display: block;
+}
