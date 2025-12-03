@@ -61,4 +61,5 @@ export function camelCase(str: string): string;
  * @returns {Promise<string>} The package version.
  */
 export function getPackageVersion(packageName: string): Promise<string>;
+export function deepAssign(target: any, ...sources: any[]): any;
 export { writeJson };

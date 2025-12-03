@@ -2,17 +2,9 @@
 @use 'variables';
 @use '../system';
 
-@function get($colorName, $media: false) {
+@function get($colorName) {
   @if not map.has-key(variables.$colors, $colorName) {
     @error "Invalid color \"#{$colorName}\" specified! Choose one of #{map.keys(variables.$colors)}";
   }
-
-  @if $media {
-    @return var(
-      --#{variables.$variable-prefix}color-#{$colorName}-#{$media},
-      var(--#{variables.$variable-prefix}color-#{$colorName})
-    );
-  }
-
-  @return var(--#{variables.$variable-prefix}color-#{$colorName});
+  @return system.root-style(#{variables.$variable-prefix}color-#{$colorName});
 }

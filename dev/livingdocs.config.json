@@ -110,24 +110,24 @@
       "identifier": "wp_cf_prettyTitle",
       "type": "text",
       "matches": [
-        "title-h1.title-h1-text",
+        "title-h1.title-h1",
         "title-h2.title-h2-text",
         "title-h3.title-h3-text",
         "title-h4.title-h4-text",
-        "title-h5.title-h5-text",
-        "title-h6.title-h6-text"
+        "title-h5.title-h5",
+        "title-h6.title-h6"
       ]
     },
     {
       "identifier": "menuTitle",
       "type": "text",
       "matches": [
-        "title-h1.title-h1-text",
+        "title-h1.title-h1",
         "title-h2.title-h2-text",
         "title-h3.title-h3-text",
         "title-h4.title-h4-text",
-        "title-h5.title-h5-text",
-        "title-h6.title-h6-text"
+        "title-h5.title-h5",
+        "title-h6.title-h6"
       ]
     },
     {

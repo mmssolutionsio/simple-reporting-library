@@ -1,4 +1,5 @@
 @use 'variables';
+@use "mixins";
 @use 'sass:map';
 @use 'sass:list';
 @use 'sass:math';
@@ -44,6 +45,11 @@
   @return $fallback;
 }
 
+@function unit-to-number($unit) {
+  // $unit z.B. "em" oder "pt"
+  @return 1#{$unit}; // ergibt 1em / 1pt als Number mit Einheit
+}
+
 @function size-unit($size, $size-unit: false) {
   @if not $size-unit {
     $size-unit: variables.$size-unit;
@@ -51,11 +57,21 @@
   @if meta.type-of($size) == 'number' and math.is-unitless($size) and $size != 0
   {
     @if $size-unit == 'rem' {
-      @return math.div($size, variables.$root-size) + rem;
+      @return math.div($size, variables.$root-size) * 1rem;
     } @else if $size-unit == 'in' {
-      @return math.div($size, variables.$dpi) + in;
+      @return math.div($size, variables.$dpi) * 1in;
     } @else if $size-unit == 'pt' {
-      @return ($size * variables.$point) + pt;
+      @return ($size * variables.$point) * 1pt;
+    } @else if $size-unit == 'px' {
+      @return $size * 1px;
+    } @else if $size-unit == 'cm' {
+      @return math.div($size, variables.$dpi) * 2.54cm;
+    } @else if $size-unit == 'mm' {
+      @return math.div($size, variables.$dpi) * 25.4mm;
+    } @else if $size-unit == 'pc' {
+      @return math.div($size, variables.$dpi) * 6pc;
+    } @else if $size-unit == 'Q' {
+      @return math.div($size, variables.$dpi) * 101.6Q;
     } @else {
       @return $size + $size-unit;
     }
@@ -64,7 +80,7 @@
   } @else if $size == null {
     @return unset;
   } @else {
-    @return #{$size};
+    @return $size;
   }
 }
 
@@ -72,6 +88,55 @@
   @if meta.type-of($number) == 'number' and not math.is-unitless($number) {
     @return math.div($number, ($number * 0 + 1));
   }
-
   @return $number;
+}
+
+@function number-to-unit($number, $unit) {
+  @if $unit == 'rem' {
+    @return $number * 1rem;
+  } @else if $unit == 'in' {
+    @return $number * 1in;
+  } @else if $unit == 'pt' {
+    @return $number * 1pt;
+  } @else if $unit == 'px' {
+    @return $number * 1px;
+  } @else if $unit == 'cm' {
+    @return $number * 1cm;
+  } @else if $unit == 'mm' {
+    @return $number * 1mm;
+  } @else if $unit == 'pc' {
+    @return $number * 1pc;
+  } @else if $unit == 'Q' {
+    @return $number * 1Q;
+  } @else {
+    @return $number + $unit;
+  }
+}
+
+@function round-if-unit($value) {
+  @if meta.type-of($value) == 'number' and not math.is-unitless($value) {
+    $unit: math.unit($value);
+    @return number-to-unit(math.round(strip-unit($value)), $unit);
+  }
+  @return $value;
+}
+
+@function root-style($varname, $default: unset) {
+  @if variables.$build == 'word' {
+    $res: map.get(mixins.$stylesOnly, print, $varname);
+    @if $res == null {
+      $res: map.get(mixins.$stylesUp, print, $varname);
+    }
+    @if $res == null {
+      $res: map.get(mixins.$styles, $varname);
+    }
+    @if meta.type-of($res) == 'number' and math.unit($res) == 'pt' {
+     $res: round-if-unit($res);
+    }
+    @if $res == null {
+      $res: $default;
+    }
+    @return $res;
+  }
+  @return var(--#{$varname}, #{$default});
 }

@@ -42,9 +42,9 @@ export function addDialogToStorage(uuid: string, refSrlPageDialog: Ref<SrlPageDi
     pageState.dialogStorage[uuid] = refSrlPageDialog
 }
 
-export function getDialogFromStorage(uuid: string): SrlPageDialog | null {
+export function getDialogFromStorage(uuid: string): Ref<SrlPageDialog> | null {
     return isDialogStored(uuid)?
-        pageState.dialogStorage[uuid].value : null
+        pageState.dialogStorage[uuid] : null
 }
 
 export function getDialogStorage() : DialogStorage {
