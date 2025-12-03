@@ -141,7 +141,7 @@ async function mapComponents(lddJson) {
     components.forEach((component) => {
       // ldd static component
       try {
-        const htmlFile =  globSync(join(groupPath, component, '*.html'));
+        const htmlFile =  globSync(join(groupPath, component, '*.html'), { posix: true });
         if (htmlFile.length) {
           const htmlPath = htmlFile[0];
           const ldConfPath = join(groupPath, component, `ld-conf.json`);
@@ -164,7 +164,7 @@ async function mapComponents(lddJson) {
 
       //   vue async component
       try {
-        const vueFiles = globSync(join(groupPath, component, '*.vue'));
+        const vueFiles = globSync(join(groupPath, component, '*.vue'), { posix: true });
         if (vueFiles.length) {
           vueFiles.forEach( c => {
             const vueFile = c.split('/').pop();
