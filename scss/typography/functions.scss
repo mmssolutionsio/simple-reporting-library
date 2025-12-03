@@ -6,51 +6,51 @@
   @if not map.has-key(variables.$typography, $typo) {
     @error "Invalid typo for typography specified! Choose one of #{map.keys(variables.$typography)}";
   }
-  @return var(--#{variables.$variable-prefix}typo-#{$typo}-font-family, unset);
+  @return system.root-style(#{variables.$variable-prefix}typo-#{$typo}-font-family, unset);
 }
 
 @function get-font-size($typo) {
   @if not map.has-key(variables.$typography, $typo) {
     @error "Invalid typo for typo specified! Choose one of #{map.keys(variables.$typography)}";
   }
-  @return var(--#{variables.$variable-prefix}typo-#{$typo}-font-size, unset);
+  @return system.root-style(#{variables.$variable-prefix}typo-#{$typo}-font-size, unset);
 }
 
 @function get-line-height($typo) {
   @if not map.has-key(variables.$typography, $typo) {
     @error "Invalid typo for typography specified! Choose one of #{map.keys(variables.$typography)}";
   }
-  @return var(--#{variables.$variable-prefix}typo-#{$typo}-line-height, unset);
+  @return system.root-style(#{variables.$variable-prefix}typo-#{$typo}-line-height, unset);
 }
 
 @function get-font-style($typo) {
   @if not map.has-key(variables.$typography, $typo) {
     @error "Invalid typo for typography specified! Choose one of #{map.keys(variables.$typography)}";
   }
-  @return var(--#{variables.$variable-prefix}typo-#{$typo}-font-style, normal);
+  @return system.root-style(#{variables.$variable-prefix}typo-#{$typo}-font-style, normal);
 }
 
 @function get-font-weight($typo) {
-  @return var(--#{variables.$variable-prefix}typo-#{$typo}-font-weight, unset);
+  @return system.root-style(#{variables.$variable-prefix}typo-#{$typo}-font-weight, unset);
 }
 
 @function get-font-color($typo) {
   @if not map.has-key(variables.$typography, $typo) {
     @error "Invalid typo for typography specified! Choose one of #{map.keys(variables.$typography)}";
   }
-  @return var(--#{variables.$variable-prefix}typo-#{$typo}-font-color, unset);
+  @return system.root-style(#{variables.$variable-prefix}typo-#{$typo}-font-color, unset);
 }
 
 @function get-letter-spacing($typo) {
-  @return var(
-    --#{variables.$variable-prefix}typo-#{$typo}-letter-spacing,
+  @return system.root-style(
+    #{variables.$variable-prefix}typo-#{$typo}-letter-spacing,
     unset
   );
 }
 
 @function get-text-transform($typo) {
-  @return var(
-    --#{variables.$variable-prefix}typo-#{$typo}-text-transform,
+  @return system.root-style(
+    #{variables.$variable-prefix}typo-#{$typo}-text-transform,
     unset
   );
 }
@@ -59,12 +59,12 @@
   @if not map.has-key(variables.$typography, $typo) {
     @error "Invalid typo for typography specified! Choose one of #{map.keys(variables.$typography)}";
   }
-  @return var(--#{variables.$variable-prefix}typo-#{$typo}-margin-top, 0);
+  @return system.root-style(#{variables.$variable-prefix}typo-#{$typo}-margin-top, 0);
 }
 
 @function get-margin-bottom($typo) {
   @if not map.has-key(variables.$typography, $typo) {
     @error "Invalid typo for typography specified! Choose one of #{map.keys(variables.$typography)}";
   }
-  @return var(--#{variables.$variable-prefix}typo-#{$typo}-margin-bottom, 0);
+  @return system.root-style(#{variables.$variable-prefix}typo-#{$typo}-margin-bottom, 0);
 }

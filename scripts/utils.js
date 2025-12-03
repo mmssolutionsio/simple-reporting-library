@@ -146,6 +146,27 @@ function getPackageVersion(packageName) {
   });
 }
 
+function deepAssign(target, ...sources) {
+    for (const source of sources) {
+        if (typeof source !== 'object' || source === null) continue;
+        for (const key of Object.keys(source)) {
+            if (
+                typeof source[key] === 'object' &&
+                source[key] !== null &&
+                !Array.isArray(source[key])
+            ) {
+                if (!target[key] || typeof target[key] !== 'object') {
+                    target[key] = {};
+                }
+                deepAssign(target[key], source[key]);
+            } else {
+                target[key] = source[key];
+            }
+        }
+    }
+    return target;
+}
+
 export {
   writeJson,
   lddGroupNames,
@@ -160,4 +181,5 @@ export {
   writeNsWowJson,
   camelCase,
   getPackageVersion,
+  deepAssign,
 };

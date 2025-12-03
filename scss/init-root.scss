@@ -1,0 +1,12 @@
+@use "./colors/root" as *;
+@use "./fonts/root" as *;
+@use "./grid/root" as *;
+@use "./helpers/root" as *;
+@use "./meta/root" as *;
+@use "./spacer/root" as *;
+@use "./typography/root" as *;
+@use "./system";
+
+@each $key, $value in system.$root-styles {
+  @include system.add-root-style($key, $value);
+}
