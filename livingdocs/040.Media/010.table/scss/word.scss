@@ -1,8 +1,5 @@
 @use "srl";
 
-$table-border-regular: map.get(srl.$meta, table, border, regular);
-$table-border-bold: map.get(srl.$meta, table, border, bold);
-
 .srl-table {
   page-break-inside: avoid;
 }
@@ -10,27 +7,6 @@ $table-border-bold: map.get(srl.$meta, table, border, bold);
 th,
 td {
   font-family: 'Arial', sans-serif;
-  border-bottom: 1pt solid srl.colors-get(map.get($table-border-regular, color));
-
-  &[class*="blinebottom"] {
-    border-bottom: 2pt solid srl.colors-get(map.get($table-border-bold, color));
-  }
-
-  &[class*="nolinetop"] {
-    border-top: none
-  }
-
-  &[class*="nolineright"] {
-    border-right: none
-  }
-
-  &[class*="nolinebottom"] {
-    border-bottom: none;
-  }
-
-  &[class*="nolineleft"] {
-    border-left: none
-  }
 
   &[class*="head"],
   &[class*="bold"],
