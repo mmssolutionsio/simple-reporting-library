@@ -1,0 +1,10 @@
+@use "srl";
+
+.srl-title-h4 {
+  font-family: 'Arial', sans-serif;
+}
+
+.srl-title-h4__number:after {
+  content: " ";
+  display: block;
+}

@@ -1,0 +1,9 @@
+@use 'srl';
+
+.srl-list-group__list {
+  .srl-list-group--ol &,
+  .srl-table-list--ol & {
+    list-style-type: decimal;
+  }
+}
+
