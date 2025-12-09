@@ -24,8 +24,8 @@ $page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
 
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  column-gap: var(--srl-gutter-column-gap);
-  row-gap: var(--srl-gutter-row-gap);
+  column-gap: srl.system-root-style(srl-gutter-column-gap);
+  row-gap: srl.system-root-style(srl-gutter-row-gap);
 }
 
 .srl-pdf-toc-page__title,
