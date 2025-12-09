@@ -1,0 +1,21 @@
+@use "srl";
+
+.srl-table {
+  page-break-inside: avoid;
+}
+
+th,
+td {
+  font-family: 'Arial', sans-serif;
+
+  &[class*="head"],
+  &[class*="bold"],
+  &[class*="regular"] {
+    font-family: 'Arial', sans-serif;
+  }
+
+  &[class*="head"],
+  &[class*="bold"] {
+    font-weight: bold;
+  }
+}

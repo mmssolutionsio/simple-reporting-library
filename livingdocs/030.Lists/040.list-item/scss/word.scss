@@ -1,0 +1,19 @@
+@use "srl";
+
+.srl-list-group__item {
+  font-family: 'Arial', sans-serif;
+
+  &:before {
+    .srl-list-group--ul & {
+      display: none;
+    }
+
+    .srl-list-group--ol & {
+      display: none;
+    }
+
+    .srl-list-group--alphanumeric & {
+      display: none;
+    }
+  }
+}
