@@ -8,6 +8,9 @@ declare global {
       boldTheWord: boolean;
     };
     categories: string[];
+    publicationName: {
+      [key: string]: string;
+    }
   };
 
   interface NsWowArticle {

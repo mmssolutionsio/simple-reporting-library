@@ -32,24 +32,25 @@ import { nextTick, ref, onMounted } from 'vue';
 import VRuntimeTemplate from 'vue3-runtime-template';
 import Autoload from '@/Autoload.ts';
 import { useRoute } from 'vue-router';
-import { useArticle, useArticles, useConfig } from '#composables';
+import { useArticle, useConfig } from '#composables';
 import { prepareHtmlContent } from '#utils';
 
 const articleRoot = ref<HTMLDivElement | null>(null);
 const config = useConfig();
 const route = useRoute();
-const articles = useArticles();
 const content = ref<string>('');
 const locale = route.params.locale as string;
 const article = useArticle();
 
 if (article.value) {
   const file = `./html/${locale}/${article.value.name}.html`;
+  const publicationTitle = config.value.settings.publicationName[locale];
+
   try {
     const req = await fetch(file);
     let text = await req.text();
 
-    document.title = article.value.translatedTitle;
+    document.title = `${article.value.translatedTitle} - ${publicationTitle}`;
     content.value = prepareHtmlContent(text);
   } catch (error) {
     console.error(`Failed to load article content from ${file}:`, error);
