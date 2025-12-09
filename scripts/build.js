@@ -24,7 +24,7 @@ import folders from './folders.js';
 import { mapLdd } from './ldd/mapLdd.js';
 import { LivingdocsDesignValidator } from './ldd/LivingdocsDesignValidator.js';
 import { camelCase } from './utils.js';
-import { buildVariables } from "./build/variables.js";
+import { buildVariables } from './build/variables.js';
 import './dotenv.js';
 
 const placeholderId = '6297EAFB-33A0-48B8-8D64-E61CDC3E9035';
@@ -85,11 +85,11 @@ async function cleanOutput() {
  * @returns {Promise<void>} A Promise that resolves when the application is built.
  */
 async function buildApp() {
-  console.log("\n\nBuild application");
+  console.log('\n\nBuild application');
   buildVariables.system.environment = 'production';
   buildVariables.system.build = 'app';
   buildVariables.system['size-unit'] = 'rem';
-  
+
   await checkFolders();
   const build = await viteBuild({
     build: {
@@ -198,7 +198,7 @@ async function buildApp() {
  * @returns {Promise<void>} A Promise that resolves when the application is built.
  */
 async function buildDDev() {
-  console.log("\n\nBuild application for DDEV");
+  console.log('\n\nBuild application for DDEV');
   buildVariables.system.environment = 'production';
   buildVariables.system.build = 'app';
   buildVariables.system['size-unit'] = 'rem';
@@ -221,7 +221,7 @@ async function buildDDev() {
  * @returns {Promise<void>} - A Promise that resolves when the zip operation is complete, or rejects with an error.
  */
 async function zipApp() {
-  console.log("\n\nCreate zip file for app");
+  console.log('\n\nCreate zip file for app');
   await checkFolders();
   const archiver = require('archiver');
   const output = createWriteStream(join(outputPath, 'app.zip'));
@@ -252,7 +252,7 @@ async function zipApp() {
 }
 
 async function zipLdd() {
-  console.log("\n\nCreate zip file for LDD");
+  console.log('\n\nCreate zip file for LDD');
   await checkFolders();
 
   const archiver = require('archiver');
@@ -290,7 +290,7 @@ async function zipLdd() {
  *                              false otherwise.
  */
 async function buildPdf() {
-  console.log("\n\nBuild PDF");
+  console.log('\n\nBuild PDF');
   buildVariables.system.environment = 'production';
   buildVariables.system.build = 'pdf';
   buildVariables.system['size-unit'] = 'rem';
@@ -326,7 +326,7 @@ async function buildPdf() {
 }
 
 async function buildXbrl() {
-  console.log("\n\nBuild XBRL");
+  console.log('\n\nBuild XBRL');
   buildVariables.system.environment = 'production';
   buildVariables.system.build = 'xbrl';
   buildVariables.system['size-unit'] = 'rem';
@@ -369,7 +369,7 @@ async function buildXbrl() {
  * @returns {Promise<boolean>} - A Promise that resolves to true if the LDD build is successful, false otherwise.
  */
 async function buildLdd(version) {
-  console.log("\n\nBuild Livingdocs");
+  console.log('\n\nBuild Livingdocs');
   buildVariables.system.environment = 'production';
   buildVariables.system.build = 'ldd';
   buildVariables.system['size-unit'] = 'rem';
@@ -433,12 +433,15 @@ async function buildLdd(version) {
           }
         }
 
-        const fontFiles = await glob(join(folders.srlAssets, 'fonts', '**', '*.scss'), {
-          withFileTypes: true,
-        });
+        const fontFiles = await glob(
+          join(folders.srlAssets, 'fonts', '**', '*.scss'),
+          {
+            withFileTypes: true,
+          },
+        );
 
         if (fontFiles.length) {
-          console.log("\n\nBuild Livingdocs fonts");
+          console.log('\n\nBuild Livingdocs fonts');
 
           const importPath = join(folders.srlImports, 'fonts');
           try {
@@ -449,10 +452,13 @@ async function buildLdd(version) {
           const importFile = join(importPath, 'style.scss');
 
           const importFonts = [];
-          fontFiles.forEach( f => {
+          fontFiles.forEach((f) => {
             importFonts.push(`../../../${f.relativePosix()}`);
-          })
-          await writeFileSync(importFile, `@use "` + importFonts.join('" as *;\n@use "') + `" as *;\n`)
+          });
+          await writeFileSync(
+            importFile,
+            `@use "` + importFonts.join('" as *;\n@use "') + `" as *;\n`,
+          );
 
           await viteBuild({
             css: {
@@ -475,15 +481,15 @@ async function buildLdd(version) {
                       return '[name][extname]';
                     }
                     return '[name]-[hash][extname]';
-                  }
-                }
-              }
+                  },
+                },
+              },
             },
             publicDir: false,
-          })
+          });
         }
 
-        console.log("\n\nBuild Livingdocs design.json");
+        console.log('\n\nBuild Livingdocs design.json');
         await writeLivingDocsJson();
 
         return true;
@@ -530,21 +536,19 @@ async function buildPdfCustomer(customer) {
     const pdfDir = join(folders.srlOutput, 'pdf');
     statSync(pdfDir);
     await cpSync(pdfDir, lddPdfDir, { recursive: true });
-    console.log(`PDF folder has been copied to ${relative(folders.root, lddPdfDir)}`);
+    console.log(
+      `PDF folder has been copied to ${relative(folders.root, lddPdfDir)}`,
+    );
   } catch (e) {
-    console.error(e)
+    console.error(e);
   }
 
   try {
     statSync(customerDir);
     const customerTarget = join(lddPdfDir, customerName);
     mkdirSync(customerTarget, { recursive: true });
-    const jsReferences = [
-      'pdf.js'
-    ];
-    const cssReferences = [
-      'pdf.css'
-    ];
+    const jsReferences = ['pdf.js'];
+    const cssReferences = ['pdf.css'];
 
     try {
       const tsPath = join(customerDir, 'custom.ts');
@@ -573,9 +577,9 @@ async function buildPdfCustomer(customer) {
                   return '[name][extname]';
                 }
                 return 'assets/[name]-[hash][extname]';
-              }
-            }
-          }
+              },
+            },
+          },
         },
         publicDir: false,
       };
@@ -599,9 +603,13 @@ async function buildPdfCustomer(customer) {
       statSync(publicDir);
       const publicTarget = join(customerTarget, 'public');
       await cpSync(publicDir, publicTarget, { recursive: true });
-      console.log(`Customer ${customer} public folder has been copied to ${relative(folders.root, publicTarget)}`);
+      console.log(
+        `Customer ${customer} public folder has been copied to ${relative(folders.root, publicTarget)}`,
+      );
 
-      const publicFiles = await glob(join(publicTarget, '**', '*'), { withFileTypes: true });
+      const publicFiles = await glob(join(publicTarget, '**', '*'), {
+        withFileTypes: true,
+      });
 
       for (const publicFile of publicFiles) {
         if (publicFile.isFile()) {
@@ -620,35 +628,50 @@ async function buildPdfCustomer(customer) {
     const nsWowUrl = `${internalLddUrl}/${lddJson.name}/${lddJson.version}/pdf`;
 
     const pdfConfig = [];
-    cssReferences.forEach( p => {
-      pdfConfig.push(`  <userStyleSheets><uri>${nsWowUrl}/${p}</uri></userStyleSheets>`);
-    })
+    cssReferences.forEach((p) => {
+      pdfConfig.push(
+        `  <userStyleSheets><uri>${nsWowUrl}/${p}</uri></userStyleSheets>`,
+      );
+    });
 
-    jsReferences.forEach( p => {
-      pdfConfig.push(`  <userScripts><beforeDocumentScripts>true</beforeDocumentScripts><uri>${nsWowUrl}/${p}</uri></userScripts>`);
-    })
+    jsReferences.forEach((p) => {
+      pdfConfig.push(
+        `  <userScripts><beforeDocumentScripts>true</beforeDocumentScripts><uri>${nsWowUrl}/${p}</uri></userScripts>`,
+      );
+    });
 
-    const pdfConfigContent = pdfXmlStart
-      + `  <appendLog>false</appendLog>\n`
-      + pdfConfig.join('\n')
-      + pdfXmlEnd;
+    const pdfConfigContent =
+      pdfXmlStart +
+      `  <appendLog>false</appendLog>\n` +
+      pdfConfig.join('\n') +
+      pdfXmlEnd;
     const pdfConfigPath = join(customerTarget, 'pdf-configuration.xml');
     writeFileSync(pdfConfigPath, pdfConfigContent);
-    console.log(`Customer ${customer} PDF configuration file has been built to ${relative(folders.root, pdfConfigPath)}`);
+    console.log(
+      `Customer ${customer} PDF configuration file has been built to ${relative(folders.root, pdfConfigPath)}`,
+    );
 
-    const pdfConfigDebugContent = pdfXmlStart
-      + `  <appendLog>true</appendLog>\n`
-      + `  <inspectableSettings><enabled>true</enabled></inspectableSettings>\n`
-      + `  <debugSettings><all>true</all></debugSettings>\n`
-      + pdfConfig.join('\n')
-      + pdfXmlEnd;
-    const pdfConfigDebugPath = join(customerTarget, 'pdf-configuration-debug.xml');
+    const pdfConfigDebugContent =
+      pdfXmlStart +
+      `  <appendLog>true</appendLog>\n` +
+      `  <inspectableSettings><enabled>true</enabled></inspectableSettings>\n` +
+      `  <debugSettings><all>true</all></debugSettings>\n` +
+      pdfConfig.join('\n') +
+      pdfXmlEnd;
+    const pdfConfigDebugPath = join(
+      customerTarget,
+      'pdf-configuration-debug.xml',
+    );
     writeFileSync(pdfConfigDebugPath, pdfConfigDebugContent);
-    console.log(`Customer ${customer} PDF debug configuration file has been built to ${relative(folders.root, pdfConfigDebugPath)}`);
+    console.log(
+      `Customer ${customer} PDF debug configuration file has been built to ${relative(folders.root, pdfConfigDebugPath)}`,
+    );
 
-    console.log(`Customer ${customer} PDF files has been built to ${relative(folders.root, customerTarget)}`);
+    console.log(
+      `Customer ${customer} PDF files has been built to ${relative(folders.root, customerTarget)}`,
+    );
 
-    console.log("\n");
+    console.log('\n');
   } catch (e) {}
 
   return true;
@@ -662,7 +685,7 @@ async function buildPdfCustomer(customer) {
  *                              or false if there was an error during the build process.
  */
 async function buildWord() {
-  console.log("\n\nBuild Word");
+  console.log('\n\nBuild Word');
   buildVariables.system.environment = 'production';
   buildVariables.system.build = 'word';
   buildVariables.system['size-unit'] = 'pt';
@@ -703,33 +726,68 @@ async function buildWord() {
  * @param {string} version
  * @return {Promise<void>} A Promise that resolves when the build process is completed or rejects if an error occurs.
  */
-async function build(version, options) {
-
+async function build(version, options = {}) {
   try {
     await checkFolders();
+
     const packageJson = await readPackageJson();
 
-    if (!version) {
-      const prompt = new Input({
-        message: 'Livingdocs version',
-        initial: packageJson.version,
-      });
-      version = await prompt.run();
+    // target option for separate build
+    const targetsString = options.target || 'app,pdf,word,xbrl,ldd';
+    const targets = targetsString
+      .split(',')
+      .map((t) => t.trim())
+      .filter(Boolean);
+    const has = (name) => targets.includes(name);
+
+    if (has('ldd')) {
+        if (!version) {
+          const prompt = new Input({
+            message: 'Livingdocs version',
+            initial: packageJson.version,
+          });
+          version = await prompt.run();
+        }
+
+        packageJson.version = version;
+        await writePackageJson();
     }
 
-    packageJson.version = version;
-    await writePackageJson();
+
 
     await cleanOutput();
-    await buildApp();
-    await buildPdf();
-    await buildWord();
-    await buildXbrl();
-    await buildLdd();
-    !options.customer || await buildPdfCustomer(options.customer);
-    new LivingdocsDesignValidator(await readLivingDocsJson()).IsDesignValid();
-    await zipApp();
-    await zipLdd();
+
+    if (has('app')) {
+      await buildApp();
+    }
+
+    if (has('pdf')) {
+      await buildPdf();
+    }
+
+    if (has('word')) {
+      await buildWord();
+    }
+
+    if (has('xbrl') || has('xhtml')) {
+      await buildXbrl();
+    }
+
+    if (has('ldd')) {
+      await buildLdd();
+
+      const livingdocsJson = await readLivingDocsJson();
+      new LivingdocsDesignValidator(livingdocsJson).IsDesignValid();
+      await zipLdd();
+    }
+
+    if (has('pdf') && options.customer) {
+      await buildPdfCustomer(options.customer);
+    }
+
+    if (has('app')) {
+      await zipApp();
+    }
   } catch (error) {
     console.log(error);
   }
@@ -773,45 +831,53 @@ async function mapScss() {
 
     const output = {
       app: [
-          `"../../srl/config" as *`,
-          `"@multivisio/nswow/scss/init-root.scss" as *`
+        `"../../srl/config" as *`,
+        `"@multivisio/nswow/scss/init-root.scss" as *`,
       ],
       ldd: [
-            `"../../srl/config" as *`,
-          `"@multivisio/nswow/scss/init-root.scss" as *`
+        `"../../srl/config" as *`,
+        `"@multivisio/nswow/scss/init-root.scss" as *`,
       ],
       pdf: [
-          `"../../srl/config" as *`,
-          `"@multivisio/nswow/scss/init-root.scss" as *`
+        `"../../srl/config" as *`,
+        `"@multivisio/nswow/scss/init-root.scss" as *`,
       ],
       word: [
-          `"../../srl/config" as *`,
-          `"@multivisio/nswow/scss/init-root.scss" as *`
+        `"../../srl/config" as *`,
+        `"@multivisio/nswow/scss/init-root.scss" as *`,
       ],
       xbrl: [
-          `"../../srl/config" as *`,
-          `"@multivisio/nswow/scss/init-root.scss" as *`
+        `"../../srl/config" as *`,
+        `"@multivisio/nswow/scss/init-root.scss" as *`,
       ],
     };
 
-    const fontFiles = await glob(join(folders.srlAssets, 'fonts', '**', '*.scss'), {
-      withFileTypes: true,
-    });
+    const fontFiles = await glob(
+      join(folders.srlAssets, 'fonts', '**', '*.scss'),
+      {
+        withFileTypes: true,
+      },
+    );
 
-    const fontsOutput = []
+    const fontsOutput = [];
 
     if (fontFiles.length) {
-      fontsOutput.push(`@import "${internalLddUrl}/${packageJson.name}/${packageJson.version}/fonts/style.css";`);
-      fontFiles.forEach(f => {
+      fontsOutput.push(
+        `@import "${internalLddUrl}/${packageJson.name}/${packageJson.version}/fonts/style.css";`,
+      );
+      fontFiles.forEach((f) => {
         output.app.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
         output.xbrl.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
-      })
+      });
       output.ldd.push(`"./fonts.scss" as *`);
       output.pdf.push(`"./fonts.scss" as *`);
       output.word.push(`"./fonts.scss" as *`);
     }
 
-    await writeFileSync(join(folders.srlImports, 'fonts.scss'), fontsOutput.join('\n'));
+    await writeFileSync(
+      join(folders.srlImports, 'fonts.scss'),
+      fontsOutput.join('\n'),
+    );
 
     const mainFiles = await glob(join(folders.srlAssets, 'scss', '*.scss'), {
       withFileTypes: true,
@@ -950,7 +1016,9 @@ async function mapScss() {
 
     await writeFileSync(
       join(folders.srlImports, 'xbrl.scss'),
-      `@use ` + output.xbrl.join(`;\n@use `) + `;\n@use "@multivisio/nswow/scss/xbrl-core-styles.scss" as *;\n`,
+      `@use ` +
+        output.xbrl.join(`;\n@use `) +
+        `;\n@use "@multivisio/nswow/scss/xbrl-core-styles.scss" as *;\n`,
     );
 
     return true;
