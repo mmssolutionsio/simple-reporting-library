@@ -533,6 +533,26 @@ async function buildPdfCustomer(customer) {
   const lddJson = await readLivingDocsJson();
 
   try {
+    const wordDir = join(folders.srlOutput, 'word');
+    const lddWordDir = join(folders.srlOutput, 'ldd', 'word');
+    statSync(wordDir);
+    await cpSync(wordDir, lddWordDir, { recursive: true });
+    console.log(`Word folder has been copied to ${relative(folders.root, lddWordDir)}`);
+  } catch (e) {
+    console.error(e)
+  }
+
+  try {
+    const xbrlDir = join(folders.srlOutput, 'xbrl');
+    const lddXbrlDir = join(folders.srlOutput, 'ldd', 'xbrl');
+    statSync(xbrlDir);
+    await cpSync(xbrlDir, lddXbrlDir, { recursive: true });
+    console.log(`Xbrl folder has been copied to ${relative(folders.root, lddXbrlDir)}`);
+  } catch (e) {
+    console.error(e)
+  }
+
+  try {
     const pdfDir = join(folders.srlOutput, 'pdf');
     statSync(pdfDir);
     await cpSync(pdfDir, lddPdfDir, { recursive: true });
