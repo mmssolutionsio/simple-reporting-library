@@ -798,11 +798,14 @@ async function build(version, options = {}) {
 
       const livingdocsJson = await readLivingDocsJson();
       new LivingdocsDesignValidator(livingdocsJson).IsDesignValid();
-      await zipLdd();
     }
 
     if (has('pdf') && options.customer) {
       await buildPdfCustomer(options.customer);
+    }
+
+    if (has('ldd')) {
+      await zipLdd();
     }
 
     if (has('app')) {
