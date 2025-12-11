@@ -1,9 +1,11 @@
 import { writeFileSync, readFileSync } from 'node:fs';
 import path from 'node:path/posix';
 import { colors } from './colors.js';
-import { readNsWowJson } from './utils.js';
+import { readNsWowJson, deepAssign } from './utils.js';
 import colorPalette from '@kne/color-palette';
 import folders from './folders.js';
+import { buildVariables } from "./build/variables.js";
+
 /**
  * Maps the values of an object or array recursively.
  *
@@ -176,24 +178,18 @@ async function beaver(verbose = 0) {
     verbose = verbose ? 1 : 0;
   }
 
-  if (typeof configJson.system === 'undefined') {
-    configJson.system = {};
-  }
+  const configAssigned = deepAssign(configJson, buildVariables);
 
-  if (typeof configJson.system.environment === 'undefined') {
-    configJson.system.environment = process.env.NODE_ENV;
-  }
-
-  if (typeof configJson.fonts !== 'undefined') {
-    const fontBasePath = configJson.fonts['font-base-path'] ?? '';
+  if (typeof configAssigned.fonts !== 'undefined') {
+    const fontBasePath = configAssigned.fonts['font-base-path'] ?? '';
     if (fontBasePath.length) {
-      configJson.fonts['font-base-path'] = '.' + path.normalize(fontBasePath);
+      configAssigned.fonts['font-base-path'] = '.' + path.normalize(fontBasePath);
     }
-    if (typeof configJson.fonts.fonts !== 'undefined') {
-      for (let x = 0; x < configJson.fonts.fonts.length; x++) {
-        let font = configJson.fonts.fonts[x];
+    if (typeof configAssigned.fonts.fonts !== 'undefined') {
+      for (let x = 0; x < configAssigned.fonts.fonts.length; x++) {
+        let font = configAssigned.fonts.fonts[x];
         if (typeof font === 'string') {
-          configJson.fonts.fonts[x] = JSON.parse(
+          configAssigned.fonts.fonts[x] = JSON.parse(
             readFileSync(
               path.join(process.cwd(), fontBasePath, font, 'styles.json'),
             ),
@@ -205,10 +201,10 @@ async function beaver(verbose = 0) {
 
   const map = {};
 
-  for (const file in configJson) {
+  for (const file in configAssigned) {
     map[file] = {};
-    for (const variable in configJson[file]) {
-      map[file][variable] = mapValues(configJson[file][variable]);
+    for (const variable in configAssigned[file]) {
+      map[file][variable] = mapValues(configAssigned[file][variable]);
     }
   }
 

@@ -1,6 +1,7 @@
 @use 'config';
 @use 'index';
 @use 'system/root';
+@use "system/variables";
 
 @use 'modern-css-reset';
 
@@ -12,7 +13,9 @@ li {
   margin: 0;
 }
 
-@include root.core-styles;
+@if variables.$build != word {
+  @include root.core-styles;
+}
 @include index.core-styles;
 @include index.system-core-styles;
 @include index.fonts-core-styles;

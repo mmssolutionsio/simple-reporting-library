@@ -10,6 +10,11 @@
   "scripts": {
     "dev": "vite",
     "build": "srl build",
+    "build-app": "srl build --target app",
+    "build-pdf": "srl build --target pdf",
+    "build-word": "srl build --target word",
+    "build-xbrl": "srl build --target xbrl",
+    "build-ldd": "srl build --target ldd",
     "build-type-check": "run-p type-check \"build {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
@@ -19,7 +24,7 @@
     "postinstall": "srl prepare"
   },
   "dependencies": {
-    "@multivisio/nswow": "^1.0.39",
+    "@multivisio/nswow": "^1.0.55",
     "axios": "^1.12.2",
     "chalk": "^5.6.2",
     "exceljs": "^4.4.0",

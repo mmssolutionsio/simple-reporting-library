@@ -1,2 +1,45 @@
 @use 'srl';
-@use 'print';
+
+.srl-chapter,
+.srl-article {
+  page-break-after: always;
+}
+
+.srl-article[class*="srl-category-notes_"],
+.srl-article[class*="srl-category-notes-"],
+.srl-article[class*="srl-category-note_"],
+.srl-article[class*="srl-category-note-"] {
+  page-break-after: avoid;
+}
+
+[class*="srl-category-notes_"] + .srl-article,
+[class*="srl-category-notes-"] + .srl-article,
+[class*="srl-category-note_"] + .srl-article,
+[class*="srl-category-note-"] + .srl-article {
+  page-break-after: always;
+}
+
+/*
+  Hold titles and the following component on the same page
+*/
+.srl-title-h1,
+.srl-title-h2,
+.srl-title-h3,
+.srl-title-h4,
+.srl-title-h5 {
+  & + * {
+    page-break-before: avoid;
+  }
+}
+
+.srl-article + [class*="srl-category-notes_"],
+.srl-article + [class*="srl-category-notes-"],
+.srl-article + [class*="srl-category-note_"],
+.srl-article + [class*="srl-category-note-"] {
+  margin-top: srl.spacer-get(800);
+}
+
+strong,
+[class*="bold"] {
+  font-weight: bold;
+}

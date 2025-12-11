@@ -79,8 +79,12 @@ commander
 commander
   .command('build')
   .description('Build ldd, app, pdf and word for production')
-  .argument('[version]', 'The name of component or group.')
+  .argument('[version]', 'Livingdocs version')
   .option('-c, --customer <customer>', 'The customer to build for')
+  .option(
+    '-t, --target <targets>',
+    'Comma separated targets: app,pdf,word,xbrl,ldd (default: all)'
+  )
   .action(async (version, options) => {
     await build(version, options);
   });

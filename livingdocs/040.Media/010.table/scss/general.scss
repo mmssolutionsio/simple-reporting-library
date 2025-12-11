@@ -49,7 +49,7 @@ td {
   );
   vertical-align: #{map.get(srl.$meta, table, vertical-align)};
   border-bottom: (
-          var(--srl-table-border-regular-width)
+          srl.system-root-style(srl-table-border-regular-width)
           map.get($table-border-regular, style)
           srl.colors-get(map.get($table-border-regular, color))
   );
@@ -93,7 +93,7 @@ td {
   */
   &[class*="head"] {
     border-bottom: (
-            var(--srl-table-border-bold-width)
+            srl.system-root-style(srl-table-border-bold-width)
             map.get($table-border-bold, style)
             srl.colors-get(map.get($table-border-bold, color))
     );
@@ -109,7 +109,7 @@ td {
 
   &[class*="blinetop"] {
     border-top: (
-            var(--srl-table-border-bold-width)
+            srl.system-root-style(srl-table-border-bold-width)
             map.get($table-border-bold, style)
             srl.colors-get(map.get($table-border-bold, color))
     );
@@ -117,21 +117,21 @@ td {
 
   &[class*="nolinetop"] {
     border-top: (
-            var(--srl-table-border-regular-width)
+            srl.system-root-style(srl-table-border-regular-width)
             map.get($table-border-regular, style)
             transparent
     );
 
     &[class*="head"] {
       border-top-width: (
-              var(--srl-table-border-regular-width)
+              srl.system-root-style(srl-table-border-regular-width)
       );
     }
   }
 
   &[class*="linebottom"] {
     border-bottom: (
-            var(--srl-table-border-regular-width)
+            srl.system-root-style(srl-table-border-regular-width)
             map.get($table-border-regular, style)
             srl.colors-get(map.get($table-border-regular, color))
     );
@@ -139,7 +139,7 @@ td {
 
   &[class*="blinebottom"] {
     border-bottom: (
-            var(--srl-table-border-bold-width)
+            srl.system-root-style(srl-table-border-bold-width)
             map.get($table-border-bold, style)
             srl.colors-get(map.get($table-border-bold, color))
     );
@@ -147,19 +147,19 @@ td {
 
   &[class*="nolinebottom"] {
     border-bottom: (
-            var(--srl-table-border-regular-width)
+            srl.system-root-style(srl-table-border-regular-width)
             map.get($table-border-regular, style)
             transparent
     );
 
     &[class*="head"] {
-      border-bottom-width: var(--srl-table-border-regular-width);
+      border-bottom-width: srl.system-root-style(srl-table-border-regular-width);
     }
   }
 
   &[class*="lineleft"] {
     border-left: (
-            var(--srl-table-border-regular-width)
+            srl.system-root-style(srl-table-border-regular-width)
             map.get($table-border-regular, style)
             srl.colors-get(map.get($table-border-regular, color))
     );
@@ -167,7 +167,7 @@ td {
 
   &[class*="blineleft"] {
     border-left: (
-            var(--srl-table-border-bold-width)
+            srl.system-root-style(srl-table-border-bold-width)
             map.get($table-border-bold, style)
             srl.colors-get(map.get($table-border-bold, color))
     );
@@ -175,7 +175,7 @@ td {
 
   &[class*="nolineleft"] {
     border-left: (
-            var(--srl-table-border-regular-width)
+            srl.system-root-style(srl-table-border-regular-width)
             map.get($table-border-regular, style)
             transparent
     );
@@ -183,7 +183,7 @@ td {
 
   &[class*="lineright"] {
     border-right: (
-            var(--srl-table-border-regular-width)
+            srl.system-root-style(srl-table-border-regular-width)
             map.get($table-border-regular, style)
             srl.colors-get(map.get($table-border-regular, color))
     );
@@ -191,7 +191,7 @@ td {
 
   &[class*="blineright"] {
     border-right: (
-            var(--srl-table-border-bold-width)
+            srl.system-root-style(srl-table-border-bold-width)
             map.get($table-border-bold, style)
             srl.colors-get(map.get($table-border-bold, color))
     );
@@ -199,7 +199,7 @@ td {
 
   &[class*="nolineleft"] {
     border-right: (
-            var(--srl-table-border-regular-width)
+            srl.system-root-style(srl-table-border-regular-width)
             map.get($table-border-regular, style)
             transparent
     );
@@ -231,9 +231,14 @@ td {
   DEFINE HERE; DIFFERENT CSS CLASSES IN EVERY PROJECT
   */
   @for $i from 1 through 10 {
-    $suffix: if($i < 10, "0#{$i}", "#{$i}");
+    $suffix: "#{$i}";
+
+    @if $i < 10 {
+      $suffix: "0#{$i}";
+    }
+
     &[class*="background-#{$suffix}"] {
-      background-color: var(--srl-table-background-#{$suffix}, transparent);
+      background-color: srl.system-root-style(srl-table-background-#{$suffix}, transparent);
     }
   }
 

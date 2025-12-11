@@ -1,5 +1,9 @@
 @use "srl";
 
+.srl-title-h3 {
+  font-family: 'Arial', sans-serif;
+}
+
 .srl-title-h3__number:after {
   content: " ";
   display: block;

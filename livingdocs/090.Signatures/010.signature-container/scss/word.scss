@@ -1,0 +1,5 @@
+@use "srl";
+
+.srl-signature {
+  @include srl.spacer-margin-top(400);
+}

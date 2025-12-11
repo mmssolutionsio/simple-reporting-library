@@ -1,5 +1,32 @@
 import { isRouterPath, isExternalPath } from './uri';
 import { camelCase } from './camelCase';
 import { prepareHtmlContent } from './html';
+import {
+    usePageState,
+    clearPageState,
+    isDialogStored,
+    addDialogToStorage,
+    getDialogFromStorage,
+    getDialogStorage,
+    isAccordionAnchored,
+    setAccordionAnchored,
+    isMounted,
+    setMounted
+} from './pageState.ts';
 
-export { isRouterPath, isExternalPath, camelCase, prepareHtmlContent };
+export {
+    isRouterPath,
+    isExternalPath,
+    camelCase,
+    prepareHtmlContent,
+    usePageState,
+    clearPageState,
+    isAccordionAnchored,
+    setAccordionAnchored,
+    isDialogStored,
+    addDialogToStorage,
+    getDialogFromStorage,
+    getDialogStorage,
+    setMounted,
+    isMounted,
+};

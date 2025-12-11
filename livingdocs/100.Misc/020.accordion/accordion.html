@@ -1,8 +1,10 @@
-<div class="srl-accordion">
+<srl-article-accordion class="srl-accordion" data-replace-tag="div">
   <div class="srl-accordion__inner">
-    <div class="srl-accordion__head" doc-container="header"></div>
-    <div class="srl-accordion__content">
-      <div class="srl-accordion__content-inner" doc-container="content"></div>
+    <div class="srl-accordion__head">
+        <button class="srl-accordion__toggle srl-article-accordion__toggle" type="button" data-replace-tag="div" doc-container="header"></button>
+    </div>
+    <div class="srl-accordion__content srl-article-accordion__content">
+      <div class="srl-accordion__content-inner srl-article-accordion__wrapper" doc-container="content"></div>
     </div>
   </div>
-</div>
+</srl-article-accordion>
