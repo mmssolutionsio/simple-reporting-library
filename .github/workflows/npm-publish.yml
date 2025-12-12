@@ -7,8 +7,11 @@ on:
   release:
     types: [created]
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+  
 jobs:
-
   publish-npm:
     runs-on: ubuntu-latest
     steps:
@@ -20,5 +23,3 @@ jobs:
       - run: npm ci
       - run: node scripts/renamePackage.js
       - run: node scripts/doPublish.js -v ${{ github.ref_name }}
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
