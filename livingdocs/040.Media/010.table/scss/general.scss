@@ -91,7 +91,7 @@ td {
   /*
   Borders
   */
-  &[class*="head"] {
+  &[class*='head'] {
     border-bottom: (
             srl.system-root-style(srl-table-border-bold-width)
             map.get($table-border-bold, style)
@@ -99,15 +99,15 @@ td {
     );
   }
 
-  &[class*="linetop"] {
+  &[class*='linetop'] {
     border-top: (
-            srl-table-border-regular-width
+            srl.system-root-style(srl-table-border-regular-width)
             map.get($table-border-regular, style)
             srl.colors-get(map.get($table-border-regular, color))
     );
   }
 
-  &[class*="blinetop"] {
+  &[class*='blinetop'] {
     border-top: (
             srl.system-root-style(srl-table-border-bold-width)
             map.get($table-border-bold, style)
@@ -115,21 +115,19 @@ td {
     );
   }
 
-  &[class*="nolinetop"] {
+  &[class*='nolinetop'] {
     border-top: (
             srl.system-root-style(srl-table-border-regular-width)
             map.get($table-border-regular, style)
             transparent
     );
 
-    &[class*="head"] {
-      border-top-width: (
-              srl.system-root-style(srl-table-border-regular-width)
-      );
+    &[class*='head'] {
+      border-top-width: srl.system-root-style(srl-table-border-regular-width)
     }
   }
 
-  &[class*="linebottom"] {
+  &[class*='linebottom'] {
     border-bottom: (
             srl.system-root-style(srl-table-border-regular-width)
             map.get($table-border-regular, style)
@@ -137,7 +135,7 @@ td {
     );
   }
 
-  &[class*="blinebottom"] {
+  &[class*='blinebottom'] {
     border-bottom: (
             srl.system-root-style(srl-table-border-bold-width)
             map.get($table-border-bold, style)
@@ -145,7 +143,7 @@ td {
     );
   }
 
-  &[class*="nolinebottom"] {
+  &[class*='nolinebottom'] {
     border-bottom: (
             srl.system-root-style(srl-table-border-regular-width)
             map.get($table-border-regular, style)
@@ -157,7 +155,7 @@ td {
     }
   }
 
-  &[class*="lineleft"] {
+  &[class*='lineleft'] {
     border-left: (
             srl.system-root-style(srl-table-border-regular-width)
             map.get($table-border-regular, style)
@@ -165,7 +163,7 @@ td {
     );
   }
 
-  &[class*="blineleft"] {
+  &[class*='blineleft'] {
     border-left: (
             srl.system-root-style(srl-table-border-bold-width)
             map.get($table-border-bold, style)
@@ -173,7 +171,7 @@ td {
     );
   }
 
-  &[class*="nolineleft"] {
+  &[class*='nolineleft'] {
     border-left: (
             srl.system-root-style(srl-table-border-regular-width)
             map.get($table-border-regular, style)
@@ -181,7 +179,7 @@ td {
     );
   }
 
-  &[class*="lineright"] {
+  &[class*='lineright'] {
     border-right: (
             srl.system-root-style(srl-table-border-regular-width)
             map.get($table-border-regular, style)
@@ -189,7 +187,7 @@ td {
     );
   }
 
-  &[class*="blineright"] {
+  &[class*='blineright'] {
     border-right: (
             srl.system-root-style(srl-table-border-bold-width)
             map.get($table-border-bold, style)
@@ -197,7 +195,7 @@ td {
     );
   }
 
-  &[class*="nolineleft"] {
+  &[class*='nolineright'] {
     border-right: (
             srl.system-root-style(srl-table-border-regular-width)
             map.get($table-border-regular, style)
