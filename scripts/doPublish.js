@@ -17,6 +17,9 @@ export async function doPublish(version = null) {
   try {
     const publishVersion = await preparePublish(version);
 
+    await execSync(`npm publish`, { stdio: 'inherit' });
+
+    /*
     const tag = `v${publishVersion.split('.')[0]}-lts`;
 
     await execSync(`npm publish --tag ${tag}`, { stdio: 'inherit' });
@@ -31,6 +34,8 @@ export async function doPublish(version = null) {
         },
       );
     }
+
+     */
 
     console.log(
       `Package ${packageName}@${publishVersion} published successfully!`,
