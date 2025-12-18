@@ -2,6 +2,9 @@
   "name": "@multivisio/nswow",
   "version": "1.0.55",
   "description": "Manage srl templates, build and publish",
+  "repository": {
+    "url": "https://github.com/mmssolutionsio/simple-reporting-library"
+  },
   "bin": {
     "srl": "cli.js"
   },
