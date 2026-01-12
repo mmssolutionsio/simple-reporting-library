@@ -126,6 +126,11 @@ function hasPointsOutsideOfParentheses(text) {
   return false;
 }
 
+function isUnitSize(value) {
+  const unitSizePattern = /^-?\d*\.?\d+(px|em|rem|%|vw|vh|vmin|vmax|cm|mm|in|pt|pc|ex|ch)?$/;
+  return unitSizePattern.test(value);
+}
+
 /**
  * Converts a JavaScript object into SCSS variables.
  *
@@ -155,6 +160,7 @@ function makeScssVariables(values, indent = 2) {
     if (
       typeof values === 'string' &&
       values !== `""` &&
+      !isUnitSize(values) &&
       (hasPointsOutsideOfParentheses(values) ||
         hasCommasOutsideOfParentheses(values))
     ) {

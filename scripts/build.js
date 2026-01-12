@@ -1065,7 +1065,11 @@ async function mapJs() {
 
   for (let i = 0; i < jsFiles.length; i++) {
     const file = jsFiles[i];
-    const className = camelCase(file.parent.name);
+    let className = file.parent.name.split('.');
+    if (className.length > 1) {
+      className.shift();
+    }
+    className = camelCase(className.join('.'));
     const path = [file.name];
     let parent = file.parent;
     while (parent) {
