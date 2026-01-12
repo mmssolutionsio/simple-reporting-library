@@ -29,11 +29,17 @@
  */
 import { computed, type ComputedRef } from 'vue';
 import useConfig from './config.ts';
+import { useInstance } from '#composables/instance.ts';
 
 const config = useConfig();
+const instance = useInstance();
+const locale = computed(() => instance.value?.config.globalProperties.$route.params.locale);
 
 const articles = computed<NsWowArticle[]>(
-  () => config.value?.articles[config.value.locale],
+  () => {
+    const lang = locale.value || config.value.locale;
+    return config.value?.articles[lang] ?? [];
+  },
 );
 
 export default function useArticles(): ComputedRef<NsWowArticle[]> {

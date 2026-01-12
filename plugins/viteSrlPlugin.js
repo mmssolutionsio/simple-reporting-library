@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { join, relative } from 'node:path/posix';
+import { join } from 'node:path/posix';
 import { execSync } from 'node:child_process';
 import folders from '../scripts/folders.js';
 import { beaver } from '../scripts/beaver.js';
@@ -77,9 +77,15 @@ function checkForUpdates() {
   try {
     if (!data.version) return;
 
+    /*
     const tag = `v${data.version.split('.')[0]}-lts`;
 
     const latest = execSync(`npm view ${packageName}@${tag} version`)
+      .toString()
+      .trim();
+     */
+
+    const latest = execSync(`npm view ${packageName} version`)
       .toString()
       .trim();
 

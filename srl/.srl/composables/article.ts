@@ -1,24 +1,24 @@
 import { computed, type ComputedRef } from 'vue';
-import { useRoute } from 'vue-router';
+import { useInstance } from '#composables/instance.ts'
 import useArticles from './articles';
 
 const articles = useArticles();
+const instance = useInstance();
+
+const slug = computed(() => {
+  return instance.value?.config.globalProperties.$route?.params?.slug
+    ? (instance.value?.config.globalProperties.$route?.params?.slug[0] as string)
+    : undefined;
+});
+
+const article = computed<NsWowArticle | undefined>(() => {
+  const slugValue = slug.value;
+  const a = articles.value
+  return !slugValue
+    ? a.find((article) => article.index)
+    : a.find((article) => article.slug === slugValue);
+});
 
 export default function useArticle(): ComputedRef<NsWowArticle | undefined> {
-  const route = useRoute();
-  return computed<NsWowArticle | undefined>(() => {
-    const slug = route.params.slug
-      ? (route.params.slug[0] as string)
-      : undefined;
-    const article = !slug
-      ? articles.value.find((article) => article.index)
-      : articles.value.find((article) => article.slug === slug);
-
-    if (!article) {
-      console.error(`Article not found for slug: ${route.path}`);
-      return undefined;
-    }
-
-    return article;
-  });
+  return article;
 }
