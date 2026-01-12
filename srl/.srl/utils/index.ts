@@ -1,5 +1,5 @@
-import { isRouterPath, isExternalPath } from './uri';
-import { camelCase } from './camelCase';
+import { isFilePath, isRouterPath, isExternalPath } from './uri';
+import { camelCase } from './string';
 import { prepareHtmlContent } from './html';
 import {
     usePageState,
@@ -15,6 +15,7 @@ import {
 } from './pageState.ts';
 
 export {
+    isFilePath,
     isRouterPath,
     isExternalPath,
     camelCase,

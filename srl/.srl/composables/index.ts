@@ -1,3 +1,4 @@
+import _instance from './instance';
 import _useArticle from './article';
 import _useArticles from './articles';
 import _useConfig from './config';
@@ -10,6 +11,8 @@ import _useViewPort from './viewPort';
 import _useLanguageSwitch from './languageSwitch';
 import * as cssStyles from './cssStyles.ts'
 
+export const setInstance = _instance.setInstance;
+export const useInstance = _instance.useInstance;
 export const useArticle = _useArticle;
 export const useArticles = _useArticles;
 export const useConfig = _useConfig;
@@ -24,6 +27,8 @@ export const addCssStyles = cssStyles.addCssStyles;
 export const useCssStyles = cssStyles.useCssStyles;
 
 export default {
+  setInstance,
+  useInstance,
   useArticle,
   useArticles,
   useConfig,

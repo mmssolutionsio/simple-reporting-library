@@ -23,9 +23,6 @@ const languageSwitch = computed<NsWowLanguageSwitch>(() => {
       res.items.push({
         label: locale,
         href: `/${locale}`,
-        callback: () => {
-          Tr.switchLanguage(locale)
-        }
       })
     }
   }
