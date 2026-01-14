@@ -1,4 +1,5 @@
 @use "web";
+@use "assets/scss/placeholders";
 
 .srl-chapter-navigation__list {
   @extend %srl-regular-width;
