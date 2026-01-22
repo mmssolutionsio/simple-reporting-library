@@ -50,7 +50,7 @@
  *   @link="handleNavigation"
  * />
  */
-import { computed, ref } from 'vue'
+import { computed, ref, VNode } from 'vue'
 
 type BackButtonItem = {
   title?: string
@@ -66,6 +66,12 @@ type BackButtonItem = {
     src: string
     alt?: string
   }
+  icon?: string
+  iconBefore?: string
+  iconAfter?: string
+  svg?: VNode | string;
+  svgBefore?: VNode | string;
+  svgAfter?: VNode | string;
   attributes?: {
     [key: string]: string
   }
@@ -82,9 +88,11 @@ const props = withDefaults(
     singleOpen?: boolean
     depth?: number
     disableClasses?: boolean
-    backButonEnabled?: boolean
+    backButtonEnabled?: boolean
+    backButtonLabel?: (backPath: NsWowNavigationItem[]) => string
     backButtonItem?: BackButtonItem
-    backButtonLabel?: string
+    path?: NsWowNavigationItem[]
+    backPath?: NsWowNavigationItem[]
   }>(),
   {
     disableTab: false,
@@ -93,11 +101,15 @@ const props = withDefaults(
     singleOpen: true,
     depth: 0,
     disableClasses: false,
-    backButtonItem: {}
+    backButtonLabel: function(backPath: NsWowNavigationItem[]) {
+      return backPath[0]?
+        backPath[0]?.label ?? 'Back' : 'Back'
+    },
   },
 )
 
 const emit = defineEmits([
+  'toggle',
   'close',
   'closeSub',
   'link',
@@ -110,6 +122,10 @@ const emit = defineEmits([
 const items = ref<SrlMenuItem[]>([])
 
 const opened = defineModel('opened', { type: Boolean, default: true })
+const breadcrumb = defineModel('breadcrumb', {
+  type: Array,
+  default: [],
+})
 
 function open(event: { index: number }) {
   if (props.singleOpen) {
@@ -124,6 +140,7 @@ function close() {
   } else {
     emit('close')
   }
+  toggle()
 }
 
 function next(event: { index: number }) {
@@ -166,10 +183,27 @@ function routerChange() {
   emit('routerChange')
 }
 
+function toggle() {
+  emit('toggle')
+}
+
 function closeAll(keep?: number | string) {
+  let findCurrentPath = null
   items.value.forEach((item: SrlMenuItem, index: number) => {
-    if (keep !== index) item.closeItem()
+    if (keep !== index) {
+      item.closeItem()
+    }
+      const currentPath = item.findPath()
+      if (currentPath) {
+        findCurrentPath = currentPath
+      }
   })
+  if (findCurrentPath) {
+    breadcrumb.value = findCurrentPath
+  } else {
+    breadcrumb.value = props.path && props.path.length ?
+      props.path.slice(0, -1) : []
+  }
 }
 
 const $el = ref<HTMLUListElement>()
@@ -186,36 +220,44 @@ function focusClickable(index: number) {
 
 const menuItems = computed<NsWowNavigationItem[]>(() => {
   const classes: string[] = []
-  if (props.backButtonItem?.attributes?.class) {
-    props.backButtonItem.attributes.class.split(' ').forEach(c => {
-      classes.push(c)
+  const backButtonAttributes = props.backButtonItem?.attributes
+  if (backButtonAttributes && backButtonAttributes.class.length > 0) {
+    backButtonAttributes.class.split(' ').forEach(c => {
+      if (c) classes.push(c)
     })
   }
   classes.push('srl-menu__link--back')
-  return props.backButonEnabled && props.depth ? [
-      {
-        label: props.backButtonLabel,
-        title: props.backButtonItem.title,
-        img: props.backButtonItem.img,
-        imgBefore: props.backButtonItem.imgBefore,
-        imgAfter: props.backButtonItem.imgAfter,
-        attributes: props.backButtonItem.attributes ?
-          Object.assign(props.backButtonItem.attributes,
-            {
-              'class': classes.join(' '),
-              'aria-controls': props.id,
-              'aria-expanded': opened.value
-            }
-          ):
-          {
-            'class': classes.join(' '),
-            'aria-controls': props.id,
-            'aria-expanded': opened.value
-          },
-        callback: close,
-      },
-      ...props.menu,
-    ] : props.menu
+
+  let backLabel: string = props.backButtonLabel(props.backPath ?? [])
+
+  if
+    (props.backButtonEnabled &&
+    props.depth &&
+    props.backButtonItem
+  ) {
+    const backItem: NsWowNavigationItem = {
+      label: backLabel,
+    }
+    props.backButtonItem.title ? backItem.title = props.backButtonItem.title : null
+    props.backButtonItem.img ? backItem.img = props.backButtonItem.img : null
+    props.backButtonItem.imgBefore ? backItem.imgBefore = props.backButtonItem.imgBefore : null
+    props.backButtonItem.imgAfter ? backItem.imgAfter = props.backButtonItem.imgAfter : null
+    props.backButtonItem.icon ? backItem.icon = props.backButtonItem.icon : null
+    props.backButtonItem.iconBefore ? backItem.iconBefore = props.backButtonItem.iconBefore : null
+    props.backButtonItem.iconAfter ? backItem.iconAfter = props.backButtonItem.iconAfter : null
+    props.backButtonItem.svg ? backItem.svg = props.backButtonItem.svg : null
+    props.backButtonItem.svgBefore ? backItem.svgBefore = props.backButtonItem.svgBefore : null
+    props.backButtonItem.svgAfter ? backItem.svgAfter = props.backButtonItem.svgAfter : null
+    backItem.attributes = {
+      ...(props.backButtonItem.attributes ?? {}),
+      class: classes.join(' '),
+      'aria-controls': props.id ?? '',
+      'aria-expanded': String(opened.value)
+    }
+    backItem.callback = close
+    return [backItem, ...props.menu]
+  }
+  return props.menu
 })
 
 const classList = computed(() => {
@@ -229,7 +271,9 @@ defineExpose({
   closeAll,
   $el,
   items,
+  breadcrumb,
 })
+
 </script>
 
 <template>
@@ -249,6 +293,7 @@ defineExpose({
     <template v-for="(item, index) in menuItems" :key="index">
       <SrlMenuItem
         ref="items"
+        v-model:breadcrumb="breadcrumb"
         :item="item"
         :name="props.name"
         :index="index"
@@ -257,9 +302,11 @@ defineExpose({
         :initOpen="props.initOpen"
         :depth="props.depth"
         :disableClasses="props.disableClasses"
-        :backButonEnabled="props.backButonEnabled"
+        :backButtonEnabled="props.backButtonEnabled"
         :backButtonLabel="props.backButtonLabel"
         :backButtonItem="props.backButtonItem"
+        :path="props.path ?? []"
+        :backPath="props.backPath ?? []"
         @open="open"
         @close="close"
         @next="next"
@@ -268,6 +315,7 @@ defineExpose({
         @back="back"
         @link="link"
         @routerChange="routerChange"
+        @toggle="toggle"
       />
     </template>
   </ul>

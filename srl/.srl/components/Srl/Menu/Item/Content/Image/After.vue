@@ -26,7 +26,7 @@ const classListText = computed(() => {
   <span :class="classListText" v-text="props.item.label"/>
   <img
     :class="classListIcon"
-    :src="props.item.imgAfter.src"
-    :alt="props.item.imgAfter.alt ?? props.item.label"
+    :src="props.item.imgAfter?.src"
+    :alt="props.item.imgAfter?.alt ?? props.item.label"
   />
 </template>

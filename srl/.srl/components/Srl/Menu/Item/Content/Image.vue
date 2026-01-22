@@ -18,7 +18,7 @@ const classListIcon = computed(() => {
 <template>
   <img
     :class="classListIcon"
-    :src="props.item.img.src"
-    :alt="props.item.img.alt ?? props.item.label"
+    :src="props.item.img?.src"
+    :alt="props.item.img?.alt ?? props.item.label"
   />
 </template>

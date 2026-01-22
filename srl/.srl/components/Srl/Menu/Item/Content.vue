@@ -44,6 +44,24 @@ const props = defineProps<{
     :depth="props.depth"
     :disableClasses="props.disableClasses"
   />
+  <SrlMenuItemContentSvg
+    v-else-if="props.item.svg"
+    :item="props.item"
+    :depth="props.depth"
+    :disableClasses="props.disableClasses"
+  />
+  <SrlMenuItemContentSvgBefore
+    v-else-if="props.item.svgBefore"
+    :item="props.item"
+    :depth="props.depth"
+    :disableClasses="props.disableClasses"
+  />
+  <SrlMenuItemContentSvgAfter
+    v-else-if="props.item.svgAfter"
+    :item="props.item"
+    :depth="props.depth"
+    :disableClasses="props.disableClasses"
+  />
   <SrlMenuItemContentText
     v-else
     :item="props.item"
