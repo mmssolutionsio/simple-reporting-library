@@ -1,0 +1,11 @@
+@use "srl";
+@use 'assets/scss/placeholders';
+
+.srl-slider {
+  .swiper {
+    display: grid;
+    row-gap: srl.system-root-style(srl-gutter-row-gap, srl.system-root-style(srl-gutter-column-gap, 0));
+    column-gap: srl.system-root-style(srl-gutter-column-gap, 0);
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

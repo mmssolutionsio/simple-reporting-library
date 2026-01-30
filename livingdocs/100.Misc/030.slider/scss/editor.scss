@@ -1,0 +1,27 @@
+@use "srl";
+@use 'assets/scss/placeholders';
+
+.srl-slider {
+  @extend %srl-grid-base;
+
+  &__placeholder {
+    height: 300px;
+  }
+
+  .swiper {
+    @extend %srl-wide-width;
+
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    row-gap: srl.system-root-style(srl-gutter-row-gap, srl.system-root-style(srl-gutter-column-gap, 0));
+    column-gap: srl.system-root-style(srl-gutter-column-gap, 0);
+
+    @include srl.grid-media-up(tablet-ls) {
+      grid-template-columns: repeat(2,1fr);
+    }
+
+    @include srl.grid-media-up(desktop) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "slider",
+  "label": "Slider",
+  "directives": {
+    "items": {
+      "defaultComponents": {
+        "paragraph": "slider-item"
+      },
+      "defaultContent": [
+        {"component": "slider-item"},
+        {"component": "slider-item"},
+        {"component": "slider-item"}
+      ],
+      "allowedChildren": [
+        "slider-item"
+      ]
+    }
+  }
+}

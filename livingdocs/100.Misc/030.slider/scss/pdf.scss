@@ -1,0 +1,14 @@
+@use "srl";
+@use 'assets/scss/placeholders';
+
+.srl-slider {
+  .swiper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    .swiper-slide {
+      @include srl.grid-pdf-flex-col(4);
+    }
+  }
+}

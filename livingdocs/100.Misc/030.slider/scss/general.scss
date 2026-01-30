@@ -1,0 +1,14 @@
+@use "srl";
+@use 'assets/scss/placeholders';
+
+.srl-slider {
+  max-width: srl.system-root-style(srl-container-max-width);
+  padding-inline: srl.system-root-style(srl-container-padding);
+  margin: 0 auto;
+
+  .swiper {
+    .srl-grid {
+      @extend %srl-grid-reset;
+    }
+  }
+}

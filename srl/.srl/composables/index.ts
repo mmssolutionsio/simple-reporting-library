@@ -2,6 +2,7 @@ import _instance from './instance';
 import _useArticle from './article';
 import _useArticles from './articles';
 import _useConfig from './config';
+import _useSrlConfig from './srlConfig';
 import _useDownloads from './downloads';
 import _useLocale from './locale';
 import _useMenu from './menu';
@@ -16,6 +17,7 @@ export const useInstance = _instance.useInstance;
 export const useArticle = _useArticle;
 export const useArticles = _useArticles;
 export const useConfig = _useConfig;
+export const useSrlConfig = _useSrlConfig;
 export const useDownloads = _useDownloads;
 export const useLocale = _useLocale;
 export const useMenu = _useMenu;
@@ -32,6 +34,7 @@ export default {
   useArticle,
   useArticles,
   useConfig,
+  useSrlConfig,
   useDownloads,
   useLocale,
   useMenu,
