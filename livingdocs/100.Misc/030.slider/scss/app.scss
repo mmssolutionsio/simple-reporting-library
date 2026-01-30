@@ -3,16 +3,9 @@
 .srl-slider {
   .swiper-button-prev,
   .swiper-button-next {
-    top: srl.system-size-unit(72) !important;
-
     svg {
       fill: none;
       color: srl.colors-black-1000()
     }
-  }
-
-  .swiper-button-next {
-    right: auto;
-    left: srl.system-size-unit(72) !important;
   }
 }
