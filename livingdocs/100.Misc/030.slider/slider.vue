@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -7,6 +7,7 @@ import 'swiper/css/pagination'
 import SvgNext from '~/livingdocs/100.Misc/030.slider/components/next.vue'
 import SvgPrev from '~/livingdocs/100.Misc/030.slider/components/prev.vue'
 import { useSrlConfig } from '#composables'
+import type SwiperClass from 'swiper/types/swiper-class'
 
 const srlConfig = useSrlConfig();
 
@@ -19,6 +20,8 @@ const props = withDefaults(defineProps<{
   navigation: true,
   pagination: false,
 })
+
+const SwiperEl = ref<SwiperClass>()
 
 const modules = computed(() => [
   ...(props.navigation ? [Navigation] : []),
@@ -53,6 +56,39 @@ const breakpoints = computed(() => ({
   },
 }))
 
+let resizeTimeout: ReturnType<typeof setTimeout>
+
+function calculateHeight() {
+  clearTimeout(resizeTimeout)
+  if (SwiperEl.value?.slidesEl) {
+    SwiperEl.value.slidesEl.style.height = 'auto'
+
+    resizeTimeout = setTimeout(() => {
+      if (SwiperEl.value?.slides?.length > 0) {
+        let height = 0
+        SwiperEl.value?.slides.forEach(slide => {
+          const slideHeight = slide.offsetHeight
+          if (slideHeight > height) {
+            height = slideHeight
+          }
+        })
+        SwiperEl.value?.slidesEl ? SwiperEl.value.slidesEl.style.height = `${height}px` : null
+      }
+    }, 100)
+  }
+}
+
+function onSwiper(swiper) {
+  SwiperEl.value = swiper
+  calculateHeight()
+}
+
+onMounted(() => {
+  window.addEventListener('resize', () => {
+    calculateHeight()
+  })
+})
+
 </script>
 
 <template>
@@ -63,6 +99,7 @@ const breakpoints = computed(() => ({
     :navigation="props.navigation ? { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' } : false"
     :pagination="props.pagination ? { el: '.swiper-pagination', clickable: true } : false"
     :breakpoints="breakpoints"
+    @swiper="onSwiper"
   >
     <slot/>
     <div v-if="props.pagination" class="swiper-pagination"></div>
