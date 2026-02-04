@@ -2,7 +2,21 @@
 @use "../system";
 @use "sass:map";
 
+$smallest-breakpoint: null;
+
 @each $breakpoint, $min-width in variables.$breakpoints {
+  @if $min-width == 0 {
+    $smallest-breakpoint: $breakpoint;
+  }
+}
+
+@each $breakpoint, $min-width in variables.$breakpoints {
+  $breakpoint-map: $breakpoint;
+
+  @if $breakpoint == $smallest-breakpoint {
+    $breakpoint-map: false;
+  }
+
   $size-unit: false;
   @if $breakpoint == print {
     $size-unit: in;
@@ -23,7 +37,7 @@
   @include system.add-root-style(
                   #{variables.$variable-prefix}container-max-width,
                   system.size-unit($container-max-width, $size-unit),
-                  $breakpoint
+                  $breakpoint-map
   );
 
   $container-padding: map.get($container, padding);
@@ -34,7 +48,7 @@
   @include system.add-root-style(
                   #{variables.$variable-prefix}container-padding,
                   system.size-unit($container-padding, $size-unit),
-                  $breakpoint
+                  $breakpoint-map
   );
 
   $gutter: map.get(variables.$gutter, $breakpoint);
@@ -64,17 +78,17 @@
   @include system.add-root-style(
                   #{variables.$variable-prefix}gutter-columns,
                   $columns,
-                  $breakpoint
+                  $breakpoint-map
   );
   @include system.add-root-style(
                   #{variables.$variable-prefix}gutter-row-gap,
                   system.size-unit($row-gap, $size-unit),
-                  $breakpoint
+                  $breakpoint-map
   );
 
   @include system.add-root-style(
                   #{variables.$variable-prefix}gutter-column-gap,
                   system.size-unit($column-gap, $size-unit),
-                  $breakpoint
+                  $breakpoint-map
   );
 }
