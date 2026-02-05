@@ -1,6 +1,11 @@
 @use 'srl';
 
+.srl-quote {
+  align-items: flex-end;
+}
+
 .srl-quote--with-image {
+  align-items: center;
   flex-direction: row;
 }
 
