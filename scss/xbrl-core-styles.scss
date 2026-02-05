@@ -5,6 +5,16 @@
 @use 'sass:map';
 @use 'sass:list';
 
+@use 'modern-css-reset';
+
+h5,
+h6,
+ol,
+ul,
+li {
+  margin: 0;
+}
+
 $breakpointsList: map.keys(variables.$breakpoints);
 $breakpointsListLength: list.length($breakpointsList);
 
