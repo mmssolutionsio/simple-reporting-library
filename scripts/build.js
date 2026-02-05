@@ -124,7 +124,7 @@ async function buildApp() {
         return false;
       } else {
         src === join(folders.srlPublic, '/') ||
-          console.log(`Copy ${src} to ${outputPath}/app`);
+        console.log(`Copy ${src} to ${outputPath}/app`);
         return true;
       }
     },
@@ -204,13 +204,12 @@ async function buildDDev() {
   buildVariables.system['size-unit'] = 'rem';
 
   await checkFolders();
-  const build = await viteBuild({
+  return  await viteBuild({
     build: {
       outDir: './.output/ddev',
     },
     publicDir: true,
   });
-  return build;
 }
 
 /**
@@ -527,7 +526,7 @@ async function buildPdfCustomer(customer) {
     console.error(`Customer ${customer} does not exist in: ` + customerDir);
   }
 
-  console.log(`\nBuild PDF for customer ${customer}`);
+  console.log(`\nBuild customer ${customer}`);
 
   const lddPdfDir = join(folders.srlOutput, 'ldd', 'pdf');
   const lddJson = await readLivingDocsJson();
@@ -542,15 +541,59 @@ async function buildPdfCustomer(customer) {
     console.error(e)
   }
 
+  const lddXbrlDir = join(folders.srlOutput, 'ldd', 'xbrl');
+
   try {
     const xbrlDir = join(folders.srlOutput, 'xbrl');
-    const lddXbrlDir = join(folders.srlOutput, 'ldd', 'xbrl');
     statSync(xbrlDir);
     await cpSync(xbrlDir, lddXbrlDir, { recursive: true });
     console.log(`Xbrl folder has been copied to ${relative(folders.root, lddXbrlDir)}`);
   } catch (e) {
     console.error(e)
   }
+
+  try {
+    const customerXbrlScssPath = join(customerDir, 'custom.scss');
+    const customerXbrlTarget = join(lddXbrlDir, customerName);
+    const baseXbrlScssPath = join(folders.srlImports, 'xbrl.scss');
+
+    const entries = [
+      baseXbrlScssPath,
+      customerXbrlScssPath,
+    ];
+
+    buildVariables.system.environment = 'production';
+    buildVariables.system.build = 'xbrl';
+    buildVariables.system['size-unit'] = 'rem';
+
+    const config = {
+      css: {
+        preprocessorOptions: {
+          scss: {
+            api: 'modern-compiler',
+          },
+        },
+      },
+      base: './',
+      build: {
+        outDir: customerXbrlTarget,
+        lib: {
+          fileName: 'xbrl',
+          entry: entries,
+          formats: ['es'],
+        },
+      },
+      publicDir: false,
+    };
+
+    try {
+      statSync(customerXbrlScssPath)
+      await viteBuild(config);
+    } catch (e) {
+      console.error(e);
+    }
+
+  } catch (e) {}
 
   try {
     const pdfDir = join(folders.srlOutput, 'pdf');
@@ -573,6 +616,10 @@ async function buildPdfCustomer(customer) {
     try {
       const tsPath = join(customerDir, 'custom.ts');
       statSync(tsPath);
+
+      buildVariables.system.environment = 'production';
+      buildVariables.system.build = 'pdf';
+      buildVariables.system['size-unit'] = 'rem';
 
       const config = {
         css: {
@@ -761,16 +808,16 @@ async function build(version, options = {}) {
     const has = (name) => targets.includes(name);
 
     if (has('ldd')) {
-        if (!version) {
-          const prompt = new Input({
-            message: 'Livingdocs version',
-            initial: packageJson.version,
-          });
-          version = await prompt.run();
-        }
+      if (!version) {
+        const prompt = new Input({
+          message: 'Livingdocs version',
+          initial: packageJson.version,
+        });
+        version = await prompt.run();
+      }
 
-        packageJson.version = version;
-        await writePackageJson();
+      packageJson.version = version;
+      await writePackageJson();
     }
 
 
@@ -855,23 +902,23 @@ async function mapScss() {
     const output = {
       app: [
         `"../../srl/config" as *`,
-        `"@multivisio/nswow/scss/init-root.scss" as *`,
+        `"@simple-reporting/base/scss/init-root.scss" as *`,
       ],
       ldd: [
         `"../../srl/config" as *`,
-        `"@multivisio/nswow/scss/init-root.scss" as *`,
+        `"@simple-reporting/base/scss/init-root.scss" as *`,
       ],
       pdf: [
         `"../../srl/config" as *`,
-        `"@multivisio/nswow/scss/init-root.scss" as *`,
+        `"@simple-reporting/base/scss/init-root.scss" as *`,
       ],
       word: [
         `"../../srl/config" as *`,
-        `"@multivisio/nswow/scss/init-root.scss" as *`,
+        `"@simple-reporting/base/scss/init-root.scss" as *`,
       ],
       xbrl: [
         `"../../srl/config" as *`,
-        `"@multivisio/nswow/scss/init-root.scss" as *`,
+        `"@simple-reporting/base/scss/init-root.scss" as *`,
       ],
     };
 
@@ -1015,33 +1062,33 @@ async function mapScss() {
     await writeFileSync(
       join(folders.srlImports, 'app.scss'),
       `@use ` +
-        output.app.join(';\n@use ') +
-        `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
+      output.app.join(';\n@use ') +
+      `;\n@use "@simple-reporting/base/scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'ldd.scss'),
       `@use ` +
-        output.ldd.join(';\n@use ') +
-        `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
+      output.ldd.join(';\n@use ') +
+      `;\n@use "@simple-reporting/base/scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'pdf.scss'),
       `@use ` +
-        output.pdf.join(';\n@use ') +
-        `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
+      output.pdf.join(';\n@use ') +
+      `;\n@use "@simple-reporting/base/scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'word.scss'),
       `@use ` +
-        output.word.join(';\n@use ') +
-        `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
+      output.word.join(';\n@use ') +
+      `;\n@use "@simple-reporting/base/scss/core-styles.scss" as *;\n`,
     );
 
     await writeFileSync(
       join(folders.srlImports, 'xbrl.scss'),
       `@use ` +
-        output.xbrl.join(`;\n@use `) +
-        `;\n@use "@multivisio/nswow/scss/xbrl-core-styles.scss" as *;\n`,
+      output.xbrl.join(`;\n@use `) +
+      `;\n@use "@simple-reporting/base/scss/xbrl-core-styles.scss" as *;\n`,
     );
 
     return true;
