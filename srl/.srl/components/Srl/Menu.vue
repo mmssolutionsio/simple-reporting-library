@@ -50,7 +50,7 @@
  *   @link="handleNavigation"
  * />
  */
-import { computed, ref, VNode } from 'vue'
+import { computed, ref, type VNode } from 'vue'
 
 type BackButtonItem = {
   title?: string
