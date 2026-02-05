@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, useId, VNode } from 'vue'
+import { computed, nextTick, ref, useId, type VNode } from 'vue'
 import type { Ref } from 'vue'
 import type { RouterLink } from 'vue-router'
 import { isExternalPath } from '#utils/uri'
