@@ -1,6 +1,29 @@
 @use 'variables';
 @use 'mixins';
 @use '../grid';
+@use "sass:map";
+@use "sass:list";
+
+@function breakpoints-keys($map) {
+  $keys: ();
+  @each $key, $value in $map {
+    $keys: list.append($keys, $key);
+  }
+  @return $keys;
+}
+
+
+@function breakpoints-keys-reverse($map) {
+  $keys: breakpoints-keys($map);
+  $reversed: ();
+  @for $i from list.length($keys) through 1 {
+    $reversed: list.append($reversed, list.nth($keys, $i));
+  }
+  @return $reversed;
+}
+
+$bpList: breakpoints-keys(grid.$breakpoints);
+$bpListReverse: breakpoints-keys-reverse(grid.$breakpoints);
 
 @mixin core-styles {
   @at-root {
@@ -8,26 +31,36 @@
       @each $key, $value in mixins.$styles {
         --#{$key}: #{$value};
       }
-      @each $breakpoint, $breakpointValue in mixins.$stylesUp {
-        @include grid.media-up($breakpoint) {
-          @each $key, $value in $breakpointValue {
-            --#{$key}: #{$value};
+
+      @each $breakpoint in $bpList {
+        $row: map.get(mixins.$stylesUp, $breakpoint);
+        @if $row {
+          @include grid.media-up($breakpoint) {
+            @each $key, $value in $row {
+              --#{$key}: #{$value};
+            }
           }
         }
       }
 
-      @each $breakpoint, $breakpointValue in mixins.$stylesDown {
-        @include grid.media-down($breakpoint) {
-          @each $key, $value in $breakpointValue {
-            --#{$key}: #{$value};
+      @each $breakpoint in $bpListReverse {
+        $row: map.get(mixins.$stylesDown, $breakpoint);
+        @if $row {
+          @include grid.media-down($breakpoint) {
+            @each $key, $value in $row {
+              --#{$key}: #{$value};
+            }
           }
         }
       }
 
-      @each $breakpoint, $breakpointValue in mixins.$stylesOnly {
-        @include grid.media($breakpoint) {
-          @each $key, $value in $breakpointValue {
-            --#{$key}: #{$value};
+      @each $breakpoint in $bpList {
+        $row: map.get(mixins.$stylesOnly, $breakpoint);
+        @if $row {
+          @include grid.media($breakpoint) {
+            @each $key, $value in $row {
+              --#{$key}: #{$value};
+            }
           }
         }
       }
