@@ -111,6 +111,13 @@ async function startActions() {
       'Srl version changed',
       'Trigger srl prepare',
     ]);
+
+    printPromptsMessage([
+      'Build or dev process abort',
+      'Please restart the process to apply the new version.',
+    ]);
+
+    process.exit();
   }
 
   await vueComponents();
