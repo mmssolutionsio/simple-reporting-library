@@ -6,4 +6,7 @@
     <debugSettings>
         <all>true</all>
     </debugSettings>
+    <addTags>
+        true
+    </addTags>
 </configuration>
