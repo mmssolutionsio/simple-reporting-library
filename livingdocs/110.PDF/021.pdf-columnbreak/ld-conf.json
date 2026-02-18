@@ -1,0 +1,5 @@
+{
+  "name": "pdf-columnbreak",
+  "label": "PDF column break",
+  "allowedParents": ["pdf-column-container"]
+}

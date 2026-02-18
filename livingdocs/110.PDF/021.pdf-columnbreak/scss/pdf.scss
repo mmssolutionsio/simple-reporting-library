@@ -1,0 +1,6 @@
+@use 'srl';
+@use 'sass:map';
+
+.srl-pdf-columnbreak {
+  break-after: column;
+}

@@ -1,0 +1,8 @@
+@use 'srl';
+
+.srl-pdf-column-container {
+  padding-block: srl.spacer-get(100);
+  border-top: 1px solid #{srl.colors-primary-1000()};
+  border-bottom: 1px solid #{srl.colors-primary-1000()};
+}
+

@@ -1,0 +1,5 @@
+@use 'srl';
+
+.srl-pdf-columnbreak__text {
+  @include srl.typography-pdf-header-regular()
+}

@@ -1,0 +1,14 @@
+@use 'srl';
+
+.srl-pdf-column-container__content {
+  column-count: 2;
+  column-gap: 5mm;
+
+  .srl-columns-unbalanced & {
+    column-fill: auto;
+  }
+
+  > * {
+    display: block;
+  }
+}
