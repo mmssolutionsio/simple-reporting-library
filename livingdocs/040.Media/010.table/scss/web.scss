@@ -1,5 +1,5 @@
 @use "srl";
-@use "assets/scss/placeholders";
+@use "@/assets/scss/placeholders";
 
 .srl-table__container > div {
   @extend %srl-grid-base;

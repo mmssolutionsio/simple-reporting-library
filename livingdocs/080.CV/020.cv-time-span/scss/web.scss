@@ -1,5 +1,5 @@
 @use 'srl';
-@use "assets/scss/placeholders";
+@use "@/assets/scss/placeholders";
 
 .srl-cv-time-span__years {
   width: srl.system-size-unit(110);
