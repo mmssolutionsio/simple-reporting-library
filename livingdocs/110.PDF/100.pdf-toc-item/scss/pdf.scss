@@ -1,2 +1,6 @@
 @use 'srl';
 @use 'sass:map';
+
+.srl-pdf-toc__item {
+  -ro-pdf-tag-type: toci;
+}

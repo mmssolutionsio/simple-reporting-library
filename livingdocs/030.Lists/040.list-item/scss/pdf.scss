@@ -4,11 +4,15 @@
 $marker-width: srl.system-size-unit(map.get(srl.$meta, list, marker-width-pdf));
 
 .srl-list-group__item {
+  -ro-pdf-tag-type: LI;
+
   &:before {
     width: $marker-width;
+    -ro-pdf-tag-type: Lbl;
   }
 }
 
 .srl-list-group__item-text {
   width: calc(100% - #{$marker-width});
+  -ro-pdf-tag-type: LBody;
 }
