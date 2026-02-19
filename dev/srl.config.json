@@ -63,7 +63,7 @@
           }
         },
         "vertical-align": "bottom",
-        "notes-separator": ", "
+        "notes-separator": ", "
       },
       "footnote": {
         "number-width": 19,
