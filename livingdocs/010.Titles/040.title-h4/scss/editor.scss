@@ -1,1 +1,9 @@
+@use 'srl';
+@use 'sass:map';
 @use "web";
+
+$number-width: srl.spacer-get(map.get(srl.$meta, title, number-width));
+
+.srl-title-h4__number.doc-no-placeholder + .srl-title-h4__text {
+  width: calc(100% - #{$number-width});
+}

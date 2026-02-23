@@ -1,0 +1,12 @@
+@use 'srl';
+@use 'web';
+@use 'assets/scss/placeholders';
+
+.srl-pdf-columnbreak {
+  text-align: center;
+}
+
+.srl-pdf-columnbreak__editor-text {
+  @include srl.typography-editor-label-text();
+  @extend %srl-regular-width;
+}

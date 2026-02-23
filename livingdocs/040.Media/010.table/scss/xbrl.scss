@@ -1,1 +1,16 @@
 @use 'general';
+@use "@/assets/scss/placeholders";
+
+.srl-table__container > div,
+.srl-table__container > .srl-table {
+  @extend %srl-grid-base;
+}
+
+.srl-table-container,
+.srl-table__container > .srl-table > table {
+  @extend %srl-regular-width;
+
+  .srl-wide-width & {
+    @extend %srl-wide-width;
+  }
+}

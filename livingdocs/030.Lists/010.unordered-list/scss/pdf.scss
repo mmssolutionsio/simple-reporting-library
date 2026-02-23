@@ -6,3 +6,7 @@ $number-width: srl.system-size-unit(map.get(srl.$meta, footnote, number-width-pd
 .srl-table-list {
   margin-left: $number-width;
 }
+
+.srl-list-group__list {
+  -ro-pdf-tag-type: L;
+}

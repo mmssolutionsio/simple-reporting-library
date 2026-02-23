@@ -1,0 +1,15 @@
+{
+  "column-behaviour": {
+    "label": "Column behaviour",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Balanced (columns of equal height)"
+      },
+      {
+        "caption": "Unbalanced (last column should be empty or shorter)",
+        "value": "srl-columns-unbalanced"
+      }
+    ]
+  }
+}

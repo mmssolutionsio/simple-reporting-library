@@ -1,4 +1,5 @@
 {
   "name": "pdf-column-container",
-  "label": "PDF column container"
+  "label": "PDF column container",
+  "properties": ["column-behaviour", "width-reduced"]
 }

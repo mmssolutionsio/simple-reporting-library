@@ -17,4 +17,11 @@
   @include srl.grid-pdf-flex-col(6);
 }
 
+.srl-pdf-toc-page__title {
+  -ro-pdf-tag-type: h1;
+}
+
+.srl-pdf-toc-page__toc-container {
+  -ro-pdf-tag-type: toc;
+}
 

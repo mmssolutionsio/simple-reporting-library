@@ -1,6 +1,6 @@
 @use "srl";
 @use "web";
-@use "assets/scss/placeholders";
+@use "@/assets/scss/placeholders";
 
 .srl-image__alt-text{
   @include srl.typography-caption();

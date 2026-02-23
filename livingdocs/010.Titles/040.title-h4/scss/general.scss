@@ -15,6 +15,10 @@ $number-width: srl.spacer-get(map.get(srl.$meta, title, number-width));
   width: $number-width;
 }
 
-.srl-title-h4__text {
+.srl-title-h4__number + .srl-title-h4__text {
   width: calc(100% - #{$number-width});
+}
+
+.srl-title-h4__number:empty + .srl-title-h4__text {
+  width: 100%;
 }
