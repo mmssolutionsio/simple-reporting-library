@@ -22,6 +22,10 @@ img {
   }
 }
 
+[style*="xlarge"] {
+  background-image: var(--xlarge-url) !important;
+}
+
 /*
   Basic layout for PDF
 */
