@@ -12,3 +12,9 @@
     @extend %srl-wide-width;
   }
 }
+
+.note-link {
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: 0s;
+  }
+}

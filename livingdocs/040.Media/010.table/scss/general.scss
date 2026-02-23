@@ -348,10 +348,6 @@ td {
   cursor: pointer;
   transition: color 0.3s ease;
 
-  @media (prefers-reduced-motion: reduce) {
-    transition-duration: 0s;
-  }
-
   &:hover {
     color: srl.colors-primary-1000();
   }
