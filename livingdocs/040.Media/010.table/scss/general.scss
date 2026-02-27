@@ -270,15 +270,18 @@ td {
     text-align: right;
   }
 
-  &[class*="vatop"] {
+  &[class*='srl-vertical-top'],
+  &[class*='vatop'] {
     vertical-align: top;
   }
 
-  &[class*="vamiddle"] {
+  &[class*='srl-vertical-middle'],
+  &[class*='vamiddle'] {
     vertical-align: middle;
   }
 
-  &[class*="vabottom"] {
+  &[class*='srl-vertical-bottom'],
+  &[class*='vabottom'] {
     vertical-align: bottom;
   }
 
