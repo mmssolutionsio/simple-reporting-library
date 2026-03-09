@@ -16,8 +16,4 @@
 .srl-pdf-toc__number {
   text-align: right;
   width: srl.system-size-unit(24pt);
-
-  &:after {
-    content: target-counter(attr(data-page-number), page);
-  }
 }
