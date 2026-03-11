@@ -1,7 +1,4 @@
 @use 'srl';
-@use "sass:map";
-
-$number-width: srl.spacer-get(map.get(srl.$meta, title, number-width));
 
 .srl-title-h4 {
   @include srl.typography-title-h4();
@@ -9,16 +6,4 @@ $number-width: srl.spacer-get(map.get(srl.$meta, title, number-width));
 
 .srl-title-h4__number-text-container {
   display: flex;
-}
-
-.srl-title-h4__number {
-  width: $number-width;
-}
-
-.srl-title-h4__number + .srl-title-h4__text {
-  width: calc(100% - #{$number-width});
-}
-
-.srl-title-h4__number:empty + .srl-title-h4__text {
-  width: 100%;
 }
