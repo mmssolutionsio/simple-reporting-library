@@ -16,4 +16,13 @@
 .srl-pdf-toc__number {
   text-align: right;
   width: srl.system-size-unit(24pt);
+
+  &:after {
+    .srl-pdf-toc__link:not([href]) & {
+      content: "No link provided";
+      color: #FF0000;
+      display: inline-block;
+      margin-left: srl.spacer-get(100)
+    }
+  }
 }
