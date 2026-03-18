@@ -72,7 +72,7 @@ const gridView = computed<GridView[]>(() => {
 
     <NGridItem v-for="item in gridView" :key="item.name">
       <NH2 v-text="item.name"/>
-      <NTable>
+      <NTable striped>
         <tbody>
           <tr>
             <td>columns</td>

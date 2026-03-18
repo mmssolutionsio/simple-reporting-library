@@ -11,7 +11,7 @@ declare global {
       grid: boolean
     }
   }
-  type SrlDevToolsDialog = null | "grid" | "settings" | "viewport"
+  type SrlDevToolsDialog = null | "grid" | "spacer" | "settings" | "viewport"
   interface Window {
     app: App;
   }

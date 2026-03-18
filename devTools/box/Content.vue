@@ -46,6 +46,20 @@ function dialogToggle(target: SrlDevToolsDialog) {
       </NButton>
 
     </BoxPanel>
+    <BoxPanel label="Spacer">
+
+      <NButton
+        quaternary
+        circle
+        size="tiny"
+        @click="dialogToggle('spacer')"
+      >
+        <template #icon>
+          <NIcon :component="InformationCircleOutline" />
+        </template>
+      </NButton>
+
+    </BoxPanel>
     <BoxPanel label="ViewPort">
 
       <NButton

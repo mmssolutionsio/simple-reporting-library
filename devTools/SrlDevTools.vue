@@ -6,6 +6,7 @@ import Content from './components/Content.vue'
 import DialogSettings from './dialog/Settings.vue'
 import DialogViewPort from './dialog/ViewPort.vue'
 import DialogGrid from './dialog/Grid.vue'
+import DialogSpacer from './dialog/Spacer.vue'
 import PanelContent from './panel/Content.vue'
 import BoxContent from './box/Content.vue'
 import { useViewPort, useSrlConfig } from '#composables'
@@ -72,6 +73,8 @@ const dialogTitle = computed(() => {
       return 'Viewport'
     case 'grid':
       return 'Grid'
+    case 'spacer':
+      return 'Spacer'
     default:
       return ''
   }
@@ -79,6 +82,9 @@ const dialogTitle = computed(() => {
 
 const dialogCardStyle = computed(() => {
   if (dialogContent.value === 'grid') {
+    return { width: 'min(80vw, 1200px)' }
+  }
+  if (dialogContent.value === 'spacer') {
     return { width: 'min(80vw, 1200px)' }
   }
   return { width: 'min(520px, 92vw)' }
@@ -149,6 +155,7 @@ function closeDialog() {
                   <DialogSettings v-if="dialogContent==='settings'" />
                   <DialogViewPort v-if="dialogContent==='viewport'" />
                   <DialogGrid v-if="dialogContent==='grid'" />
+                  <DialogSpacer v-if="dialogContent==='spacer'" />
                 </Content>
               </NCard>
             </NModal>
