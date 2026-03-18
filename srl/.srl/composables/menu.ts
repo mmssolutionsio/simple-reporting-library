@@ -91,9 +91,12 @@ export default function useMenu(
     try {
       const route = useRoute();
       menus[name] = computed<NsWowNavigationItem[]>(() => {
-        return config.value.menus[config.value.locale][name].map((item) => {
-          return buildNav(item, route);
-        });
+        if (config.value.menus[config.value.locale][name]) {
+          return config.value.menus[config.value.locale][name].map((item) => {
+            return buildNav(item, route);
+          });
+        }
+        return [];
       });
 
       return menus[name];

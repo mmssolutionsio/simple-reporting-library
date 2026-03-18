@@ -21,6 +21,7 @@
   "main": "cli.js",
   "dependencies": {
     "@kne/color-palette": "^0.1.0",
+    "@vicons/ionicons5": "^0.13.0",
     "archiver": "^7.0.1",
     "chalk": "^5.6.2",
     "colors": "^1.4.0",
@@ -30,10 +31,14 @@
     "fs": "^0.0.1-security",
     "fs-extra": "^11.3.2",
     "glob": "^10.4.5",
-    "modern-css-reset": "^1.4.0",
-    "node-html-parser": "^7.0.1",
-    "vite": "^6.3.6",
+    "native-ui": "^0.0.1",
     "write-json": "^3.0.1"
+  },
+  "peerDependencies": {
+    "modern-css-reset": "^1.4.0",
+    "naive-ui": "^2.43.2",
+    "node-html-parser": "^7.0.1",
+    "vite": "^6.3.6"
   },
   "keywords": [
     "scss",

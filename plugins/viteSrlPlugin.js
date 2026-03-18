@@ -10,6 +10,8 @@ import {
   map,
   mapLdd,
   mapJs,
+  generateUseSrlConfig,
+  mapIndexScss,
   mapScss,
 } from '../scripts/build.js';
 import chalk from 'chalk';
@@ -121,6 +123,8 @@ async function startActions() {
   }
 
   await vueComponents();
+  await generateUseSrlConfig();
+  await mapIndexScss();
   await beaver(0);
   await map();
   await mapJs();
@@ -174,6 +178,7 @@ function viteSrlPlugin() {
         }
         if (path.endsWith('/srl.config.json')) {
           await updateNsWowJson();
+          await generateUseSrlConfig();
           triggerAction(beaver);
         }
       });
@@ -196,14 +201,14 @@ function viteSrlPlugin() {
         }
 
         if (
-          path.includes('livingdocs') &&
+          path.includes('/livingdocs/') &&
           (path.endsWith('/app.js') || path.endsWith('/app.ts'))
         ) {
           triggerAction(mapJs);
         }
 
         if (
-          path.includes('livingdocs') &&
+          path.includes('/livingdocs/') &&
           (path.endsWith('/properties.json') ||
             path.endsWith('/properties.ts') ||
             path.endsWith('/properties.js') ||
@@ -213,10 +218,14 @@ function viteSrlPlugin() {
         }
 
         if (
-          path.includes('src/components/') &&
+          path.includes('/src/components/') &&
           path.endsWith('.vue')
         ) {
           triggerAction(vueComponents);
+        }
+
+        if (path.includes('/src/assets/scss/placeholders/')) {
+          triggerAction(mapIndexScss);
         }
       });
 
@@ -238,14 +247,14 @@ function viteSrlPlugin() {
         }
 
         if (
-          path.includes('livingdocs') &&
+          path.includes('/livingdocs/') &&
           (path.endsWith('/app.js') || path.endsWith('/app.ts'))
         ) {
           triggerAction(mapJs);
         }
 
         if (
-          path.includes('livingdocs') &&
+          path.includes('/livingdocs/') &&
           (path.endsWith('/properties.json') ||
             path.endsWith('/properties.ts') ||
             path.endsWith('/properties.js') ||
@@ -255,10 +264,14 @@ function viteSrlPlugin() {
         }
 
         if (
-          path.includes('src/components/') &&
+          path.includes('/src/components/') &&
           path.endsWith('.vue')
         ) {
           triggerAction(vueComponents);
+        }
+
+        if (path.includes('/src/assets/scss/placeholders/')) {
+          triggerAction(mapIndexScss);
         }
       });
     },

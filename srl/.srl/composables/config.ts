@@ -39,6 +39,7 @@
  * const config = useConfig()
  */
 import { ref, type Ref } from 'vue';
+import { objectDeepAssign } from '../utils/object.ts'
 
 const config = ref<NsWowConfig>({
   locale: 'de',
@@ -74,7 +75,7 @@ async function setConfig(): Promise<Ref<NsWowConfig>> {
 
     const path = `/src/locales/${locale}.json`;
     if (defaultMessages[path]) {
-      config.value.translations[locale] = Object.assign(
+      config.value.translations[locale] = objectDeepAssign(
         defaultMessages[path],
         config.value.translations[locale],
       );
@@ -88,7 +89,7 @@ async function loadSettings() {
   try {
     const response: Response = await fetch(file);
     const data: NsWowSettings = await response.json();
-    config.value.settings = Object.assign(config.value.settings, data);
+    config.value.settings = objectDeepAssign(config.value.settings, data);
     config.value.locale = data.defaultLanguage;
     document.documentElement.lang = data.defaultLanguage;
   } catch (e) {

@@ -77,6 +77,30 @@ type BackButtonItem = {
   }
 }
 
+type SrlMenuItemProps = {
+  name: string
+  item: NsWowNavigationItem
+  index: number | string
+  disableTab: boolean
+  disableTabIndex: boolean
+  initOpen: number
+  depth: number
+  disableClasses: boolean
+  backButtonEnabled: boolean
+  backButtonLabel: (backPath: NsWowNavigationItem[]) => string
+  backButtonItem?: BackButtonItem
+  backPath: NsWowNavigationItem[]
+  path: NsWowNavigationItem[]
+}
+
+type TogglePayload = {
+  element: HTMLAnchorElement | HTMLButtonElement
+  itemEl: HTMLLIElement
+  menu: SrlMenu
+  opened: boolean
+  props: SrlMenuItemProps
+}
+
 const props = withDefaults(
   defineProps<{
     name: string
@@ -108,17 +132,19 @@ const props = withDefaults(
   },
 )
 
-const emit = defineEmits([
-  'toggle',
-  'close',
-  'closeSub',
-  'link',
-  'routerChange',
-  'nextExceeded',
-  'prevExceeded',
-  'tab',
-  'back',
-])
+const emit = defineEmits<{
+  (e: 'toggle', payload: TogglePayload): void
+  (e: 'backButtonClick'): void
+  (e: 'close'): void
+  (e: 'closeSub'): void
+  (e: 'link'): void
+  (e: 'routerChange'): void
+  (e: 'nextExceeded'): void
+  (e: 'prevExceeded'): void
+  (e: 'tab'): void
+  (e: 'back'): void
+}>()
+
 const items = ref<SrlMenuItem[]>([])
 
 const opened = defineModel('opened', { type: Boolean, default: true })
@@ -140,7 +166,6 @@ function close() {
   } else {
     emit('close')
   }
-  toggle()
 }
 
 function next(event: { index: number }) {
@@ -183,8 +208,8 @@ function routerChange() {
   emit('routerChange')
 }
 
-function toggle() {
-  emit('toggle')
+function toggle(data: TogglePayload) {
+  emit('toggle', data)
 }
 
 function closeAll(keep?: number | string) {
@@ -254,7 +279,10 @@ const menuItems = computed<NsWowNavigationItem[]>(() => {
       'aria-controls': props.id ?? '',
       'aria-expanded': String(opened.value)
     }
-    backItem.callback = close
+    backItem.callback = () => {
+      close()
+      emit('backButtonClick')
+    }
     return [backItem, ...props.menu]
   }
   return props.menu
@@ -320,5 +348,3 @@ defineExpose({
     </template>
   </ul>
 </template>
-
-<style scoped lang="scss"></style>

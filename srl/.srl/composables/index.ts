@@ -1,4 +1,5 @@
 import _instance from './instance';
+import _useSrlConfig from './srlConfig'
 import _useArticle from './article';
 import _useArticles from './articles';
 import _useConfig from './config';
@@ -12,6 +13,7 @@ import _useLanguageSwitch from './languageSwitch';
 import * as cssStyles from './cssStyles.ts'
 
 export const setInstance = _instance.setInstance;
+export const useSrlConfig = _useSrlConfig;
 export const useInstance = _instance.useInstance;
 export const useArticle = _useArticle;
 export const useArticles = _useArticles;
@@ -29,6 +31,7 @@ export const useCssStyles = cssStyles.useCssStyles;
 export default {
   setInstance,
   useInstance,
+  useSrlConfig,
   useArticle,
   useArticles,
   useConfig,

@@ -49,17 +49,25 @@ const breadcrumb = defineModel<NsWowNavigationItem[]>('breadcrumb', {
   required: true,
 }) as Ref<NsWowNavigationItem[]>
 
-const emit = defineEmits([
-  'toggle',
-  'open',
-  'close',
-  'link',
-  'routerChange',
-  'next',
-  'prev',
-  'tab',
-  'back',
-])
+const emit = defineEmits<{
+  (e: 'toggle', payload: {
+    element: HTMLAnchorElement | HTMLButtonElement
+    itemEl: HTMLLIElement
+    menu: SrlMenu
+    menuEl: HTMLUListElement
+    opened: boolean
+    props: typeof props
+  }): void
+  (e: 'open', payload: { index: number | string }): void
+  (e: 'close', payload: { index: number | string }): void
+  (e: 'link'): void
+  (e: 'routerChange'): void
+  (e: 'next', payload: { index: number | string }): void
+  (e: 'prev', payload: { index: number | string }): void
+  (e: 'tab'): void
+  (e: 'back'): void
+}>()
+
 const id = ref<number | string | undefined>()
 if (props.item.children) {
   id.value = useId()
@@ -68,7 +76,7 @@ if (props.item.children) {
 const currentBackPath = computed<NsWowNavigationItem[]>(() => {
   if (!props.item?.attributes?.class?.includes('srl-menu__link--back')) {
     const i: NsWowNavigationItem = {
-      label: props.item.label
+      label: props.item.label,
     }
     props.item.title ? i.title = props.item.title : null
     props.item.img ? i.img = props.item.img : null
@@ -87,13 +95,20 @@ const currentBackPath = computed<NsWowNavigationItem[]>(() => {
 })
 
 const currentPath = computed<NsWowNavigationItem[]>(() => {
-  return [...props.path, props.item]
+  return [...props.path, {
+    ...props.item,
+    element: $el.value,
+    menu: menu.value,
+    menuEl: menu.value?.$el,
+    itemEl: li.value,
+  }]
 })
 
 const external = ref(props.item.href && isExternalPath(props.item.href))
 
-const menu = ref()
-const $el = ref<HTMLElement | null>(null)
+const menu = ref<SrlMenu | null>(null)
+const li = ref<HTMLLIElement>()
+const $el = ref<HTMLAnchorElement | HTMLButtonElement>()
 const opened = ref(false)
 
 
@@ -109,6 +124,7 @@ function toggleAction() {
   } else {
     menu.value.closeAll()
   }
+  !props.item.callback || props.item.callback($el.value , li.value, menu.value.$el)
   toggle()
 }
 function close() {
@@ -124,7 +140,18 @@ function closeSub() {
 }
 
 function toggle() {
-  emit('toggle')
+  emit('toggle', {
+    element: $el.value!,
+    itemEl: li.value!,
+    menu: menu.value,
+    menuEl: menu.value.$el,
+    opened: opened.value,
+    props: props,
+  })
+}
+
+function toggleBridge(data) {
+  emit('toggle', data)
 }
 
 function next() {
@@ -154,7 +181,7 @@ function back(event: KeyboardEvent) {
 }
 
 function link() {
-  !props.item.callback || props.item.callback()
+  !props.item.callback || props.item.callback($el.value, li.value)
   emit('link')
 }
 
@@ -173,7 +200,13 @@ function closeItem() {
 function findPath(): NsWowNavigationItem[] | null {
   if (opened.value) {
     if (props.item?.children?.length) {
-      let res = [...props.path, props.item]
+      let res = [...props.path, {
+        ...props.item,
+        element: $el.value,
+        menu: menu.value,
+        menuEl: menu.value?.$el,
+        itemEl: li.value,
+      }]
       menu.value.items.forEach((item) => {
         item.opened && (res = item.findPath() || res)
       })
@@ -194,12 +227,12 @@ defineExpose({
 })
 
 function internalLinkClick() {
-  !props.item.callback || props.item.callback()
+  !props.item.callback || props.item.callback($el.value , li.value)
   routerChange()
 }
 
 function externalLinkClick() {
-  !props.item.callback || props.item.callback()
+  !props.item.callback || props.item.callback($el.value , li.value)
   link()
 }
 
@@ -237,7 +270,7 @@ const classListItem = computed(() => {
 </script>
 
 <template>
-  <li v-if="!item.children && props.item.href" role="none" :class="classListLi">
+  <li v-if="!item.children && props.item.href" ref="li" role="none" :class="classListLi">
     <router-link
       v-if="!external"
       ref="$el"
@@ -289,7 +322,7 @@ const classListItem = computed(() => {
       />
     </a>
   </li>
-  <li v-else-if="props.item.callback" role="none" :class="classListLi">
+  <li v-else-if="!item.children && props.item.callback" ref="li" role="none" :class="classListLi">
     <button
       type="button"
       ref="$el"
@@ -315,7 +348,7 @@ const classListItem = computed(() => {
       />
     </button>
   </li>
-  <li v-else :class="classListLi" role="none">
+  <li v-else :class="classListLi" ref="li" role="none">
     <button
       type="button"
       ref="$el"
@@ -365,7 +398,8 @@ const classListItem = computed(() => {
       @routerChange="emit('routerChange')"
       @tab="tab"
       @closeSub="closeSub"
-      @toggle="toggle"
+      @toggle="toggleBridge"
+      @backButtonClick="toggle"
     />
   </li>
 </template>

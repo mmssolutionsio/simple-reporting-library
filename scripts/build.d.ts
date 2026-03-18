@@ -22,6 +22,8 @@ export function ddev(): Promise<void>;
  * @throws {Error} If there is an error during the mapping process.
  */
 export function map(): Promise<boolean>;
+export function generateUseSrlConfig(): Promise<void>;
+export function mapIndexScss(): Promise<boolean>;
 /**
  * Maps SCSS files and generates import statements for different output files.
  *
