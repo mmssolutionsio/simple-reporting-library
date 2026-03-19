@@ -60,4 +60,5 @@ onMounted(() => {
   <suspense>
     <App />
   </suspense>
+  <SrlDevTools />
 </template>

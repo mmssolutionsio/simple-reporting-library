@@ -1,3 +1,5 @@
+import type { VNode } from 'vue';
+
 export {};
 declare global {
   type NsWowSettings = {
@@ -98,6 +100,9 @@ declare global {
     icon?: string;
     iconBefore?: string;
     iconAfter?: string;
+    svg?: VNode | string;
+    svgBefore?: VNode | string;
+    svgAfter?: VNode | string;
     img?: {
       src: string;
       alt?: string;

@@ -6,7 +6,8 @@ const props = defineProps<{
     toggle: () => void;
     open: () => void;
     close: () => void;
-  };
+  }
+  level: number
 }>()
 
 </script>

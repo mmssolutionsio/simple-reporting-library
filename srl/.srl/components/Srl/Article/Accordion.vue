@@ -53,6 +53,7 @@ onMounted(() => {
     content.value.id = id
     content.value.setAttribute('tabindex', '-1')
     toggle.value.setAttribute('aria-controls', id)
+    toggle.value.setAttribute('aria-expanded', 'false')
 
     toggle.value.addEventListener('click', () => {
       toggle.value?.getAttribute('aria-expanded') === 'true' ? close() : open()

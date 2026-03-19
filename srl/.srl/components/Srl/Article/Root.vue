@@ -44,13 +44,13 @@ const article = useArticle();
 
 if (article.value) {
   const file = `./html/${locale}/${article.value.name}.html`;
-  const publicationTitle = config.value.settings.publicationName[locale];
-
+  const publicationTitle = config.value.settings?.publicationName?[locale] : null;
   try {
     const req = await fetch(file);
     let text = await req.text();
-
-    document.title = `${article.value.translatedTitle} - ${publicationTitle}`;
+    const title = [article.value.translatedTitle];
+    publicationTitle ? title.push(publicationTitle as string) : null;
+    document.title = title.join(' - ');
     content.value = prepareHtmlContent(text);
   } catch (error) {
     console.error(`Failed to load article content from ${file}:`, error);

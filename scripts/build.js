@@ -20,12 +20,14 @@ import {
   writeLivingDocsJson,
 } from './utils.js';
 import { nsWowInternalLddUrl } from './config.js';
-import folders from './folders.js';
+import folders, { srlSystem } from './folders.js';
 import { mapLdd } from './ldd/mapLdd.js';
 import { LivingdocsDesignValidator } from './ldd/LivingdocsDesignValidator.js';
 import { camelCase } from './utils.js';
+import { stripMediaFromCssFile } from './css/stripMediaFromCss.js';
 import { buildVariables } from './build/variables.js';
 import './dotenv.js';
+import { readJson } from 'fs-extra/esm';
 
 const placeholderId = '6297EAFB-33A0-48B8-8D64-E61CDC3E9035';
 const nswowPath = folders.srlImports;
@@ -360,6 +362,11 @@ async function buildXbrl() {
   }
 }
 
+async function finalizeXbrl() {
+  console.log('\n\nFinalize XBRL');
+  await stripMediaFromCssFile(join(folders.srlOutput, 'xbrl', 'xbrl.css'));
+}
+
 /**
  * Builds Living Documentation (LDD) for a project.
  *
@@ -370,7 +377,7 @@ async function buildXbrl() {
 async function buildLdd(version) {
   console.log('\n\nBuild Livingdocs');
   buildVariables.system.environment = 'production';
-  buildVariables.system.build = 'ldd';
+  buildVariables.system.build = 'editor';
   buildVariables.system['size-unit'] = 'rem';
 
   await checkFolders();
@@ -851,6 +858,10 @@ async function build(version, options = {}) {
       await buildPdfCustomer(options.customer);
     }
 
+    if (has('xbrl') || has('xhtml')) {
+      await finalizeXbrl();
+    }
+
     if (has('ldd')) {
       await zipLdd();
     }
@@ -886,6 +897,60 @@ function cleanupScssAlias(string) {
   return string.replace(/[^a-zA-Z0-9]/g, '');
 }
 
+async function generateUseSrlConfig() {
+  const content = await readJson(join(folders.root, 'srl.config.json'));
+  const c = [
+    `import { ref } from 'vue';`,
+    `const srlConfig = ref(${JSON.stringify(content, null, 2)})`,
+    'export default function useSrlConfig() {',
+    `  return srlConfig`,
+    '}'
+  ]
+
+  writeFileSync(
+    join(folders.srlComposables, 'srlConfig.ts'),
+    c.join('\n'),
+  );
+}
+
+async function mapIndexScss() {
+  const files = await glob(join(folders.srlAssets, 'scss', 'placeholders', '**', '*.scss'), {
+    withFileTypes: true,
+    nosort: false,
+  });
+
+  files.sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
+
+  const relativePathToRoot = join('..', '/');
+
+  const map = [];
+
+  for (let x = 0; x < files.length; x++) {
+    const alias = cleanupScssAlias(files[x].relativePosix());
+    map.push(`@use "${relativePathToRoot}${files[x].relativePosix()}" as ${alias};`);
+  }
+
+  const c = [
+    `@use './config';`,
+    ...map,
+    `@forward './system' as system-*;`,
+    `@forward './fonts' as fonts-*;`,
+    `@forward './grid' as grid-*;`,
+    `@forward './colors' as colors-*;`,
+    `@forward './typography' as typography-*;`,
+    `@forward './helpers' as helpers-*;`,
+    `@forward './spacer' as spacer-*;`,
+    `@forward './meta';`,
+  ]
+
+  writeFileSync(
+    join(folders.srlSystem, 'index.scss'),
+    c.join('\n'),
+  );
+
+  return true;
+}
+
 /**
  * Maps SCSS files and generates import statements for different output files.
  *
@@ -902,23 +967,23 @@ async function mapScss() {
     const output = {
       app: [
         `"../../srl/config" as *`,
-        `"@simple-reporting/base/scss/init-root.scss" as *`,
+        `"@multivisio/nswow/scss/init-root.scss" as *`,
       ],
       ldd: [
         `"../../srl/config" as *`,
-        `"@simple-reporting/base/scss/init-root.scss" as *`,
+        `"@multivisio/nswow/scss/init-root.scss" as *`,
       ],
       pdf: [
         `"../../srl/config" as *`,
-        `"@simple-reporting/base/scss/init-root.scss" as *`,
+        `"@multivisio/nswow/scss/init-root.scss" as *`,
       ],
       word: [
         `"../../srl/config" as *`,
-        `"@simple-reporting/base/scss/init-root.scss" as *`,
+        `"@multivisio/nswow/scss/init-root.scss" as *`,
       ],
       xbrl: [
         `"../../srl/config" as *`,
-        `"@simple-reporting/base/scss/init-root.scss" as *`,
+        `"@multivisio/nswow/scss/init-root.scss" as *`,
       ],
     };
 
@@ -1063,32 +1128,32 @@ async function mapScss() {
       join(folders.srlImports, 'app.scss'),
       `@use ` +
       output.app.join(';\n@use ') +
-      `;\n@use "@simple-reporting/base/scss/core-styles.scss" as *;\n`,
+      `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'ldd.scss'),
       `@use ` +
       output.ldd.join(';\n@use ') +
-      `;\n@use "@simple-reporting/base/scss/core-styles.scss" as *;\n`,
+      `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'pdf.scss'),
       `@use ` +
       output.pdf.join(';\n@use ') +
-      `;\n@use "@simple-reporting/base/scss/core-styles.scss" as *;\n`,
+      `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'word.scss'),
       `@use ` +
       output.word.join(';\n@use ') +
-      `;\n@use "@simple-reporting/base/scss/core-styles.scss" as *;\n`,
+      `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
     );
 
     await writeFileSync(
       join(folders.srlImports, 'xbrl.scss'),
       `@use ` +
       output.xbrl.join(`;\n@use `) +
-      `;\n@use "@simple-reporting/base/scss/xbrl-core-styles.scss" as *;\n`,
+      `;\n@use "@multivisio/nswow/scss/xbrl-core-styles.scss" as *;\n`,
     );
 
     return true;
@@ -1157,4 +1222,4 @@ async function map() {
   return true;
 }
 
-export { build, ddev, map, mapScss, mapLdd, mapJs };
+export { build, ddev, map, generateUseSrlConfig, mapIndexScss, mapScss, mapLdd, mapJs };

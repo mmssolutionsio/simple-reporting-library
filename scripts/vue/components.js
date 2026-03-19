@@ -39,8 +39,10 @@ export async function vueComponents() {
   const appComponents = readVueDir(folders.srlSrc, '@/');
   const srlComponents = readVueDir(folders.srlRoot, '#');
 
-  const components = []
-  const types = []
+  const components = [
+    `app.component('SrlDevTools', defineAsyncComponent(() => import('@multivisio/nswow/devTools/SrlDevTools.vue')));`,
+  ]
+  const types = [];
 
   for (const [name, info] of Object.entries(appComponents)) {
     components.push(
@@ -65,6 +67,11 @@ export async function vueComponents() {
       })
     }
   }
+
+  types.push({
+    name: 'SrlDevTools',
+    type: `  type SrlDevTools = typeof import('@multivisio/nswow/devTools/SrlDevTools.vue')['default'];`,
+  });
 
   writeFileSync(join(folders.srlPlugins, 'asyncSrlComponents.ts'),
 `import { defineAsyncComponent, type App } from 'vue';
