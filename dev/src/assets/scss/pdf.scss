@@ -22,7 +22,7 @@ img {
   }
 }
 
-[style*="xlarge"] {
+[style*="--xlarge-url"] {
   background-image: var(--xlarge-url) !important;
 }
 

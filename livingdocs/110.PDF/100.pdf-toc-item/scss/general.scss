@@ -18,6 +18,11 @@
   width: srl.system-size-unit(24pt);
 
   &:after {
-    content: target-counter(attr(data-page-number), page);
+    .srl-pdf-toc__link:not([href]) & {
+      content: "No link provided";
+      color: #FF0000;
+      display: inline-block;
+      margin-left: srl.spacer-get(100)
+    }
   }
 }
