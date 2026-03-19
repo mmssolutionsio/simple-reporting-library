@@ -36,7 +36,7 @@
  * to other components in the application.
  */
 import App from '@/App.vue';
-import { onMounted, watch } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { useCssStyles } from '#composables'
 import { setMounted } from '#utils'
 
@@ -51,6 +51,11 @@ watch(
   },
   { immediate: true },
 );
+
+const devToolsEnabled = computed(() => {
+  return import.meta.env.DEV && import.meta.env.VITE_DISABLE_SRL_DEVTOOLS !== 'true'
+})
+
 onMounted(() => {
   setMounted(true)
 });
@@ -60,5 +65,5 @@ onMounted(() => {
   <suspense>
     <App />
   </suspense>
-  <SrlDevTools />
+  <SrlDevTools v-if="devToolsEnabled" />
 </template>
