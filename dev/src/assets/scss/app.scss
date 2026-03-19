@@ -2,6 +2,11 @@
 @use 'web';
 @use "./components/note/accordion";
 
+html,
+body {
+  overscroll-behavior: none;
+}
+
 .fade-enter-from {
   opacity: 0;
 }
