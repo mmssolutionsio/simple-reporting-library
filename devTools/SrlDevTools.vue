@@ -7,6 +7,7 @@ import DialogSettings from './dialog/Settings.vue'
 import DialogViewPort from './dialog/ViewPort.vue'
 import DialogGrid from './dialog/Grid.vue'
 import DialogSpacer from './dialog/Spacer.vue'
+import DialogColors from './dialog/Colors.vue'
 import PanelContent from './panel/Content.vue'
 import BoxContent from './box/Content.vue'
 import { useViewPort, useSrlConfig } from '#composables'
@@ -75,6 +76,8 @@ const dialogTitle = computed(() => {
       return 'Grid'
     case 'spacer':
       return 'Spacer'
+    case 'colors':
+      return 'Colors'
     default:
       return ''
   }
@@ -156,6 +159,7 @@ function closeDialog() {
                   <DialogViewPort v-if="dialogContent==='viewport'" />
                   <DialogGrid v-if="dialogContent==='grid'" />
                   <DialogSpacer v-if="dialogContent==='spacer'" />
+                  <DialogColors v-if="dialogContent==='colors'" />
                 </Content>
               </NCard>
             </NModal>

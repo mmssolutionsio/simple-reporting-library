@@ -60,6 +60,20 @@ function dialogToggle(target: SrlDevToolsDialog) {
       </NButton>
 
     </BoxPanel>
+    <BoxPanel label="Colors">
+
+      <NButton
+        quaternary
+        circle
+        size="tiny"
+        @click="dialogToggle('colors')"
+      >
+        <template #icon>
+          <NIcon :component="InformationCircleOutline" />
+        </template>
+      </NButton>
+
+    </BoxPanel>
     <BoxPanel label="ViewPort">
 
       <NButton
