@@ -5,19 +5,33 @@ import { computed } from 'vue'
 
 const srlConfig = useSrlConfig()
 
-const spacerView = computed(() => {
+type SpacerItem = {
+  name: string
+  size: number | string
+  alias: string | null
+  only?: SpacerItemMedia[]
+  up?: SpacerItemMedia[]
+  down?: SpacerItemMedia[]
+}
+
+type SpacerItemMedia = {
+  name: string
+  size: number | string
+}
+
+const spacerView = computed<SpacerItem[]>(() => {
   const res = []
-  for (const [key, item] of Object.etries(srlConfig.value.spacer.spacer)) {
-    const i = {
+  for (const [key, item] of Object.entries(srlConfig.value.spacer.spacer)) {
+    const i: SpacerItem = {
       name: key,
       size: item.size,
       alias: item.alias??null,
     }
 
     if (item.media) {
-      for (const [media, value] of Object.etries(item.media)) {
+      for (const [media, value] of Object.entries(item.media)) {
         if (['up', 'down'].includes(media)) {
-          for (const [m, s] of Object.etries(value)) {
+          for (const [m, s] of Object.entries(value as object)) {
             if (!i[media]) { i[media] = [] }
             i[media].push({
               name: m,
