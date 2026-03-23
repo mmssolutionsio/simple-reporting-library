@@ -44,7 +44,7 @@ import { objectDeepAssign } from '../utils/object.ts'
 const config = ref<NsWowConfig>({
   locale: 'de',
   settings: {
-    languages: ['de', 'en'],
+    languages: ['de'],
     defaultLanguage: 'de',
     shortBreadcrumb: false,
     search: {
