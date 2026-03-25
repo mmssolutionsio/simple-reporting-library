@@ -1,4 +1,5 @@
 @use 'sass:map';
+@use 'sass:list';
 @use 'variables';
 @use 'functions';
 @use '../grid';
@@ -70,6 +71,60 @@
 
 @mixin column-gap($spacer) {
   column-gap: functions.get($spacer);
+}
+
+@mixin component-margin($spacing-rules) {
+  @each $pair, $margin in $spacing-rules {
+    $from: list.nth($pair, 1);
+    $to: list.nth($pair, 2);
+
+    @if $to == '*' {
+      #{$from} + * {
+        @include margin-top($margin);
+      }
+    } @else {
+      #{$from} + #{$to} {
+        @include margin-top($margin);
+      }
+    }
+
+    @if system.$build == "pdf" {
+      @if $to == '*' {
+        #{$from}-first + *,
+        #{$from}-last + * {
+          @include margin-top($margin);
+        }
+      } @else {
+        #{$from}-first + #{$to}-first,
+        #{$from}-last + #{$to}-first {
+          @include margin-top($margin);
+        }
+      }
+    } @else {
+      $wrappers: null;
+
+      @if system.$build != "xbrl" {
+        $wrappers: ('.srl-nested-container');
+      } @else {
+        $wrappers: ('.srl-nested-container', '.ixbrl-element');
+      }
+      @each $wrapper in $wrappers {
+        @if $to == '*' {
+          #{$from} + #{$wrapper}:has(:first-child),
+          #{$wrapper}:has(#{$from}:last-child) + * {
+            @include margin-top($margin);
+          }
+        } @else {
+          #{$from} + #{$wrapper}:has(#{$to}:first-child),
+          #{$wrapper}:has(#{$from}:last-child) + #{$to},
+          #{$wrapper}:has(#{$from}:first-child) + #{$wrapper}:has(#{$to}:last-child),
+          #{$wrapper}:has(#{$from}:last-child) + #{$wrapper}:has(#{$to}:first-child) {
+            @include margin-top($margin);
+          }
+        }
+      }
+    }
+  }
 }
 
 @mixin core-styles {
