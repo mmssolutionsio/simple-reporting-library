@@ -1,6 +1,7 @@
 /.idea
 /node_modules/
 /test-data/
+/test-data2/
 /test-project/
 /.npmrc
 .DS_Store

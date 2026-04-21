@@ -1,1 +1,16 @@
 @use "web";
+
+.srl-cv__button {
+  .srl-cv__button-close {
+    display: none;
+  }
+  &[aria-expanded="true"] {
+    .srl-cv__button-close {
+      display: block;
+    }
+
+    .srl-cv__button-more {
+      display: none;
+    }
+  }
+}

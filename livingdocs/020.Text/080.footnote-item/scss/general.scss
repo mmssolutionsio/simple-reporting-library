@@ -1,8 +1,35 @@
 @use 'srl';
-@use "sass:map";
+@use 'sass:map';
+@use "@/assets/scss/margins";
+@use "spacing-variations";
+
+$number-width: srl.system-size-unit(map.get(srl.$meta, footnote, number-width));
+
+@if srl.$system-build == "pdf" {
+  $number-width: srl.system-size-unit(map.get(srl.$meta, footnote, number-width-pdf));
+}
 
 .srl-footnote:not(.srl-grid),
 .srl-footnote__item {
   display: flex;
   @include srl.typography-footnote-text();
+}
+
+@include margins.srl-component-margin(spacing-variations.$margins);
+
+.srl-footnote__key,
+.srl-footnote__number {
+  width: $number-width;
+
+  &:empty {
+    width: 0;
+
+    & + .srl-footnote__text {
+      width: 100%;
+    }
+  }
+}
+
+.srl-footnote__text {
+  width: calc(100% - #{$number-width});
 }

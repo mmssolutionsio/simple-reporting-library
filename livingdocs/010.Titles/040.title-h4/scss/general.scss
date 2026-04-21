@@ -1,4 +1,6 @@
 @use 'srl';
+@use "@/assets/scss/margins";
+@use "spacing-variations";
 
 .srl-title-h4 {
   @include srl.typography-title-h4();
@@ -7,3 +9,5 @@
 .srl-title-h4__number-text-container {
   display: flex;
 }
+
+@include margins.srl-component-margin(spacing-variations.$margins);

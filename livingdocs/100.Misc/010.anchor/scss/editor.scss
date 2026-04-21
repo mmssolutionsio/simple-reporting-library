@@ -1,6 +1,5 @@
 @use 'srl';
 @use 'web';
-@use 'assets/scss/placeholders';
 
 .srl-anchor__text {
   @extend %srl-regular-width;

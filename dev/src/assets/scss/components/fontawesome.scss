@@ -1,0 +1,56 @@
+@use "sass:list";
+@use "srl";
+@use "srl/fa";
+
+$brands: (
+  facebook-f,
+  linkedin-in,
+  xing,
+  x-twitter,
+  instagram
+);
+
+$icons: (
+  search,
+  download,
+  close,
+  chevron-up,
+  chevron-right,
+  chevron-down,
+  chevron-left,
+  arrow-up,
+  arrow-right,
+  arrow-down,
+  arrow-left
+);
+
+@at-root {
+  .#{fa.$css-prefix},
+  [class*="#{fa.$css-prefix}-"] {
+    @extend %srl-icon-base;
+  }
+}
+
+@each $name in $brands {
+  .#{fa.$css-prefix}-#{$name} {
+    @include fa.brands($name);
+  }
+}
+
+@each $name in $icons {
+  .#{fa.$css-prefix}-#{$name} {
+    @include fa.icon($name);
+  }
+  .#{fa.$css-prefix}-thin-#{$name} {
+    @include fa.thin($name);
+  }
+  .#{fa.$css-prefix}-light-#{$name} {
+    @include fa.light($name);
+  }
+  .#{fa.$css-prefix}-regular-#{$name} {
+    @include fa.regular($name);
+  }
+  .#{fa.$css-prefix}-solid-#{$name} {
+    @include fa.solid($name);
+  }
+}

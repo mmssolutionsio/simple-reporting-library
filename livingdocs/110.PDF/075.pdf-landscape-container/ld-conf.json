@@ -1,0 +1,7 @@
+{
+  "name": "pdf-landscape-container",
+  "label": "PDF landscape container",
+  "properties": [
+    "page-size"
+  ]
+}

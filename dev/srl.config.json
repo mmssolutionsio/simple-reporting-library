@@ -3,7 +3,7 @@
     "meta": {
       "title": {
         "number-width": 800,
-        "number-width-pdf": 400
+        "number-width-pdf": 1200
       },
       "list": {
         "marker-width": 40,
@@ -63,7 +63,8 @@
           }
         },
         "vertical-align": "bottom",
-        "notes-separator": ", "
+        "notes-separator": ", ",
+        "cells-width-in-mm": false
       },
       "footnote": {
         "number-width": 19,
@@ -86,10 +87,6 @@
         "toc-page-number": {
           "width": 40,
           "width-pdf": "35pt"
-        },
-        "toc-number": {
-          "width": 25,
-          "width-pdf": "20pt"
         }
       }
     }
@@ -103,7 +100,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -128,7 +124,6 @@
         "line-height": 1.2,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "white-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -144,7 +139,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -166,7 +160,6 @@
         "line-height": 0.875,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "white-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -182,7 +175,6 @@
         "line-height": 1.1,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -204,7 +196,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -225,7 +216,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -246,7 +236,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -267,7 +256,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -291,7 +279,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -312,7 +299,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -333,7 +319,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -354,7 +339,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -375,7 +359,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -396,7 +379,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -417,7 +399,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -438,7 +419,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -459,7 +439,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -480,7 +459,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "primary-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -501,7 +479,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -522,7 +499,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -543,7 +519,6 @@
         "line-height": 1,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -564,7 +539,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "up": {
@@ -586,7 +560,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -602,7 +575,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -618,7 +590,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -634,7 +605,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -650,7 +620,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -666,7 +635,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -682,7 +650,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -703,7 +670,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -719,7 +685,6 @@
         "line-height": 1.14,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -735,7 +700,6 @@
         "line-height": 1.2,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -751,7 +715,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 600,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -772,7 +735,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "primary-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -788,7 +750,6 @@
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
-        "color": "black-1000",
         "letter-spacing": 0,
         "media": {
           "print": {
@@ -831,23 +792,23 @@
       },
       {
         "name": "primary-400",
-        "color": "#ffcb99"
+        "color": "#ffcb9a"
       },
       {
         "name": "primary-600",
-        "color": "#ffb166"
+        "color": "#ffb065"
       },
       {
         "name": "primary-800",
-        "color": "#ff9733"
+        "color": "#ff9734"
       },
       {
         "name": "primary-1000",
-        "color": "#ff7d00"
+        "color": "#F05000"
       },
       {
         "name": "secondary-200",
-        "color": "#ccd1e7"
+        "color": "#ccd1e6"
       },
       {
         "name": "secondary-400",
@@ -855,11 +816,11 @@
       },
       {
         "name": "secondary-600",
-        "color": "#6675b7"
+        "color": "#6675b6"
       },
       {
         "name": "secondary-800",
-        "color": "#33479f"
+        "color": "#32469f"
       },
       {
         "name": "secondary-1000",
@@ -965,11 +926,27 @@
           }
         }
       },
+      "150": {
+        "size": 12,
+        "media": {
+          "print": {
+            "size": "6pt"
+          }
+        }
+      },
       "200": {
         "size": 16,
         "media": {
           "print": {
             "size": "8pt"
+          }
+        }
+      },
+      "300": {
+        "size": 24,
+        "media": {
+          "print": {
+            "size": "12pt"
           }
         }
       },
@@ -986,6 +963,14 @@
         "media": {
           "print": {
             "size": "32pt"
+          }
+        }
+      },
+      "1200": {
+        "size": 96,
+        "media": {
+          "print": {
+            "size": "48pt"
           }
         }
       },

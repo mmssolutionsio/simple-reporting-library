@@ -1,0 +1,23 @@
+{
+  "name": "list-item-unordered-list",
+  "label": "List item (unordered list)",
+  "allowedParents": ["unordered-list", "list-item-unordered-list"],
+  "directives": {
+    "add-nested-list": {
+      "type": "toggle",
+      "label": "Add nested list container",
+      "default": false
+    },
+    "sub-list": {
+      "allowedChildren": ["list-item-unordered-list"],
+      "defaultComponents": {
+        "paragraph": "list-item-unordered-list"
+      },
+      "defaultContent": [
+        {
+          "component": "list-item-unordered-list"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,14 @@
+@use 'srl';
+@use "sass:map";
+@use "@/assets/scss/margins";
+@use "spacing-variations";
+
+@include margins.srl-component-margin(spacing-variations.$margins);
+
+.srl-list-group__item-inner {
+  @include srl.typography-list();
+
+  .srl-footnote-container .srl-table-list & {
+    @include srl.typography-footnote-text();
+  }
+}

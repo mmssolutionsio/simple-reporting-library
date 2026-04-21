@@ -97,6 +97,7 @@ declare global {
   type NsWowNavigationItem = {
     label: string;
     title?: string;
+    iconPrefix?: string;
     icon?: string;
     iconBefore?: string;
     iconAfter?: string;
@@ -120,7 +121,11 @@ declare global {
     attributes?: {
       [key: string]: string;
     };
-    callback?: () => void;
+    callback?: (
+      ctaElement: HTMLAnchorElement | HTMLButtonElement,
+      listElement: HTMLLIElement,
+      menu?: HTMLUListElement
+    ) => void;
     children?: NsWowNavigationItem[];
   };
 

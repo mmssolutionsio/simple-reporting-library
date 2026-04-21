@@ -1,11 +1,19 @@
 @use 'srl';
 @use 'sass:map';
 
+$toc-toc-page-number-width: srl.system-size-unit(map.get(srl.$meta, pdf, toc-page-number, width-pdf));
+
 .srl-pdf-toc__item {
   -ro-pdf-tag-type: toci;
 }
 
-.srl-pdf-toc__number {
+.srl-pdf-toc__text {
+  width: calc(100% - $toc-toc-page-number-width);
+}
+
+.srl-pdf-toc__page-number {
+  width: $toc-toc-page-number-width;
+
   &:after {
     content: target-counter(attr(data-page-number), page);
   }

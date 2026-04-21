@@ -2,9 +2,18 @@
 @use 'web';
 @use "./components/note/accordion";
 
+html {
+  -webkit-text-size-adjust: 100%;
+  scrollbar-gutter: stable;
+}
+
 html,
 body {
   overscroll-behavior: none;
+}
+
+* {
+  scroll-margin-top: calc(srl.system-root-style(srl-header-height) + srl.spacer-get(400));
 }
 
 .fade-enter-from {

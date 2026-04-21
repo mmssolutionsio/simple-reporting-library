@@ -124,7 +124,10 @@ function toggleAction() {
   } else {
     menu.value.closeAll()
   }
-  !props.item.callback || props.item.callback($el.value , li.value, menu.value.$el)
+  !props.item.callback || props.item.callback(
+    $el.value as HTMLAnchorElement | HTMLButtonElement,
+    li.value as HTMLLIElement,
+    menu.value.$el)
   toggle()
 }
 function close() {
@@ -181,12 +184,18 @@ function back(event: KeyboardEvent) {
 }
 
 function link() {
-  !props.item.callback || props.item.callback($el.value, li.value)
+  !props.item.callback || props.item.callback(
+    $el.value as HTMLAnchorElement | HTMLButtonElement,
+    li.value as HTMLLIElement,
+  )
   emit('link')
 }
 
 function routerChange() {
-  !props.item.callback || props.item.callback()
+  !props.item.callback || props.item.callback(
+    $el.value as HTMLAnchorElement,
+    li.value as HTMLLIElement,
+  )
   emit('link')
   emit('routerChange')
 }
@@ -227,12 +236,18 @@ defineExpose({
 })
 
 function internalLinkClick() {
-  !props.item.callback || props.item.callback($el.value , li.value)
+  !props.item.callback || props.item.callback(
+    $el.value as HTMLAnchorElement,
+    li.value as HTMLLIElement,
+  )
   routerChange()
 }
 
 function externalLinkClick() {
-  !props.item.callback || props.item.callback($el.value , li.value)
+  !props.item.callback || props.item.callback(
+    $el.value as HTMLAnchorElement,
+    li.value as HTMLLIElement,
+  )
   link()
 }
 

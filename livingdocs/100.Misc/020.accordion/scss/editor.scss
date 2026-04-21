@@ -1,0 +1,12 @@
+@use "srl";
+
+.srl-category-accordion {
+  template-header {
+    display: block;
+    flex: 1;
+  }
+
+  template-content {
+    display: block;
+  }
+}

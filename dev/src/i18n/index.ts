@@ -1,4 +1,4 @@
-import { createI18n, type I18n, type I18nOptions, type LocaleMessages } from 'vue-i18n'
+import { createI18n, type I18n, type I18nOptions } from 'vue-i18n'
 import useConfig from '#composables/config'
 
 let i18n: I18n | undefined = undefined

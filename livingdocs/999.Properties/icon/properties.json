@@ -8,11 +8,11 @@
       },
       {
         "caption": "Arrow right",
-        "value": "srl-icon-arrow-right-after"
+        "value": "srl-button-icon-arrow-right-after"
       },
       {
         "caption": "Download",
-        "value": "srl-icon-download-after"
+        "value": "srl-button-icon-download-after"
       }
     ]
   }

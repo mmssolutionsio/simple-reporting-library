@@ -1,1 +1,9 @@
 @use 'general';
+
+.srl-table__container > .srl-table > .srl-table-footnote-wrap {
+  @extend %srl-regular-width;
+
+  .srl-wide-width & {
+    @extend %srl-wide-width;
+  }
+}

@@ -1,4 +1,6 @@
 @use 'srl';
+@use "@/assets/scss/margins";
+@use "spacing-variations";
 
 .srl-title-h2 {
   @include srl.typography-title-h2();
@@ -15,6 +17,8 @@
     color: srl.colors-primary-1000();
   }
 }
+
+@include margins.srl-component-margin(spacing-variations.$margins);
 
 .srl-title-h2__number-text-container {
   display: flex;

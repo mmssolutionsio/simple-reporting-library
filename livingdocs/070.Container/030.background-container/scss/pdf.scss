@@ -1,0 +1,13 @@
+@use "srl";
+@use 'sass:map';
+
+$page-margin-right: srl.system-size-unit(map.get(srl.$meta, pdf, margin, right));
+$page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
+
+.srl-background-container {
+  box-decoration-break: clone;
+  margin-left: -$page-margin-left;
+  margin-right: -$page-margin-right;
+  padding-left: $page-margin-left;
+  padding-right: $page-margin-right;
+}

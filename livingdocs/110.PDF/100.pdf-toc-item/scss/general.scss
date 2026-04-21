@@ -1,4 +1,5 @@
 @use 'srl';
+@use "sass:map";
 
 .srl-pdf-toc__item {
   padding-block: srl.spacer-get(100);
@@ -11,11 +12,6 @@
 
 .srl-pdf-toc__text {
   width: calc(100% - srl.system-size-unit(24pt) - srl.spacer-get(100));
-}
-
-.srl-pdf-toc__number {
-  text-align: right;
-  width: srl.system-size-unit(24pt);
 
   &:after {
     .srl-pdf-toc__link:not([href]) & {
@@ -25,4 +21,9 @@
       margin-left: srl.spacer-get(100)
     }
   }
+}
+
+.srl-pdf-toc__page-number {
+  text-align: right;
+  width: srl.system-size-unit(24pt);
 }

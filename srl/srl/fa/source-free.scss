@@ -1,0 +1,14 @@
+@use "sass:map";
+@use "srl/meta";
+@use "@fortawesome/fontawesome-free/scss/variables" with (
+  $css-prefix: srl-icon,
+  $icon-property: --srl-icon,
+  $font-path: "@fortawesome/fontawesome-free/webfonts"
+);
+@forward "@fortawesome/fontawesome-free/scss/variables";
+@forward "@fortawesome/fontawesome-free/scss/mixins";
+$type: free;
+$default-style: light;
+@if map.has-key(meta.$meta, icon, default-style) {
+  $default-style: map.get(meta.$meta, icon, default-style);
+}

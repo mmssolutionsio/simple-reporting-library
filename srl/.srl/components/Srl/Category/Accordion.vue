@@ -15,12 +15,14 @@ function toggle() {
 
 function open() {
   state.value = true
-  rootEl.value?.querySelector<HTMLDivElement>(`#${id.value}`)?.focus()
+  const r = rootEl.value as HTMLElement
+  r?.querySelector<HTMLDivElement>(`#${id.value}`)?.focus()
 }
 
 function close() {
   state.value = false
-  rootEl.value?.querySelector<HTMLDivElement>(`[aria-controls="${id.value}"]`)?.focus()
+  const r = rootEl.value as HTMLElement
+  r?.querySelector<HTMLDivElement>(`[aria-controls="${id.value}"]`)?.focus()
 }
 
 const accordion = computed(() => {
@@ -37,18 +39,19 @@ const accordion = computed(() => {
 
 onMounted(() => {
   if (route.hash) {
-    if (rootEl.value.id && rootEl.value.id === route.hash) {
+    const r = rootEl.value as HTMLElement
+    if (r.id && `#${r.id}` === route.hash) {
       open()
       isAccordionAnchored() || setAccordionAnchored(true)
     } else {
-      const targetEl = rootEl.value?.querySelector<HTMLElement>(route.hash)
+      const targetEl = r?.querySelector<HTMLElement>(route.hash)
       if (targetEl) {
         open()
         if (!isAccordionAnchored()) {
           setAccordionAnchored(true)
           nextTick(() => {
             setTimeout(() => {
-              rootEl.value.scrollIntoView({
+              r.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start',
               })

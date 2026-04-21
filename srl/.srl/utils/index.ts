@@ -3,6 +3,7 @@ import { camelCase } from './string';
 import { prepareHtmlContent } from './html';
 import { objectDeepAssign } from './object'
 import {
+  type RefSrlPageDialog,
   usePageState,
   clearPageState,
   isDialogStored,
@@ -21,6 +22,7 @@ export {
   isExternalPath,
   camelCase,
   prepareHtmlContent,
+  RefSrlPageDialog,
   usePageState,
   clearPageState,
   isAccordionAnchored,

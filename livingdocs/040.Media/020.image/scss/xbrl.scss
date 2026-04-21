@@ -1,5 +1,3 @@
 @use 'srl';
+@use 'general';
 
-.srl-image__caption-text {
-  @include srl.typography-caption();
-}

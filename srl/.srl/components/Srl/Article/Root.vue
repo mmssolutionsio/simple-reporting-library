@@ -44,7 +44,10 @@ const article = useArticle();
 
 if (article.value) {
   const file = `./html/${locale}/${article.value.name}.html`;
-  const publicationTitle = config.value.settings?.publicationName[locale]??null;
+  let publicationTitle = null
+  if (config.value.settings?.publicationName) {
+    publicationTitle = config.value.settings.publicationName[locale] ?? null;
+  }
   try {
     const req = await fetch(file);
     let text = await req.text();

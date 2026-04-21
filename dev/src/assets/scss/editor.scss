@@ -1,6 +1,5 @@
 @use 'srl';
 @use 'web';
-@use "placeholders";
 
 $editor-color-srl: srl.colors-shade-200();
 $editor-background-color-srl: srl.colors-primary-1000();
@@ -10,13 +9,14 @@ $editor-background-color-srl: srl.colors-primary-1000();
 */
 .srl-article-root .doc-component-highlight {
   outline: 1px solid $editor-color-srl;
+  border-radius: 0;
 }
 
-.ns-temp-highlight {
-  background: $editor-background-color-srl;
+.srl-temp-highlight {
+  background: #FFFF00;
 }
 
-span.ns-nowrap {
+span.srl-nowrap {
   --b: 1px; /* thickness of the border */
   --c: #{$editor-color-srl}; /* color of the border */
   --w: 6px; /* width of border */
@@ -30,7 +30,7 @@ span.ns-nowrap {
     conic-gradient(from -90deg at bottom var(--b) right var(--b), var(--_g)) 100% 100% / var(--_p);
 }
 
-span.ns-key-figure {
+span.srl-key-figure {
   color: srl.colors-white-1000();
   background-color: $editor-background-color-srl;
 }

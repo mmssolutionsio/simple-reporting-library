@@ -1,11 +1,13 @@
 {
-  "name": "standard-ld",
+  "name": "demo-mms-ld",
   "label": "skeleton",
-  "version": "0.0.1",
+  "version": "0.0.14",
   "author": "nsgroup",
   "assets": {
-    "css": ["./assets/style.css"],
-    "js": ["./assets/ldd.js"]
+    "css": [
+      "assets/ldd.css"
+    ],
+    "js": []
   },
   "wrapper": "<div class=\"srl-article-root doc-section\"></div>",
   "imageRatios": {
@@ -35,58 +37,425 @@
     }
   },
   "componentProperties": {
-    "web-width": {
-      "label": "Web width",
-      "type": "select",
-      "options": [
-        {
-          "caption": "Text width"
-        },
-        {
-          "caption": "Content width",
-          "value": "srl-article__grid--content-web"
-        },
-        {
-          "caption": "Full width",
-          "value": "srl-article__grid--full-web"
-        }
-      ]
-    },
-    "pdf-width": {
-      "label": "PDF width",
-      "type": "select",
-      "options": [
-        {
-          "caption": "Text width"
-        },
-        {
-          "caption": "Content width",
-          "value": "srl-article__grid--content-pdf"
-        },
-        {
-          "caption": "Full width",
-          "value": "srl-article__grid--full-pdf"
-        }
-      ]
-    },
-    "show-mobile-image": {
-      "label": "Show mobile image",
+    "reverse": {
+      "label": "Reverse",
       "type": "option",
-      "value": "show-mobile-image"
+      "value": "srl-reverse"
+    },
+    "pdf-spacer": {
+      "label": "PDF spacer (please use with caution)",
+      "type": "select",
+      "options": [
+        {
+          "caption": "Default"
+        },
+        {
+          "caption": "XXS spacer",
+          "value": "srl-spacer-25"
+        },
+        {
+          "caption": "XS spacer",
+          "value": "srl-spacer-50"
+        },
+        {
+          "caption": "S spacer",
+          "value": "srl-spacer-100"
+        },
+        {
+          "caption": "M spacer",
+          "value": "srl-spacer-200"
+        },
+        {
+          "caption": "L spacer",
+          "value": "srl-spacer-400"
+        },
+        {
+          "caption": "XL spacer",
+          "value": "srl-spacer-800"
+        },
+        {
+          "caption": "XXL spacer",
+          "value": "srl-spacer-1600"
+        }
+      ]
+    },
+    "icon": {
+      "label": "Icon",
+      "type": "select",
+      "options": [
+        {
+          "caption": "None"
+        },
+        {
+          "caption": "Arrow right",
+          "value": "srl-button-icon-arrow-right-after"
+        },
+        {
+          "caption": "Download",
+          "value": "srl-button-icon-download-after"
+        }
+      ]
+    },
+    "hide-quote-characters": {
+      "label": "Hide quote characters before and after",
+      "type": "option",
+      "value": "srl-hide-quote-characters"
+    },
+    "width-all": {
+      "label": "Width",
+      "type": "select",
+      "options": [
+        {
+          "caption": "Regular"
+        },
+        {
+          "caption": "Wide",
+          "value": "srl-wide-width"
+        },
+        {
+          "caption": "Full",
+          "value": "srl-full-width"
+        }
+      ]
+    },
+    "width-reduced": {
+      "label": "Width",
+      "type": "select",
+      "options": [
+        {
+          "caption": "Regular"
+        },
+        {
+          "caption": "Wide",
+          "value": "srl-wide-width"
+        }
+      ]
+    },
+    "horizontal-alignment": {
+      "label": "Horizontal alignment",
+      "type": "select",
+      "options": [
+        {
+          "caption": "left"
+        },
+        {
+          "caption": "center",
+          "value": "srl-horizontal-center"
+        },
+        {
+          "caption": "right",
+          "value": "srl-horizontal-right"
+        }
+      ]
+    },
+    "vertical-alignment": {
+      "label": "Vertical alignment",
+      "type": "select",
+      "options": [
+        {
+          "caption": "top"
+        },
+        {
+          "caption": "center",
+          "value": "srl-vertical-center"
+        },
+        {
+          "caption": "bottom",
+          "value": "srl-vertical-bottom"
+        }
+      ]
+    },
+    "toc-title": {
+      "label": "Show as title",
+      "type": "option",
+      "value": "srl-pdf-toc__item--title"
+    },
+    "pdf-hide-paging-publication-chapter-title": {
+      "label": "Hide Paging/Publication/Chapter title",
+      "type": "option",
+      "value": "hide-paging-publication-chapter-title"
+    },
+    "toc-page-type": {
+      "label": "ToC page type",
+      "type": "select",
+      "options": [
+        {
+          "caption": "Default"
+        },
+        {
+          "caption": "Main ToC",
+          "value": "srl-pdf-toc-page--main"
+        }
+      ]
+    },
+    "page-size": {
+      "label": "Page size",
+      "type": "select",
+      "options": [
+        {
+          "caption": "Default (A4)"
+        },
+        {
+          "caption": "A3",
+          "value": "srl-pdf-landscape-container--a3"
+        }
+      ]
+    },
+    "invert-cover": {
+      "label": "Font color scheme",
+      "type": "select",
+      "options": [
+        {
+          "caption": "Normal"
+        },
+        {
+          "caption": "Black",
+          "value": "srl-cover--font-color-black"
+        },
+        {
+          "caption": "Primary",
+          "value": "srl-cover--font-color-primary"
+        }
+      ]
+    },
+    "pdf-chapter-navigation-item-current": {
+      "label": "Is current navigation item",
+      "type": "option",
+      "value": "srl-chapter-navigation__list-item--current"
+    },
+    "column-behaviour": {
+      "label": "Column behaviour",
+      "type": "select",
+      "options": [
+        {
+          "caption": "Balanced (columns of equal height)"
+        },
+        {
+          "caption": "Unbalanced (last column should be empty or shorter)",
+          "value": "srl-columns-unbalanced"
+        }
+      ]
+    },
+    "sticky": {
+      "label": "Sticky aside column",
+      "type": "option",
+      "value": "srl-aside-content-container--sticky"
+    },
+    "pdf-padding": {
+      "label": "PDF padding",
+      "type": "select",
+      "options": [
+        {
+          "caption": "Normal"
+        },
+        {
+          "caption": "Tiny",
+          "value": "srl-pdf-padding-tiny"
+        },
+        {
+          "caption": "Small",
+          "value": "srl-pdf-padding-small"
+        }
+      ]
+    },
+    "pdf-font-size": {
+      "label": "PDF font-size",
+      "type": "select",
+      "options": [
+        {
+          "caption": "Normal"
+        },
+        {
+          "caption": "Small",
+          "value": "srl-pdf-font-size-small"
+        }
+      ]
+    },
+    "h5-as": {
+      "label": "Title styling",
+      "type": "select",
+      "options": [
+        {
+          "caption": "Default"
+        },
+        {
+          "caption": "Styling from title h6",
+          "value": "srl-title-h6"
+        }
+      ]
+    },
+    "h4-as": {
+      "label": "Title styling",
+      "type": "select",
+      "options": [
+        {
+          "caption": "Default"
+        },
+        {
+          "caption": "Styling from title h5",
+          "value": "srl-title-h5"
+        },
+        {
+          "caption": "Styling from title h6",
+          "value": "srl-title-h6"
+        }
+      ]
+    },
+    "h2-as": {
+      "label": "Title styling",
+      "type": "select",
+      "options": [
+        {
+          "caption": "Default"
+        },
+        {
+          "caption": "Styling from title h3",
+          "value": "srl-title-h3"
+        },
+        {
+          "caption": "Styling from title h4",
+          "value": "srl-title-h4"
+        },
+        {
+          "caption": "Styling from title h5",
+          "value": "srl-title-h5"
+        },
+        {
+          "caption": "Styling from title h6",
+          "value": "srl-title-h6"
+        }
+      ]
+    },
+    "h3-as": {
+      "label": "Title styling",
+      "type": "select",
+      "options": [
+        {
+          "caption": "Default"
+        },
+        {
+          "caption": "Styling from title h4",
+          "value": "srl-title-h4"
+        },
+        {
+          "caption": "Styling from title h5",
+          "value": "srl-title-h5"
+        },
+        {
+          "caption": "Styling from title h6",
+          "value": "srl-title-h6"
+        }
+      ]
     }
   },
   "groups": [
     {
-      "label": "Media",
-      "components": ["image", "table"]
+      "label": "Titles",
+      "components": [
+        "title-h1",
+        "title-h2",
+        "title-h3",
+        "title-h4",
+        "title-h5",
+        "title-h6"
+      ]
     },
     {
       "label": "Text",
-      "components": ["paragraph"]
+      "components": [
+        "lead",
+        "paragraph",
+        "paragraph-strong",
+        "link",
+        "quote",
+        "quote-with-portrait",
+        "footnote-container",
+        "footnote-item"
+      ]
     },
     {
-      "label": "Titles",
-      "components": ["title-h1", "title-h2", "title-h3", "title-h4", "title-h5", "title-h6"]
+      "label": "Lists",
+      "components": [
+        "unordered-list",
+        "ordered-list",
+        "alphanumeric-list",
+        "list-item-unordered-list",
+        "list-item-ordered-list",
+        "list-item-alphanumeric-list"
+      ]
+    },
+    {
+      "label": "Media",
+      "components": [
+        "table",
+        "image",
+        "video",
+        "interactive-element"
+      ]
+    },
+    {
+      "label": "Buttons",
+      "components": [
+        "button-container",
+        "button"
+      ]
+    },
+    {
+      "label": "Container",
+      "components": [
+        "aside-content-container",
+        "columns-container",
+        "background-container"
+      ]
+    },
+    {
+      "label": "CV",
+      "components": [
+        "cv",
+        "cv-time-span"
+      ]
+    },
+    {
+      "label": "Signatures",
+      "components": [
+        "signature-container",
+        "signature-item"
+      ]
+    },
+    {
+      "label": "Misc",
+      "components": [
+        "anchor",
+        "accordion"
+      ]
+    },
+    {
+      "label": "PDF",
+      "components": [
+        "pdf-pagebreak",
+        "pdf-column-container",
+        "pdf-columnbreak",
+        "pdf-publication-title",
+        "pdf-chapter-title",
+        "pdf-chapter-navigation-container",
+        "pdf-chapter-navigation-item",
+        "pdf-cover",
+        "pdf-landscape-container",
+        "pdf-toc-page",
+        "pdf-toc-item-title",
+        "pdf-toc-item"
+      ]
+    },
+    {
+      "label": "Hosting Components",
+      "components": [
+        "download-center",
+        "search"
+      ]
+    },
+    {
+      "label": "Properties",
+      "components": []
     }
   ],
   "defaultComponents": {
@@ -162,6 +531,802 @@
       "matches": [
         "image.desktop-image"
       ]
+    }
+  ],
+  "components": [
+    {
+      "name": "title-h1",
+      "label": "Title (h1)",
+      "properties": [
+        "width-reduced",
+        "pdf-spacer"
+      ],
+      "html": "<h1 class=\"srl-grid srl-title-h1 srl-linkable\"><span class=\"srl-grid__inner srl-title-h1__text\" doc-editable=\"title-h1\">Title h1 Lorem ipsum dolor sit amet</span></h1>"
+    },
+    {
+      "name": "title-h2",
+      "label": "Title (h2)",
+      "properties": [
+        "h2-as",
+        "width-reduced",
+        "pdf-spacer"
+      ],
+      "directives": {
+        "title-h2-number": {
+          "recommendedMaxLength": 2
+        }
+      },
+      "html": "<h2 class=\"srl-grid srl-title-h2 srl-linkable\"><span\n    class=\"srl-grid__inner srl-title-h2__number-text-container\"\n    data-category-marker=\"container\"\n  ><span\n      class=\"srl-title-h2__number\"\n      data-category-marker=\"number\"\n      doc-optional\n      doc-editable=\"title-h2-number\"\n    >1</span><span\n      class=\"srl-title-h2__text\"\n      data-category-marker=\"text\"\n      doc-editable=\"title-h2-text\"\n    >Title h2 Lorem ipsum dolor sit amet</span></span></h2>"
+    },
+    {
+      "name": "title-h3",
+      "label": "Title (h3)",
+      "properties": [
+        "h3-as",
+        "width-reduced",
+        "pdf-spacer"
+      ],
+      "directives": {
+        "title-h3-number": {
+          "recommendedMaxLength": 4
+        }
+      },
+      "html": "<h3 class=\"srl-grid srl-title-h3 srl-linkable\"><span\n    class=\"srl-grid__inner srl-title-h3__number-text-container\"\n    data-category-marker=\"container\"\n  ><span\n      class=\"srl-title-h3__number\"\n      data-category-marker=\"number\"\n      doc-optional\n      doc-editable=\"title-h3-number\"\n    >1.1.</span><span\n      class=\"srl-title-h3__text\"\n      data-category-marker=\"text\"\n      doc-editable=\"title-h3-text\"\n    >Title h3 Lorem ipsum dolor sit amet</span></span></h3>"
+    },
+    {
+      "name": "title-h4",
+      "label": "Title (h4)",
+      "properties": [
+        "h4-as",
+        "width-reduced",
+        "pdf-spacer"
+      ],
+      "directives": {
+        "title-h4-number": {
+          "recommendedMaxLength": 6
+        }
+      },
+      "html": "<h4 class=\"srl-grid srl-title-h4 srl-linkable\"><span\n    class=\"srl-grid__inner srl-title-h4__number-text-container\"\n    data-category-marker=\"container\"\n  ><span\n      class=\"srl-title-h4__number\"\n      data-category-marker=\"number\"\n      doc-optional\n      doc-editable=\"title-h4-number\"\n    >1.1.1.</span><span\n      class=\"srl-title-h4__text\"\n      data-category-marker=\"text\"\n      doc-editable=\"title-h4-text\"\n    >Title h4 Lorem ipsum dolor sit amet</span></span></h4>"
+    },
+    {
+      "name": "title-h5",
+      "label": "Title (h5)",
+      "properties": [
+        "h5-as",
+        "width-reduced",
+        "pdf-spacer"
+      ],
+      "html": "<h5 class=\"srl-grid srl-title-h5 srl-linkable\"><span class=\"srl-grid__inner srl-title-h5__text\" doc-editable=\"title-h5\">Title h5 Lorem ipsum dolor sit amet</span></h5>"
+    },
+    {
+      "name": "title-h6",
+      "label": "Title (h6)",
+      "properties": [
+        "width-reduced",
+        "pdf-spacer"
+      ],
+      "html": "<h6 class=\"srl-grid srl-title-h6 srl-linkable\"><span class=\"srl-grid__inner srl-title-h6__text\" doc-editable=\"title-h6\">Title h6 Lorem ipsum dolor sit amet</span></h6>"
+    },
+    {
+      "name": "lead",
+      "label": "Lead",
+      "properties": [
+        "pdf-spacer"
+      ],
+      "directives": {
+        "lead": {
+          "recommendedMaxLength": 325
+        }
+      },
+      "html": "<div class=\"srl-grid srl-lead\"><p class=\"srl-grid__inner srl-lead__text srl-linkable\" doc-editable=\"lead\">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste sapiente,\n    magni incidunt aut hic ut sint, repellendus nesciunt alias sequi, vero\n    voluptatem! Similique laborum natus eum ullam, rem officiis dolores.</p></div>"
+    },
+    {
+      "name": "paragraph",
+      "label": "Paragraph",
+      "properties": [
+        "pdf-spacer"
+      ],
+      "html": "<p class=\"srl-grid srl-paragraph srl-linkable\"><span class=\"srl-grid__inner srl-paragraph__text\" doc-editable=\"paragraph\">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy\n    eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam\n    voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet\n    clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit\n    amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam\n    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed\n    diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet\n    clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit\n    amet.</span></p>"
+    },
+    {
+      "name": "paragraph-strong",
+      "label": "Paragraph (strong)",
+      "properties": [
+        "pdf-spacer"
+      ],
+      "html": "<p class=\"srl-grid srl-paragraph-strong srl-linkable\"><span\n    class=\"srl-grid__inner srl-paragraph-strong__text\"\n    doc-editable=\"transformable-text\"\n  >Lorem ipsum dolor sit amet?</span></p>"
+    },
+    {
+      "name": "link",
+      "label": "Link",
+      "properties": [
+        "pdf-spacer"
+      ],
+      "directives": {
+        "showParagraph": {
+          "type": "toggle",
+          "label": "Show paragraph",
+          "default": true
+        },
+        "link": {
+          "plainText": true
+        }
+      },
+      "html": "<div class=\"srl-grid srl-link srl-linkable\"><div class=\"srl-grid__inner srl-link__content\"><p class=\"srl-paragraph\" doc-toggle=\"showParagraph\"><span class=\"srl-paragraph__link-text\" doc-editable=\"link-text\">Lorem ipsum dolor sit amet, consetetur sadipscing elitr:</span></p><a doc-link=\"href\" class=\"srl-link__link\"><span class=\"srl-link__text\" doc-editable=\"link\">Link text</span></a></div></div>"
+    },
+    {
+      "name": "quote",
+      "label": "Quote",
+      "properties": [
+        "width-reduced",
+        "pdf-spacer",
+        "hide-quote-characters"
+      ],
+      "html": "<blockquote class=\"srl-grid srl-quote\"><div class=\"srl-grid__inner srl-quote__text\"><p class=\"srl-quote__quote srl-linkable\" doc-editable=\"quote-text\">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse</p><p class=\"srl-quote__cite\"><cite class=\"srl-quote__name\" doc-editable=\"quote-name\" doc-optional>Max Mustermann</cite><span class=\"srl-quote__position\" doc-editable=\"quote-position\" doc-optional>CEO</span></p></div></blockquote>"
+    },
+    {
+      "name": "quote-with-portrait",
+      "label": "Quote with image",
+      "properties": [
+        "width-reduced",
+        "pdf-spacer",
+        "hide-quote-characters"
+      ],
+      "directives": {
+        "image": {
+          "imageRatios": [
+            "1:1"
+          ],
+          "allowOriginalRatio": false
+        }
+      },
+      "html": "<blockquote class=\"srl-grid srl-quote srl-quote srl-quote--with-image\"><figure class=\"srl-quote__figure\"><img class=\"srl-quote__img\" doc-image=\"image\" /></figure><div class=\"srl-quote__text\"><p class=\"srl-quote__quote srl-linkable\" doc-editable=\"quote-text\">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse</p><p class=\"srl-quote__cite\"><cite class=\"srl-quote__name\" doc-editable=\"quote-name\" doc-optional>Max Mustermann</cite><span class=\"srl-quote__position\" doc-editable=\"quote-position\" doc-optional>CEO</span></p></div></blockquote>"
+    },
+    {
+      "name": "footnote-container",
+      "label": "Footnote container",
+      "properties": [
+        "pdf-spacer"
+      ],
+      "directives": {
+        "container": {
+          "allowedChildren": [
+            "footnote-item"
+          ],
+          "defaultComponents": {
+            "paragraph": "footnote-item"
+          },
+          "defaultContent": [
+            {
+              "component": "footnote-item"
+            }
+          ]
+        }
+      },
+      "html": "<div class=\"srl-grid srl-footnote srl-linkable\"><div\n    class=\"srl-grid__inner srl-footnote__inner\"\n    doc-container=\"container\"\n  ></div></div>"
+    },
+    {
+      "name": "footnote-item",
+      "label": "Footnote item",
+      "allowedParents": [
+        "footnote-container"
+      ],
+      "html": "<div class=\"srl-footnote__item\"><span class=\"srl-footnote__number\"><sup doc-editable=\"footnote-number\">1</sup></span><span class=\"srl-footnote__text\" doc-editable=\"footnote-text\">Footnote</span></div>"
+    },
+    {
+      "name": "unordered-list",
+      "label": "List (unordered)",
+      "properties": [
+        "pdf-spacer"
+      ],
+      "directives": {
+        "list": {
+          "allowedChildren": [
+            "list-item-unordered-list"
+          ],
+          "defaultComponents": {
+            "paragraph": "list-item-unordered-list"
+          },
+          "defaultContent": [
+            {
+              "component": "list-item-unordered-list"
+            }
+          ]
+        }
+      },
+      "html": "<div class=\"srl-grid srl-list-group srl-list-group--ul\"><ul\n    class=\"srl-grid__inner srl-list-group__list srl-list-group__list--ul\"\n    doc-container=\"list\"\n  ></ul></div>"
+    },
+    {
+      "name": "ordered-list",
+      "label": "List (numeric)",
+      "properties": [
+        "pdf-spacer"
+      ],
+      "directives": {
+        "list": {
+          "allowedChildren": [
+            "list-item-ordered-list"
+          ],
+          "defaultComponents": {
+            "paragraph": "list-item-ordered-list"
+          },
+          "defaultContent": [
+            {
+              "component": "list-item-ordered-list"
+            }
+          ]
+        }
+      },
+      "html": "<div class=\"srl-grid srl-list-group srl-list-group--ol\"><ol\n    class=\"srl-grid__inner srl-list-group__list srl-list-group__list--ol\"\n    doc-container=\"list\"\n  ></ol></div>"
+    },
+    {
+      "name": "alphanumeric-list",
+      "label": "List (alphanumeric)",
+      "properties": [
+        "pdf-spacer"
+      ],
+      "directives": {
+        "list": {
+          "allowedChildren": [
+            "list-item-alphanumeric-list"
+          ],
+          "defaultComponents": {
+            "paragraph": "list-item-alphanumeric-list"
+          },
+          "defaultContent": [
+            {
+              "component": "list-item-alphanumeric-list"
+            }
+          ]
+        }
+      },
+      "html": "<div class=\"srl-grid srl-list-group srl-list-group--alphanumeric\"><ol\n    class=\"srl-grid__inner srl-list-group__list srl-list-group__list--alphanumeric\"\n    doc-container=\"list\"\n  ></ol></div>"
+    },
+    {
+      "name": "list-item-unordered-list",
+      "label": "List item (unordered list)",
+      "allowedParents": [
+        "unordered-list",
+        "list-item-unordered-list"
+      ],
+      "directives": {
+        "add-nested-list": {
+          "type": "toggle",
+          "label": "Add nested list container",
+          "default": false
+        },
+        "sub-list": {
+          "allowedChildren": [
+            "list-item-unordered-list"
+          ],
+          "defaultComponents": {
+            "paragraph": "list-item-unordered-list"
+          },
+          "defaultContent": [
+            {
+              "component": "list-item-unordered-list"
+            }
+          ]
+        }
+      },
+      "html": "<li class=\"srl-list-group__item srl-list-group__item--ul\"><div class=\"srl-list-group__item-inner\"><span class=\"srl-list-group__item-text srl-linkable\" doc-editable=\"list-text\">List-Item</span></div><ul class=\"srl-list-group__sub-list srl-list-group__sub-list--ul\" doc-container=\"sub-list\" doc-toggle=\"add-nested-list\"></ul></li>"
+    },
+    {
+      "name": "list-item-ordered-list",
+      "label": "List item (numeric list)",
+      "allowedParents": [
+        "ordered-list",
+        "list-item-ordered-list"
+      ],
+      "directives": {
+        "add-nested-list": {
+          "type": "toggle",
+          "label": "Add nested list container",
+          "default": false
+        },
+        "sub-list": {
+          "allowedChildren": [
+            "list-item-ordered-list"
+          ],
+          "defaultComponents": {
+            "paragraph": "list-item-ordered-list"
+          },
+          "defaultContent": [
+            {
+              "component": "list-item-ordered-list"
+            }
+          ]
+        }
+      },
+      "html": "<li class=\"srl-list-group__item srl-list-group__item--ol\"><div class=\"srl-list-group__item-inner\"><span class=\"srl-list-group__item-text srl-linkable\" doc-editable=\"list-text\">List-Item</span></div><ol class=\"srl-list-group__sub-list srl-list-group__sub-list--ol\" doc-container=\"sub-list\" doc-toggle=\"add-nested-list\"></ol></li>"
+    },
+    {
+      "name": "list-item-alphanumeric-list",
+      "label": "List item (alphanumeric list)",
+      "allowedParents": [
+        "alphanumeric-list",
+        "list-item-alphanumeric-list"
+      ],
+      "directives": {
+        "add-nested-list": {
+          "type": "toggle",
+          "label": "Add nested list container",
+          "default": false
+        },
+        "sub-list": {
+          "allowedChildren": [
+            "list-item-alphanumeric-list"
+          ],
+          "defaultComponents": {
+            "paragraph": "list-item-alphanumeric-list"
+          },
+          "defaultContent": [
+            {
+              "component": "list-item-alphanumeric-list"
+            }
+          ]
+        }
+      },
+      "html": "<li class=\"srl-list-group__item srl-list-group__item--alphanumeric\"><div class=\"srl-list-group__item-inner\"><span class=\"srl-list-group__item-text srl-linkable\" doc-editable=\"list-text\">List-Item</span></div><ol class=\"srl-list-group__sub-list srl-list-group__sub-list--alphanumeric\" doc-container=\"sub-list\" doc-toggle=\"add-nested-list\"></ol></li>"
+    },
+    {
+      "name": "table",
+      "label": "Table (finance plus)",
+      "properties": [
+        "pdf-padding",
+        "pdf-font-size",
+        "width-reduced",
+        "pdf-spacer"
+      ],
+      "directives": {
+        "nswow-table": {
+          "service": "nswow-table"
+        }
+      },
+      "html": "<div class=\"srl-table\"><srl-ld-table data-replace-tag=\"div\" data-remove-from-xhtml=\"transient\" data-remove-from-pdf=\"transient\"><div ref=\"wrapper\" class=\"srl-table__container\" doc-include=\"nswow-table\"><p class=\"srl-grid srl-paragraph\"><span class=\"srl-grid__inner srl-paragraph__text\">Table placeholder</span></p></div></srl-ld-table></div>"
+    },
+    {
+      "name": "image",
+      "label": "Image",
+      "properties": [
+        "width-all",
+        "pdf-spacer"
+      ],
+      "directives": {
+        "show-alt-text": {
+          "type": "toggle",
+          "label": "Show alt text",
+          "default": false
+        },
+        "show-mobile-image": {
+          "type": "toggle",
+          "label": "Show mobile image",
+          "default": false
+        },
+        "show-caption": {
+          "type": "toggle",
+          "label": "Show caption",
+          "default": true
+        },
+        "desktop-image": {
+          "imageRatios": [
+            "1:1",
+            "3:2",
+            "4:3",
+            "16:9"
+          ],
+          "allowOriginalRatio": true
+        },
+        "mobile-image": {
+          "imageRatios": [
+            "1:1",
+            "3:2",
+            "4:3",
+            "16:9"
+          ],
+          "allowOriginalRatio": true
+        }
+      },
+      "html": "<figure class=\"srl-image\"><div class=\"srl-grid srl-grid--media\"><div class=\"srl-image__alt-text\" doc-editable=\"alt-tag\" doc-toggle=\"show-alt-text\"\n          data-alt-text-source=\"alt\">Write the alt text here (optional, but recommended)</div><div\n      class=\"srl-grid__inner srl-image__image-container srl-image__image-container--desktop\"\n    ><img\n        class=\"srl-image__img srl-image__img--desktop\"\n        doc-image=\"desktop-image\"\n        data-alt-text-target=\"alt\"\n      /></div><div\n      class=\"srl-grid__inner srl-image__image-container srl-image__image-container--mobile\"\n      doc-toggle=\"show-mobile-image\"\n      data-remove-from-pdf=\"complete\"\n    ><img\n        class=\"srl-image__img srl-image__img--mobile\"\n        doc-image=\"mobile-image\"\n        data-alt-text-target=\"alt\"\n      /></div></div><figcaption\n    class=\"srl-grid srl-image__caption srl-linkable\"\n    doc-toggle=\"show-caption\"\n  ><span class=\"srl-image__caption-text\" doc-editable=\"image-caption\">Write an image caption here (optional)</span></figcaption></figure>"
+    },
+    {
+      "name": "video",
+      "label": "Video",
+      "properties": [
+        "width-all",
+        "pdf-spacer"
+      ],
+      "directives": {
+        "video-thumbnail": {
+          "imageRatios": [
+            "16:9"
+          ],
+          "allowOriginalRatio": false
+        },
+        "showVideoLink": {
+          "type": "toggle",
+          "label": "Enable video link for PDF",
+          "default": false
+        },
+        "link": {
+          "plainText": true
+        },
+        "text": {
+          "plainText": true
+        }
+      },
+      "html": "<div class=\"srl-video\" data-remove-from-word=\"complete\"><div class=\"srl-grid srl-grid--media\"><div class=\"srl-grid__inner srl-video__inner\"><srl-ld-video data-remove-from-xhtml=\"transient\" data-remove-from-pdf=\"transient\"><div class=\"srl-video__video-container\" doc-html=\"free-html\" data-remove-from-pdf=\"complete\"></div><img class=\"srl-video__thumbnail\" doc-image=\"video-thumbnail\"></img><div class=\"srl-video__play\" data-remove-from-pdf=\"complete\"><button class=\"srl-button srl-has-icon\" type=\"button\"><svg class=\"svg svg-play\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M5 3L19 12L5 21V3Z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg><span doc-editable=\"text\">Video abspielen</span></button></div></srl-ld-video></div></div><div class=\"srl-grid\"><div\n      class=\"srl-video__video-link-container\"\n      data-remove-from-web=\"complete\"\n      doc-toggle=\"showVideoLink\"\n    ><a class=\"srl-video__video-link\" doc-link=\"href\" target=\"_blank\"><span class=\"srl-video__video-link-icon\"><svg\n            class=\"svg svg-play\"\n            viewBox=\"0 0 14 18\"\n            fill=\"none\"\n            xmlns=\"http://www.w3.org/2000/svg\"\n          ><path\n              d=\"M0.5 17C0.5 17.1844 0.601492 17.3538 0.764071 17.4408C0.92665 17.5278 1.12392 17.5183 1.27735 17.416L13.2774 9.41603C13.4164 9.32329 13.5 9.16718 13.5 9C13.5 8.83282 13.4164 8.67671 13.2774 8.58397L1.27735 0.583975C1.12392 0.481689 0.92665 0.472153 0.764071 0.559163C0.601492 0.646172 0.5 0.815602 0.5 1V17Z\"\n              stroke=\"currentColor\"\n              stroke-linecap=\"round\"\n              stroke-linejoin=\"round\"\n            /></svg></span><span class=\"srl-video__video-link-text\" doc-editable=\"link\">Link to the video in your report</span></a></div></div></div>"
+    },
+    {
+      "name": "interactive-element",
+      "label": "Interactive element",
+      "description": "Separate image for PDF",
+      "properties": [
+        "width-reduced",
+        "pdf-spacer"
+      ],
+      "html": "<div class=\"srl-grid srl-interactive-element\"><div class=\"srl-grid__inner\"><p class=\"srl-paragraph srl-paragraph--strong srl-linkable\"><span class=\"srl-paragraph__text\" doc-editable=\"interactive-chart-title\">Subtitle</span></p><p class=\"srl-paragraph srl-linkable\"><span\n        class=\"srl-paragraph__text\"\n        doc-editable=\"interactive-chart-sub-title\"\n      >Title</span></p><div\n      doc-html=\"free-html\"\n      class=\"srl-chart__chart\"\n      data-remove-from-pdf=\"complete\"\n    ><div class=\"iframe-placeholder\"></div></div><figure class=\"srl-chart__image-container\" data-remove-from-web=\"complete\"><img class=\"srl-chart__image\" doc-image=\"pdf-image\" /></figure></div></div>"
+    },
+    {
+      "name": "button-container",
+      "label": "Button container",
+      "directives": {
+        "button-container": {
+          "allowedChildren": [
+            "button"
+          ],
+          "defaultComponents": {
+            "paragraph": "button"
+          },
+          "defaultContent": [
+            {
+              "component": "button"
+            }
+          ]
+        }
+      },
+      "html": "<div class=\"srl-grid srl-button-container\"><div class=\"srl-grid__inner srl-button-container__inner\" doc-container=\"button-container\"></div></div>"
+    },
+    {
+      "name": "button",
+      "label": "Button",
+      "properties": [
+        "icon"
+      ],
+      "allowedParents": [
+        "button-container"
+      ],
+      "directives": {
+        "button-text": {
+          "plainText": true
+        }
+      },
+      "html": "<a doc-link=\"href\" class=\"srl-button\"><i class=\"srl-button__icon\" aria-hidden=\"true\"></i><span class=\"srl-button__text\" doc-editable=\"button-text\">Button</span></a>"
+    },
+    {
+      "name": "aside-content-container",
+      "label": "Aside / Content container",
+      "properties": [
+        "sticky",
+        "pdf-spacer"
+      ],
+      "directives": {
+        "aside": {
+          "allowedChildren": [
+            "paragraph",
+            "link"
+          ]
+        },
+        "content": {
+          "defaultComponents": {
+            "paragraph": "paragraph"
+          },
+          "defaultContent": [
+            {
+              "component": "paragraph"
+            }
+          ]
+        }
+      },
+      "html": "<div class=\"srl-grid srl-aside-content-container\"><div\n    class=\"srl-grid__aside srl-aside-content-container__aside\"\n    doc-container=\"aside\"\n  ></div><div\n    class=\"srl-grid__content srl-aside-content-container__content\"\n    doc-container=\"content\"\n  ></div></div>"
+    },
+    {
+      "name": "columns-container",
+      "label": "Columns container",
+      "properties": [
+        "width-reduced",
+        "vertical-alignment",
+        "pdf-spacer"
+      ],
+      "directives": {
+        "show-column-3": {
+          "type": "toggle",
+          "label": "Show column 3",
+          "default": false
+        },
+        "show-column-4": {
+          "type": "toggle",
+          "label": "Show column 4",
+          "default": false
+        }
+      },
+      "html": "<div class=\"srl-grid srl-columns srl-nested-container\"><div class=\"srl-grid__inner srl-flex srl-flex-gap\"><div\n      class=\"srl-columns__column srl-columns__column--1\"\n      doc-container=\"column-1\"\n    ></div><div\n      class=\"srl-columns__column srl-columns__column--2\"\n      doc-container=\"column-2\"\n    ></div><div\n      class=\"srl-columns__column srl-columns__column--3\"\n      doc-container=\"column-3\"\n      doc-toggle=\"show-column-3\"\n    ></div><div\n      class=\"srl-columns__column srl-columns__column--4\"\n      doc-container=\"column-4\"\n      doc-toggle=\"show-column-4\"\n    ></div></div></div>"
+    },
+    {
+      "name": "background-container",
+      "label": "Background container",
+      "html": "<div class=\"srl-background-container srl-nested-container\" doc-container=\"content\"></div>"
+    },
+    {
+      "name": "cv",
+      "label": "CV",
+      "properties": [
+        "pdf-spacer"
+      ],
+      "directives": {
+        "image": {
+          "imageRatios": [
+            "1:1"
+          ],
+          "allowOriginalRatio": false
+        }
+      },
+      "html": "<srl-article-accordion class=\"srl-cv\" data-replace-tag=\"div\"><div class=\"srl-grid srl-cv__header\"><div class=\"srl-grid__inner srl-cv__inner\"><div class=\"srl-cv__header-portrait\"><figure class=\"srl-cv__figure\"><img class=\"srl-cv__img\" doc-image=\"image\" /></figure></div><div class=\"srl-cv__header-content\"><p class=\"srl-title-h3\"><span class=\"srl-title-h3__text\" doc-editable=\"cv-title-h3\">Max Mustermann</span></p><p class=\"srl-title-h4\"><span class=\"srl-title-h4__text\" doc-editable=\"cv-title-h4\">Chairman of the Group Management, Chief Executive Officer (CEO)</span></p><p class=\"srl-paragraph\" doc-editable=\"cv-text-excerpt\">Swiss, born 1956<br />Appointed in 2018</p></div></div></div><div class=\"srl-cv__content srl-article-accordion__content\"><div class=\"srl-article-accordion__wrapper\" doc-container=\"cv-content\"></div></div><div class=\"srl-grid srl-cv__button-container\" data-remove-from-pdf=\"complete\" data-remove-from-word=\"complete\" data-remove-from-xhtml=\"complete\"><div class=\"srl-grid__inner srl-cv__button-container-inner text-center\"><button type=\"button\" class=\"srl-cv__button srl-article-accordion__toggle\"><span class=\"srl-cv__button-more\" doc-editable=\"cv-text-more\">Read more</span><span class=\"srl-cv__button-close\" doc-editable=\"cv-text-close\">close</span></button><hr class=\"srl-cv__divider\"/></div></div></srl-article-accordion>"
+    },
+    {
+      "name": "cv-time-span",
+      "label": "CV time span",
+      "html": "<div class=\"srl-grid srl-cv-time-span\"><div class=\"srl-grid__inner srl-cv-time-span__inner\"><span class=\"srl-cv-time-span__years\" doc-editable=\"cv-time-span-years\">2010 - 2012</span><span\n      class=\"srl-cv-time-span__position srl-linkable\"\n      doc-editable=\"cv-time-span-position\"\n    >Ut enim ad minim veniam, quis nostrud exercitation ullamco, Ut enim ad minim\n      veniam, quis nostrud exercitation ullamco. Ut enim ad minim veniam, quis\n      nostrud exercitation ullamco</span></div></div>"
+    },
+    {
+      "name": "signature-container",
+      "label": "Signature container",
+      "properties": [
+        "pdf-spacer"
+      ],
+      "directives": {
+        "content": {
+          "allowedChildren": [
+            "signature-item"
+          ],
+          "defaultContent": [
+            {
+              "component": "signature-item"
+            },
+            {
+              "component": "signature-item"
+            }
+          ]
+        }
+      },
+      "html": "<div class=\"srl-grid srl-signature\"><div\n    class=\"srl-grid__inner srl-signature__content\"\n    doc-container=\"content\"\n  ></div></div>"
+    },
+    {
+      "name": "signature-item",
+      "label": "Signature item",
+      "allowedParents": [
+        "signature-container"
+      ],
+      "directives": {
+        "signature-item-name": {
+          "plainText": true
+        },
+        "signature-item-position": {
+          "plainText": true
+        },
+        "image": {
+          "imageRatios": [
+            "1:1",
+            "4:3",
+            "16:9"
+          ],
+          "allowOriginalRatio": true
+        }
+      },
+      "html": "<div class=\"srl-signature__item\"><img class=\"srl-signature__img\" doc-image=\"image\" /><p class=\"srl-signature__name\" doc-editable=\"signature-item-name\">Max Mustermann</p><p class=\"srl-signature__position\" doc-editable=\"signature-item-position\">Position</p></div>"
+    },
+    {
+      "name": "anchor",
+      "label": "Anchor",
+      "directives": {
+        "anchor-text": {
+          "plainText": true
+        }
+      },
+      "html": "<p\n  class=\"srl-anchor srl-editor-component\"\n  data-remove-from-translate-plus=\"true\"\n  data-remove-from-word=\"complete\"\n  data-remove-from-xhtml=\"complete\"\n  data-is-anchor=\"true\"\n><span class=\"srl-anchor__text srl-editor-component__text\" doc-editable=\"anchor-text\">Must start with a letter (A–Z or a–z); a number is not allowed. After the\n    first letter, any combination of letters (a–z, A–Z), digits (0–9), hyphens\n    (-), underscores (_), colons (:), and periods (.) is allowed. The ID must be\n    unique and is case-sensitive.</span></p>"
+    },
+    {
+      "name": "accordion",
+      "label": "Accordion",
+      "properties": [
+        "pdf-spacer"
+      ],
+      "directives": {
+        "header": {
+          "allowedChildren": [
+            "title-h2",
+            "title-h3",
+            "title-h4",
+            "title-h5",
+            "title-h6"
+          ],
+          "defaultContent": [
+            {
+              "component": "title-h2"
+            }
+          ]
+        },
+        "content": {
+          "defaultComponents": {
+            "paragraph": "paragraph"
+          }
+        }
+      },
+      "html": "<srl-ld-accordion class=\"srl-category-accordion srl-category-accordion--category\"\n  data-remove-from-pdf=\"transient\"\n  data-remove-from-word=\"transient\"\n  data-remove-from-xbrl=\"transient\"\n><div class=\"srl-category-accordion__inner\"\n    data-remove-from-web=\"transient\"\n    data-remove-from-pdf=\"transient\"\n    data-remove-from-word=\"transient\"\n    data-remove-from-xbrl=\"transient\"\n  ><div class=\"srl-category-accordion__inner-head\"\n      data-remove-from-web=\"transient\"\n      data-remove-from-pdf=\"transient\"\n      data-remove-from-word=\"transient\"\n      data-remove-from-xbrl=\"transient\"\n    ><div class=\"srl-category-accordion__head\"\n        data-remove-from-web=\"transient\"\n        data-remove-from-pdf=\"transient\"\n        data-remove-from-word=\"transient\"\n        data-remove-from-xbrl=\"transient\"\n      ><div class=\"srl-category-accordion__head--btn\"\n          data-remove-from-web=\"transient\"\n          data-remove-from-pdf=\"transient\"\n          data-remove-from-word=\"transient\"\n          data-remove-from-xbrl=\"transient\"\n        ><template-header doc-container=\"header\"\n            data-remove-from-pdf=\"transient\"\n            data-remove-from-word=\"transient\"\n            data-remove-from-xbrl=\"transient\"\n          ></template-header><span class=\"srl-category-accordion__icon\"\n            data-remove-from-web=\"complete\"\n            data-remove-from-pdf=\"complete\"\n            data-remove-from-word=\"complete\"\n            data-remove-from-xbrl=\"complete\"\n          ></span></div></div></div><div class=\"srl-category-accordion__content\"\n      data-remove-from-web=\"transient\"\n      data-remove-from-pdf=\"transient\"\n      data-remove-from-word=\"transient\"\n      data-remove-from-xbrl=\"transient\"\n    ><template-content class=\"srl-category-accordion__content-inner\" doc-container=\"content\"\n        data-remove-from-pdf=\"transient\"\n        data-remove-from-word=\"transient\"\n        data-remove-from-xbrl=\"transient\"\n      ></template-content></div></div></srl-ld-accordion>"
+    },
+    {
+      "name": "pdf-pagebreak",
+      "label": "PDF page break",
+      "html": "<div\n  class=\"srl-pdf-pagebreak srl-editor-component\"\n  data-remove-from-web=\"complete\"\n  data-remove-from-word=\"complete\"\n  data-remove-from-xhtml=\"complete\"\n><span class=\"srl-pdf-pagebreak__editor-text srl-editor-component__text\" data-remove-from-pdf=\"complete\">PDF page break</span></div>"
+    },
+    {
+      "name": "pdf-column-container",
+      "label": "PDF column container",
+      "properties": [
+        "column-behaviour",
+        "width-reduced"
+      ],
+      "html": "<div\n  class=\"srl-grid srl-pdf-column-container\"\n  data-remove-from-web=\"transient\"\n  data-remove-from-word=\"transient\"\n  data-remove-from-xhtml=\"transient\"\n><div\n    class=\"srl-grid__inner\"\n    data-remove-from-web=\"transient\"\n    data-remove-from-word=\"transient\"\n    data-remove-from-xhtml=\"transient\"\n  ><div\n      class=\"srl-pdf-column-container__content\"\n      data-remove-from-web=\"transient\"\n      data-remove-from-word=\"transient\"\n      data-remove-from-xhtml=\"transient\"\n      doc-container=\"column-container\"\n    ></div></div></div>"
+    },
+    {
+      "name": "pdf-columnbreak",
+      "label": "PDF column break",
+      "allowedParents": [
+        "pdf-column-container"
+      ],
+      "html": "<div\n  class=\"srl-pdf-columnbreak srl-editor-component\"\n  data-remove-from-web=\"complete\"\n  data-remove-from-word=\"complete\"\n  data-remove-from-xhtml=\"complete\"\n><span class=\"srl-pdf-columnbreak__editor-text srl-editor-component__text\" data-remove-from-pdf=\"complete\">PDF column break</span></div>"
+    },
+    {
+      "name": "pdf-publication-title",
+      "label": "PDF publication title",
+      "html": "<p\n  class=\"srl-pdf-publication-title srl-editor-component\"\n  data-remove-from-web=\"complete\"\n  data-remove-from-word=\"complete\"\n  data-remove-from-xhtml=\"complete\"\n><span class=\"srl-pdf-publication-title__text srl-editor-component__text\" doc-editable=\"pdf-publication-titletext\">Publication title</span></p>"
+    },
+    {
+      "name": "pdf-chapter-title",
+      "label": "PDF chapter title",
+      "html": "<p\n  class=\"srl-pdf-chapter-title srl-editor-component\"\n  data-remove-from-web=\"complete\"\n  data-remove-from-word=\"complete\"\n  data-remove-from-xhtml=\"complete\"\n><span class=\"srl-pdf-chapter-title__text srl-editor-component__text\" doc-editable=\"pdf-chapter-title-text\">Chapter title</span></p>"
+    },
+    {
+      "name": "pdf-chapter-navigation-container",
+      "label": "PDF chapter navigation container",
+      "directives": {
+        "pdf-chapter-navigation-list": {
+          "allowedChildren": [
+            "pdf-chapter-navigation-item"
+          ],
+          "defaultComponents": {
+            "paragraph": "pdf-chapter-navigation-item"
+          },
+          "defaultContent": [
+            {
+              "component": "pdf-chapter-navigation-item"
+            }
+          ]
+        }
+      },
+      "html": "<div\n  class=\"srl-chapter-navigation srl-editor-component\"\n  data-is-chapter-override=\"true\"\n  data-remove-from-web=\"complete\"\n  data-remove-from-word=\"complete\"\n  data-remove-from-xhtml=\"complete\"\n><ol\n    class=\"srl-chapter-navigation__list\"\n    doc-container=\"pdf-chapter-navigation-list\"\n  ></ol></div>"
+    },
+    {
+      "name": "pdf-chapter-navigation-item",
+      "label": "PDF chapter navigation item",
+      "properties": [
+        "pdf-chapter-navigation-item-current"
+      ],
+      "allowedParents": [
+        "pdf-chapter-navigation-container"
+      ],
+      "html": "<li\n  class=\"srl-chapter-navigation__list-item\"\n  data-remove-from-web=\"complete\"\n  data-remove-from-word=\"complete\"\n  data-remove-from-xhtml=\"complete\"\n><a class=\"srl-chapter-navigation__link\" doc-link=\"href\" doc-editable=\"pdf-chapter-navigation-item-text\">Chapter Title</a></li>"
+    },
+    {
+      "name": "pdf-cover",
+      "label": "PDF cover",
+      "properties": [
+        "invert-cover"
+      ],
+      "directives": {
+        "show-logo": {
+          "type": "toggle",
+          "label": "Show logo",
+          "default": false
+        },
+        "show-main-title": {
+          "type": "toggle",
+          "label": "Show main title",
+          "default": true
+        },
+        "show-sub-title": {
+          "type": "toggle",
+          "label": "Show sub title",
+          "default": false
+        },
+        "cover": {
+          "imageRatios": [
+            "a4"
+          ],
+          "allowOriginalRatio": false
+        }
+      },
+      "html": "<div\n  class=\"srl-pdf-cover\"\n  doc-image=\"cover\"\n  data-remove-from-web=\"complete\"\n  data-remove-from-word=\"complete\"\n  data-remove-from-xhtml=\"complete\"\n><div class=\"srl-pdf-cover__content\"><div class=\"srl-pdf-cover__top\"><div class=\"srl-pdf-cover__logo-container\" doc-toggle=\"show-logo\"><img class=\"srl-pdf-cover__logo\" doc-image=\"logo\" /></div></div><div class=\"srl-pdf-cover__bottom\"><h1\n        class=\"srl-title-h1\"\n        doc-editable=\"pdf-cover-main-title\"\n        doc-toggle=\"show-main-title\"\n      >Annual Report 2050</h1><h2\n        class=\"srl-title-h2\"\n        doc-editable=\"pdf-cover-sub-title\"\n        doc-toggle=\"show-sub-title\"\n      >Committed to continuous improvement</h2></div></div></div>"
+    },
+    {
+      "name": "pdf-landscape-container",
+      "label": "PDF landscape container",
+      "properties": [
+        "page-size"
+      ],
+      "html": "<div\n  class=\"srl-pdf-landscape-container srl-nested-container\"\n  data-remove-from-web=\"transient\"\n  data-remove-from-word=\"transient\"\n  data-remove-from-xhtml=\"transient\"\n  doc-container=\"container\"\n></div>"
+    },
+    {
+      "name": "pdf-toc-page",
+      "label": "ToC page",
+      "properties": [
+        "pdf-hide-paging-publication-chapter-title",
+        "toc-page-type"
+      ],
+      "directives": {
+        "toc": {
+          "allowedChildren": [
+            "pdf-toc-item-title",
+            "pdf-toc-item"
+          ],
+          "defaultComponents": {
+            "paragraph": "pdf-toc-item"
+          },
+          "defaultContent": [
+            {
+              "component": "pdf-toc-item"
+            }
+          ]
+        }
+      },
+      "html": "<div\n  class=\"srl-pdf-toc-page\"\n  data-remove-from-web=\"complete\"\n  data-remove-from-word=\"complete\"\n  data-remove-from-xhtml=\"complete\"\n  data-is-toc-page=\"true\"\n><div class=\"srl-pdf-toc-page__inner\"><div class=\"srl-pdf-toc-page__title\" doc-editable=\"pdf-toc-page-title\">Chapter title</div><div class=\"srl-pdf-toc-page__toc-container\" doc-container=\"toc\" data-is-toc-container=\"true\"></div></div></div>"
+    },
+    {
+      "name": "pdf-toc-item-title",
+      "label": "ToC item title",
+      "allowedParents": [
+        "pdf-toc-page"
+      ],
+      "html": "<div\n  class=\"srl-pdf-toc-item-title\"\n  data-remove-from-web=\"complete\"\n  data-remove-from-word=\"complete\"\n  data-remove-from-xhtml=\"complete\"\n  doc-editable=\"pdf-toc-item-title-text\"\n>Chapter title</div>"
+    },
+    {
+      "name": "pdf-toc-item",
+      "label": "ToC item",
+      "properties": [
+        "toc-title"
+      ],
+      "allowedParents": [
+        "pdf-toc-page"
+      ],
+      "directives": {
+        "pdf-toc-item-number": {
+          "plainText": true
+        },
+        "pdf-toc-item-text": {
+          "plainText": true
+        }
+      },
+      "html": "<a\n  class=\"srl-pdf-toc__item\"\n  doc-link=\"href\"\n  data-page-number=\"\"\n  data-is-toc-item=\"true\"\n  data-remove-from-web=\"complete\"\n  data-remove-from-word=\"complete\"\n  data-remove-from-xhtml=\"complete\"\n><div class=\"srl-pdf-toc__text\" doc-editable=\"pdf-toc-item-text\" data-is-toc-text=\"true\">Article title</div><div class=\"srl-pdf-toc__page-number\" doc-editable=\"pdf-toc-item-number\" data-is-toc-number=\"true\">1</div></a>"
+    },
+    {
+      "name": "download-center",
+      "label": "Download center",
+      "html": "<srl-ld-download-center><div class=\"srl-download-center\" data-remove-from-web=\"complete\"><span class=\"srl-download-center__editor-text\" data-remove-from-pdf=\"complete\">Placeholder for download list</span></div></srl-ld-download-center>"
+    },
+    {
+      "name": "search",
+      "label": "Search",
+      "html": "<srl-ld-search use-auto-search use-more-results><div class=\"srl-search\" data-remove-from-web=\"complete\"><span class=\"srl-search__editor-text\">Placeholder for search form</span></div></srl-ld-search>"
     }
   ]
 }

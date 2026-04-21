@@ -1,0 +1,14 @@
+@use 'srl';
+@use "web";
+
+srl-ld-search {
+  display: block;
+}
+
+.srl-search {
+  text-align: center;
+}
+
+.srl-search__editor-text {
+  @include srl.typography-editor-label-text();
+}

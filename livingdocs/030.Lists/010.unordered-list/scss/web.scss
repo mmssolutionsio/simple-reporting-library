@@ -1,2 +1,16 @@
 @use 'srl';
-@use 'sass:map';
+
+.srl-list-group__list {
+  list-style: none;
+  padding: 0;
+}
+
+.srl-list-group__list--ol,
+.srl-list-group__sub-list--ol {
+  counter-reset: ordered-list;
+}
+
+.srl-list-group__list--alphanumeric,
+.srl-list-group__sub-list--alphanumeric {
+  counter-reset: alphanumeric-list;
+}

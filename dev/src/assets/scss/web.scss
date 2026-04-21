@@ -1,33 +1,29 @@
 @use "srl";
-@use "placeholders";
 @use "./components/note/accordion";
 
-.srl-grid {
-  @extend %srl-grid-base;
+@include srl.system-add-root-style('srl-header-height', srl.system-size-unit(68));
+@include srl.system-add-root-style('srl-header-height', srl.system-size-unit(101), 'tablet-ls', 'up');
 
-  .srl-grid {
-    @extend %srl-grid-reset;
+// Set inline background images for media queries
+[style*="--medium-url"] {
+  background-image: var(--medium-url) !important;
+}
+
+@include srl.grid-media-up(tablet-pt) {
+  [style*="--large-url"] {
+    background-image: var(--large-url) !important;
   }
 }
 
-.srl-grid__inner {
-  @extend %srl-regular-width;
-
-  .srl-wide-width & {
-    @extend %srl-wide-width;
-  }
-
-  .srl-quote.srl-wide-width & {
-    @extend %srl-quote-wide-width;
+@include srl.grid-media-up(desktop) {
+  [style*="--xlarge-url"] {
+    background-image: var(--xlarge-url) !important;
   }
 }
 
-.srl-grid__aside {
-  @extend %srl-trim-margins;
-  @extend %srl-aside-width;
-}
-
-.srl-grid__content {
-  @extend %srl-trim-margins;
-  @extend %srl-regular-width;
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation-name: none !important;
+  }
 }

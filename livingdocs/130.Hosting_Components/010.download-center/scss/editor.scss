@@ -1,0 +1,15 @@
+@use 'srl';
+@use "web";
+
+srl-ld-download-center {
+  display: block;
+}
+
+.srl-download-center {
+  text-align: center;
+  @include srl.spacer-padding-block(200);
+}
+
+.srl-download-center__editor-text {
+  @include srl.typography-editor-label-text();
+}

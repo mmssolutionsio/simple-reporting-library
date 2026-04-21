@@ -1,6 +1,5 @@
 @use "srl";
 @use "web";
-@use 'assets/scss/placeholders';
 
 .srl-pdf-chapter-title__text {
   @extend %srl-regular-width;

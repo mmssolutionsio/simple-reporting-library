@@ -17,7 +17,9 @@ export const baseComponentsToInstall = [
   '030.Lists/010.unordered-list',
   '030.Lists/020.ordered-list',
   '030.Lists/030.alphanumeric-list',
-  '030.Lists/040.list-item',
+  '030.Lists/040.list-item-unordered-list',
+  '030.Lists/050.list-item-ordered-list',
+  '030.Lists/060.list-item-alphanumeric-list',
   '040.Media/010.table',
   '040.Media/020.image',
   '040.Media/030.video',
@@ -35,8 +37,10 @@ export const baseComponentsToInstall = [
   '110.PDF/100.pdf-toc-item',
   '999.Properties/alignment',
   '999.Properties/hide-quote-characters',
+  '999.Properties/icon',
   '999.Properties/pdf-spacer',
-  '999.Properties/width'
+  '999.Properties/reverse',
+  '999.Properties/grid',
 ];
 
 export const nsWowInternalLddUrl = 'https://nswow-ld.nswow.ch/designs';

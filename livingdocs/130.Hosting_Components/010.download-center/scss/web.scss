@@ -1,0 +1,42 @@
+@use "srl";
+@use "spacing-variations";
+
+.srl-download-center {
+  display: flex;
+  flex-direction: column;
+  @include srl.spacer-row-gap(800);
+}
+
+.srl-download-center__section {
+  > .srl-grid__inner {
+  }
+}
+
+.srl-download-center__item {
+  border-bottom: 1px solid srl.colors-primary-1000();
+  &:first-child {
+    border-top: 1px solid srl.colors-primary-1000();
+  }
+}
+
+.srl-download-center__link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: var(--srl-spacer-200) 0;
+  color: srl.colors-grey-600();
+  text-decoration: none;
+  gap: var(--srl-spacer-100);
+  @include srl.typography-paragraph();
+}
+
+.srl-download-center__title {
+  @include srl.typography-title-h5();
+}
+
+.srl-download-center__language-button-container {
+  display: flex;
+  align-items: center;
+  gap: var(--srl-spacer-100)
+}

@@ -1,0 +1,230 @@
+@use "srl/system";
+@use "srl/colors";
+@use "srl/spacer";
+@use "srl/typography";
+@use "srl/fa";
+@use "srl/button";
+
+$animation-duration: .3s;
+
+@include system.add-root-style(srl-button-color, colors.black-1000());
+@include system.add-root-style(srl-button-bg-color, colors.white-1000());
+@include system.add-root-style(srl-button-brd-color, colors.grey-600());
+@include system.add-root-style(srl-button-brd-size, system.size-unit(1));
+@include system.add-root-style(srl-button-height, 3.5em);
+@include system.add-root-style(srl-button-gap, spacer.get(100));
+@include system.add-root-style(srl-button-brd-radius, calc( 3.5em / 2 ));
+@include system.add-root-style(srl-button-padding-inline, spacer.get(300));
+@include system.add-root-style(srl-button-image-size, 1em);
+
+@include system.add-root-style(srl-button-hover-color, colors.white-1000());
+@include system.add-root-style(srl-button-hover-bg-color, colors.grey-600());
+@include system.add-root-style(srl-button-hover-brd-color, colors.grey-600());
+
+@include system.add-root-style(srl-button-focus-color, colors.white-1000());
+@include system.add-root-style(srl-button-focus-bg-color, colors.primary-1000());
+@include system.add-root-style(srl-button-focus-brd-color, colors.primary-1000());
+
+@include system.add-root-style(srl-button-active-color, colors.white-1000());
+@include system.add-root-style(srl-button-active-bg-color, colors.primary-1000());
+@include system.add-root-style(srl-button-active-brd-color, colors.primary-1000());
+
+%srl-button {
+  @include typography.button-text();
+  column-gap: system.root-style(srl-button-gap);
+  height: system.root-style(srl-button-height);
+  align-items: center;
+  justify-content: center;
+  color: var( --srl-button-color-override, system.root-style(srl-button-color) );
+  background-color: var( --srl-button-bg-color-override, system.root-style(srl-button-bg-color) );
+  padding-inline: system.root-style(srl-button-padding-inline);
+  border: system.root-style(srl-button-brd-size) solid var( --srl-button-brd-color-override, system.root-style(srl-button-brd-color) );
+  border-radius: system.root-style(srl-button-brd-radius);
+  text-decoration: none;
+  text-box-trim: trim-both;
+  cursor: pointer;
+
+  &:not([hidden]) {
+    display: inline-flex;
+  }
+
+  @if (system.$build == 'app') {
+    transition:
+            color $animation-duration ease-out,
+            background-color $animation-duration ease-out,
+            border-color $animation-duration ease-out,
+            border-radius $animation-duration ease-out;
+  }
+
+  &:hover {
+    color: var(--srl-button-color-override, system.root-style(srl-button-hover-color));
+    background-color: var(--srl-button-bg-color-override, system.root-style(srl-button-hover-bg-color));
+    border-color: var(--srl-button-brd-color-override, system.root-style(srl-button-hover-brd-color));
+  }
+
+  &:focus,
+  &:focus-visible {
+    color: var(--srl-button-color-override, system.root-style(srl-button-focus-color));
+    background-color: var(--srl-button-bg-color-override, system.root-style(srl-button-focus-bg-color));
+    border-color: var(--srl-button-brd-color-override, system.root-style(srl-button-focus-brd-color));
+    outline: none   ;
+
+    &[aria-expanded="false"] {
+      color: var( --srl-button-color-override, system.root-style(srl-button-color) );
+      background-color: var( --srl-button-bg-color-override, system.root-style(srl-button-bg-color) );
+      border: system.root-style(srl-button-brd-size) solid var( --srl-button-brd-color-override, system.root-style(srl-button-brd-color) );
+    }
+  }
+
+  img, svg {
+    width: auto;
+    height: system.root-style(srl-button-image-size);
+    color: inherit;
+  }
+
+  &.srl-active,
+  &[aria-expanded="true"],
+  &[aria-selected="true"],
+  &[aria-current="page"]
+  {
+    color: system.root-style(srl-button-active-color);
+    background-color: system.root-style(srl-button-active-bg-color);
+    border-color: system.root-style(srl-button-active-brd-color);
+  }
+}
+
+%srl-button--ghost {
+  --srl-typo-button-text-font-family: inherit;
+  --srl-typo-button-text-font-size: inherit;
+  --srl-typo-button-text-font-weight: inherit;
+  --srl-typo-button-text-line-height: inherit;
+  --srl-button-color: inherit;
+  --srl-button-bg-color: transparent;
+  --srl-button-brd-radius: 0;
+  --srl-button-height: auto;
+  --srl-button-brd-size: 0;
+  --srl-button-padding-inline: 0;
+  --srl-button-hover-color: inherit;
+  --srl-button-hover-bg-color: transparent;
+  --srl-button-hover-brd-color: transparent;
+  --srl-button-focus-color: inherit;
+  --srl-button-focus-bg-color: transparent;
+  --srl-button-focus-brd-color: transparent;
+  --srl-button-active-color: inherit;
+  --srl-button-active-bg-color: transparent;
+  --srl-button-active-brd-color: transparent;
+}
+
+%srl-button--icon {
+  --srl-button-brd-radius: 50%;
+  --srl-button-padding-block: 0;
+  --srl-button-padding-inline: .9em;
+  --srl-button-image-size: 1.3em;
+  width: system.size-unit(49);
+  height: system.size-unit(49);
+
+  [class*=srl-icon] {
+    @include fa.size(20);
+  }
+
+  &::before {
+    font-size: system.size-unit(17.5) !important;
+  }
+}
+
+%srl-button--white {
+  --srl-button-color: #{colors.black-1000()};
+  --srl-button-bg-color: #{colors.white-1000()};
+  --srl-button-brd-color: #{colors.white-1000()};
+  --srl-button-hover-color: #{colors.white-1000()};
+  --srl-button-hover-bg-color: #{colors.primary-1000()};
+  --srl-button-hover-brd-color: #{colors.primary-1000()};
+  --srl-button-focus-color: #{colors.white-1000()};
+  --srl-button-focus-bg-color: #{colors.secondary-1000()};
+  --srl-button-focus-brd-color: #{colors.secondary-1000()};
+  --srl-button-active-color: #{colors.white-1000()};
+  --srl-button-active-bg-color: #{colors.secondary-1000()};
+  --srl-button-active-brd-color: #{colors.secondary-1000()};
+}
+
+%srl-button--primary {
+  --srl-button-color: #{colors.white-1000()};
+  --srl-button-bg-color: #{colors.primary-1000()};
+  --srl-button-brd-color: #{colors.primary-1000()};
+  --srl-button-hover-color: #{colors.primary-1000()};
+  --srl-button-hover-bg-color: #{colors.white-1000()};
+  --srl-button-hover-brd-color: #{colors.black-1000()};
+  --srl-button-focus-color: #{colors.white-1000()};
+  --srl-button-focus-bg-color: #{colors.secondary-1000()};
+  --srl-button-focus-brd-color: #{colors.secondary-1000()};
+  --srl-button-active-color: #{colors.white-1000()};
+  --srl-button-active-bg-color: #{colors.secondary-1000()};
+  --srl-button-active-brd-color: #{colors.secondary-1000()};
+}
+
+%srl-button--secondary {
+  --srl-button-color: #{colors.white-1000()};
+  --srl-button-bg-color: #{colors.secondary-1000()};
+  --srl-button-brd-color: #{colors.secondary-1000()};
+  --srl-button-hover-color: #{colors.secondary-1000()};
+  --srl-button-hover-bg-color: #{colors.white-1000()};
+  --srl-button-hover-brd-color: #{colors.black-1000()};
+  --srl-button-focus-color: #{colors.white-1000()};
+  --srl-button-focus-bg-color: #{colors.primary-1000()};
+  --srl-button-focus-brd-color: #{colors.primary-1000()};
+  --srl-button-active-color: #{colors.white-1000()};
+  --srl-button-active-bg-color: #{colors.primary-1000()};
+  --srl-button-active-brd-color: #{colors.primary-1000()};
+}
+
+%srl-button--transparent-white {
+  --srl-button-color: #{colors.white-1000()};
+  --srl-button-bg-color: transparent;
+  --srl-button-brd-color: transparent;
+  --srl-button-hover-color: #{colors.white-1000()};
+  --srl-button-hover-bg-color: transparent;
+  --srl-button-hover-brd-color: #{colors.white-1000()};
+  --srl-button-focus-color: #{colors.white-1000()};
+  --srl-button-focus-bg-color: #{colors.primary-1000()};
+  --srl-button-focus-brd-color: #{colors.primary-1000()};
+  --srl-button-active-color: #{colors.white-1000()};
+  --srl-button-active-bg-color: #{colors.primary-1000()};
+  --srl-button-active-brd-color: #{colors.primary-1000()};
+}
+
+%srl-button--transparent-black {
+  --srl-button-color: #{colors.black-1000()};
+  --srl-button-bg-color: transparent;
+  --srl-button-brd-color: transparent;
+  --srl-button-hover-color: #{colors.black-1000()};
+  --srl-button-hover-bg-color: transparent;
+  --srl-button-hover-brd-color: #{colors.black-1000()};
+  --srl-button-focus-color: #{colors.white-1000()};
+  --srl-button-focus-bg-color: #{colors.primary-1000()};
+  --srl-button-focus-brd-color: #{colors.primary-1000()};
+  --srl-button-active-color: #{colors.white-1000()};
+  --srl-button-active-bg-color: #{colors.primary-1000()};
+  --srl-button-active-brd-color: #{colors.primary-1000()};
+}
+
+%srl-button__switch-hover {
+  --srl-button-color-override: var(--srl-button-hover-color);
+  --srl-button-bg-color-override: var(--srl-button-hover-bg-color);
+  --srl-button-brd-color-override: var(--srl-button-hover-brd-color);
+}
+
+%srl-button__switch-focus {
+  --srl-button-color-override: var(--srl-button-focus-color);
+  --srl-button-bg-color-override: var(--srl-button-focus-bg-color);
+  --srl-button-brd-color-override: var(--srl-button-focus-brd-color);
+}
+
+%srl-button__switch-active {
+  --srl-button-color-override: var(--srl-button-active-color);
+  --srl-button-bg-color-override: var(--srl-button-active-bg-color);
+  --srl-button-brd-color-override: var(--srl-button-active-brd-color);
+}
+
+%srl-button__switch {
+  @include button.switch(".srl-button");
+}

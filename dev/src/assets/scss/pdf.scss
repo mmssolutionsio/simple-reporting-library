@@ -1,5 +1,4 @@
 @use 'srl';
-@use 'placeholders';
 @use 'print';
 @use 'sass:map';
 
@@ -100,35 +99,4 @@ img {
   & + * {
     break-before: avoid;
   }
-}
-
-/*
-  Layout
-*/
-.srl-grid {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-
-  .srl-grid {
-    display: block;
-  }
-}
-
-.srl-grid__inner {
-  @include srl.grid-pdf-flex-col(6);
-
-  .srl-wide-width & {
-    @include srl.grid-pdf-flex-col(8);
-  }
-}
-
-.srl-grid__aside {
-  @extend %srl-trim-margins;
-  @include srl.grid-pdf-flex-col(2);
-}
-
-.srl-grid__content {
-  @extend %srl-trim-margins;
-  @include srl.grid-pdf-flex-col(6);
 }

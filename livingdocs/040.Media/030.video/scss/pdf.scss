@@ -13,19 +13,9 @@ $page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
 }
 
 .srl-video__thumbnail {
-  @include srl.grid-pdf-flex-col(6);
-
-  .srl-wide-width & {
-    @include srl.grid-pdf-flex-col(8);
-  }
-
   .srl-full-width & {
     width: 210mm;
     min-width: 210mm;
   }
-}
-
-.srl-video__video-link-container {
-  @include srl.grid-pdf-flex-col(6);
 }
 

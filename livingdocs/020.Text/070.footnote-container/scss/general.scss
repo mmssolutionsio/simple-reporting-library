@@ -2,4 +2,12 @@
 
 .srl-footnote-container {
   overflow: hidden;
+
+  &:not(.srl-grid) {
+    @extend %srl-regular-width;
+
+    .srl-wide-width & {
+      @extend %srl-wide-width;
+    }
+  }
 }

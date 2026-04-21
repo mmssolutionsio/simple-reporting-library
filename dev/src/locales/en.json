@@ -1,4 +1,44 @@
 {
+  "page": {
+    "title": "Annual Report",
+    "navigation": {
+      "back": "Back to {label}"
+    }
+  },
+  "accessibility": {
+    "toMainNavigation": "To main navigation",
+    "toMainContent": "To main content",
+    "toFooter": "To footer",
+    "pagePrev": "Previous page",
+    "pageNext": "Next page",
+    "toTop": "Back to top",
+    "modalClose": "Close window",
+    "searchLabel": "Enter search term",
+    "companyPage": "Company page",
+    "callNumber": "Call number",
+    "callFax": "Call fax",
+    "sendEmail": "Send email",
+    "contactForm": "Contact form"
+  },
+  "footer": {
+    "followUs": "Follow us on",
+    "contact": "Contact",
+    "downloads": "Downloads",
+    "furtherLinks": "Further links",
+    "copyright": "© {year}",
+    "privacySettings": "Cookie settings",
+    "phone": "Phone: ",
+    "fax": "Fax: ",
+    "email": "Email: "
+  },
+  "search": {
+    "search": "search",
+    "placeholder": "Enter a search term and press return",
+    "resultCount": "{count} result for: \"{text}\"|{count} results for: \"{text}\"",
+    "showMoreResults": "Show more results",
+    "noResultsMessage": "Unfortunately, we couldn't find any entries for this term. Please verify your term or return to the home page.",
+    "backToHomepage": "Back to home page"
+  },
   "toMainNavigation": "To main navigation",
   "toMainContent": "To main content",
   "toFooter": "To footer",

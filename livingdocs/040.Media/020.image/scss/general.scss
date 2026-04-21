@@ -1,5 +1,6 @@
 @use 'srl';
-@use "@/assets/scss/placeholders";
+@use "@/assets/scss/margins";
+@use "spacing-variations";
 
 .srl-grid--media {
   .srl-full-width & {
@@ -7,10 +8,13 @@
   }
 }
 
+@include margins.srl-component-margin(spacing-variations.$margins);
+
 .srl-image__caption {
   @include srl.spacer-margin-top(100);
 }
 
 .srl-image__caption-text {
   @include srl.typography-caption();
+  @extend %srl-regular-width;
 }

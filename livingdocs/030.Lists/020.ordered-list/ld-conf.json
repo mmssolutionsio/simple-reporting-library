@@ -4,13 +4,13 @@
   "properties": ["pdf-spacer"],
   "directives": {
     "list": {
-      "allowedChildren": ["list-item"],
+      "allowedChildren": ["list-item-ordered-list"],
       "defaultComponents": {
-        "paragraph": "list-item"
+        "paragraph": "list-item-ordered-list"
       },
       "defaultContent": [
         {
-          "component": "list-item"
+          "component": "list-item-ordered-list"
         }
       ]
     }

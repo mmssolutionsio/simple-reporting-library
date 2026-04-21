@@ -1,4 +1,44 @@
 {
+  "page": {
+    "title": "Geschäftsbericht",
+    "navigation": {
+      "back": "Zurück zu {label}"
+    }
+  },
+  "accessibility": {
+    "toMainNavigation": "Zur Hauptnavigation",
+    "toMainContent": "Zum Inhalt",
+    "toFooter": "Zum Footer",
+    "pagePrev": "Vorherige Seite",
+    "pageNext": "Nächste Seite",
+    "toTop": "An den Seitenanfang",
+    "modalClose": "Fenster schliessen",
+    "searchLabel": "Suchbegriff eingeben",
+    "companyPage": "Unternehmensseite",
+    "callNumber": "Telefonnummer wählen",
+    "callFax": "Faxnummer wählen",
+    "sendEmail": "E-Mail schreiben",
+    "contactForm": "Kontaktformular"
+  },
+  "footer": {
+    "followUs": "Folgen Sie uns auf",
+    "contact": "Kontakt",
+    "downloads": "Downloads",
+    "furtherLinks": "Weitere Links",
+    "copyright": "© {year}",
+    "privacySettings": "Cookie Einstellungen",
+    "phone": "Tel: ",
+    "fax": "Fax: ",
+    "email": "Email: "
+  },
+  "search": {
+    "search": "suchen",
+    "placeholder": "Suchbegriff eingeben und Enter drücken",
+    "resultCount": "{count} Treffer zu: \"{text}\"",
+    "showMoreResults": "Mehr Ergebnisse anzeigen",
+    "noResultsMessage": "Leider konnten wir keine Einträge für diesen Begriff finden. Bitte überprüfen Sie Ihren Begriff oder kehren Sie zur Startseite zurück.",
+    "backToHomepage": "Zurück zur Startseite"
+  },
   "toMainNavigation": "Zur Hauptnavigation",
   "toMainContent": "Zum Inhalt",
   "toFooter": "Zum Footer",

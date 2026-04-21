@@ -1,11 +1,4 @@
 @use "srl";
-@use "@/assets/scss/placeholders";
-
-.srl-grid--media {
-  .srl-full-width & {
-    @extend %srl-grid-reset;
-  }
-}
 
 .srl-video__inner {
   position: relative;
@@ -71,10 +64,6 @@
     height: 15px;
     margin-right: 0;
   }
-}
-
-.srl-video__video-link-container {
-  @extend %srl-regular-width;
 }
 
 .srl-video__started {

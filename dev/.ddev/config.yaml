@@ -1,4 +1,4 @@
-name: standard-ld
+name: demo
 type: php
 docroot: .output/ddev
 php_version: '8.3'

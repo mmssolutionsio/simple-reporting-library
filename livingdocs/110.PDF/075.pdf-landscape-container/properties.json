@@ -1,0 +1,15 @@
+{
+  "page-size": {
+    "label": "Page size",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Default (A4)"
+      },
+      {
+        "caption": "A3",
+        "value": "srl-pdf-landscape-container--a3"
+      }
+    ]
+  }
+}

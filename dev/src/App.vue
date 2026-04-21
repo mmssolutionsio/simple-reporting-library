@@ -7,8 +7,7 @@ const mainNavigation = useMenu('menuMain')
 <template>
   <div class="srl-page__wrap">
     <PageBypassLinks />
-    <PageHeader />
-    <PageMainNavigation :mainNavigation="mainNavigation" />
+    <PageHeader :mainNavigation="mainNavigation" />
     <PageMain :mainNavigation="mainNavigation" />
     <PageFooter />
   </div>
