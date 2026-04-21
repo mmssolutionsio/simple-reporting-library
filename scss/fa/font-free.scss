@@ -1,0 +1,17 @@
+@use "srl/fa" as v;
+
+@font-face {
+  font-family: 'Font Awesome 7 Brands';
+  font-style: normal;
+  font-weight: 400;
+  font-display: v.$font-display;
+  src: url('#{v.$font-path}/fa-brands-400.woff2');
+}
+
+@font-face {
+  font-family: v.$family;
+  font-style: normal;
+  font-weight: 900;
+  font-display: v.$font-display;
+  src: url('#{v.$font-path}/fa-solid-900.woff2');
+}

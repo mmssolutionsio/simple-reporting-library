@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import SrlPageCustomDialog from '@/Dialog.vue';
 import Autoload from '@/Autoload.ts';
 
 const props = withDefaults(
-    defineProps<{
-      header?: string;
-      content?: string;
-    }>(),
-    {
-      header: '',
-      content: '',
-    },
+  defineProps<{
+    header?: string;
+    content?: string;
+  }>(),
+  {
+    header: '',
+    content: '',
+  },
 );
 
 const $el = ref<HTMLDialogElement | null>(null);
@@ -29,14 +29,17 @@ function setDialogContentAndOpen(template: string) {
 
 function open() {
   dialogState.value = true;
-  $el.value?.showModal();
-  $el.value?.querySelector('.srl-dialog__main')?.focus();
-  Autoload.init($el.value);
+  const dialog = $el.value as HTMLDialogElement;
+  dialog.showModal();
+  const main = dialog.querySelector('.srl-dialog__main') as HTMLElement;
+  main ? main.focus() : null
+  Autoload.init(dialog);
 }
 
 function close() {
   dialogState.value = false;
-  $el.value?.close();
+  const dialog = $el.value as HTMLDialogElement;
+  dialog.close();
 }
 
 function clearContent() {
@@ -49,6 +52,7 @@ defineExpose({
   dialogState,
   setDialogContent,
   setDialogContentAndOpen,
+  clearContent,
   open,
   close,
 });
@@ -63,7 +67,20 @@ defineExpose({
       @click.stop="close"
   >
     <SrlAriaTabChain @click.stop>
-      <SrlPageCustomDialog :header="header" :content="content" @close="close" />
+      <SrlPageCustomDialog :header="header" :content="content" @close="close">
+        <template v-if="$slots.header" #header>
+          <slot name="header"/>
+        </template>
+        <template v-if="$slots.main" #main>
+          <slot name="main"/>
+        </template>
+        <template v-else-if="$slots.default" #main>
+          <slot/>
+        </template>
+        <template v-if="$slots.footer" #footer>
+          <slot name="footer"/>
+        </template>
+      </SrlPageCustomDialog>
     </SrlAriaTabChain>
   </dialog>
 </template>

@@ -1,0 +1,25 @@
+@mixin switch($seletor) {
+  & {
+    &:hover {
+      #{$seletor} {
+        @extend %srl-button__switch-hover;
+      }
+    }
+
+    &:focus,
+    &:focus-visible {
+      #{$seletor} {
+        @extend %srl-button__switch-focus;
+      }
+    }
+
+    &.srl-active,
+    &[aria-expanded="true"],
+    &[aria-selected="true"],
+    &[aria-current="page"] {
+      #{$seletor} {
+        @extend %srl-button__switch-active;
+      }
+    }
+  }
+}

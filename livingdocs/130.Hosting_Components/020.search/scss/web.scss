@@ -1,0 +1,200 @@
+@use "srl";
+@use "spacing-variations";
+
+
+/*
+Search form
+*/
+
+.srl-search__wrap {
+  @include srl.spacer-margin-top(400);
+}
+
+.srl-search-form__group {
+  transition: all .3s ease-out;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: srl.colors-grey-600();
+  border-radius: srl.system-root-style(srl-default-border-radius);
+  overflow: hidden;
+
+  &:hover {
+    @extend %srl-button__switch-hover;
+    background-color: srl.colors-secondary-1000();
+    .srl-search-form__button {
+      background-color: srl.colors-secondary-1000();
+      border-color: srl.colors-grey-800();
+
+      svg {
+        color: srl.colors-grey-800();
+      }
+    }
+  }
+
+  &:has(input:focus) {
+    @extend %srl-button__switch-focus;
+    background-color: srl.colors-secondary-1000();
+    .srl-search-form__input {
+      color: srl.colors-primary-1000();
+      &::placeholder {
+        color: srl.colors-primary-800();
+      }
+    }
+    .srl-search-form__button {
+      background-color: srl.colors-secondary-1000();
+      border-color: srl.colors-primary-1000();
+
+      svg {
+        color: srl.colors-primary-1000();
+      }
+    }
+  }
+
+  /*
+  &:has(input:focus-visible) {
+    background-color: srl.colors-primary-200();
+    border: srl.system-size-unit(1) solid srl.colors-primary-1000();
+    .srl-search-form__input {
+      color: srl.colors-grey-600();
+      &::placeholder {
+        color: srl.colors-grey-400();
+      }
+    }
+    .srl-search-form__button {
+      background-color: srl.colors-primary-200();
+      border-color: srl.colors-grey-600();
+
+      svg {
+        color: srl.colors-grey-600();
+      }
+    }
+  }
+
+   */
+}
+
+.srl-search-form__label {
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+}
+
+.srl-search-form__input {
+  width: 100%;
+  height: 100%;
+  border: 0 !important;
+  outline: 0 !important;
+  @include srl.typography-title-h5();
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, outline 0.3s ease;
+  background-color: transparent;
+  color: srl.colors-grey-800();
+  padding:
+    srl.spacer-get(400)
+    srl.system-size-unit(96)
+    srl.spacer-get(400)
+    srl.spacer-get(400)
+  ;
+
+  &::placeholder {
+    @include srl.typography-title-h5();
+    color: srl.colors-grey-800();
+  }
+
+  &:hover {
+  }
+
+  &:focus {
+    border-color: transparent;
+  }
+}
+
+.srl-search-form__button {
+  position: absolute;
+  right: srl.spacer-get(400);
+  background-color: srl.colors-grey-600();
+  border-color: srl.colors-grey-800();
+
+  svg {
+    color: srl.colors-grey-800();
+  }
+}
+
+/*
+Search results
+*/
+.srl-search-results__main-title {
+  @include srl.spacer-margin-top(200);
+}
+
+.srl-search-results__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.srl-search-results__item {
+  &:first-child {
+    .srl-search-results__link {
+      border-top-width: srl.system-size-unit(1);
+    }
+  }
+  &:has(+ .srl-search-results__item:hover) {
+    .srl-search-results__link {
+      border-bottom-color: srl.colors-grey-600();
+    }
+  }
+  &:has(+ .srl-search-results__item:focus) {
+    .srl-search-results__link {
+      border-bottom-color: srl.colors-black-1000();
+    }
+  }
+}
+
+.srl-search-results__link {
+  display: block;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-decoration: none;
+  @include srl.spacer-padding-block(400);
+  @include srl.spacer-padding-inline(200);
+  color: srl.colors-grey-600();
+  border-color: srl.colors-primary-1000();
+  border-style: solid;
+  border-width: 0 0 srl.system-size-unit(1) 0;
+
+  &:hover {
+    background-color: srl.colors-grey-600();
+    color: srl.colors-white-1000();
+    border-color: srl.colors-grey-600();
+  }
+
+  &:focus {
+    background-color: srl.colors-black-1000();
+    color: srl.colors-primary-1000();
+    border-color: srl.colors-primary-1000();
+  }
+}
+
+.srl-search-results__title {
+  @include srl.typography-title-h5();
+  color: inherit;
+  transition: color 0.3s ease;
+
+  .srl-search-results__link:focus & {
+  }
+}
+
+.srl-search-results__snippet {
+  @include srl.typography-paragraph();
+  color: inherit;
+  transition: color 0.3s ease;
+
+  .srl-search-results__link:focus & {
+  }
+}

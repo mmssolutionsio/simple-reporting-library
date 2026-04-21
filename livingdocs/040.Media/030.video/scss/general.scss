@@ -1,11 +1,30 @@
 @use 'srl';
+@use "@/assets/scss/margins";
+@use "spacing-variations";
+
+.srl-grid--media {
+  .srl-full-width & {
+    @extend %srl-grid-reset;
+  }
+}
 
 .srl-video {
   display: block;
 }
 
+@include margins.srl-component-margin(spacing-variations.$margins);
+
+.srl-video__thumbnail {
+  @extend %srl-regular-width;
+
+  .srl-wide-width & {
+    @extend %srl-wide-width;
+  }
+}
+
 .srl-video__video-link-container {
   @include srl.spacer-margin-top(100);
+  @extend %srl-regular-width;
 }
 
 .srl-video__video-link {

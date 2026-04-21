@@ -41,13 +41,14 @@ const firstElement = ref<HTMLElement>();
 const lastElement = ref<HTMLElement>();
 
 function registerTabs(): void {
+  const root = rootElement.value as HTMLElement;
   availableTabs.value = Array.from(
-    rootElement.value.querySelectorAll<HTMLElement>(
+    root.querySelectorAll<HTMLElement>(
       'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])',
     ),
   );
   firstElement.value = availableTabs.value[0];
-  lastElement.value = availableTabs.value.at(-1);
+  lastElement.value = availableTabs.value[availableTabs.value.length - 1];
 }
 
 onMounted(() => {
@@ -67,7 +68,7 @@ function next(event) {
 
   if (focusedElement === lastElement.value) {
     event.preventDefault();
-    firstElement.value.focus();
+    firstElement.value?.focus();
   }
 }
 
@@ -79,9 +80,9 @@ function prev(event) {
   const currentIndex = availableTabs.value.indexOf(event.target);
 
   if (currentIndex === -1) {
-    firstElement.value.focus();
+    firstElement.value?.focus();
   } else if (currentIndex === 0) {
-    lastElement.value.focus();
+    lastElement.value?.focus();
   } else {
     availableTabs.value[currentIndex - 1].focus();
   }

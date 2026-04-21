@@ -7,14 +7,14 @@
   "directives": {
     "list": {
       "allowedChildren": [
-        "list-item"
+        "list-item-unordered-list"
       ],
       "defaultComponents": {
-        "paragraph": "list-item"
+        "paragraph": "list-item-unordered-list"
       },
       "defaultContent": [
         {
-          "component": "list-item"
+          "component": "list-item-unordered-list"
         }
       ]
     }

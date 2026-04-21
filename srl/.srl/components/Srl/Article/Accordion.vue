@@ -20,57 +20,70 @@ const props = withDefaults(defineProps<{
 const route = useRoute()
 
 const id = useId()
-const rootEl = ref<HTMLDivElement>()
-const toggle = ref<HTMLButtonElement>()
-const content = ref<HTMLDivElement>()
-const wrapper = ref<HTMLDivElement>()
+const rootEl = ref<HTMLDivElement | null>(null)
+const toggle = ref<HTMLButtonElement | null>(null)
+const content = ref<HTMLDivElement | null>(null)
+const wrapper = ref<HTMLDivElement | null>(null)
 const transition = computed<string>(() => {
   return props.duration + 'ms'
 })
 
 function open() {
-  toggle.value?.setAttribute('aria-expanded', 'true')
-  wrapper.value?.removeAttribute('hidden')
-  content.value?.classList.add(props.openClass)
-  content.value.focus()
+  const t = toggle.value as HTMLButtonElement
+  const w = wrapper.value as HTMLDivElement
+  const c = content.value as HTMLDivElement
+  t.setAttribute('aria-expanded', 'true')
+  w.removeAttribute('hidden')
+  c.classList.add(props.openClass)
+  c.focus()
 }
 
 function close() {
-  toggle.value?.setAttribute('aria-expanded', 'false')
-  content.value?.classList.remove(props.openClass)
+  const t = toggle.value as HTMLButtonElement
+  const w = wrapper.value as HTMLDivElement
+  const c = content.value as HTMLDivElement
+
+  t.setAttribute('aria-expanded', 'false')
+  c.classList.remove(props.openClass)
   setTimeout(() => {
-    wrapper.value?.setAttribute('hidden', 'true')
+    w.setAttribute('hidden', 'true')
   }, props.duration)
 }
 
 onMounted(() => {
-  toggle.value = rootEl.value?.querySelector( props.toggleSelector ) || undefined
-  content.value = rootEl.value?.querySelector( props.contentSelector ) || undefined
-  wrapper.value = rootEl.value?.querySelector( props.wrapperSelector ) || undefined
+  const r = rootEl.value as HTMLDivElement
+
+  toggle.value = r.querySelector( props.toggleSelector ) || null
+  content.value = r.querySelector( props.contentSelector ) || null
+  wrapper.value = r.querySelector( props.wrapperSelector ) || null
 
   if (toggle.value && content.value && wrapper.value) {
-    wrapper.value.setAttribute('hidden', 'true')
-    content.value.id = id
-    content.value.setAttribute('tabindex', '-1')
-    toggle.value.setAttribute('aria-controls', id)
-    toggle.value.setAttribute('aria-expanded', 'false')
+    const t = toggle.value as HTMLButtonElement
+    const w = wrapper.value as HTMLDivElement
+    const c = content.value as HTMLDivElement
 
-    toggle.value.addEventListener('click', () => {
-      toggle.value?.getAttribute('aria-expanded') === 'true' ? close() : open()
+    w.setAttribute('hidden', 'true')
+    c.id = id
+    c.setAttribute('tabindex', '-1')
+    t.setAttribute('aria-controls', id)
+    t.setAttribute('aria-expanded', 'false')
+
+    t.addEventListener('click', () => {
+      t.getAttribute('aria-expanded') === 'true' ? close() : open()
     })
 
     if (route.hash) {
-      if (rootEl.value.id && rootEl.value.id === route.hash) {
+      if (r.id && r.id === route.hash) {
         open()
         isAccordionAnchored() || setAccordionAnchored(true)
       } else {
-        const targetEl = rootEl.value?.querySelector<HTMLElement>(route.hash)
+        const targetEl = r.querySelector<HTMLElement>(route.hash)
         if (targetEl) {
           open()
           if (!isAccordionAnchored()) {
             setAccordionAnchored(true)
             setTimeout(() => {
-              rootEl.value?.scrollIntoView({
+              r.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start',
               })

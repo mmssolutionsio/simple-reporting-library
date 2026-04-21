@@ -1,9 +1,13 @@
 @use 'srl';
 @use "sass:map";
+@use "@/assets/scss/margins";
+@use "spacing-variations";
 
 .srl-cv-time-span {
   @include srl.typography-cv-time-span();
 }
+
+@include margins.srl-component-margin(spacing-variations.$margins);
 
 .srl-cv-time-span__inner {
   display: flex;

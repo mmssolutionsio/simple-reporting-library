@@ -1,5 +1,4 @@
 @use 'srl';
-@use "@/assets/scss/placeholders";
 
 .srl-cv__inner {
   display: grid;
@@ -12,4 +11,21 @@
 
 .srl-cv__header-content {
   @extend %srl-cv-header-content;
+}
+
+.srl-cv__button-container-inner {
+}
+
+.srl-cv__button {
+  @extend %srl-button;
+}
+
+.srl-cv__divider {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  top: calc((srl.spacer-get(150) + (#{srl.typography-get-line-height(button-text)}) / 2) * -1);
+  z-index: -1;
+  border-top: 0;
+  border-bottom: 1px solid srl.colors-grey-200();
 }

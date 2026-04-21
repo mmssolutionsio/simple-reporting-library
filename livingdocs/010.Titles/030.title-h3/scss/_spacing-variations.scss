@@ -1,0 +1,13 @@
+$margins: (
+  ('.srl-title-h3', '*'): 100,
+  ('.srl-title-h3', '.srl-paragraph'): 100,
+  ('.srl-title-h3', '.srl-paragraph-strong'): 100,
+  ('.srl-title-h3', '.srl-table'): 200,
+  ('.srl-title-h3', '.srl-title-h4'): 200,
+  ('.srl-cv__header-content .srl-title-h3', '.srl-title-h4'): 100,
+  ('.srl-title-h3', '.srl-button-container'): 400,
+  ('.srl-title-h3', '.srl-columns'): 400,
+  ('.srl-title-h3', '.srl-pdf-pagebreak'): 800,
+  ('.srl-title-h3', '.srl-anchor'): 800,
+  ('.srl-title-h3', '.srl-background-container'): 1600,
+)

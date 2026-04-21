@@ -115,6 +115,7 @@ async function startActions() {
   if (!srlConfig || JSON.stringify(srlConfig) !== JSON.stringify(data)) {
     writeConfigJson(data);
   }
+
   if (srlConfig && srlConfig.version !== data.version) {
     await prepare();
     printPromptsMessage([
@@ -122,12 +123,14 @@ async function startActions() {
       'Trigger srl prepare',
     ]);
 
+    /*
     printPromptsMessage([
       'Build or dev process abort',
       'Please restart the process to apply the new version.',
     ]);
 
     process.exit();
+    */
   }
 
   await vueComponents();
@@ -154,7 +157,6 @@ function viteSrlPlugin() {
   return {
     name: 'vite-srl-plugin',
     config(config) {
-      startActions();
 
       config.base = './';
 
@@ -175,6 +177,9 @@ function viteSrlPlugin() {
       config.resolve.alias['fa-source'] = join(folders.srlSystem, 'fa', `source-${faType}.scss`);
       config.resolve.alias['fa-font'] = join(folders.srlSystem, 'fa', `font-${faType}.scss`);
       config.resolve.alias['vue'] = 'vue/dist/vue.esm-bundler.js';
+    },
+    async configResolved() {
+      await startActions();
     },
     async configureServer(server) {
       const fontPath = join(folders.srlAssets, 'fonts');

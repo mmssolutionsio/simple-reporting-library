@@ -1,7 +1,5 @@
 @use 'srl';
+@use "@/assets/scss/margins";
+@use "spacing-variations";
 
-.srl-list-group__list {
-  list-style: none;
-  padding: 0;
-}
-
+@include margins.srl-component-margin(spacing-variations.$margins);

@@ -1,0 +1,23 @@
+{
+  "name": "list-item-ordered-list",
+  "label": "List item (numeric list)",
+  "allowedParents": ["ordered-list", "list-item-ordered-list"],
+  "directives": {
+    "add-nested-list": {
+      "type": "toggle",
+      "label": "Add nested list container",
+      "default": false
+    },
+    "sub-list": {
+      "allowedChildren": ["list-item-ordered-list"],
+      "defaultComponents": {
+        "paragraph": "list-item-ordered-list"
+      },
+      "defaultContent": [
+        {
+          "component": "list-item-ordered-list"
+        }
+      ]
+    }
+  }
+}

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useArticles, useConfig } from '#composables';
-import { prepareHtmlContent, isDialogStored, addDialogToStorage, getDialogFromStorage } from '#utils';
+import { type RefSrlPageDialog, prepareHtmlContent, isDialogStored, addDialogToStorage, getDialogFromStorage } from '#utils';
 
 const props = defineProps<{
   uuid: string;
@@ -13,8 +13,8 @@ const articles = useArticles();
 const id = ref<string>(`srl-page__dialog-${props.uuid.replaceAll(' ', '_')}`);
 const content = ref<string>('');
 
-const dialog = isDialogStored(props.uuid)?
-    getDialogFromStorage(props.uuid):
+const dialog: RefSrlPageDialog = isDialogStored(props.uuid)?
+    getDialogFromStorage(props.uuid) as RefSrlPageDialog:
     ref<SrlPageDialog | null>(null);
 
 if (!isDialogStored(props.uuid)) {
@@ -23,7 +23,7 @@ if (!isDialogStored(props.uuid)) {
 }
 
 const state = computed<boolean>(() => {
-  return dialog.value ?
+  return dialog?.value ?
       dialog.value.dialogState : false
 });
 
@@ -50,7 +50,8 @@ async function loadContent() {
 }
 
 async function open() {
-  dialog.value?.open();
+  const d = dialog?.value as SrlPageDialog;
+  d?.open();
 }
 </script>
 

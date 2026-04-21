@@ -1,0 +1,118 @@
+@use "fa-source" as v;
+@forward "fa-source";
+@use "sass:map";
+@use "sass:string";
+@use "../system";
+
+@mixin base {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: var(--#{v.$css-prefix}-display, #{v.$display});
+  font-family: var(--_#{v.$css-prefix}-family);
+  font-feature-settings: normal;
+  font-style: normal;
+  font-synthesis: none;
+  font-variant: normal;
+  font-weight: var(--#{v.$css-prefix}-style, #{v.$style});
+  line-height: 1;
+  text-align: center;
+  text-rendering: auto;
+  width: var(--#{v.$css-prefix}-width, #{v.$fw-width});
+}
+
+@mixin brands($icon) {
+  @include content-before($icon, brands);
+}
+
+@mixin icon($icon) {
+  @include content-before($icon, v.$default-style);
+}
+
+@mixin thin($icon) {
+  @include content-before($icon, thin);
+}
+
+@mixin light($icon) {
+  @include content-before($icon, light);
+}
+
+@mixin regular($icon) {
+  @include content-before($icon, regular);
+}
+
+@mixin solid($icon) {
+  @include content-before($icon, solid);
+}
+
+@mixin size($size) {
+  @include v.fa-size($size);
+}
+
+@function find-font-weight($style) {
+  @if v.$type == pro {
+    @if $style == thin {
+      @return 100;
+    } @else if $style == light {
+      @return 300;
+    } @else if $style == regular {
+      @return 400;
+    } @else if $style == solid {
+      @return 900;
+    }
+  }
+  @return 900;
+}
+
+@mixin content($icon, $style: solid) {
+  @if not map.has-key(v.$brand-icons, $icon) and not map.has-key(v.$icons, $icon) {
+    @debug "Icon "#{$icon}" not found in Font Awesome 7.";
+  } @else {
+    $var: map.get(v.$brand-icons, $icon);
+    @if $var != null {
+      @include system.add-root-style(#{v.$css-prefix}-family-brands, '"Font Awesome 7 Brands"');
+      @include system.add-root-style(#{v.$css-prefix}-font-brands, normal 400 1em/1 var(--#{v.$css-prefix}-family-brands));
+      --#{v.$css-prefix}-family: var(--#{v.$css-prefix}-family-brands);
+      --#{v.$css-prefix}-style: 400;
+      --_#{v.$css-prefix}-family: var(--#{v.$css-prefix}-family, var(--#{v.$css-prefix}-style-family, "Font Awesome 7 Brands"));
+      content: string.unquote("\"#{ $var }\"");
+    } @else {
+      $var: map.get(v.$icons, $icon);
+      @include system.add-root-style(#{v.$css-prefix}-family-classic, '"#{ v.$family }"');
+      @include system.add-root-style(#{v.$css-prefix}-font-#{$style}, normal #{find-font-weight($style)} 1em/1 var(--#{v.$css-prefix}-family-classic));
+      @include system.add-root-style(#{v.$css-prefix}-style-family-classic, var(--#{v.$css-prefix}-family-classic));
+      --#{v.$css-prefix}-family: var(--#{v.$css-prefix}-family-classic);
+      --#{v.$css-prefix}-style: #{find-font-weight($style)};
+      --_#{v.$css-prefix}-family: var(--#{v.$css-prefix}-family, var(--#{v.$css-prefix}-style-family, '#{v.$family}'));
+      content: string.unquote("\"#{ $var }\"");
+    }
+  }
+}
+
+@mixin content-before($icon, $style: solid) {
+  @if not map.has-key(v.$brand-icons, $icon) and not map.has-key(v.$icons, $icon) {
+    @debug "Icon "#{$icon}" not found in Font Awesome 7.";
+  } @else {
+    $var: map.get(v.$brand-icons, $icon);
+    @if $var != null {
+      @include system.add-root-style(#{v.$css-prefix}-family-brands, '"Font Awesome 7 Brands"');
+      @include system.add-root-style(#{v.$css-prefix}-font-brands, normal 400 1em/1 var(--#{v.$css-prefix}-family-brands));
+      --#{v.$css-prefix}-family: var(--#{v.$css-prefix}-family-brands);
+      --#{v.$css-prefix}-style: 400;
+      --_#{v.$css-prefix}-family: var(--#{v.$css-prefix}-family, var(--#{v.$css-prefix}-style-family, "Font Awesome 7 Brands"));
+      &::before {
+        content: string.unquote("\"#{ $var }\"");
+      }
+    } @else {
+      $var: map.get(v.$icons, $icon);
+      @include system.add-root-style(#{v.$css-prefix}-family-classic, '"#{ v.$family }"');
+      @include system.add-root-style(#{v.$css-prefix}-font-#{$style}, normal #{find-font-weight($style)} 1em/1 var(--#{v.$css-prefix}-family-classic));
+      @include system.add-root-style(#{v.$css-prefix}-style-family-classic, var(--#{v.$css-prefix}-family-classic));
+      --#{v.$css-prefix}-family: var(--#{v.$css-prefix}-family-classic);
+      --#{v.$css-prefix}-style: #{find-font-weight($style)};
+      --_#{v.$css-prefix}-family: var(--#{v.$css-prefix}-family, var(--#{v.$css-prefix}-style-family, '#{v.$family}'));
+      &::before {
+        content: string.unquote("\"#{ $var }\"");
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
 @use 'srl';
+@use 'web';
 @use 'sass:map';
 
 $number-width: srl.system-size-unit(map.get(srl.$meta, footnote, number-width-pdf));
@@ -7,6 +8,7 @@ $number-width: srl.system-size-unit(map.get(srl.$meta, footnote, number-width-pd
   margin-left: $number-width;
 }
 
-.srl-list-group__list {
+.srl-list-group__list,
+.srl-list-group__sub-list {
   -ro-pdf-tag-type: L;
 }

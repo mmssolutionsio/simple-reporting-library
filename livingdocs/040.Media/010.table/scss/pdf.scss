@@ -1,32 +1,16 @@
 @use 'srl';
 @use 'sass:map';
 
-$table-cells-width-in-mm: false;
+$table-cells-width-in-mm: map.get(srl.$meta, table, cells-width-in-mm);
 
 .srl-table {
   break-inside: avoid;
 }
 
-.srl-table__container > div {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.srl-table-container {
-  @include srl.grid-pdf-flex-col(6);
-
-  .srl-wide-width & {
-    @include srl.grid-pdf-flex-col(8);
-  }
-}
-
 @if $table-cells-width-in-mm == true {
   .srl-table-container {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    @extend %srl-grid-base;
   }
 
   table {

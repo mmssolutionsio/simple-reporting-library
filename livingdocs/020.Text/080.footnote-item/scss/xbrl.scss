@@ -1,1 +1,26 @@
+@use 'srl';
+@use 'sass:map';
 @use 'general';
+
+$number-width: srl.system-size-unit(map.get(srl.$meta, footnote, number-width));
+
+.srl-table-footnote-item {
+  display: flex;
+  @include srl.typography-footnote-text();
+}
+
+.srl-table-footnote-id {
+  width: $number-width;
+
+  &:empty {
+    width: 0;
+
+    & + .srl-table-footnote-text {
+      width: 100%;
+    }
+  }
+}
+
+.srl-table-footnote-text {
+  width: calc(100% - #{$number-width});
+}

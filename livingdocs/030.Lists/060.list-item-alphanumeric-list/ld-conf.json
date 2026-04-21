@@ -1,0 +1,23 @@
+{
+  "name": "list-item-alphanumeric-list",
+  "label": "List item (alphanumeric list)",
+  "allowedParents": ["alphanumeric-list", "list-item-alphanumeric-list"],
+  "directives": {
+    "add-nested-list": {
+      "type": "toggle",
+      "label": "Add nested list container",
+      "default": false
+    },
+    "sub-list": {
+      "allowedChildren": ["list-item-alphanumeric-list"],
+      "defaultComponents": {
+        "paragraph": "list-item-alphanumeric-list"
+      },
+      "defaultContent": [
+        {
+          "component": "list-item-alphanumeric-list"
+        }
+      ]
+    }
+  }
+}

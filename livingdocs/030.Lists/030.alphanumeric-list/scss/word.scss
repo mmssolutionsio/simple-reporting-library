@@ -1,9 +1,0 @@
-@use 'srl';
-
-.srl-list-group__list {
-  .srl-list-group--alphanumeric &,
-  .srl-table-list--alphanumeric & {
-    list-style-type: lower-alpha;
-  }
-}
-

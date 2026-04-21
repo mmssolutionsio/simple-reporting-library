@@ -1,5 +1,9 @@
 @use 'srl';
+@use "@/assets/scss/margins";
+@use "spacing-variations";
 
 .srl-title-h6 {
   @include srl.typography-title-h6();
 }
+
+@include margins.srl-component-margin(spacing-variations.$margins);

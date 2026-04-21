@@ -1,0 +1,9 @@
+@use "srl";
+
+.srl-grid__aside {
+  @extend %srl-trim-margins;
+}
+
+.srl-grid__content {
+  @extend %srl-trim-margins;
+}

@@ -1,9 +1,4 @@
 @use "srl";
-@use "@/assets/scss/placeholders";
-
-.srl-image__caption-text {
-  @extend %srl-regular-width;
-}
 
 .srl-image__image-container--desktop {
   display: none;

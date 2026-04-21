@@ -5,10 +5,9 @@
 }
 
 .srl-cv__header-portrait {
-  margin-right: srl.grid-get-gutter-column-gap();
-  width: srl.grid-calculate-pdf-col-span-minus-one-gutter(2);
+  @extend %srl-cv-header-portrait;
 }
 
 .srl-cv__header-content {
-  width: srl.grid-calculate-pdf-col-span-minus-one-gutter(4);
+  @extend %srl-cv-header-content;
 }

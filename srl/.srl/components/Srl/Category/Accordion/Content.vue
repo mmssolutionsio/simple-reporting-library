@@ -11,7 +11,7 @@ const props = defineProps<{
   };
 }>()
 
-const rootEl = ref<HTMLDivElement>()
+const rootEl = ref<HTMLDivElement | null>(null);
 const focusElements = ref<HTMLElement[]>()
 
 watch(
@@ -22,7 +22,7 @@ watch(
 )
 
 function getFocusElements() {
-  const container = rootEl.value
+  const container = rootEl.value as HTMLElement
   const elements = container?.querySelectorAll<HTMLElement>(
     'a, button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])'
   )

@@ -1,12 +1,13 @@
 @use 'general';
-@use "@/assets/scss/placeholders";
 
-.srl-table__container > div,
+/*
+  Extra instruction for XBRL, because structure of tagged tables
+  is different from original tables
+*/
 .srl-table__container > .srl-table {
   @extend %srl-grid-base;
 }
 
-.srl-table-container,
 .srl-table__container > .srl-table > table {
   @extend %srl-regular-width;
 
