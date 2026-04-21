@@ -17,6 +17,14 @@ import {
 import chalk from 'chalk';
 import { vueComponents } from '../scripts/vue/components.js';
 
+/**
+ * Determine Font Awesome type (free or pro) based on the presence of the pro package in node_modules
+ * @type {string}
+ */
+let faType = 'free'
+if (existsSync(join(folders.root, 'node_modules', '@fortawesome', 'fontawesome-pro'))) {
+  faType = 'pro';
+}
 
 /**
  * Output prompts message in a box
@@ -164,6 +172,8 @@ function viteSrlPlugin() {
       config.resolve.alias['#ld'] = folders.ld;
       config.resolve.alias['assets'] = folders.srlAssets;
       config.resolve.alias['srl'] = folders.srlSystem;
+      config.resolve.alias['fa-source'] = join(folders.srlSystem, 'fa', `source-${faType}.scss`);
+      config.resolve.alias['fa-font'] = join(folders.srlSystem, 'fa', `font-${faType}.scss`);
       config.resolve.alias['vue'] = 'vue/dist/vue.esm-bundler.js';
     },
     async configureServer(server) {
