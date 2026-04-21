@@ -1,0 +1,84 @@
+@use "srl";
+
+body:has(.srl-page__dialog[open]) {
+    overflow: hidden;
+}
+.srl-page__dialog[open] {
+    border: none;
+    padding: 0;
+    width: srl.system-root-style(srl-container-max-width, 100%);
+    max-width: 100%;
+    max-height: 100dvh;
+    background-color: transparent;
+
+    &::backdrop {
+        background: srl.colors-grey-400();
+        opacity: 0.6;
+    }
+}
+
+
+.srl-dialog {
+    position: relative;
+    background-color: srl.colors-white-1000();
+    padding-block: srl.system-root-style(srl-container-padding, 0);
+    max-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    gap: srl.system-root-style(srl-container-padding, 0);
+}
+
+.srl-dialog__header,
+.srl-dialog__footer {
+    padding-inline: srl.system-root-style(srl-container-padding, 0);
+}
+
+.srl-dialog__header {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: flex-start;
+    position: relative;
+    gap: srl.grid-get-gutter-column-gap();
+}
+
+.srl-dialog__main {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: auto;
+
+    padding-block-end: srl.system-root-style(srl-container-padding, 0);
+    padding-inline-start: srl.system-root-style(srl-container-padding, 0);
+    padding-inline-end: calc(srl.system-root-style(srl-container-padding, 0) / 4 * 3);
+    margin-inline-end: calc(srl.system-root-style(srl-container-padding, 0) / 4);
+
+    @media (hover: hover) {
+        padding-inline-end: calc(srl.system-root-style(srl-container-padding, 0) / 4 * 3 - #{srl.system-size-unit(16)});
+        scrollbar-gutter: stable;
+    }
+
+    .srl-grid,
+    .srl-table__container > div,
+    .srl-category-accordion__inner-head {
+        padding-inline: 0;
+        margin-inline: 0;
+    }
+}
+
+.srl-dialog__header--body {
+    flex: 1 1 auto;
+}
+
+.srl-dialog__footer {
+    flex: 0 0 auto;
+}
+
+@include srl.grid-media-up(tablet-pt) {
+    .srl-page__dialog[open] {
+        border-radius: srl.system-size-unit(16);
+    }
+}

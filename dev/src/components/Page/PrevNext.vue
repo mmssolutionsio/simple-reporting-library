@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { isRouterPath } from '#utils'
 
@@ -21,10 +21,46 @@ const scrollY = ref(window.scrollY)
 window.addEventListener('scroll', () => {
   scrollY.value = window.scrollY
 })
+
+const headerThreshold = ref<number>(500)
+
+function readHeaderHeight() {
+  const raw = getComputedStyle(document.documentElement).getPropertyValue('--srl-header-height')?.trim()
+  if (!raw) {
+    headerThreshold.value = 500
+    return
+  }
+
+  // parse numeric part
+  let value = parseFloat(raw)
+  if (isNaN(value)) {
+    headerThreshold.value = 500
+    return
+  }
+
+  // handle rem unit (e.g. "2rem")
+  if (raw.endsWith('rem')) {
+    const rootFs = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
+    value = value * rootFs
+  }
+
+  headerThreshold.value = Math.round(value)
+}
+
+onMounted(() => {
+  readHeaderHeight()
+  window.addEventListener('resize', readHeaderHeight)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', readHeaderHeight)
+})
+// --- END NEW ---
+
 function prevNextHelper(item: NsWowNavigationItem, label: string = '', depth: number = 0) {
   if (item.href && isRouterPath(item.href)) {
     const url = item.href
-    const title = label.length > 0 ? `${label}\n${item.label}` : item.label
+    const title = label.length > 0 ? `${item.label}` : item.label
     prevNextNavigation.value.push({ title, url })
   }
 
@@ -66,34 +102,60 @@ const nextItem = computed(() => {
 })
 
 function toTop() {
-  window.scrollTo(0, 0)
-  document.querySelector('#srl-page-main')?.focus()
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+
+  const checkScroll = () => {
+    if (window.scrollY === 0) {
+      const main = document.querySelector('#srl-page-main') as HTMLElement;
+      main?.focus()
+    } else {
+      requestAnimationFrame(checkScroll)
+    }
+  }
+
+  requestAnimationFrame(checkScroll)
 }
 </script>
 <template>
   <div>
     <slot />
-    <div class="srl-prev-next">
-      <div class="srl-prev-next__wrap">
-        <button class="srl-to-top" :hidden="scrollY < 500" type="button" @click="toTop">
-          <img src="@/assets/images/toTop.svg" :alt="$t('toTop')" :title="$t('toTop')" />
-        </button>
-        <router-link
-          v-if="prevItem"
-          class="srl-page-prev"
-          :to="prevItem.url"
-          :title="prevItem.title"
-        >
-          <img src="@/assets/images/prev.svg" :alt="$t('pagePrev')" />
-        </router-link>
-        <router-link
-          v-if="nextItem"
-          class="srl-page-next"
-          :to="nextItem.url"
-          :title="nextItem.title"
-        >
-          <img src="@/assets/images/next.svg" :alt="$t('pageNext')" />
-        </router-link>
+    <div class="srl-grid srl-wide-width srl-to-top">
+      <div class="srl-grid__inner srl-to-top__inner">
+        <ButtonDefault class="srl-to-top__button" :hidden="scrollY < 500" :label="$t('toTop')" icon="arrow-up" :callback="toTop" />
+      </div>
+    </div>
+    <div class="srl-grid srl-wide-width srl-prev-next">
+      <div class="srl-grid__inner srl-prev-next__inner">
+        <div class="srl-prev-next__prev">
+          <router-link
+            v-if="prevItem"
+            class="srl-page-prev__link"
+            :to="prevItem.url"
+            :title="prevItem.title"
+          >
+            <div class="srl-page-prev__icon srl-page-prev__icon--prev srl-button srl-button--icon">
+              <i class="srl-icon-arrow-left" />
+            </div>
+            <div class="srl-page-prev__text">
+              <span class="srl-page-prev__title" v-text="prevItem.title" />
+            </div>
+          </router-link>
+        </div>
+        <div class="srl-prev-next__next">
+          <router-link
+            v-if="nextItem"
+            class="srl-page-prev__link"
+            :to="nextItem.url"
+            :title="nextItem.title"
+          >
+            <div class="srl-page-prev__text">
+              <span class="srl-page-prev__title" v-text="nextItem.title" />
+            </div>
+            <div class="srl-page-prev__icon srl-page-prev__icon--prev srl-button srl-button--icon">
+              <i class="srl-icon-arrow-right" />
+            </div>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -102,67 +164,75 @@ function toTop() {
 <style lang="scss">
 @use 'srl';
 
-body:has(.srl-to-top) {
-  .srl-article-root {
-    padding-block-end: srl.system-size-unit(60) !important;
-  }
+.srl-prev-next {
+  @include srl.spacer-margin-top(400);
 }
 
-.srl-prev-next {
-  pointer-events: none;
-  position: sticky;
-  bottom: 0;
-  z-index: 800;
-  max-width: calc(var(--srl-container-max-width) + var(--srl-container-padding) * 2);
-  padding-inline: var(--srl-container-padding);
-  margin-inline: auto;
-  padding-block-end: var(--srl-spacer-medium);
-  height: calc(var(--srl-spacer-L) + srl.system-size-unit(44));
-
-  &__wrap {
-    display: flex;
-    position: relative;
-    justify-content: space-between;
-    width: 100%;
-  }
+.srl-prev-next__inner {
+  display: grid;
+  grid-template-columns: subgrid;
 }
 
 .srl-to-top {
-  pointer-events: auto;
-  width: srl.system-size-unit(44);
-  height: srl.system-size-unit(44);
-  position: absolute;
-  top: srl.system-size-unit(-52);
-  right: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  cursor: pointer;
-  transition: all ease-out 0.3s;
-  opacity: 1;
+  position: sticky;
+  bottom: var(--srl-spacer-400);
+  margin-top: var(--srl-spacer-1600);
+  margin-bottom: var(--srl-spacer-400);
+  display: flex;
+  justify-content: flex-end;
+  z-index: 3;
+  pointer-events: none;
+  @include srl.grid-col(4);
+  @include srl.grid-col(4, phone-ls);
+  @include srl.grid-col(8, tablet-pt);
+  @include srl.grid-col(8, tablet-ls);
+  @include srl.grid-col(12, desktop);
+  @include srl.grid-col(12, desktop-large);
+}
 
+.srl-to-top__button {
+  pointer-events: all;
   &:not([hidden]) {
-    display: block;
+    display: flex;
   }
 
   &[hidden] {
     pointer-events: none;
     opacity: 0;
   }
+}
 
-  img {
-    display: block;
+.srl-prev-next__prev,
+.srl-prev-next__next {
+  @include srl.grid-col(4);
+}
+
+.srl-prev-next__next {
+  @include srl.grid-offset(8, tablet-ls);
+  @include srl.grid-offset(8, desktop);
+  @include srl.grid-offset(8, desktop-large);
+}
+
+.srl-page-prev__link {
+  @extend %srl-button__switch;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @include srl.spacer-gap(200);
+  @include srl.typography-paragraph();
+  text-decoration: none;
+  color: srl.colors-black-1000();
+  transition: color 0.3s ease;
+  @include srl.spacer-padding-top(400);
+  @include srl.spacer-padding-bottom(400);
+  border-top: 1px solid srl.colors-grey-200();
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: 0s;
   }
 }
 
-.srl-page-prev,
-.srl-page-next {
-  pointer-events: auto;
-  width: srl.system-size-unit(44);
-  height: srl.system-size-unit(44);
-  display: block;
-  img {
-    display: block;
-  }
+.srl-page-prev__text {
+  width: calc(100% - srl.system-size-unit(48) - srl.spacer-get(200));
 }
 </style>

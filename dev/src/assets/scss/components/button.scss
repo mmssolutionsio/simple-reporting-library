@@ -1,0 +1,37 @@
+@use "srl";
+
+.srl-button {
+  @extend %srl-button;
+}
+
+.srl-button--ghost {
+  @extend %srl-button--ghost;
+}
+
+.srl-button--icon {
+  @extend %srl-button--icon;
+}
+
+.srl-button--white {
+  @extend %srl-button--white;
+}
+
+.srl-button--primary {
+  @extend %srl-button--primary;
+}
+
+.srl-button--secondary {
+  @extend %srl-button--secondary;
+}
+
+.srl-button--transparent-white {
+  @extend %srl-button--transparent-white;
+}
+
+.srl-button--transparent-black {
+  @extend %srl-button--transparent-black;
+}
+
+.srl-button__switch {
+  @include srl.button-switch(".srl-button");
+}

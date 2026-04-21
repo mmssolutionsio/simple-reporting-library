@@ -1,0 +1,354 @@
+@use "srl/helpers";
+@use "srl/system";
+@use "srl/grid";
+
+%srl-trim-margins {
+  @include helpers.trim-margins;
+}
+
+%srl-grid-base {
+  @if system.$build == "pdf" {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  } @else {
+    margin-left: auto;
+    margin-right: auto;
+    @include grid.container();
+    @include grid.row();
+  }
+}
+
+%srl-grid-reset {
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
+  display: block;
+}
+
+%srl-regular-width {
+  @if system.$build == "xbrl" {
+    @include grid.col(6);
+    @include grid.offset(3);
+  } @else if system.$build == "pdf" {
+    @include grid.pdf-flex-col(6);
+  } @else {
+    // Mobile
+    @include grid.col(4);
+
+    // Mobile landscape
+    @include grid.col(4, phone-ls);
+
+    // Tablet portrait
+    @include grid.col(8, tablet-pt);
+
+    // Tablet landscape
+    @include grid.col(8, tablet-ls);
+    @include grid.offset(2, tablet-ls);
+
+    // Desktop
+    @include grid.col(6, desktop);
+    @include grid.offset(3, desktop);
+
+    // Desktop large
+    @include grid.col(6, desktop-large);
+    @include grid.offset(3, desktop-large);
+  }
+}
+
+%srl-wide-width {
+  @if system.$build == "xbrl" {
+    @include grid.col(12);
+    @include grid.offset(0);
+  } @else if system.$build == "pdf" {
+    @include grid.pdf-flex-col(8);
+  } @else {
+    // Mobile
+    @include grid.col(4);
+
+    // Mobile landscape
+    @include grid.col(4, phone-ls);
+
+    // Tablet portrait
+    @include grid.col(8, tablet-pt);
+
+    // Tablet landscape
+    @include grid.col(12, tablet-ls);
+    @include grid.offset(0, tablet-ls);
+
+    // Desktop
+    @include grid.col(12, desktop);
+    @include grid.offset(0, desktop);
+
+    // Desktop large
+    @include grid.col(12, desktop-large);
+    @include grid.offset(0, desktop-large);
+  }
+}
+
+/*
+  Quote without an image wide with
+*/
+%srl-quote-wide-width {
+  @if system.$build == "xbrl" {
+    @include grid.col(8);
+    @include grid.offset(2);
+  } @else if system.$build == "pdf" {
+    @include grid.pdf-flex-col(8);
+  } @else {
+    // Mobile
+    @include grid.col(4);
+
+    // Mobile landscape
+    @include grid.col(4, phone-ls);
+
+    // Tablet portrait
+    @include grid.col(8, tablet-pt);
+
+    // Tablet landscape
+    @include grid.col(10, tablet-ls);
+    @include grid.offset(1, tablet-ls);
+
+    // Desktop
+    @include grid.col(8, desktop);
+    @include grid.offset(2, desktop);
+
+    // Desktop large
+    @include grid.col(8, desktop-large);
+    @include grid.offset(2, desktop-large);
+  }
+}
+
+/*
+  Quote with an image regular with
+  Just the image
+*/
+%srl-quote-with-image-image-regular-width {
+  @if system.$build == "xbrl" {
+    @include grid.col(2);
+    @include grid.offset(3);
+  } @else if system.$build == "pdf" {
+    margin-left: grid.calculate-pdf-col-start(3);
+    margin-right: grid.get-gutter-column-gap();
+    width: grid.calculate-pdf-col-span-minus-one-gutter(2);
+  } @else {
+    // Mobile
+    @include grid.col(4);
+
+    // Mobile landscape
+    @include grid.col(4, phone-ls);
+
+    // Tablet portrait
+    @include grid.col(3, tablet-pt);
+
+    // Tablet landscape
+    @include grid.col(3, tablet-ls);
+    @include grid.offset(2, tablet-ls);
+
+    // Desktop
+    @include grid.col(2, desktop);
+    @include grid.offset(3, desktop);
+
+    // Desktop large
+    @include grid.col(2, desktop-large);
+    @include grid.offset(3, desktop-large);
+  }
+}
+
+/*
+  Quote with an image regular with
+  Just the text
+*/
+%srl-quote-with-image-text-regular-width {
+  @if system.$build == "xbrl" {
+    @include grid.col(4);
+    @include grid.offset(5);
+  } @else if system.$build == "pdf" {
+    width: grid.calculate-pdf-col-span-minus-one-gutter(4);
+  } @else {
+    // Mobile
+    @include grid.col(4);
+
+    // Mobile landscape
+    @include grid.col(4, phone-ls);
+
+    // Tablet portrait
+    @include grid.col(5, tablet-pt);
+
+    // Tablet landscape
+    @include grid.col(5, tablet-ls);
+    @include grid.offset(5, tablet-ls);
+
+    // Desktop
+    @include grid.col(4, desktop);
+    @include grid.offset(5, desktop);
+
+    // Desktop large
+    @include grid.col(4, desktop-large);
+    @include grid.offset(5, desktop-large);
+  }
+}
+
+/*
+  Quote with an image wide with
+  Just the image
+*/
+%srl-quote-with-image-image-wide-width {
+  @if system.$build == "xbrl" {
+    @include grid.col(2);
+    @include grid.offset(2);
+  } @else if system.$build == "pdf" {
+    margin-left: 0;
+    margin-right: 0;
+    @include grid.pdf-flex-col(2);
+  } @else {
+    // Mobile
+    @include grid.col(4);
+
+    // Mobile landscape
+    @include grid.col(4, phone-ls);
+
+    // Tablet portrait
+    @include grid.col(3, tablet-pt);
+
+    // Tablet landscape
+    @include grid.col(3, tablet-ls);
+    @include grid.offset(1, tablet-ls);
+
+    // Desktop
+    @include grid.col(2, desktop);
+    @include grid.offset(2, desktop);
+
+    // Desktop large
+    @include grid.col(2, desktop-large);
+    @include grid.offset(2, desktop-large);
+  }
+}
+
+/*
+  Quote with an image wide with
+  Just the text
+*/
+%srl-quote-with-image-text-wide-width {
+  @if system.$build == "xbrl" {
+    @include grid.col(6);
+    @include grid.offset(4);
+  } @else if system.$build == "pdf" {
+    @include grid.pdf-flex-col(6);
+  } @else {
+    // Mobile
+    @include grid.col(4);
+
+    // Mobile landscape
+    @include grid.col(4, phone-ls);
+
+    // Tablet portrait
+    @include grid.col(5, tablet-pt);
+
+    // Tablet landscape
+    @include grid.col(7, tablet-ls);
+    @include grid.offset(4, tablet-ls);
+
+    // Desktop
+    @include grid.col(6, desktop);
+    @include grid.offset(4, desktop);
+
+    // Desktop large
+    @include grid.col(6, desktop-large);
+    @include grid.offset(4, desktop-large);
+  }
+}
+
+/*
+  Aside width
+*/
+%srl-aside-width {
+  @if system.$build == "xbrl" {
+    @include grid.col(2);
+    @include grid.offset(1);
+  } @else if system.$build == "pdf" {
+    @include grid.pdf-flex-col(2);
+  } @else {
+    // Mobile
+    @include grid.col(4);
+
+    // Mobile landscape
+    @include grid.col(4, phone-ls);
+
+    // Tablet portrait
+    @include grid.col(8, tablet-pt);
+
+    // Tablet landscape
+    @include grid.col(2, tablet-ls);
+
+    // Desktop
+    @include grid.col(2, desktop);
+    @include grid.offset(1, desktop);
+
+    // Desktop large
+    @include grid.col(2, desktop-large);
+    @include grid.offset(1, desktop-large);
+  }
+}
+
+/*
+  Quote with an image regular with
+  Just the image
+*/
+%srl-cv-header-portrait {
+  @if system.$build == "xbrl" {
+    @include grid.col(2);
+  } @else if system.$build == "pdf" {
+    margin-right: grid.get-gutter-column-gap();
+    width: grid.calculate-pdf-col-span-minus-one-gutter(2);
+  } @else {
+    // Mobile
+    @include grid.col(4);
+
+    // Mobile landscape
+    @include grid.col(4, phone-ls);
+
+    // Tablet portrait
+    @include grid.col(3, tablet-pt);
+
+    // Tablet landscape
+    @include grid.col(3, tablet-ls);
+
+    // Desktop
+    @include grid.col(2, desktop);
+
+    // Desktop large
+    @include grid.col(2, desktop-large);
+  }
+}
+
+/*
+  Quote with an image regular with
+  Just the text
+*/
+%srl-cv-header-content {
+  @if system.$build == "xbrl" {
+    @include grid.col(4);
+  } @else if system.$build == "pdf" {
+    width: grid.calculate-pdf-col-span-minus-one-gutter(4);
+  } @else {
+    // Mobile
+    @include grid.col(4);
+
+    // Mobile landscape
+    @include grid.col(4, phone-ls);
+
+    // Tablet portrait
+    @include grid.col(5, tablet-pt);
+
+    // Tablet landscape
+    @include grid.col(5, tablet-ls);
+
+    // Desktop
+    @include grid.col(4, desktop);
+
+    // Desktop large
+    @include grid.col(4, desktop-large);
+  }
+}

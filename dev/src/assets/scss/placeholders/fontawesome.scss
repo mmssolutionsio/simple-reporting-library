@@ -1,0 +1,7 @@
+
+@use "sass:string";
+@use "srl/fa";
+
+%srl-icon-base {
+  @include fa.base();
+}

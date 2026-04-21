@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Tr from '@/i18n/translation'
-import HomeView from '@/views/HomeView.vue'
 import ArticleView from '@/views/ArticleView.vue'
 import PageNotFound from '@/views/PageNotFound.vue'
 
@@ -8,7 +7,7 @@ const routes = [
   {
     path: '/:locale?',
     name: 'home',
-    component: HomeView,
+    component: ArticleView,
     beforeEnter: Tr.routeMiddleware
   },
   {

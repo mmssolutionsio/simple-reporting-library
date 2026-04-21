@@ -1,0 +1,57 @@
+@use "srl";
+@use "srl/system";
+@use "sass:list";
+
+@mixin srl-component-margin($spacing-rules) {
+  @each $pair, $margin in $spacing-rules {
+    $from: list.nth($pair, 1);
+    $to: list.nth($pair, 2);
+
+    @if $to == '*' {
+      #{$from} + * {
+        @include srl.spacer-margin-top($margin);
+      }
+    } @else {
+      #{$from} + #{$to} {
+        @include srl.spacer-margin-top($margin);
+      }
+    }
+
+    @if system.$build == "pdf" {
+      @if $to == '*' {
+        #{$from}-first + *,
+        #{$from}-last + * {
+          @include srl.spacer-margin-top($margin);
+        }
+      } @else {
+        #{$from}-first + #{$to}-first,
+        #{$from}-last + #{$to}-first {
+          @include srl.spacer-margin-top($margin);
+        }
+      }
+    } @else {
+      $wrappers: null;
+
+      @if system.$build != "xbrl" {
+        $wrappers: ('.srl-nested-container');
+      } @else {
+        $wrappers: ('.srl-nested-container', '.ixbrl-element');
+      }
+      @each $wrapper in $wrappers {
+        @if $to == '*' {
+          #{$from} + #{$wrapper}:has(:first-child),
+          #{$wrapper}:has(#{$from}:last-child) + * {
+            @include srl.spacer-margin-top($margin);
+          }
+        } @else {
+          #{$from} + #{$wrapper}:has(#{$to}:first-child),
+          #{$wrapper}:has(#{$from}:last-child) + #{$to},
+          #{$wrapper}:has(#{$from}:first-child) + #{$wrapper}:has(#{$to}:last-child),
+          #{$wrapper}:has(#{$from}:last-child) + #{$wrapper}:has(#{$to}:first-child) {
+            @include srl.spacer-margin-top($margin);
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,12 +1,21 @@
 @use 'srl';
+@use "srl/fa";
 @use 'sass:string';
 @use 'sass:map';
-@use 'components/round-button';
-@use 'components/icons';
+@use "components/button";
+@use "components/fontawesome";
+//@use 'components/icons';
 
 $font-weight-bold: map.get(srl.$meta, font, weight, bold);
 
+@include srl.system-add-root-style('srl-default-border-radius', srl.system-size-unit(16, pt));
+@include srl.system-add-root-style('srl-default-border-radius', srl.system-size-unit(16));
+
+@include srl.system-add-root-style('srl-model-flex-direction', column);
+@include srl.system-add-root-style('srl-model-flex-direction', row, tablet-pt, up);
+
 body {
+  @include srl.typography-paragraph();
   background: srl.colors-white-1000();
   color: srl.colors-black-1000();
 }
@@ -60,4 +69,22 @@ span {
   &[class*="key-figure"] {
     white-space: nowrap;
   }
+}
+
+.srl-highlight {
+  color: srl.colors-primary-1000();
+}
+
+.srl-flex {
+  display: flex;
+  flex-direction: srl.system-root-style(srl-model-flex-direction);
+  gap: var(--srl-gutter-column-gap);
+}
+
+.srl-justify-self-center {
+  justify-self: center;
+}
+
+.text-center {
+  text-align: center;
 }
