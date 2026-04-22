@@ -113,7 +113,10 @@ $transition-duration: .3s;
       @extend %srl-button--icon;
       @extend %srl-icon-base;
       @include fa.icon(plus);
-      width: auto;
+
+      &:before {
+        @extend %srl-icon-base;
+      }
     }
 
     &[aria-expanded="true"] {
