@@ -4,3 +4,11 @@
 .srl-footnote__item {
   font-family: 'Arial', sans-serif;
 }
+
+.srl-footnote__key,
+.srl-footnote__number {
+  &:after {
+    content: " ";
+    display: block;
+  }
+}
