@@ -21,3 +21,10 @@
 }
 
 
+.srl-quote__quote {
+  .srl-title-image-quote &,
+  .srl-teaser-quote & {
+    @include srl.typography-title-h2-landing-page();
+  }
+}
+

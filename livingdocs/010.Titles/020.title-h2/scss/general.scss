@@ -5,6 +5,16 @@
 .srl-title-h2 {
   @include srl.typography-title-h2();
 
+  .srl-title-image-quote &,
+  .srl-teaser-quote &,
+  .srl-teaser & {
+    @include srl.typography-title-h2-landing-page();
+  }
+
+  .srl-title-image-quote & {
+    color: srl.colors-black-1000();
+  }
+
   .srl-pdf-cover & {
     @include srl.typography-title-h2-pdf();
   }

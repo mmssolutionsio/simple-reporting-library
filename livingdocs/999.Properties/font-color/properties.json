@@ -1,0 +1,15 @@
+{
+  "font-color": {
+    "label": "Font color",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Default"
+      },
+      {
+        "caption": "white",
+        "value": "srl-color-white-1000"
+      }
+    ]
+  }
+}

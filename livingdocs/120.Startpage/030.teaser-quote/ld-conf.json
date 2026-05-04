@@ -1,0 +1,25 @@
+{
+  "name": "teaser-quote",
+  "label": "Teaser quote",
+  "properties": [
+    "icon",
+    "reverse",
+    "hide-quote-characters",
+    "font-color"
+  ],
+  "directives": {
+    "show-alt-text": {
+      "type": "toggle",
+      "label": "Show alt text",
+      "default": false
+    },
+    "image-mobile": {
+      "imageRatios": ["393:702"],
+      "allowOriginalRatio": false
+    },
+    "image": {
+      "imageRatios": ["16:9"],
+      "allowOriginalRatio": false
+    }
+  }
+}

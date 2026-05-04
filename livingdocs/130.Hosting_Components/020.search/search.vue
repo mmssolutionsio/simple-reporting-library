@@ -391,7 +391,7 @@ function setWindowState(index: number) {
           />
           <button
             tabindex="-2"
-            class="srl-button srl-button--icon"
+            class="srl-search-form__button srl-button srl-button--icon"
             type="button"
             :aria-label="$t('search.search')"
             @click="submitSearch"
