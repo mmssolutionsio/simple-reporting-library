@@ -8,7 +8,4 @@
 @forward "@fortawesome/fontawesome-free/scss/variables";
 @forward "@fortawesome/fontawesome-free/scss/mixins";
 $type: free;
-$default-style: light;
-@if map.has-key(meta.$meta, icon, default-style) {
-  $default-style: map.get(meta.$meta, icon, default-style);
-}
+$default-style: solid;

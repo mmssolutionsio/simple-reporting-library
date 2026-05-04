@@ -63,7 +63,7 @@
   @return 900;
 }
 
-@mixin content($icon, $style: solid) {
+@mixin content($icon, $style: v.$default-style) {
   @if not map.has-key(v.$brand-icons, $icon) and not map.has-key(v.$icons, $icon) {
     @debug "Icon "#{$icon}" not found in Font Awesome 7.";
   } @else {
@@ -88,7 +88,7 @@
   }
 }
 
-@mixin content-before($icon, $style: solid) {
+@mixin content-before($icon, $style: v.$default-style) {
   @if not map.has-key(v.$brand-icons, $icon) and not map.has-key(v.$icons, $icon) {
     @debug "Icon "#{$icon}" not found in Font Awesome 7.";
   } @else {
