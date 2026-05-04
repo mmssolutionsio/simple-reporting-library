@@ -24,6 +24,4 @@ export class PDFSetPageNumbers {
   }
 }
 
-export default {
-  PDFSetPageNumbers,
-}
+export default PDFSetPageNumbers

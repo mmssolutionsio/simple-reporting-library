@@ -70,6 +70,4 @@ export class PDFNotes {
   }
 }
 
-export default {
-  PDFNotes,
-}
+export default PDFNotes
