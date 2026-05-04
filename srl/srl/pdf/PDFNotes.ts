@@ -2,7 +2,7 @@ export interface PDFNotesConfig {
   noteClass: string; // kann mehrere Selektoren per Komma enthalten
 }
 
-export default class PDFNotes {
+export class PDFNotes {
   private notesArticles: NodeListOf<HTMLElement>;
   private selectors: string[];
   private excludedClasses = ['srl-grid', 'srl-linkable'];
@@ -68,4 +68,8 @@ export default class PDFNotes {
       // last.classList.add(`last-note-${typeKey}`);
     });
   }
+}
+
+export default {
+  PDFNotes,
 }
