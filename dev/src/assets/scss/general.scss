@@ -75,6 +75,22 @@ span {
   color: srl.colors-primary-1000();
 }
 
+.srl-linkable {
+  a {
+    color: srl.colors-primary-1000();
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+    &[href^="http"] {
+      &:after {
+        @extend %srl-icon-base;
+        @include fa.content(square-arrow-up-right);
+      }
+    }
+  }
+}
+
 .srl-flex {
   display: flex;
   flex-direction: srl.system-root-style(srl-model-flex-direction);
