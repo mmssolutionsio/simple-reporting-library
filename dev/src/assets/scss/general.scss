@@ -84,7 +84,7 @@ span {
       text-decoration: none;
     }
 
-    &[href^="http"] {
+    &[target="_blank"] {
       &:after {
         @extend %srl-icon-base;
         @include fa.content(arrow-up-right-from-square);
