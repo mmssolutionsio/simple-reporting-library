@@ -19,12 +19,14 @@
 
     @if system.$build == "pdf" {
       @if $to == '*' {
-        #{$from}-first + *,
+        #{$from} + *,
         #{$from}-last + * {
           @include srl.spacer-margin-top($margin);
         }
       } @else {
-        #{$from}-first + #{$to}-first,
+        #{$from} + #{$to},
+        #{$from} + #{$to}-first,
+        #{$from}-last + #{$to},
         #{$from}-last + #{$to}-first {
           @include srl.spacer-margin-top($margin);
         }
