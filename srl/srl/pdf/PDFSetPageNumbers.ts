@@ -3,7 +3,7 @@ export interface PDFSetPageNumbersConfig {
   tocItemPageNumberClass: string;
 }
 
-export default class PDFSetPageNumbers {
+export class PDFSetPageNumbers {
   private tocItems: NodeListOf<HTMLElement>;
   private pageNumberClass: string;
 
@@ -23,3 +23,5 @@ export default class PDFSetPageNumbers {
     });
   }
 }
+
+export default PDFSetPageNumbers

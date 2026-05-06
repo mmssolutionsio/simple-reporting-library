@@ -35,6 +35,8 @@ export const baseComponentsToInstall = [
   '110.PDF/080.pdf-toc-page',
   '110.PDF/090.pdf-toc-item-title',
   '110.PDF/100.pdf-toc-item',
+  '130.Hosting_Components/010.download-center',
+  '130.Hosting_Components/020.search',
   '999.Properties/alignment',
   '999.Properties/hide-quote-characters',
   '999.Properties/icon',

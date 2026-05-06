@@ -1,4 +1,5 @@
 @use 'srl';
+@use "srl/fa";
 @use "@/assets/scss/margins";
 @use "spacing-variations";
 
@@ -24,7 +25,6 @@
 
 .srl-video__video-link-container {
   @include srl.spacer-margin-top(100);
-  @extend %srl-regular-width;
 }
 
 .srl-video__video-link {
@@ -33,6 +33,11 @@
   align-items: center;
   text-decoration: none;
   @include srl.typography-video-link();
+}
+
+.srl-video__video-link-icon {
+  @extend %srl-icon-base;
+  @include fa.icon(play);
 }
 
 .srl-video__video-link-text {
