@@ -1,1 +1,5 @@
 @use "srl";
+
+.srl-aside-content-container {
+  gap: srl.spacer-get(200);
+}

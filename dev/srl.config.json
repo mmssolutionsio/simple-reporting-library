@@ -315,7 +315,7 @@
       {
         "name": "link",
         "font-family": "Inter",
-        "font-size": 12,
+        "font-size": 14,
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
@@ -327,7 +327,7 @@
           },
           "up": {
             "tablet-pt": {
-              "font-size": 14
+              "font-size": 16
             }
           }
         }
