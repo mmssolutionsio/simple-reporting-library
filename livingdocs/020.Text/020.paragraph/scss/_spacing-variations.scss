@@ -1,5 +1,6 @@
 $margins: (
   ('.srl-paragraph', '*'): 200,
+  ('.srl-paragraph', '.srl-link__link'): 100,
   ('.srl-paragraph', '.srl-paragraph'): 200,
   ('.srl-paragraph', '.srl-paragraph-strong'): 200,
   ('.srl-paragraph', '.srl-list-group'): 200,
