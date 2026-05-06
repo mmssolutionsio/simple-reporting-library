@@ -1,7 +1,7 @@
 import '#imports/pdf.scss'
 import * as Awesomizr from 'srl/pdf/Awesomizr.js'
 import PDFNotes from 'srl/pdf/PDFNotes.ts'
-import PDFNestedContainers from '../../srl/pdf/PDFNestedContainers.ts'
+import PDFNestedContainers from 'srl/pdf/PDFNestedContainers.ts'
 import PDFSetPageNumbers from 'srl/pdf/PDFSetPageNumbers.ts'
 
 document.addEventListener('DOMContentLoaded', () => {
