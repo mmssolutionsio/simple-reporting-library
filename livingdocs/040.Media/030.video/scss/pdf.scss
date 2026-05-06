@@ -4,6 +4,14 @@
 $page-margin-right: srl.system-size-unit(map.get(srl.$meta, pdf, margin, right));
 $page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
 
+.srl-video {
+  display: none;
+}
+
+.srl-video.srl-video-show-pdf-link {
+  display: block;
+}
+
 .srl-grid--media {
   .srl-full-width & {
     max-width: 210mm;

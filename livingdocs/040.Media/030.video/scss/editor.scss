@@ -4,3 +4,13 @@
   max-width: 192px;
   max-height: 108px;
 }
+
+.srl-video__video-link-container {
+  display: none;
+}
+
+.srl-video.srl-video-show-pdf-link {
+  .srl-video__video-link-container {
+    display: grid;
+  }
+}

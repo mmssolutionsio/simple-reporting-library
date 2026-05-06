@@ -1,16 +1,11 @@
 {
   "name": "video",
   "label": "Video",
-  "properties": ["width-all", "pdf-spacer"],
+  "properties": ["showVideoLink", "width-all", "pdf-spacer"],
   "directives": {
     "video-thumbnail": {
       "imageRatios": ["16:9"],
       "allowOriginalRatio": false
-    },
-    "showVideoLink": {
-      "type": "toggle",
-      "label": "Enable video link for PDF",
-      "default": false
     },
     "link": {
       "plainText": true

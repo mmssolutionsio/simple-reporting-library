@@ -1,0 +1,7 @@
+{
+  "showVideoLink": {
+    "type": "option",
+    "label": "Enable video link for PDF",
+    "value": "srl-video-show-pdf-link"
+  }
+}
