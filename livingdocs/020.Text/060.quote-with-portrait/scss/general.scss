@@ -20,6 +20,10 @@ $quote-close: map.get(srl.$meta, quote, quote-close);
 .srl-quote__quote {
   @include srl.typography-quote();
 
+  .srl-teaser-quote.srl-color-white-1000 & {
+    color: srl.colors-black-1000()
+  }
+
   &:before {
     content: "#{$quote-open}";
 
@@ -44,8 +48,16 @@ $quote-close: map.get(srl.$meta, quote, quote-close);
 
 .srl-quote__name {
   @include srl.typography-quote-name();
+
+  .srl-teaser-quote.srl-color-white-1000 & {
+    color: srl.colors-black-1000()
+  }
 }
 
 .srl-quote__position {
     @include srl.typography-quote-position();
+
+  .srl-teaser-quote.srl-color-white-1000 & {
+    color: srl.colors-black-1000()
+  }
 }

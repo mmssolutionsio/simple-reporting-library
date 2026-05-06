@@ -1,5 +1,13 @@
 @use 'srl';
+@use "sass:map";
+
+$font-weight-bold: map.get(srl.$meta, font, weight, bold);
 
 .srl-link {
   @include srl.typography-link();
+}
+
+.srl-link__link {
+  font-weight: $font-weight-bold;
+  display: block;
 }

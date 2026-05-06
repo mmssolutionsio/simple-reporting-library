@@ -1,0 +1,7 @@
+@use "srl";
+
+.srl-title-h1 {
+  .srl-hero-video & {
+    @include srl.typography-title-h1-landing-page();
+  }
+}

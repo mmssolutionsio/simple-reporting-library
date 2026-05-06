@@ -79,13 +79,15 @@ span {
   a {
     color: srl.colors-primary-1000();
     text-decoration: underline;
+
     &:hover {
       text-decoration: none;
     }
-    &[href^="http"] {
+
+    &[target="_blank"] {
       &:after {
         @extend %srl-icon-base;
-        @include fa.content(square-arrow-up-right);
+        @include fa.content(arrow-up-right-from-square);
       }
     }
   }

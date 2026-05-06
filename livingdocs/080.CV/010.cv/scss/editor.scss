@@ -1,5 +1,10 @@
+@use "srl";
 @use "web";
 
 .srl-cv {
   display: block;
+}
+
+.srl-cv__button-container {
+  @include srl.spacer-margin-block(400);
 }

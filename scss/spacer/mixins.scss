@@ -9,27 +9,53 @@
 }
 
 @mixin margin-block($spacer) {
-  margin-block: functions.get($spacer);
+  @if system.$build == "word" {
+    margin-top: functions.get($spacer);
+    margin-bottom: functions.get($spacer);
+  } @else {
+    margin-block: functions.get($spacer);
+  }
 }
 
 @mixin margin-inline($spacer) {
-  margin-inline: functions.get($spacer);
+  @if system.$build == "word" {
+    margin-left: functions.get($spacer);
+    margin-right: functions.get($spacer);
+  } @else {
+    margin-inline: functions.get($spacer);
+  }
 }
 
 @mixin margin-top($spacer) {
-  margin-block-start: functions.get($spacer);
+  @if system.$build == "word" {
+    margin-top: functions.get($spacer);
+  } @else {
+    margin-block-start: functions.get($spacer);
+  }
 }
 
 @mixin margin-right($spacer) {
-  margin-inline-end: functions.get($spacer);
+  @if system.$build == "word" {
+    margin-right: functions.get($spacer);
+  } @else {
+    margin-inline-end: functions.get($spacer);
+  }
 }
 
 @mixin margin-bottom($spacer) {
-  margin-block-end: functions.get($spacer);
+  @if system.$build == "word" {
+    margin-bottom: functions.get($spacer);
+  } @else {
+    margin-block-end: functions.get($spacer);
+  }
 }
 
 @mixin margin-left($spacer) {
-  margin-inline-start: functions.get($spacer);
+  @if system.$build == "word" {
+    margin-left: functions.get($spacer);
+  } @else {
+    margin-inline-start: functions.get($spacer);
+  }
 }
 
 @mixin padding($spacer) {
@@ -37,27 +63,53 @@
 }
 
 @mixin padding-block($spacer) {
-  padding-block: functions.get($spacer);
+  @if system.$build == "word" {
+    padding-top: functions.get($spacer);
+    padding-bottom: functions.get($spacer);
+  } @else {
+    padding-block: functions.get($spacer);
+  }
 }
 
 @mixin padding-inline($spacer) {
-  padding-inline: functions.get($spacer);
+  @if system.$build == "word" {
+    padding-left: functions.get($spacer);
+    padding-right: functions.get($spacer);
+  } @else {
+    padding-inline: functions.get($spacer);
+  }
 }
 
 @mixin padding-top($spacer) {
-  padding-block-start: functions.get($spacer);
+  @if system.$build == "word" {
+    padding-top: functions.get($spacer);
+  } @else {
+    padding-block-start: functions.get($spacer);
+  }
 }
 
 @mixin padding-right($spacer) {
-  padding-inline-end: functions.get($spacer);
+  @if system.$build == "word" {
+    padding-right: functions.get($spacer);
+  } @else {
+    padding-inline-end: functions.get($spacer);
+  }
 }
 
 @mixin padding-bottom($spacer) {
-  padding-block-end: functions.get($spacer);
+  @if system.$build == "word" {
+    padding-bottom: functions.get($spacer);
+  } @else {
+    padding-block-end: functions.get($spacer);
+  }
 }
 
 @mixin padding-left($spacer) {
-  padding-inline-start: functions.get($spacer);
+  @if system.$build == "word" {
+    padding-left: functions.get($spacer);
+  } @else {
+    padding-inline-start: functions.get($spacer);
+  }
 }
 
 @mixin gap($spacer) {

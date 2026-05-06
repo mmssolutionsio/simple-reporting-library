@@ -15,11 +15,11 @@
   }
 
   .srl-button-icon-arrow-left-before & {
-    @include fa.icon(chevron-left);
+    @include fa.icon(arrow-left);
   }
 
   .srl-button-icon-arrow-right-after & {
-    @include fa.icon(chevron-right);
+    @include fa.icon(arrow-right);
   }
 
   .srl-button-icon-download-after & {
