@@ -1,3 +1,18 @@
+@use 'srl';
+@use "sass:map";
+
 .srl-aside-content-container {
   justify-content: space-between;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.srl-aside-content-container__aside {
+  &:before {
+    content: "";
+    display: block;
+    background: srl.colors-grey-200();
+    height: srl.system-size-unit(1pt);
+    width: srl.system-size-unit(80pt);
+  }
 }
