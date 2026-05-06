@@ -1,15 +1,29 @@
 @use "srl";
 
 .srl-image__image-container--desktop {
-  display: none;
-
-  @include srl.grid-media-up(tablet-pt) {
-    display: block;
-  }
+  display: block;
 }
 
 .srl-image__image-container--mobile {
-  @include srl.grid-media-up(tablet-pt) {
+  display: none;
+}
+
+.srl-image:has(.srl-image__image-container--mobile) {
+  .srl-image__image-container--desktop {
     display: none;
+  }
+
+  .srl-image__image-container--mobile {
+    display: block;
+  }
+
+  @include srl.grid-media-up(tablet-ls) {
+    .srl-image__image-container--desktop {
+      display: block;
+    }
+
+    .srl-image__image-container--mobile {
+      display: none;
+    }
   }
 }

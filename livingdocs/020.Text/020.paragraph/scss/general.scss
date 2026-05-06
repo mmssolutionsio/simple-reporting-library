@@ -4,6 +4,10 @@
 
 .srl-paragraph {
   @include srl.typography-paragraph();
+
+  .srl-link & {
+    @include srl.typography-link();
+  }
 }
 
 @include margins.srl-component-margin(spacing-variations.$margins);
