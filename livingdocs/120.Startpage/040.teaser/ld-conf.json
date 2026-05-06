@@ -1,0 +1,23 @@
+{
+  "name": "teaser",
+  "label": "Teaser",
+  "properties": [
+    "icon",
+    "reverse"
+  ],
+  "directives": {
+    "show-alt-text": {
+      "type": "toggle",
+      "label": "Show alt text",
+      "default": false
+    },
+    "image-mobile": {
+      "imageRatios": ["16:9"],
+      "allowOriginalRatio": false
+    },
+    "image": {
+      "imageRatios": ["16:9"],
+      "allowOriginalRatio": false
+    }
+  }
+}

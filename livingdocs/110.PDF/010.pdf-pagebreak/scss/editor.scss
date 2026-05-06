@@ -3,6 +3,7 @@
 
 .srl-pdf-pagebreak {
   text-align: center;
+  @include srl.spacer-margin-block(1600);
 }
 
 .srl-pdf-pagebreak__editor-text {

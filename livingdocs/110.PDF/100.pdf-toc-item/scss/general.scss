@@ -8,19 +8,17 @@
   border-top: srl.system-size-unit(1pt) solid srl.colors-black-1000();
   text-decoration: none;
   @include srl.typography-toc-item();
+  color: srl.colors-black-1000();
 }
 
 .srl-pdf-toc__text {
   width: calc(100% - srl.system-size-unit(24pt) - srl.spacer-get(100));
+}
 
-  &:after {
-    .srl-pdf-toc__link:not([href]) & {
-      content: "No link provided";
-      color: #FF0000;
-      display: inline-block;
-      margin-left: srl.spacer-get(100)
-    }
-  }
+.srl-pdf-toc__item:not([href]) .srl-pdf-toc__text:after {
+  content: 'No link provided';
+  color: #ff0000;
+  display: block;
 }
 
 .srl-pdf-toc__page-number {

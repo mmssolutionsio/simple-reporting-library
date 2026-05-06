@@ -1,0 +1,22 @@
+@use "srl";
+@use "web";
+
+.srl-title-image-quote__alt-text {
+  // Mobile
+  @include srl.grid-col(4);
+
+  // Mobile landscape
+  @include srl.grid-col(4, phone-ls);
+
+  // Tablet portrait
+  @include srl.grid-col(8, tablet-pt);
+
+  // Tablet landscape
+  @include srl.grid-col(6, tablet-ls);
+
+  // Desktop
+  @include srl.grid-col(6, desktop);
+
+  // Desktop large
+  @include srl.grid-col(6, desktop-large);
+}

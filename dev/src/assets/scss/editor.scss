@@ -45,6 +45,7 @@ img[src^="data:image/svg+xml"] {
   @extend %srl-grid-base;
 
   &.srl-pdf-pagebreak,
+  &.srl-pdf-columnbreak,
   &.srl-anchor {
     border-top: 1px solid #{srl.colors-primary-1000()};
     border-bottom: 1px solid #{srl.colors-primary-1000()};

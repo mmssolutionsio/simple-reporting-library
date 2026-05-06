@@ -1,0 +1,8 @@
+@use "srl";
+@use "@/assets/scss/margins";
+
+@include srl.system-add-root-style(srl-model-flex-direction, row);
+
+.srl-columns__column * {
+  width: 100%;
+}

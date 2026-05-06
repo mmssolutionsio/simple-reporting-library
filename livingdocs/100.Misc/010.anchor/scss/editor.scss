@@ -1,6 +1,10 @@
 @use 'srl';
 @use 'web';
 
+.srl-anchor {
+  @include srl.spacer-margin-block(1600);
+}
+
 .srl-anchor__text {
   @extend %srl-regular-width;
   @include srl.typography-pdf-header()

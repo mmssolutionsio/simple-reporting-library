@@ -1,0 +1,41 @@
+@use "srl";
+@use "@/assets/scss/margins";
+@use "spacing-variations";
+
+@include margins.srl-component-margin(spacing-variations.$margins);
+
+.srl-title-image-quote__title-container {
+  @extend %srl-wide-width;
+}
+
+.srl-title-image-quote__image-content-container {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / calc(var(--srl-gutter-columns) + 1);
+  row-gap: srl.spacer-get(200);
+}
+
+.srl-title-image-quote__image-container,
+.srl-title-image-quote__content-container {
+  // Mobile
+  @include srl.grid-col(4);
+
+  // Mobile landscape
+  @include srl.grid-col(4, phone-ls);
+
+  // Tablet portrait
+  @include srl.grid-col(8, tablet-pt);
+
+  // Tablet landscape
+  @include srl.grid-col(6, tablet-ls);
+
+  // Desktop
+  @include srl.grid-col(6, desktop);
+
+  // Desktop large
+  @include srl.grid-col(6, desktop-large);
+
+  @include srl.grid-media-up(tablet-ls) {
+    grid-row: 1;
+  }
+}

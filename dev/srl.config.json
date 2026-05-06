@@ -118,6 +118,27 @@
         }
       },
       {
+        "name": "title-h1-landing-page",
+        "font-family": "Inter",
+        "font-size": 40,
+        "line-height": 1.25,
+        "font-style": "normal",
+        "font-weight": 400,
+        "letter-spacing": 0,
+        "media": {
+          "up": {
+            "tablet-pt": {
+              "font-size": 60,
+              "line-height": 1.26
+            },
+            "desktop": {
+              "font-size": 80,
+              "line-height": 1.2
+            }
+          }
+        }
+      },
+      {
         "name": "title-h1-pdf",
         "font-family": "Inter",
         "font-size": "16pt",
@@ -149,6 +170,31 @@
             "tablet-pt": {
               "font-size": 28,
               "line-height": 1.5
+            }
+          }
+        }
+      },
+      {
+        "name": "title-h2-landing-page",
+        "font-family": "Inter",
+        "font-size": 30,
+        "line-height": 1.5,
+        "font-style": "normal",
+        "font-weight": 600,
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "28pt",
+            "line-height": 0.875
+          },
+          "up": {
+            "tablet-pt": {
+              "font-size": 36,
+              "line-height": 1.5
+            },
+            "desktop": {
+              "font-size": 56,
+              "line-height": 1.46
             }
           }
         }
@@ -275,7 +321,7 @@
       {
         "name": "paragraph",
         "font-family": "Inter",
-        "font-size": 14,
+        "font-size": 16,
         "line-height": 1.5,
         "font-style": "normal",
         "font-weight": 400,
@@ -287,7 +333,7 @@
           },
           "up": {
             "tablet-pt": {
-              "font-size": 16
+              "font-size": 18
             }
           }
         }
@@ -515,7 +561,7 @@
       {
         "name": "button-text",
         "font-family": "Inter",
-        "font-size": 12,
+        "font-size": 16,
         "line-height": 1,
         "font-style": "normal",
         "font-weight": 400,
@@ -527,7 +573,7 @@
           },
           "up": {
             "tablet-pt": {
-              "font-size": 14
+              "font-size": 18
             }
           }
         }
@@ -979,6 +1025,14 @@
         "media": {
           "print": {
             "size": "48pt"
+          }
+        }
+      },
+      "3200": {
+        "size": 256,
+        "media": {
+          "print": {
+            "size": "96pt"
           }
         }
       }

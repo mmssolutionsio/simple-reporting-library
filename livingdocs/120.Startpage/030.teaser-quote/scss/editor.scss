@@ -1,0 +1,6 @@
+@use "srl";
+@use "web";
+
+.srl-teaser-quote__alt-text {
+  grid-column: content-start / content-end;
+}

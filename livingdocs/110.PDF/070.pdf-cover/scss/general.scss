@@ -20,3 +20,6 @@ $page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
   justify-content: space-between;
 }
 
+.srl-pdf-cover__logo {
+  max-width: 118pt;
+}

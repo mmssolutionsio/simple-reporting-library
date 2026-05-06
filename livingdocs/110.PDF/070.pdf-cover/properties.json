@@ -7,8 +7,8 @@
         "caption": "Normal"
       },
       {
-        "caption": "Black",
-        "value": "srl-cover--font-color-black"
+        "caption": "White",
+        "value": "srl-color-white-1000"
       },
       {
         "caption": "Primary",
