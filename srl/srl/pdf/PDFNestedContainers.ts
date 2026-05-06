@@ -2,7 +2,7 @@ export interface PDFNestedContainerMarkerConfig {
   selector?: string
 }
 
-export default class PDFNestedContainers {
+export class PDFNestedContainers {
   private containers: NodeListOf<HTMLElement>
 
   private excludedClasses = ['srl-grid', 'srl-linkable', 'srl-nested-container']
@@ -106,3 +106,5 @@ export default class PDFNestedContainers {
     return relevant || null
   }
 }
+
+export default PDFNestedContainers
