@@ -1,1 +1,5 @@
 @use 'srl';
+
+.srl-aside-content-container__aside {
+  @extend %srl-decoration-line;
+}

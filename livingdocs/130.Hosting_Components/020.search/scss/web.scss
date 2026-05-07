@@ -96,6 +96,10 @@ Search results
   @include srl.spacer-margin-top(200);
 }
 
+.srl-search-results__nav + * {
+  @include srl.spacer-margin-top(400);
+}
+
 .srl-search-results__list {
   list-style: none;
   margin: 0;

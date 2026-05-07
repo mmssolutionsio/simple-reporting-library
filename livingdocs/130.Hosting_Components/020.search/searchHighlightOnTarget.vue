@@ -242,5 +242,8 @@ onBeforeUnmount(() => {
 .searchTarget {
   background-color: srl.colors-primary-1000();
   color: srl.colors-white-1000();
+  padding: srl.spacer-get(50);
+  text-box-trim: trim-both;
+  border-radius: srl.spacer-get(50);
 }
 </style>

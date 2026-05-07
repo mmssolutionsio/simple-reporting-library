@@ -5,9 +5,11 @@
 }
 
 .srl-quote__name {
+  display: block;
   @include srl.typography-quote-name();
 }
 
 .srl-quote__position {
+  display: block;
   @include srl.typography-quote-position();
 }
