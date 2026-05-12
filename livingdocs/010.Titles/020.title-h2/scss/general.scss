@@ -32,4 +32,5 @@
 
 .srl-title-h2__number-text-container {
   display: flex;
+  @include srl.spacer-gap(200);
 }

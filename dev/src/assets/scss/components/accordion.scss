@@ -90,6 +90,26 @@ $transition-duration: .3s;
       margin-inline: 0;
     }
 
+    &.srl-title-h2 {
+      [class*="-number"],
+      [class*="-text"]
+      {
+        @include srl.typography-title-h3();
+      }
+    }
+    &.srl-title-h3 {
+      [class*="-number"],
+      [class*="-text"] {
+        @include srl.typography-title-h4();
+      }
+    }
+    &.srl-title-h4 {
+      [class*="-number"],
+      [class*="-text"] {
+        @include srl.typography-title-h5();
+      }
+    }
+
     [class*="-number"],
     [class*="-text"]
     {

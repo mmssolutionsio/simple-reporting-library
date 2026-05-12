@@ -1,6 +1,6 @@
 {
   "name": "aside-content-container",
-  "label": "Aside / Content container",
+  "label": "Aside content container",
   "properties": ["sticky", "pdf-spacer"],
   "directives": {
     "aside": {

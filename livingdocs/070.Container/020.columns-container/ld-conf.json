@@ -1,6 +1,6 @@
 {
   "name": "columns-container",
-  "label": "Columns container",
+  "label": "Layout column container",
   "properties": ["width-reduced", "vertical-alignment", "pdf-spacer"],
   "directives": {
     "show-column-3": {

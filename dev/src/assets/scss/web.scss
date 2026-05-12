@@ -1,5 +1,5 @@
 @use "srl";
-@use "./components/note/accordion";
+@use "./components/accordion";
 
 @include srl.system-add-root-style('srl-header-height', srl.system-size-unit(68));
 @include srl.system-add-root-style('srl-header-height', srl.system-size-unit(101), 'tablet-ls', 'up');
