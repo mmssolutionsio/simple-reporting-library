@@ -8,6 +8,7 @@
 
 .srl-title-h3__number-text-container {
   display: flex;
+  @include srl.spacer-gap(200);
 }
 
 @include margins.srl-component-margin(spacing-variations.$margins);
