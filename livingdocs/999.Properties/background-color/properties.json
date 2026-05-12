@@ -1,0 +1,23 @@
+{
+  "background-color": {
+    "label": "Background color",
+    "type": "select",
+    "options": [
+      {
+        "caption": "None"
+      },
+      {
+        "caption": "Primary",
+        "value": "srl-bg-primary-1000"
+      },
+      {
+        "caption": "Secondary",
+        "value": "srl-bg-secondary-1000"
+      },
+      {
+        "caption": "Tertiary",
+        "value": "srl-bg-tertiary-1000"
+      }
+    ]
+  }
+}
