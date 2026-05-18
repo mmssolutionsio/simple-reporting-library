@@ -1,5 +1,4 @@
 @use 'srl';
-@use "@/assets/scss/margins";
 @use "spacing-variations";
 
 .srl-title-h4 {
@@ -11,4 +10,4 @@
   @include srl.spacer-gap(200);
 }
 
-@include margins.srl-component-margin(spacing-variations.$margins);
+@include srl.spacer-component-margin(spacing-variations.$margins);
