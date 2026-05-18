@@ -66,6 +66,17 @@ img {
 }
 
 /*
+  Subscripts and superscripts
+*/
+.subscript,
+sub,
+.superscript,
+sup {
+  line-height: initial;
+}
+
+
+/*
   Page breaks for PDF
 */
 .srl-chapter,

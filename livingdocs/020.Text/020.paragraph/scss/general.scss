@@ -4,7 +4,7 @@
 .srl-paragraph {
   @include srl.typography-paragraph();
 
-  .srl-link & {
+  .srl-aside-content-container__aside & {
     @include srl.typography-link();
   }
 }

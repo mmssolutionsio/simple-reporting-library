@@ -3,3 +3,11 @@
 .srl-aside-content-container {
   gap: srl.spacer-get(200);
 }
+
+.srl-aside-content-container__aside {
+  order: 2;
+
+  @include srl.grid-media-up(tablet-ls) {
+    order: unset;
+  }
+}

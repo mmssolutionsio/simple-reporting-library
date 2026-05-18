@@ -13,6 +13,7 @@ $page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
 }
 
 .srl-image__image-container {
+  .srl-nested-container &,
   .srl-full-width & {
     width: 100%;
   }
