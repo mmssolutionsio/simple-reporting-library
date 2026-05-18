@@ -853,6 +853,10 @@
         "color": "#F05000"
       },
       {
+        "name": "on-primary-1000",
+        "color": "#ffffff"
+      },
+      {
         "name": "secondary-200",
         "color": "#ccd1e6"
       },
@@ -872,7 +876,10 @@
         "name": "secondary-1000",
         "color": "#001987"
       },
-
+      {
+        "name": "on-secondary-1000",
+        "color": "#ffffff"
+      },
       {
         "name": "tertiary-200",
         "color": "#ccd1e7"
@@ -892,6 +899,10 @@
       {
         "name": "tertiary-1000",
         "color": "#001987"
+      },
+      {
+        "name": "on-tertiary-1000",
+        "color": "#ffffff"
       },
       {
         "name": "yellow-200",

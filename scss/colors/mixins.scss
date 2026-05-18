@@ -16,6 +16,9 @@
           background-color: functions.get($colorName);
           @if map.has-key(variables.$colors, $onKey) {
             color: functions.get($onKey);
+            * {
+              color: inherit;
+            }
           }
         }
       }
