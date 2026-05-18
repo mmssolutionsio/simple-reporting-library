@@ -1,5 +1,4 @@
 @use "srl";
-@use "@/assets/scss/margins";
 @use "spacing-variations";
 
 .srl-hero-video {
@@ -10,7 +9,7 @@
   }
 }
 
-@include margins.srl-component-margin(spacing-variations.$margins);
+@include srl.spacer-component-margin(spacing-variations.$margins);
 
 .srl-hero-video__video-container {
   position: relative;

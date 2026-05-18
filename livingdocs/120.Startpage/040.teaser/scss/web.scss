@@ -1,12 +1,11 @@
 @use "srl";
-@use "@/assets/scss/margins";
 @use "spacing-variations";
 
 .srl-teaser {
   @extend %srl-breakout-grid-base;
 }
 
-@include margins.srl-component-margin(spacing-variations.$margins);
+@include srl.spacer-component-margin(spacing-variations.$margins);
 
 .srl-teaser__image-container {
   @include srl.grid-media-up(desktop) {

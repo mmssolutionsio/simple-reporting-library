@@ -1,6 +1,5 @@
 @use 'srl';
 @use 'sass:map';
-@use "@/assets/scss/margins";
 @use "spacing-variations";
 
 $number-width: srl.system-size-unit(map.get(srl.$meta, footnote, number-width));
@@ -15,7 +14,7 @@ $number-width: srl.system-size-unit(map.get(srl.$meta, footnote, number-width));
   @include srl.typography-footnote-text();
 }
 
-@include margins.srl-component-margin(spacing-variations.$margins);
+@include srl.spacer-component-margin(spacing-variations.$margins);
 
 .srl-footnote__key,
 .srl-footnote__number {

@@ -1,6 +1,5 @@
 @use 'srl';
 @use "sass:map";
-@use "@/assets/scss/margins";
 @use "spacing-variations";
 
 $quote-open: map.get(srl.$meta, quote, quote-open);
@@ -11,7 +10,7 @@ $quote-close: map.get(srl.$meta, quote, quote-close);
   row-gap: srl.spacer-get(400);
 }
 
-@include margins.srl-component-margin(spacing-variations.$margins);
+@include srl.spacer-component-margin(spacing-variations.$margins);
 
 .srl-quote__img {
   border-radius: 50%;
