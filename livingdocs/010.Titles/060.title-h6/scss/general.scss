@@ -3,6 +3,7 @@
 @use "spacing-variations";
 
 .srl-title-h6 {
+  color: srl.colors-grey-600();
   @include srl.typography-title-h6();
 }
 

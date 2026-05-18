@@ -24,6 +24,13 @@ $table-border-bold: map.get(srl.$meta, table, border, bold);
 
   & > div {
     @extend %srl-grid-base;
+
+    .srl-nested-container & {
+      width: 100%;
+      display: block;
+      padding: 0;
+      margin: 0;
+    }
   }
 }
 
