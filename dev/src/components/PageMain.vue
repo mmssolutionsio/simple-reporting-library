@@ -15,10 +15,12 @@ const props = defineProps<{
 <style lang="scss" scoped>
 @use 'srl';
 #srl-page-main {
-  padding-top: srl.system-root-style(srl-header-height);
+  padding-top: calc( srl.system-root-style(srl-header-height) + srl.spacer-get(800) );
   min-height: 100dvh;
-  .srl-page__wrap:not([class*='home']) & {
-    padding-top: calc( srl.system-root-style(srl-header-height) + srl.spacer-get(800) );
+  &:has(.srl-article-root [class*='hero']:first-child),
+  &:has(.srl-article-root [class*='background']:first-child)
+  {
+    padding-top: srl.system-root-style(srl-header-height);
   }
 }
 </style>
