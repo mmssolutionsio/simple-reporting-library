@@ -38,11 +38,12 @@ export const baseComponentsToInstall = [
   '130.Hosting_Components/010.download-center',
   '130.Hosting_Components/020.search',
   '999.Properties/alignment',
+  '999.Properties/font-color',
+  '999.Properties/grid',
   '999.Properties/hide-quote-characters',
   '999.Properties/icon',
   '999.Properties/pdf-spacer',
   '999.Properties/reverse',
-  '999.Properties/grid',
 ];
 
 export const nsWowInternalLddUrl = 'https://nswow-ld.nswow.ch/designs';
