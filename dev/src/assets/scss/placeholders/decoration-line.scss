@@ -1,0 +1,32 @@
+@use "srl/system";
+@use "srl/colors";
+@use "srl/spacer";
+
+%srl-decoration-line {
+  padding-top: spacer.get(200);
+  position: relative;
+
+  &:before {
+    content: "";
+    display: block;
+    background: colors.grey-200();
+    position: absolute;
+    top: 0;
+    left: 0;
+    @if system.$build == "pdf" {
+      height: system.size-unit(1pt);
+      width: system.size-unit(80pt);
+    } @else {
+      height: system.size-unit(1);
+      width: system.size-unit(80);
+    }
+  }
+}
+
+%srl-decoration-line-reset {
+  padding-top: 0;
+
+  &:before {
+    display: none;
+  }
+}
