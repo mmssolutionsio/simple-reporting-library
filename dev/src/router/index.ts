@@ -48,7 +48,7 @@ const router = createRouter({
           resolve({
             top: savedPosition.top,
             left: savedPosition.left,
-            behavior: 'instant'
+            behavior: 'smooth'
           })
         }
 
