@@ -13,6 +13,7 @@ import {
 import { build, ddev, map, mapJs } from './scripts/build.js';
 import { beaver } from './scripts/beaver.js';
 import prepare from './scripts/prepare.js';
+import { migrateProject } from './scripts/migrate/project.js';
 
 const packageJson = JSON.parse(
   await readFile(new URL('./package.json', import.meta.url)),
@@ -83,7 +84,7 @@ commander
   .option('-c, --customer <customer>', 'The customer to build for')
   .option(
     '-t, --target <targets>',
-    'Comma separated targets: app,pdf,word,xbrl,ldd (default: all)'
+    'Comma separated targets: app,pdf,word,xbrl,ldd (default: all)',
   )
   .action(async (version, options) => {
     await build(version, options);
@@ -110,6 +111,18 @@ commander
   )
   .action(async () => {
     await mapJs();
+  });
+
+commander
+  .command('migrate')
+  .description('Migrate legacy project components, SCSS and Livingdocs config')
+  .option('-s, --source <source>', 'Migration source folder', 'migration')
+  .option('--dry-run', 'Print the migration plan without writing files')
+  .option('-f, --force', 'Overwrite existing generated files')
+  .option('--no-clean', 'Keep existing livingdocs files before migration')
+  .option('--no-map', 'Skip running the SRL mapper after writing files')
+  .action(async (options) => {
+    await migrateProject(options);
   });
 
 commander
