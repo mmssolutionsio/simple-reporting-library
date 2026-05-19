@@ -66,7 +66,7 @@ const Translate = {
     localStorage.setItem('user-locale', newLocale)
   },
 
-  routeMiddleware(
+  async routeMiddleware(
     to: RouteLocationNormalized,
     _from: RouteLocationNormalized,
     next: NavigationGuardNext

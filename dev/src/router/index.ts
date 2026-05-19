@@ -34,8 +34,31 @@ if (import.meta.env.DEV) {
 
 const router = createRouter({
   history: createWebHistory(import.meta.BASE_URL),
-  scrollBehavior() {
-    window.scrollTo(0, 0)
+  scrollBehavior(to, from, savedPosition) {
+    return new Promise( resolve => {
+      setTimeout(() => {
+        if (to.hash) {
+          resolve({
+            el: to.hash,
+            behavior: 'smooth'
+          })
+        }
+
+        if (savedPosition) {
+          resolve({
+            top: savedPosition.top,
+            left: savedPosition.left,
+            behavior: 'instant'
+          })
+        }
+
+        resolve({
+          top: 0,
+          left: 0,
+          behavior: 'instant'
+        })
+      }, 100)
+    })
   },
   routes: routes
 })
