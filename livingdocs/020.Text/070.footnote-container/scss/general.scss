@@ -1,4 +1,5 @@
 @use "srl";
+@use "spacing-variations";
 
 .srl-footnote-container {
   overflow: hidden;
@@ -11,3 +12,5 @@
     }
   }
 }
+
+@include srl.spacer-component-margin(spacing-variations.$margins);
