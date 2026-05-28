@@ -148,6 +148,8 @@
         }
       } @else {
         #{$from} + #{$to},
+        #{$from}-first + #{$to},
+        #{$from}-first + #{$to}-first,
         #{$from} + #{$to}-first,
         #{$from}-last + #{$to},
         #{$from}-last + #{$to}-first {

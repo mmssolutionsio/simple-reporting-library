@@ -521,8 +521,8 @@
       "identifier": "wp_cf_excerpt",
       "type": "text",
       "matches": [
-        "lead.text",
-        "paragraph.text"
+        "lead.lead",
+        "paragraph.paragraph"
       ]
     },
     {
