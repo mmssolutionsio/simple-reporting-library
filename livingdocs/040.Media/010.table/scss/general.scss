@@ -44,6 +44,13 @@ $table-border-bold: map.get(srl.$meta, table, border, bold);
 /*
   Has to be wrapped so it doesn't interfere with the local dev tools
 */
+
+table {
+  .srl-table.responsive-table & {
+    table-layout: auto;
+  }
+}
+
 .srl-table {
   table {
     border-collapse: collapse;
@@ -51,10 +58,6 @@ $table-border-bold: map.get(srl.$meta, table, border, bold);
     min-width: 100%;
     margin: 0;
     table-layout: fixed;
-
-    .responsive-table & {
-      table-layout: auto;
-    }
 
     @-moz-document url-prefix() {
       border-collapse: inherit;
