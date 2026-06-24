@@ -45,5 +45,12 @@
   "pagePrev": "Previous page",
   "pageNext": "Next page",
   "toTop": "Back to top",
-  "modalClose": "Close window"
+  "modalClose": "Close window",
+  "components": {
+    "kfc": {
+      "print": "Print",
+      "selectKeyFigures": "Select key figures",
+      "selectTimePeriod": "Select time period"
+    }
+  }
 }
