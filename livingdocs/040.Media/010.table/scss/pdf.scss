@@ -13,39 +13,45 @@ $table-cells-width-in-mm: map.get(srl.$meta, table, cells-width-in-mm);
     @extend %srl-grid-base;
   }
 
-  table {
-    width: fit-content;
-    min-width: unset;
+  .srl-table {
+    table {
+      width: fit-content;
+      min-width: unset;
+    }
   }
 }
 
-tr {
-  &[class*="pagebreak"] {
-    break-after: always;
+.srl-table {
+  tr {
+    &[class*="pagebreak"] {
+      break-after: always;
+    }
+  }
+
+  th,
+  td {
+    padding: (
+            srl.spacer-get(map.get(srl.$meta, table, padding, regular-pdf, top))
+            srl.spacer-get(map.get(srl.$meta, table, padding, regular-pdf, right))
+            srl.spacer-get(map.get(srl.$meta, table, padding, regular-pdf, bottom))
+            srl.spacer-get(map.get(srl.$meta, table, padding, regular-pdf, left))
+    );
   }
 }
 
 th,
 td {
-  padding: (
-          srl.spacer-get(map.get(srl.$meta, table, padding, regular-pdf, top))
-          srl.spacer-get(map.get(srl.$meta, table, padding, regular-pdf, right))
-          srl.spacer-get(map.get(srl.$meta, table, padding, regular-pdf, bottom))
-          srl.spacer-get(map.get(srl.$meta, table, padding, regular-pdf, left))
-  );
-
   /*
   PDF only Font Sizes
   */
-  .srl-pdf-font-size-small & {
+  .srl-table.srl-pdf-font-size-small & {
     font-size: srl.typography-get-font-size('table-cell-small-regular');
   }
-
 
   /*
   PDF only Paddings
   */
-  .srl-pdf-padding-tiny & {
+  .srl-table.srl-pdf-padding-tiny & {
     padding: (
             srl.spacer-get(map.get(srl.$meta, table, padding, tiny, top))
             srl.spacer-get(map.get(srl.$meta, table, padding, tiny, right))
@@ -54,7 +60,7 @@ td {
     );
   }
 
-  .srl-pdf-padding-small & {
+  .srl-table.srl-pdf-padding-small & {
     padding: (
             srl.spacer-get(map.get(srl.$meta, table, padding, small, top))
             srl.spacer-get(map.get(srl.$meta, table, padding, small, right))
