@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import SrlPageCustomDialog from '@/Dialog.vue';
 import Autoload from '@/Autoload.ts';
 
@@ -7,17 +7,23 @@ const props = withDefaults(
   defineProps<{
     header?: string;
     content?: string;
+    initialState?: boolean;
   }>(),
   {
     header: '',
     content: '',
+    initialState: false
   },
 );
+
+const emit = defineEmits(['open', 'close']);
 
 const $el = ref<HTMLDialogElement | null>(null);
 const header = ref<string>(props.header);
 const content = ref<string>(props.content);
-const dialogState = ref<boolean>(false);
+const dialogState = ref<boolean>(props.initialState);
+
+
 function setDialogContent(template: string) {
   content.value = template;
 }
@@ -26,6 +32,13 @@ function setDialogContentAndOpen(template: string) {
   setDialogContent(template);
   open();
 }
+
+watch(
+  dialogState,
+  to => {
+    emit(to ? 'open' : 'close')
+  }
+)
 
 function open() {
   dialogState.value = true;
@@ -60,11 +73,11 @@ defineExpose({
 
 <template>
   <dialog
-      ref="$el"
-      id="srl-page__dialog"
-      class="srl-page__dialog"
-      aria-modal="true"
-      @click.stop="close"
+    ref="$el"
+    id="srl-page__dialog"
+    class="srl-page__dialog"
+    aria-modal="true"
+    @click.stop="close"
   >
     <SrlAriaTabChain @click.stop>
       <SrlPageCustomDialog :header="header" :content="content" @close="close">

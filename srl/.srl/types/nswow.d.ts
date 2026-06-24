@@ -34,6 +34,7 @@ declare global {
 
   type NsWowConfig = {
     locale: string;
+    base: string;
     settings: NsWowSettings;
     articles: NsWowArticles;
     menus: {

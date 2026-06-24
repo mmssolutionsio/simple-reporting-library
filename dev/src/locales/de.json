@@ -45,5 +45,12 @@
   "pagePrev": "Vorherige Seite",
   "pageNext": "Nächste Seite",
   "toTop": "An den Seitenanfang",
-  "modalClose": "Fenster schließen"
+  "modalClose": "Fenster schließen",
+  "components": {
+    "kfc": {
+      "print": "Drucken",
+      "selectKeyFigures": "Kennzahlen auswählen",
+      "selectTimePeriod": "Zeitraum auswählen"
+    }
+  }
 }

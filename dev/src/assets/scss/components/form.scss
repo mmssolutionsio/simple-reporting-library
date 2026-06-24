@@ -1,0 +1,30 @@
+@use "srl";
+@use "srl/fa";
+
+.srl-checkbox {
+  display: flex;
+  @include srl.spacer-gap(100);
+  align-items: flex-start;
+  justify-content: flex-start;
+  cursor: pointer;
+  input[type="checkbox"] {
+    display: none;
+  }
+  &:before {
+    @include fa.base();
+    @include fa.content(circle-x);
+    @include fa.size(20);
+    display: block;
+    text-align: center;
+    width: srl.system-size-unit(24);
+    transform: translateY(srl.system-size-unit(12));
+    color: red;
+  }
+
+  &:has(input[type="checkbox"]:checked) {
+    &:before {
+      @include fa.content(square-check);
+      color: green;
+    }
+  }
+}

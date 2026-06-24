@@ -104,13 +104,13 @@ $animation-duration: .3s;
   --srl-button-height: auto;
   --srl-button-brd-size: 0;
   --srl-button-padding-inline: 0;
-  --srl-button-hover-color: inherit;
+  --srl-button-hover-color: colors.primary-1000();
   --srl-button-hover-bg-color: transparent;
   --srl-button-hover-brd-color: transparent;
-  --srl-button-focus-color: inherit;
+  --srl-button-focus-color: colors.secondary-1000();
   --srl-button-focus-bg-color: transparent;
   --srl-button-focus-brd-color: transparent;
-  --srl-button-active-color: inherit;
+  --srl-button-active-color: colors.tertiary-1000();
   --srl-button-active-bg-color: transparent;
   --srl-button-active-brd-color: transparent;
 }

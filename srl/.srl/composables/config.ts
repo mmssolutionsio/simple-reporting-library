@@ -41,8 +41,20 @@
 import { ref, type Ref } from 'vue';
 import { objectDeepAssign } from '../utils/object.ts'
 
+function getBaseHrefOrDefault(defaultValue = '/'): string {
+  const baseEl = document.head.querySelector('base');
+  const href = (baseEl?.getAttribute('href') || defaultValue).trim();
+
+  if (!href) {
+    return '/';
+  }
+
+  return href.endsWith('/') ? href : `${href}/`;
+}
+
 const config = ref<NsWowConfig>({
   locale: 'de',
+  base: getBaseHrefOrDefault(),
   settings: {
     languages: ['de'],
     defaultLanguage: 'de',
