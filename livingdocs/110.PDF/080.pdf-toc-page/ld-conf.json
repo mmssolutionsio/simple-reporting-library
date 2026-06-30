@@ -6,7 +6,8 @@
     "toc": {
       "allowedChildren": [
         "pdf-toc-item-title",
-        "pdf-toc-item"
+        "pdf-toc-item",
+        "pdf-pagebreak"
       ],
       "defaultComponents": {
         "paragraph": "pdf-toc-item"

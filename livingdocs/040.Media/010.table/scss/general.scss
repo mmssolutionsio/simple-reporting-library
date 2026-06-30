@@ -71,16 +71,11 @@ table {
     */
     @include srl.typography-table-cell-regular();
     padding: (
-            srl.spacer-get(map.get(srl.$meta, table, padding, regular, top))
-            srl.spacer-get(map.get(srl.$meta, table, padding, regular, right))
-            srl.spacer-get(map.get(srl.$meta, table, padding, regular, bottom))
-            srl.spacer-get(map.get(srl.$meta, table, padding, regular, left))
+            srl.spacer-get(map.get(srl.$meta, table, padding, regular, top)) srl.spacer-get(map.get(srl.$meta, table, padding, regular, right)) srl.spacer-get(map.get(srl.$meta, table, padding, regular, bottom)) srl.spacer-get(map.get(srl.$meta, table, padding, regular, left))
     );
     vertical-align: #{map.get(srl.$meta, table, vertical-align)};
     border-bottom: (
-            srl.system-root-style(srl-table-border-regular-width)
-            map.get($table-border-regular, style)
-            srl.colors-get(map.get($table-border-regular, color))
+            srl.system-root-style(srl-table-border-regular-width) map.get($table-border-regular, style) srl.colors-get(map.get($table-border-regular, color))
     );
 
     /*
@@ -122,33 +117,25 @@ table {
     */
     &[class*='head'] {
       border-bottom: (
-              srl.system-root-style(srl-table-border-bold-width)
-              map.get($table-border-bold, style)
-              srl.colors-get(map.get($table-border-bold, color))
+              srl.system-root-style(srl-table-border-bold-width) map.get($table-border-bold, style) srl.colors-get(map.get($table-border-bold, color))
       );
     }
 
     &[class*='linetop'] {
       border-top: (
-              srl.system-root-style(srl-table-border-regular-width)
-              map.get($table-border-regular, style)
-              srl.colors-get(map.get($table-border-regular, color))
+              srl.system-root-style(srl-table-border-regular-width) map.get($table-border-regular, style) srl.colors-get(map.get($table-border-regular, color))
       );
     }
 
     &[class*='blinetop'] {
       border-top: (
-              srl.system-root-style(srl-table-border-bold-width)
-              map.get($table-border-bold, style)
-              srl.colors-get(map.get($table-border-bold, color))
+              srl.system-root-style(srl-table-border-bold-width) map.get($table-border-bold, style) srl.colors-get(map.get($table-border-bold, color))
       );
     }
 
     &[class*='nolinetop'] {
       border-top: (
-              srl.system-root-style(srl-table-border-regular-width)
-              map.get($table-border-regular, style)
-              transparent
+              srl.system-root-style(srl-table-border-regular-width) map.get($table-border-regular, style) transparent
       );
 
       &[class*='head'] {
@@ -158,25 +145,19 @@ table {
 
     &[class*='linebottom'] {
       border-bottom: (
-              srl.system-root-style(srl-table-border-regular-width)
-              map.get($table-border-regular, style)
-              srl.colors-get(map.get($table-border-regular, color))
+              srl.system-root-style(srl-table-border-regular-width) map.get($table-border-regular, style) srl.colors-get(map.get($table-border-regular, color))
       );
     }
 
     &[class*='blinebottom'] {
       border-bottom: (
-              srl.system-root-style(srl-table-border-bold-width)
-              map.get($table-border-bold, style)
-              srl.colors-get(map.get($table-border-bold, color))
+              srl.system-root-style(srl-table-border-bold-width) map.get($table-border-bold, style) srl.colors-get(map.get($table-border-bold, color))
       );
     }
 
     &[class*='nolinebottom'] {
       border-bottom: (
-              srl.system-root-style(srl-table-border-regular-width)
-              map.get($table-border-regular, style)
-              transparent
+              srl.system-root-style(srl-table-border-regular-width) map.get($table-border-regular, style) transparent
       );
 
       &[class*="head"] {
@@ -186,49 +167,37 @@ table {
 
     &[class*='lineleft'] {
       border-left: (
-              srl.system-root-style(srl-table-border-regular-width)
-              map.get($table-border-regular, style)
-              srl.colors-get(map.get($table-border-regular, color))
+              srl.system-root-style(srl-table-border-regular-width) map.get($table-border-regular, style) srl.colors-get(map.get($table-border-regular, color))
       );
     }
 
     &[class*='blineleft'] {
       border-left: (
-              srl.system-root-style(srl-table-border-bold-width)
-              map.get($table-border-bold, style)
-              srl.colors-get(map.get($table-border-bold, color))
+              srl.system-root-style(srl-table-border-bold-width) map.get($table-border-bold, style) srl.colors-get(map.get($table-border-bold, color))
       );
     }
 
     &[class*='nolineleft'] {
       border-left: (
-              srl.system-root-style(srl-table-border-regular-width)
-              map.get($table-border-regular, style)
-              transparent
+              srl.system-root-style(srl-table-border-regular-width) map.get($table-border-regular, style) transparent
       );
     }
 
     &[class*='lineright'] {
       border-right: (
-              srl.system-root-style(srl-table-border-regular-width)
-              map.get($table-border-regular, style)
-              srl.colors-get(map.get($table-border-regular, color))
+              srl.system-root-style(srl-table-border-regular-width) map.get($table-border-regular, style) srl.colors-get(map.get($table-border-regular, color))
       );
     }
 
     &[class*='blineright'] {
       border-right: (
-              srl.system-root-style(srl-table-border-bold-width)
-              map.get($table-border-bold, style)
-              srl.colors-get(map.get($table-border-bold, color))
+              srl.system-root-style(srl-table-border-bold-width) map.get($table-border-bold, style) srl.colors-get(map.get($table-border-bold, color))
       );
     }
 
     &[class*='nolineright'] {
       border-right: (
-              srl.system-root-style(srl-table-border-regular-width)
-              map.get($table-border-regular, style)
-              transparent
+              srl.system-root-style(srl-table-border-regular-width) map.get($table-border-regular, style) transparent
       );
     }
 

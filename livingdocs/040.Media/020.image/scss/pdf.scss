@@ -24,4 +24,9 @@ $page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
     width: 210mm;
     min-width: 210mm;
   }
+
+  .srl-pdf-landscape-container .srl-full-width & {
+    width: 297mm;
+    min-width: 297mm;
+  }
 }
