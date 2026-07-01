@@ -1,5 +1,9 @@
 @use 'srl';
 
+body {
+  font-family: 'Arial', sans-serif;
+}
+
 .srl-chapter,
 .srl-article {
   page-break-after: always;
