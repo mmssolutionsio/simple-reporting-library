@@ -1,0 +1,10 @@
+@use "srl";
+@use "web";
+
+.srl-pdf-chapter-cover {
+  margin-inline: auto;
+}
+
+.srl-pdf-chapter-cover {
+  background-color: srl.colors-primary-1000();
+}

@@ -138,6 +138,22 @@
         }
       },
       {
+        "name": "title-h1-chapter-cover",
+        "font-family": "Inter",
+        "font-size": 72,
+        "line-height": 1.2,
+        "font-style": "normal",
+        "font-weight": 500,
+        "color": "white-1000",
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "81pt",
+            "line-height": 1
+          }
+        }
+      },
+      {
         "name": "title-h1-pdf",
         "font-family": "Inter",
         "font-size": "16pt",
