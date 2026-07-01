@@ -1,4 +1,19 @@
 @use 'srl';
+@use 'sass:map';
+
+$page-margin-top: srl.system-size-unit(map.get(srl.$meta, pdf, margin, top));
+$page-margin-right: srl.system-size-unit(map.get(srl.$meta, pdf, margin, right));
+$page-margin-bottom: srl.system-size-unit(map.get(srl.$meta, pdf, margin, bottom));
+$page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
+
+@page {
+  margin: (
+          $page-margin-top
+          $page-margin-right
+          $page-margin-bottom
+          $page-margin-left
+  );
+}
 
 body {
   font-family: 'Arial', sans-serif;
