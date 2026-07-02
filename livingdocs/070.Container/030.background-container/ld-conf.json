@@ -1,4 +1,7 @@
 {
   "name": "background-container",
-  "label": "Background container"
+  "label": "Background container",
+  "properties": [
+    "background-color"
+  ]
 }
