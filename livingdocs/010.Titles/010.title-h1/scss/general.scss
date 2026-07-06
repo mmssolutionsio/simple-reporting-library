@@ -1,4 +1,5 @@
 @use 'srl';
+@use "spacing-variations";
 
 .srl-title-h1 {
   @include srl.typography-title-h1();

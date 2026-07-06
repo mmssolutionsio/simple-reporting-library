@@ -8,11 +8,11 @@
       },
       {
         "caption": "Styling from title h5",
-        "value": "srl-title-h5"
+        "value": "srl-title-h5 srl-margin-group-title-h5-h6"
       },
       {
         "caption": "Styling from title h6",
-        "value": "srl-title-h6"
+        "value": "srl-title-h6 srl-margin-group-title-h5-h6"
       }
     ]
   }

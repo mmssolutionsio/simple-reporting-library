@@ -975,14 +975,14 @@
           "all": 200,
           "background-container": 1600,
           "title-h2": 800,
+          "title-h3": 800,
           "image": 800,
           "video": 800,
           "quote": 800,
+          "title-h4": 400,
           "table": 400,
           "signature": 400,
-          "button-container": 400,
-          "title-h3": 400,
-          "title-h4": 400
+          "button-container": 400
         },
         "list-item": {
           "all": 100

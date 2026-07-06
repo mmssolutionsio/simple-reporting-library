@@ -1,7 +1,4 @@
 $margins: (
-  ('.srl-cv-time-span', '*'): 200,
-  ('.srl-cv-time-span', '.srl-cv-time-span'): 0,
-  ('.srl-cv-time-span', '.srl-cv-time-span-strong'): 0,
-  ('.srl-cv-time-span', '.srl-title-h2'): 400,
-  ('.srl-cv-time-span', '.srl-title-h3'): 400,
+  ('.srl-cv-time-span', '.srl-cv-time-span'): 100,
+  ('.srl-cv-time-span', '.srl-cv-time-span-strong'): 100,
 );
