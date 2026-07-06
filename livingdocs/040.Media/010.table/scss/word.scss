@@ -16,24 +16,25 @@
     @extend %srl-grid-reset;
   }
 }
-
-table {
-  width: 100%;
-  min-width: 100%;
-}
-
-th,
-td {
-  font-family: 'Arial', sans-serif;
-
-  &[class*="head"],
-  &[class*="bold"],
-  &[class*="regular"] {
-    font-family: 'Arial', sans-serif;
+.srl-table {
+  table {
+    width: 100%;
+    min-width: 100%;
   }
 
-  &[class*="head"],
-  &[class*="bold"] {
-    font-weight: bold;
+  th,
+  td {
+    font-family: 'Arial', sans-serif;
+
+    &[class*="head"],
+    &[class*="bold"],
+    &[class*="regular"] {
+      font-family: 'Arial', sans-serif;
+    }
+
+    &[class*="head"],
+    &[class*="bold"] {
+      font-weight: bold;
+    }
   }
 }

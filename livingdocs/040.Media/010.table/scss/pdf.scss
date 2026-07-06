@@ -21,6 +21,12 @@ $table-cells-width-in-mm: map.get(srl.$meta, table, cells-width-in-mm);
   }
 }
 
+.srl-table-container {
+  .srl-nested-container & {
+    width: 100%;
+  }
+}
+
 .srl-table {
   tr {
     &[class*="pagebreak"] {

@@ -1,0 +1,27 @@
+@use "srl";
+
+.srl-pdf-chapter-cover {
+  width: 595pt;
+  height: 842pt;
+}
+
+.srl-pdf-chapter-cover__content {
+  padding: 32pt 0 96pt 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.srl-pdf-chapter-cover__title {
+  border-top: srl.system-size-unit(0.5pt) solid #{srl.colors-white-1000()};
+  border-bottom: srl.system-size-unit(0.5pt) solid #{srl.colors-white-1000()};
+  height: auto;
+  width: 100%;
+  padding-right: srl.spacer-get(300);
+  padding-left: srl.spacer-get(300);
+  padding-top: srl.spacer-get(300);
+  padding-bottom: srl.spacer-get(800);
+
+  @include srl.typography-title-h1-chapter-cover();
+}

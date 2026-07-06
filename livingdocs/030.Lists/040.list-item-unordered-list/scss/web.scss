@@ -3,6 +3,7 @@
 
 $marker-width: srl.system-size-unit(map.get(srl.$meta, list, marker-width));
 $number-width: srl.system-size-unit(map.get(srl.$meta, footnote, number-width));
+$nested-marker-width: calc(#{$marker-width} * 1.5);
 $unordered-marker: "–";
 $ordered-marker-after: ".";
 $alphanumeric-marker-after: ")";
@@ -21,7 +22,7 @@ $alphanumeric-marker-after: ")";
     .srl-table-list--ol &,
     .srl-list-group--ol & {
       counter-increment: ordered-list;
-      content: counter(ordered-list) $ordered-marker-after;
+      content: counters(ordered-list, ".") $ordered-marker-after;
       font-variant-numeric: tabular-nums;
     }
 
@@ -42,6 +43,18 @@ $alphanumeric-marker-after: ")";
   }
 }
 
+.srl-list-group__sub-list--ol .srl-list-group__sub-list--ol .srl-list-group__item-inner:before {
+  width: $nested-marker-width;
+}
+
+.srl-list-group__sub-list--ol .srl-list-group__sub-list--ol .srl-list-group__item-text {
+  width: calc(100% - #{$nested-marker-width});
+}
+
 .srl-list-group__sub-list {
   list-style: none;
+
+  .srl-list-group__sub-list--ol & {
+    counter-reset: ordered-list;
+  }
 }

@@ -7,12 +7,16 @@
         "caption": "Normal"
       },
       {
+        "caption": "Black",
+        "value": "srl-color-black-1000"
+      },
+      {
         "caption": "White",
         "value": "srl-color-white-1000"
       },
       {
         "caption": "Primary",
-        "value": "srl-cover--font-color-primary"
+        "value": "srl-color-primary-1000"
       }
     ]
   }

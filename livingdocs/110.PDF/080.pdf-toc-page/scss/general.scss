@@ -1,4 +1,7 @@
 @use 'srl';
+@use "spacing-variations";
+
+@include srl.spacer-component-margin(spacing-variations.$margins);
 
 .srl-pdf-toc-page__title {
   @include srl.typography-toc-title();

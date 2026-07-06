@@ -1,4 +1,5 @@
 @use 'srl';
+@use "spacing-variations";
 @use "sass:map";
 
 .srl-pdf-toc__item {
@@ -10,6 +11,12 @@
   @include srl.typography-toc-item();
   color: srl.colors-black-1000();
 }
+
+.srl-pdf-toc__item--title {
+  @include srl.typography-toc-item-title();
+}
+
+@include srl.spacer-component-margin(spacing-variations.$margins);
 
 .srl-pdf-toc__text {
   width: calc(100% - srl.system-size-unit(24pt) - srl.spacer-get(100));

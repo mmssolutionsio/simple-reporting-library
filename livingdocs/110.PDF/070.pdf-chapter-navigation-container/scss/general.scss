@@ -7,3 +7,15 @@
   display: flex;
   column-gap: srl.grid-get-gutter-column-gap();
 }
+
+.srl-chapter-navigation__list-item {
+  a {
+    color: srl.colors-black-1000();
+  }
+}
+
+.srl-chapter-navigation__list-item--current {
+  a {
+    color: srl.colors-primary-1000();
+  }
+}

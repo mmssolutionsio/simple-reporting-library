@@ -3,6 +3,8 @@
 @use "sass:map";
 
 $marker-width: srl.system-size-unit(map.get(srl.$meta, list, marker-width-pdf));
+$nested-marker-width: calc(#{$marker-width} * 1.5);
+$deep-nested-marker-width: calc(#{$marker-width} * 2);
 
 .srl-list-group__item-inner {
   -ro-pdf-tag-type: LI;
@@ -14,8 +16,28 @@ $marker-width: srl.system-size-unit(map.get(srl.$meta, list, marker-width-pdf));
 }
 
 .srl-list-group__item-text {
-  width: calc(100% - #{$marker-width});
   -ro-pdf-tag-type: LBody;
+
+  .srl-table-list--ul &,
+  .srl-list-group--ul & {
+    width: calc(100% - #{$marker-width});
+  }
+}
+
+.srl-list-group__sub-list--ol .srl-list-group__item-inner:before {
+  width: $nested-marker-width;
+}
+
+.srl-list-group__sub-list--ol .srl-list-group__item-text {
+  width: calc(100% - #{$nested-marker-width});
+}
+
+.srl-list-group__sub-list--ol .srl-list-group__sub-list--ol .srl-list-group__item-inner:before {
+  width: $deep-nested-marker-width;
+}
+
+.srl-list-group__sub-list--ol .srl-list-group__sub-list--ol .srl-list-group__item-text {
+  width: calc(100% - #{$deep-nested-marker-width});
 }
 
 .srl-list-group__sub-list {
