@@ -1,5 +1,12 @@
 @use "srl";
 
+.srl-grid__inner {
+  .srl-nested-container:not(.srl-pdf-column-container) & {
+    width: 100%;
+    @extend %srl-grid-reset;
+  }
+}
+
 .srl-grid__aside {
   @extend %srl-trim-margins;
 }

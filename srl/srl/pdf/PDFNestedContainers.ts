@@ -34,18 +34,18 @@ export class PDFNestedContainers {
       const firstElement = this.findEdgeElement(container, 'first')
       const lastElement = this.findEdgeElement(container, 'last')
 
-      const firstClass = firstElement
-        ? this.getRelevantClass(firstElement)
-        : null
-      const lastClass = lastElement ? this.getRelevantClass(lastElement) : null
+      const firstClasses = firstElement
+        ? this.getRelevantClasses(firstElement)
+        : []
+      const lastClasses = lastElement ? this.getRelevantClasses(lastElement) : []
 
-      if (firstClass) {
+      firstClasses.forEach((firstClass) => {
         container.classList.add(`${firstClass}-first`)
-      }
+      })
 
-      if (lastClass) {
+      lastClasses.forEach((lastClass) => {
         container.classList.add(`${lastClass}-last`)
-      }
+      })
     })
   }
 
@@ -53,7 +53,8 @@ export class PDFNestedContainers {
     root: HTMLElement,
     direction: 'first' | 'last',
   ): HTMLElement | null {
-    const children = Array.from(root.children) as HTMLElement[]
+    const searchRoot = this.getEdgeSearchRoot(root)
+    const children = Array.from(searchRoot.children) as HTMLElement[]
     const orderedChildren =
       direction === 'first' ? children : [...children].reverse()
 
@@ -84,6 +85,21 @@ export class PDFNestedContainers {
     return null
   }
 
+  private getEdgeSearchRoot(root: HTMLElement): HTMLElement {
+    if (!this.hasClass(root, 'srl-aside-content-container')) {
+      return root
+    }
+
+    const content = Array.from(root.children).find((child) =>
+      this.hasClass(
+        child as HTMLElement,
+        'srl-aside-content-container__content',
+      ),
+    ) as HTMLElement | undefined
+
+    return content || root
+  }
+
   private isLayoutWrapper(el: HTMLElement): boolean {
     const classes = Array.from(el.classList)
 
@@ -102,12 +118,25 @@ export class PDFNestedContainers {
     return false
   }
 
+  private hasClass(el: HTMLElement, className: string): boolean {
+    return Array.from(el.classList).includes(className)
+  }
+
   private getRelevantClass(el: HTMLElement): string | null {
+    return this.getRelevantClasses(el)[0] || null
+  }
+
+  private getRelevantClasses(el: HTMLElement): string[] {
     const classes = Array.from(el.classList)
+
+    const marginGroupClass = classes.find((cls) =>
+      cls.startsWith('srl-margin-group-'),
+    )
 
     const relevant = classes.find((cls) => {
       if (!cls.startsWith('srl-')) return false
       if (this.excludedClasses.includes(cls)) return false
+      if (cls.startsWith('srl-margin-group-')) return false
       if (cls.includes('__')) return false
       if (this.wrapperClasses.includes(cls)) return false
       if (cls.endsWith('-first')) return false
@@ -117,7 +146,10 @@ export class PDFNestedContainers {
       return true
     })
 
-    return relevant || null
+    return [marginGroupClass, relevant].filter(
+      (cls, index, list): cls is string =>
+        Boolean(cls) && list.indexOf(cls) === index,
+    )
   }
 }
 

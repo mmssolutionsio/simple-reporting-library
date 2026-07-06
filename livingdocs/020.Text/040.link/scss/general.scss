@@ -1,6 +1,6 @@
 @use 'srl';
-@use "sass:map";
-@use "spacing-variations";
+@use 'sass:map';
+@use 'spacing-variations';
 
 $font-weight-bold: map.get(srl.$meta, font, weight, bold);
 
@@ -13,6 +13,7 @@ $font-weight-bold: map.get(srl.$meta, font, weight, bold);
 }
 
 @include srl.spacer-component-margin(spacing-variations.$margins);
+@include srl.spacer-component-margin(link-content);
 
 .srl-link__link {
   font-weight: $font-weight-bold;

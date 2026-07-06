@@ -1,9 +1,8 @@
 @use 'srl';
-@use "spacing-variations";
 
 .srl-title-h6 {
   color: srl.colors-grey-600();
   @include srl.typography-title-h6();
 }
 
-@include srl.spacer-component-margin(spacing-variations.$margins);
+@include srl.spacer-component-margin(title-h5-h6);

@@ -1,6 +1,5 @@
 @use 'srl';
-@use "srl/fa";
-@use "spacing-variations";
+@use 'srl/fa';
 
 .srl-grid--media {
   .srl-full-width & {
@@ -12,7 +11,7 @@
   display: block;
 }
 
-@include srl.spacer-component-margin(spacing-variations.$margins);
+@include srl.spacer-component-margin(visual-media);
 
 .srl-video__thumbnail {
   @extend %srl-regular-width;

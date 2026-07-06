@@ -1,5 +1,12 @@
 @use 'srl';
-@use "spacing-variations";
+@use 'spacing-variations';
+@use 'sass:map';
+
+$number-width: srl.spacer-get(map.get(srl.$meta, title, number-width));
+
+@if srl.$system-build == "pdf" {
+  $number-width: srl.spacer-get(map.get(srl.$meta, title, number-width-pdf));
+}
 
 .srl-title-h3 {
   @include srl.typography-title-h3();
@@ -10,4 +17,17 @@
   @include srl.spacer-gap(200);
 }
 
+.srl-title-h3__number {
+  width: $number-width;
+}
+
+.srl-title-h3__text {
+  width: 100%;
+}
+
+.srl-title-h3__number + .srl-title-h3__text {
+  width: calc(100% - #{$number-width});
+}
+
+@include srl.spacer-component-margin(title-h3-h4);
 @include srl.spacer-component-margin(spacing-variations.$margins);

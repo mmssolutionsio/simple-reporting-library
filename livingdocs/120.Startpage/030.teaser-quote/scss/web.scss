@@ -1,7 +1,6 @@
-@use "srl";
-@use "spacing-variations";
+@use 'srl';
 
-@include srl.spacer-component-margin(spacing-variations.$margins);
+@include srl.spacer-component-margin(startpage-section);
 
 .srl-teaser-quote {
   position: relative;

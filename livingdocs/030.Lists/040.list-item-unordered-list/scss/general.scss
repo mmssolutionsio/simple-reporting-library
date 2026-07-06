@@ -1,8 +1,6 @@
 @use 'srl';
-@use "sass:map";
-@use "spacing-variations";
 
-@include srl.spacer-component-margin(spacing-variations.$margins);
+@include srl.spacer-component-margin(list-item);
 
 .srl-list-group__item-inner {
   @include srl.typography-list();
