@@ -172,7 +172,7 @@
         "name": "title-h2",
         "font-family": "Inter",
         "font-size": 26,
-        "line-height": 1.2,
+        "line-height": 1.28,
         "font-style": "normal",
         "font-weight": 600,
         "letter-spacing": 0,
@@ -244,7 +244,7 @@
           "up": {
             "tablet-pt": {
               "font-size": 24,
-              "line-height": 1.2
+              "line-height": 1.33
             }
           }
         }
@@ -253,7 +253,7 @@
         "name": "title-h4",
         "font-family": "Inter",
         "font-size": 18,
-        "line-height": 1.5,
+        "line-height": 1.4,
         "font-style": "normal",
         "font-weight": 600,
         "letter-spacing": 0,
@@ -273,7 +273,7 @@
         "name": "title-h5",
         "font-family": "Inter",
         "font-size": 16,
-        "line-height": 1.5,
+        "line-height": 1.333,
         "font-style": "normal",
         "font-weight": 600,
         "letter-spacing": 0,
@@ -293,7 +293,7 @@
         "name": "title-h6",
         "font-family": "Inter",
         "font-size": 16,
-        "line-height": 1.5,
+        "line-height": 1.333,
         "font-style": "normal",
         "font-weight": 600,
         "letter-spacing": 0,
@@ -969,6 +969,82 @@
     ]
   },
   "spacer": {
+    "margins": {
+      "group": {
+        "text": {
+          "all": 200,
+          "background-container": 1600,
+          "title-h2": 800,
+          "image": 800,
+          "video": 800,
+          "quote": 800,
+          "table": 400,
+          "signature": 400,
+          "button-container": 400,
+          "title-h3": 400,
+          "title-h4": 400
+        },
+        "list-item": {
+          "all": 100
+        },
+        "visual-media": {
+          "all": 800,
+          "background-container": 1600
+        },
+        "startpage-section": {
+          "all": 3200
+        },
+        "title-h1": {
+          "all": 400,
+          "paragraph": 200,
+          "paragraph-strong": 200,
+          "title-h2": 800,
+          "image": 800,
+          "video": 800,
+          "cv": 800,
+          "pdf-toc": 800,
+          "background-container": 1600
+        },
+        "title-h2": {
+          "all": 200,
+          "title-h3": 400,
+          "button-container": 400,
+          "keyfigure__icon": 800,
+          "background-container": 1600
+        },
+        "title-h3-h4": {
+          "all": 100,
+          "table": 200,
+          "button-container": 400,
+          "background-container": 1600
+        },
+        "title-h5-h6": {
+          "all": 0,
+          "button-container": 400,
+          "background-container": 1600
+        },
+        "table": {
+          "all": 400,
+          "table": 800,
+          "title-h2": 800,
+          "title-h4": 200,
+          "image": 800,
+          "video": 800,
+          "quote": 800,
+          "background-container": 1600
+        },
+        "cv": {
+          "all": 400,
+          "background-container": 1600
+        },
+        "background-container": {
+          "all": 1600
+        },
+        "link-content": {
+          "link__link": 50
+        }
+      }
+    },
     "spacer": {
       "0": {
         "size": 0

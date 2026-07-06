@@ -1,5 +1,4 @@
-@use "srl";
-@use "spacing-variations";
+@use 'srl';
 
 .srl-hero-video {
   @extend %srl-breakout-grid-base;
@@ -9,7 +8,7 @@
   }
 }
 
-@include srl.spacer-component-margin(spacing-variations.$margins);
+@include srl.spacer-component-margin(startpage-section);
 
 .srl-hero-video__video-container {
   position: relative;
@@ -55,7 +54,8 @@
 }
 
 .srl-hero-video__content-container {
-  padding: 0 var(--srl-container-padding, unset) var(--srl-container-padding, unset);
+  padding: 0 var(--srl-container-padding, unset)
+    var(--srl-container-padding, unset);
   grid-column: content-start / content-end;
   display: grid;
   grid-template-columns: subgrid;

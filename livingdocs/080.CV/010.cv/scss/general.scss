@@ -1,8 +1,6 @@
 @use 'srl';
-@use "sass:map";
-@use "spacing-variations";
 
-@include srl.spacer-component-margin(spacing-variations.$margins);
+@include srl.spacer-component-margin(cv);
 
 .srl-cv__inner {
   display: flex;

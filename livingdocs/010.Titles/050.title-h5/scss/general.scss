@@ -1,8 +1,9 @@
 @use 'srl';
-@use "spacing-variations";
+@use 'spacing-variations';
 
 .srl-title-h5 {
   @include srl.typography-title-h5();
 }
 
+@include srl.spacer-component-margin(title-h5-h6);
 @include srl.spacer-component-margin(spacing-variations.$margins);

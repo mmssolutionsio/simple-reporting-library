@@ -1,8 +1,7 @@
-@use "srl";
-@use "spacing-variations";
+@use 'srl';
 
 .srl-background-container {
   padding-block: srl.spacer-get(800);
 }
 
-@include srl.spacer-component-margin(spacing-variations.$margins);
+@include srl.spacer-component-margin(background-container);
