@@ -156,7 +156,7 @@
         "name": "title-h2",
         "font-family": "Inter",
         "font-size": 26,
-        "line-height": 1.2,
+        "line-height": 1.28,
         "font-style": "normal",
         "font-weight": 600,
         "letter-spacing": 0,
@@ -228,7 +228,7 @@
           "up": {
             "tablet-pt": {
               "font-size": 24,
-              "line-height": 1.2
+              "line-height": 1.33
             }
           }
         }
@@ -237,7 +237,7 @@
         "name": "title-h4",
         "font-family": "Inter",
         "font-size": 18,
-        "line-height": 1.5,
+        "line-height": 1.4,
         "font-style": "normal",
         "font-weight": 600,
         "letter-spacing": 0,
@@ -257,7 +257,7 @@
         "name": "title-h5",
         "font-family": "Inter",
         "font-size": 16,
-        "line-height": 1.5,
+        "line-height": 1.333,
         "font-style": "normal",
         "font-weight": 600,
         "letter-spacing": 0,
@@ -277,7 +277,7 @@
         "name": "title-h6",
         "font-family": "Inter",
         "font-size": 16,
-        "line-height": 1.5,
+        "line-height": 1.333,
         "font-style": "normal",
         "font-weight": 600,
         "letter-spacing": 0,
