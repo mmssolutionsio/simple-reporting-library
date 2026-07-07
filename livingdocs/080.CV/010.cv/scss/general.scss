@@ -9,6 +9,10 @@
 
 .srl-cv__img {
   border-radius: 50%;
+
+  .srl-quote--square-img & {
+    border-radius: 0;
+  }
 }
 
 .srl-cv__content {

@@ -1,0 +1,5 @@
+@use 'srl';
+
+.srl-pdf-landscape-container {
+  @include srl.spacer-margin-block(3200);
+}

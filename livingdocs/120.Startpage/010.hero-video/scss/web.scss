@@ -54,8 +54,7 @@
 }
 
 .srl-hero-video__content-container {
-  padding: 0 var(--srl-container-padding, unset)
-    var(--srl-container-padding, unset);
+  padding: 0 var(--srl-container-padding, unset) var(--srl-container-padding, unset);
   grid-column: content-start / content-end;
   display: grid;
   grid-template-columns: subgrid;
