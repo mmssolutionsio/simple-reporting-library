@@ -1,7 +1,7 @@
 {
   "name": "cv",
   "label": "CV",
-  "properties": ["pdf-spacer"],
+  "properties": ["portrait-borders","pdf-spacer"],
   "directives": {
     "image": {
       "imageRatios": ["1:1"],

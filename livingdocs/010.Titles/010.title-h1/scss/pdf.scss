@@ -1,0 +1,4 @@
+@use "srl";
+@use "spacing-variations";
+
+@include srl.spacer-component-margin(spacing-variations.$margins);

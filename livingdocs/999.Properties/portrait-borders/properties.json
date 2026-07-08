@@ -1,0 +1,15 @@
+{
+  "portrait-borders": {
+    "label": "Portrait border type",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Default (circle)"
+      },
+      {
+        "caption": "Square",
+        "value": "srl-quote--square-img"
+      }
+    ]
+  }
+}

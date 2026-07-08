@@ -1,7 +1,7 @@
 @use "srl";
 
 .srl-grid__inner {
-  .srl-nested-container:not(.srl-pdf-column-container) & {
+  .srl-nested-container:not(.srl-columns, .srl-pdf-column-container, .srl-background-container) & {
     width: 100%;
     @extend %srl-grid-reset;
   }

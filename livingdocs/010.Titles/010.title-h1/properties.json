@@ -1,10 +1,14 @@
 {
-  "h2-as": {
+  "h1-as": {
     "label": "Title styling",
     "type": "select",
     "options": [
       {
         "caption": "Default"
+      },
+      {
+        "caption": "Styling from title h2",
+        "value": "srl-title-h2 srl-margin-group-title-h2"
       },
       {
         "caption": "Styling from title h3",
