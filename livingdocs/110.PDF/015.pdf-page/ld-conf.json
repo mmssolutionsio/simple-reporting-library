@@ -1,0 +1,9 @@
+{
+  "name": "pdf-page",
+  "label": "PDF page",
+  "directives": {
+    "nswow-pdf": {
+      "service": "nswow-pdf"
+    }
+  }
+}

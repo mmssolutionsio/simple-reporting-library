@@ -1,0 +1,13 @@
+{
+  "name": "pdf-graphic",
+  "label": "PDF graphic",
+  "properties": [
+    "pdf-spacer-before",
+    "pdf-spacer-after"
+  ],
+  "directives": {
+    "nswow-pdf": {
+      "service": "nswow-pdf"
+    }
+  }
+}

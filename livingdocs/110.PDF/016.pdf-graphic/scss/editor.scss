@@ -1,0 +1,14 @@
+@use "srl";
+
+.srl-pdf-graphic {
+  margin-block: srl.spacer-get(3200);
+}
+
+.srl-pdf-graphic__a4-ratio {
+  aspect-ratio: 210 / 297;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid srl.colors-primary-1000();
+}
