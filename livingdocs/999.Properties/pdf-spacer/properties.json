@@ -7,32 +7,106 @@
         "caption": "Default"
       },
       {
-        "caption": "XXS spacer",
+        "caption": "XXS spacer (1pt)",
         "value": "srl-spacer-25"
       },
       {
-        "caption": "XS spacer",
+        "caption": "XS spacer (2pt)",
         "value": "srl-spacer-50"
       },
       {
-        "caption": "S spacer",
+        "caption": "S spacer (4pt)",
         "value": "srl-spacer-100"
       },
       {
-        "caption": "M spacer",
+        "caption": "M spacer (8pt)",
         "value": "srl-spacer-200"
       },
       {
-        "caption": "L spacer",
+        "caption": "L spacer (16pt)",
         "value": "srl-spacer-400"
       },
       {
-        "caption": "XL spacer",
+        "caption": "XL spacer (32pt)",
         "value": "srl-spacer-800"
       },
       {
-        "caption": "XXL spacer",
+        "caption": "XXL spacer (48pt)",
         "value": "srl-spacer-1600"
+      }
+    ]
+  },
+  "pdf-spacer-before": {
+    "label": "PDF spacer before",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Default"
+      },
+      {
+        "caption": "XXS spacer (1pt)",
+        "value": "srl-mt-25"
+      },
+      {
+        "caption": "XS spacer (2pt)",
+        "value": "srl-mt-50"
+      },
+      {
+        "caption": "S spacer (4pt)",
+        "value": "srl-mt-100"
+      },
+      {
+        "caption": "M spacer (8pt)",
+        "value": "srl-mt-200"
+      },
+      {
+        "caption": "L spacer (16pt)",
+        "value": "srl-mt-400"
+      },
+      {
+        "caption": "XL spacer (32pt)",
+        "value": "srl-mt-800"
+      },
+      {
+        "caption": "XXL spacer (48pt)",
+        "value": "srl-mt-1600"
+      }
+    ]
+  },
+  "pdf-spacer-after": {
+    "label": "PDF spacer after",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Default"
+      },
+      {
+        "caption": "XXS spacer (1pt)",
+        "value": "srl-mb-25"
+      },
+      {
+        "caption": "XS spacer (2pt)",
+        "value": "srl-mb-50"
+      },
+      {
+        "caption": "S spacer (4pt)",
+        "value": "srl-mb-100"
+      },
+      {
+        "caption": "M spacer (8pt)",
+        "value": "srl-mb-200"
+      },
+      {
+        "caption": "L spacer (16pt)",
+        "value": "srl-mb-400"
+      },
+      {
+        "caption": "XL spacer (32pt)",
+        "value": "srl-mb-800"
+      },
+      {
+        "caption": "XXL spacer (48pt)",
+        "value": "srl-mb-1600"
       }
     ]
   }
