@@ -43,6 +43,7 @@ export const baseComponentsToInstall = [
   '999.Properties/hide-quote-characters',
   '999.Properties/icon',
   '999.Properties/pdf-spacer',
+  '999.Properties/portrait-borders',
   '999.Properties/reverse',
 ];
 
