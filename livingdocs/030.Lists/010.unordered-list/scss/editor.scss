@@ -1,11 +1,11 @@
 @use "srl";
 @use "web";
 
-.srl-list-group--ul), {
+.srl-list-group--ul {
   @include srl.helpers-editor-label('List (unordered)');
 }
 
-.srl-list-group--ol, {
+.srl-list-group--ol {
   @include srl.helpers-editor-label('List (ordered)');
 }
 
