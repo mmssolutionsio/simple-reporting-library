@@ -1,1 +1,14 @@
+@use "srl";
 @use "web";
+
+.srl-list-group--ul), {
+  @include srl.helpers-editor-label('List (unordered)');
+}
+
+.srl-list-group--ol, {
+  @include srl.helpers-editor-label('List (ordered)');
+}
+
+.srl-list-group--alphanumeric {
+  @include srl.helpers-editor-label('List (alphanumeric)');
+}
