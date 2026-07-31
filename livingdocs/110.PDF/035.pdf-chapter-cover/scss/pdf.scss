@@ -6,23 +6,12 @@ $page-margin-right: srl.system-size-unit(map.get(srl.$meta, pdf, margin, right))
 $page-margin-bottom: srl.system-size-unit(map.get(srl.$meta, pdf, margin, bottom));
 $page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
 
-@page chapter-cover {
-  margin: 0;
-
-  @top-left-corner {
-    content: '';
-    display: none;
-  }
-
-  @top-left {
-    content: '';
-    display: none;
-  }
-
-  @top-right-corner {
-    content: '';
-    display: none;
-  }
+.srl-pdf-chapter-cover {
+  page: full-bleed-a4-without-page-margin-boxes;
+  width: 210mm;
+  height: 297mm;
+  max-height: 297mm;
+  background: srl.colors-primary-1000();
 }
 
 .srl-pdf-chapter-cover__content {
@@ -32,12 +21,4 @@ $page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
 .srl-pdf-chapter-cover__title {
   padding-right: $page-margin-right;
   padding-left: $page-margin-left;
-}
-
-.srl-pdf-chapter-cover {
-  page: chapter-cover;
-  width: 210mm;
-  height: 297mm;
-  max-height: 297mm;
-  background: srl.colors-primary-1000();
 }

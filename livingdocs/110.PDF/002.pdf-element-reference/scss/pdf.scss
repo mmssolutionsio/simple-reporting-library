@@ -3,11 +3,13 @@
 
 .srl-pdf-image {
   -ro-source-area: "crop";
+  width: auto;
 
   /*
   Intentionally here and not in 015.pdf-page because of the order of css
   */
   .srl-pdf-page & {
     -ro-source-area: "trim";
+    width: 100%;
   }
 }

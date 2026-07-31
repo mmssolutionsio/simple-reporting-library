@@ -1,0 +1,24 @@
+{
+  "pdf-hide-page-margin-boxes": {
+    "label": "Hide page margin boxes",
+    "type": "option",
+    "value": "srl-hide-page-margin-boxes"
+  },
+  "pdf-page-layout": {
+    "label": "PDF page layout",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Default (A4 portrait)"
+      },
+      {
+        "caption": "A4 landscape",
+        "value": "srl-pdf-page-layout--a4-landscape"
+      },
+      {
+        "caption": "A3 landscape",
+        "value": "srl-pdf-page-layout--a3-landscape"
+      }
+    ]
+  }
+}

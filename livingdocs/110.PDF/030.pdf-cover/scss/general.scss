@@ -8,8 +8,6 @@ $page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
 
 .srl-pdf-cover {
   background-size: cover;
-  width: 595pt;
-  height: 842pt;
 }
 
 .srl-pdf-cover__content {

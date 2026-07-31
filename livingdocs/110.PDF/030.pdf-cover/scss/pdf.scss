@@ -1,22 +1,12 @@
-@page cover {
-  margin: 0;
-
-  @top-left-corner {
-    content: "";
-    display: none;
-  }
-
-  @top-left {
-    content: "";
-    display: none;
-  }
-
-  @top-right-corner {
-    content: "";
-    display: none;
-  }
-}
-
 .srl-pdf-cover {
-  page: cover;
+  height: 297mm;
+  page: full-bleed-a4-without-page-margin-boxes;
+
+  &.srl-pdf-page-layout--a4-landscape {
+    page: full-bleed-a4-landscape-without-page-margin-boxes;
+  }
+
+  &.srl-pdf-page-layout--a3-landscape {
+    page: full-bleed-a3-landscape-without-page-margin-boxes;
+  }
 }

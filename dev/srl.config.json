@@ -975,11 +975,13 @@
           "all": 200,
           "background-container": 1600,
           "title-h2": 800,
-          "title-h3": 800,
+          "title-h3": 400,
+          "title-h4": 400,
+          "title-h5": 200,
+          "title-h6": 200,
           "image": 800,
           "video": 800,
           "quote": 800,
-          "title-h4": 400,
           "table": 400,
           "signature": 400,
           "button-container": 400
@@ -1007,6 +1009,7 @@
         },
         "title-h2": {
           "all": 200,
+          "table": 400,
           "title-h3": 400,
           "button-container": 400,
           "keyfigure__icon": 800,
@@ -1020,15 +1023,26 @@
         },
         "title-h5-h6": {
           "all": 0,
+          "table": 50,
           "button-container": 400,
+          "background-container": 1600
+        },
+        "lead": {
+          "all": 1600,
+          "srl-button-container--search": 400
+        },
+        "quote": {
+          "all": 800,
           "background-container": 1600
         },
         "table": {
           "all": 400,
           "table": 800,
           "title-h2": 800,
-          "title-h3": 800,
-          "title-h4": 800,
+          "title-h3": 400,
+          "title-h4": 400,
+          "title-h5": 200,
+          "title-h6": 200,
           "image": 800,
           "video": 800,
           "quote": 800,

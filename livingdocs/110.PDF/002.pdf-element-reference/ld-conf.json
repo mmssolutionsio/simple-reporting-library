@@ -1,6 +1,6 @@
 {
-  "name": "pdf-graphic",
-  "label": "PDF graphic",
+  "name": "pdf-element-reference",
+  "label": "PDF element reference",
   "properties": [
     "pdf-spacer-before",
     "pdf-spacer-after"
