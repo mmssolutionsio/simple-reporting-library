@@ -47,6 +47,7 @@ img {
     position: absolute;
     top: srl.spacer-get(400);
     left: $page-margin-left;
+    z-index: 1;
   }
 
   @top-left {
@@ -54,6 +55,7 @@ img {
     position: absolute;
     top: srl.spacer-get(400);
     left: srl.grid-calculate-pdf-col-span-plus-one-gutter(2);
+    z-index: 1;
   }
 
   @top-right-corner {
@@ -61,7 +63,8 @@ img {
     position: absolute;
     top: srl.spacer-get(400);
     right: $page-margin-right;
-    @include srl.typography-pdf-header()
+    z-index: 1;
+    @include srl.typography-pdf-header();
   }
 }
 
@@ -74,7 +77,6 @@ sub,
 sup {
   line-height: initial;
 }
-
 
 /*
   Page breaks for PDF
