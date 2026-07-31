@@ -6,8 +6,26 @@ $page-margin-right: srl.system-size-unit(map.get(srl.$meta, pdf, margin, right))
 $page-margin-bottom: srl.system-size-unit(map.get(srl.$meta, pdf, margin, bottom));
 $page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
 
+@include srl.system-add-root-style(srl-typo-title-h1-pdf-font-color-base, srl.system-root-style(srl-typo-title-h1-pdf-font-color));
+@include srl.system-add-root-style(srl-typo-title-h2-pdf-font-color-base, srl.system-root-style(srl-typo-title-h2-pdf-font-color));
+
 .srl-pdf-cover {
   background-size: cover;
+
+  &.srl-color-black-1000 {
+    --srl-typo-title-h1-pdf-font-color: #{srl.system-root-style(srl-color-black-1000, srl.system-root-style(srl-typo-title-h1-pdf-font-color-base))};
+    --srl-typo-title-h2-pdf-font-color: #{srl.system-root-style(srl-color-black-1000, srl.system-root-style(srl-typo-title-h2-pdf-font-color-base))};
+  }
+
+  &.srl-color-white-1000 {
+    --srl-typo-title-h1-pdf-font-color: #{srl.system-root-style(srl-color-white-1000, srl.system-root-style(srl-typo-title-h1-pdf-font-color-base))};
+    --srl-typo-title-h2-pdf-font-color: #{srl.system-root-style(srl-color-white-1000, srl.system-root-style(srl-typo-title-h2-pdf-font-color-base))};
+  }
+
+  &.srl-color-primary-1000 {
+    --srl-typo-title-h1-pdf-font-color: #{srl.system-root-style(srl-color-primary-1000, srl.system-root-style(srl-typo-title-h1-pdf-font-color-base))};
+    --srl-typo-title-h2-pdf-font-color: #{srl.system-root-style(srl-color-primary-1000, srl.system-root-style(srl-typo-title-h2-pdf-font-color-base))};
+  }
 }
 
 .srl-pdf-cover__content {
