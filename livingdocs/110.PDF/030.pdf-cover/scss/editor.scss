@@ -4,4 +4,7 @@
 .srl-pdf-cover {
   border: 1px solid #{srl.colors-primary-1000()};
   margin-inline: auto;
+  width: 595pt;
+  height: 842pt;
+  @include srl.spacer-margin-block(1600);
 }

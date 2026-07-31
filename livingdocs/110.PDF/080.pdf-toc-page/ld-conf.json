@@ -1,7 +1,7 @@
 {
   "name": "pdf-toc-page",
   "label": "ToC page",
-  "properties": ["pdf-hide-paging-publication-chapter-title", "toc-page-type"],
+  "properties": ["pdf-hide-page-margin-boxes", "toc-page-type"],
   "directives": {
     "toc": {
       "allowedChildren": [

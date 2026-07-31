@@ -1,0 +1,178 @@
+{
+  "DirectiveNameUpdates": [
+    {
+      "Component": "home-video",
+      "Previous": "background",
+      "New": {
+        "imageRatios": [
+          "16:9",
+          "4:3",
+          "1:2"
+        ],
+        "allowOriginalRatio": false
+      }
+    },
+    {
+      "Component": "table",
+      "Previous": "nswow-table",
+      "New": {
+        "services": [
+          {
+            "service": "nswow-table",
+            "label": "ns.wow Table"
+          }
+        ]
+      }
+    },
+    {
+      "Component": "ordered-list-group",
+      "Previous": "list",
+      "New": {
+        "allowedChildren": [
+          "list-item"
+        ],
+        "defaultComponents": {
+          "paragraph": "list-item"
+        },
+        "defaultContent": [
+          {
+            "component": "list-item"
+          }
+        ]
+      }
+    },
+    {
+      "Component": "unordered-list-group",
+      "Previous": "list",
+      "New": {
+        "allowedChildren": [
+          "list-item"
+        ],
+        "defaultComponents": {
+          "paragraph": "list-item"
+        },
+        "defaultContent": [
+          {
+            "component": "list-item"
+          }
+        ]
+      }
+    },
+    {
+      "Component": "link",
+      "Previous": "link",
+      "New": {
+        "plainText": true
+      }
+    },
+    {
+      "Component": "img",
+      "Previous": "image",
+      "New": {
+        "imageRatios": [
+          "1:1",
+          "4:3",
+          "16:9"
+        ],
+        "allowOriginalRatio": true
+      }
+    },
+    {
+      "Component": "signature-container",
+      "Previous": "content",
+      "New": {
+        "allowedChildren": [
+          "signature-item"
+        ],
+        "defaultContent": [
+          {
+            "component": "signature-item"
+          },
+          {
+            "component": "signature-item"
+          },
+          {
+            "component": "signature-item"
+          }
+        ]
+      }
+    },
+    {
+      "Component": "council-container",
+      "Previous": "council-container",
+      "New": {
+        "allowedChildren": [
+          "council-item"
+        ]
+      }
+    },
+    {
+      "Component": "council-item",
+      "Previous": "description",
+      "New": {
+        "allowedChildren": [
+          "title-h4",
+          "paragraph",
+          "unordered-list-group"
+        ]
+      }
+    },
+    {
+      "Component": "tile-img",
+      "Previous": "image",
+      "New": {
+        "imageRatios": [
+          "1:1",
+          "4:3",
+          "16:9"
+        ],
+        "allowOriginalRatio": true
+      }
+    },
+    {
+      "Component": "pdf-toc-page",
+      "Previous": "toc-left",
+      "New": {
+        "allowedChildren": [
+          "pdf-toc-item",
+          "pdf-toc-item-title"
+        ],
+        "defaultContent": [
+          {
+            "component": "pdf-toc-item"
+          }
+        ]
+      }
+    },
+    {
+      "Component": "pdf-toc-page",
+      "Previous": "toc-right",
+      "New": {
+        "allowedChildren": [
+          "pdf-toc-item",
+          "pdf-toc-item-title"
+        ],
+        "defaultContent": [
+          {
+            "component": "pdf-toc-item"
+          }
+        ]
+      }
+    },
+    {
+      "Component": "pdf-toc-item",
+      "Previous": "page",
+      "New": {
+        "plainText": true
+      }
+    },
+    {
+      "Component": "pdf-toc-item",
+      "Previous": "text",
+      "New": {
+        "plainText": true
+      }
+    }
+  ],
+  "ComponentNameUpdates": []
+}

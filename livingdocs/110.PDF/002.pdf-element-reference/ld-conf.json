@@ -1,0 +1,13 @@
+{
+  "name": "pdf-element-reference",
+  "label": "PDF element reference",
+  "properties": [
+    "pdf-spacer-before",
+    "pdf-spacer-after"
+  ],
+  "directives": {
+    "nswow-pdf": {
+      "service": "nswow-pdf"
+    }
+  }
+}

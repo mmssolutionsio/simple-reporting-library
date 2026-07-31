@@ -1,0 +1,153 @@
+@mixin hide-page-margin-boxes {
+  @top-left-corner {
+    content: '';
+    display: none;
+  }
+
+  @top-left {
+    content: '';
+    display: none;
+  }
+
+  @top-center {
+    content: '';
+    display: none;
+  }
+
+  @top-right {
+    content: '';
+    display: none;
+  }
+
+  @top-right-corner {
+    content: '';
+    display: none;
+  }
+
+  @right-top {
+    content: '';
+    display: none;
+  }
+
+  @right-middle {
+    content: '';
+    display: none;
+  }
+
+  @right-bottom {
+    content: '';
+    display: none;
+  }
+
+  @bottom-right-corner {
+    content: '';
+    display: none;
+  }
+
+  @bottom-right {
+    content: '';
+    display: none;
+  }
+
+  @bottom-center {
+    content: '';
+    display: none;
+  }
+
+  @bottom-left {
+    content: '';
+    display: none;
+  }
+
+  @bottom-left-corner {
+    content: '';
+    display: none;
+  }
+
+  @left-bottom {
+    content: '';
+    display: none;
+  }
+
+  @left-middle {
+    content: '';
+    display: none;
+  }
+
+  @left-top {
+    content: '';
+    display: none;
+  }
+}
+
+@page a4-landscape {
+  -ro-media-size: A4 landscape;
+  size: A4 landscape;
+}
+
+@page a3-landscape {
+  -ro-media-size: A3 landscape;
+  size: A3 landscape;
+}
+
+@page full-bleed-a4 {
+  margin: 0;
+  -ro-media-size: A4;
+  size: A4;
+}
+
+@page full-bleed-a4-landscape {
+  margin: 0;
+  -ro-media-size: A4 landscape;
+  size: A4 landscape;
+}
+
+@page full-bleed-a3-landscape {
+  margin: 0;
+  -ro-media-size: A3 landscape;
+  size: A3 landscape;
+}
+
+@page full-bleed-a4-without-page-margin-boxes {
+  margin: 0;
+  -ro-media-size: A4;
+  size: A4;
+  @include hide-page-margin-boxes;
+}
+
+@page full-bleed-a4-landscape-without-page-margin-boxes {
+  margin: 0;
+  -ro-media-size: A4 landscape;
+  size: A4 landscape;
+  @include hide-page-margin-boxes;
+}
+
+@page full-bleed-a3-landscape-without-page-margin-boxes {
+  margin: 0;
+  -ro-media-size: A3 landscape;
+  size: A3 landscape;
+  @include hide-page-margin-boxes;
+}
+
+
+.srl-pdf-page-layout--a4-landscape {
+  page: a4-landscape;
+  height: 210mm;
+}
+
+.srl-pdf-page-layout--a3-landscape {
+  page: a3-landscape;
+  height: 297mm;
+}
+
+.srl-hide-page-margin-boxes {
+  page: full-bleed-a4-without-page-margin-boxes;
+
+  &.srl-pdf-page-layout--a4-landscape {
+    page: full-bleed-a4-landscape-without-page-margin-boxes;
+  }
+
+  &.srl-pdf-page-layout--a3-landscape {
+    page: full-bleed-a3-landscape-without-page-margin-boxes;
+  }
+}
