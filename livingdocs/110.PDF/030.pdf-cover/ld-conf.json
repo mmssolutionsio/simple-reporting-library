@@ -2,7 +2,8 @@
   "name": "pdf-cover",
   "label": "PDF cover",
   "properties": [
-    "invert-cover"
+    "invert-cover",
+    "pdf-page-layout"
   ],
   "directives": {
     "show-logo": {

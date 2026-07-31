@@ -1,15 +1,3 @@
-@use "srl";
-
-@page a4-landscape {
-  -ro-media-size: A4 landscape;
-  size: A4 landscape;
-}
-
-@page a3-landscape {
-  -ro-media-size: A3 landscape;
-  size: A3 landscape;
-}
-
 .srl-pdf-landscape-container {
   page: a4-landscape;
 }

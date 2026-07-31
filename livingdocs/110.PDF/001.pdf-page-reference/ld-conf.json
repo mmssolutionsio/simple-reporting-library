@@ -1,0 +1,10 @@
+{
+  "name": "pdf-page-reference",
+  "label": "PDF page reference",
+  "properties": ["pdf-hide-page-margin-boxes"],
+  "directives": {
+    "nswow-pdf": {
+      "service": "nswow-pdf"
+    }
+  }
+}

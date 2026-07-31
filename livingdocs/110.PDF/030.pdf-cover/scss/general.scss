@@ -11,8 +11,6 @@ $page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
 
 .srl-pdf-cover {
   background-size: cover;
-  width: 595pt;
-  height: 842pt;
 
   &.srl-color-black-1000 {
     --srl-typo-title-h1-pdf-font-color: #{srl.system-root-style(srl-color-black-1000, srl.system-root-style(srl-typo-title-h1-pdf-font-color-base))};

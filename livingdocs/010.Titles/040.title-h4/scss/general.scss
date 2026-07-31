@@ -17,9 +17,6 @@ $number-width: srl.spacer-get(map.get(srl.$meta, title, number-width));
   @include srl.spacer-gap(200);
 }
 
-@include srl.spacer-component-margin(title-h3-h4);
-@include srl.spacer-component-margin(spacing-variations.$margins);
-
 .srl-title-h4__number {
   width: $number-width;
 }
@@ -31,3 +28,6 @@ $number-width: srl.spacer-get(map.get(srl.$meta, title, number-width));
 .srl-title-h4__number + .srl-title-h4__text {
   width: calc(100% - #{$number-width});
 }
+
+@include srl.spacer-component-margin(title-h3-h4);
+@include srl.spacer-component-margin(spacing-variations.$margins);

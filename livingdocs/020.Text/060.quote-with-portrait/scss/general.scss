@@ -11,6 +11,7 @@ $quote-close: map.get(srl.$meta, quote, quote-close);
 }
 
 @include srl.spacer-component-margin(spacing-variations.$margins);
+@include srl.spacer-component-margin(quote);
 
 .srl-quote__img {
   border-radius: 50%;
