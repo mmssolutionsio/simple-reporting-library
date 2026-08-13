@@ -4,13 +4,15 @@ import { useArticles, useLocale, addCssStyles } from '#composables';
 type AttrObj = { [key: string]: string | null };
 function attributesToString(attributes: Record<string, string | null>): string {
     return Object.entries(attributes)
-        .map(([key, value]) => (value !== null ? `${key}="${value}"` : key))
-        .join(' ');
+      .map(([key, value]) => (value !== null ? `${key}="${value}"` : key))
+      .join(' ');
 }
 
 export function prepareHtmlContent(text: string): string {
     const articles = useArticles();
     const locale = useLocale();
+
+    text = preserveTableCellLineBreaks(text);
 
     const regex = /<a\s+([^>]+)>(.*?)<\/a>/gis;
     text = text.replace(regex, (match, attrString, innerText) => {
@@ -22,8 +24,8 @@ export function prepareHtmlContent(text: string): string {
         });
 
         if (
-            attrObj['data-note-target'] &&
-            attrObj['data-note-target'] === 'popup'
+          attrObj['data-note-target'] &&
+          attrObj['data-note-target'] === 'popup'
         ) {
             attrObj.uuid = attrObj.href;
             delete attrObj.href;
@@ -63,8 +65,8 @@ export function prepareHtmlContent(text: string): string {
             if (a) {
                 delete attrObj.href;
                 attrObj.to = a.index
-                    ? `/${locale.value}`
-                    : `/${locale.value}/${a.slug}`;
+                  ? `/${locale.value}`
+                  : `/${locale.value}/${a.slug}`;
                 if (arrLink[1]) {
                     attrObj.to += `#${arrLink[1]}`;
                 }
@@ -87,6 +89,26 @@ export function prepareHtmlContent(text: string): string {
     });
 
     return text;
+}
+
+function preserveTableCellLineBreaks(text: string): string {
+    return text.replace(
+      /(<t[dh]\b[^>]*>)([\s\S]*?)(<\/t[dh]>)/gi,
+      (_cellMatch, cellOpen: string, cellContent: string, cellClose: string) => {
+          const content = cellContent.replace(
+            /(<span\b[^>]*>)([\s\S]*?)(<\/span>)/gi,
+            (spanMatch, spanOpen: string, spanContent: string, spanClose: string) => {
+                if (!/[\r\n]/.test(spanContent)) {
+                    return spanMatch;
+                }
+
+                return `${spanOpen}${spanContent.replace(/\r\n|\r|\n/g, '<br />')}${spanClose}`;
+            }
+          );
+
+          return `${cellOpen}${content}${cellClose}`;
+      }
+    );
 }
 
 export default {
