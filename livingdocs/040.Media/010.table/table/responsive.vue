@@ -1,68 +1,84 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch } from 'vue';
 
-const props = withDefaults(defineProps<{
-  component?: HTMLDivElement
-  containerSelector?: string
-  tableSelector?: string
-}>(), {
-  containerSelector: '.srl-table__container',
-  tableSelector: 'table'
-})
+const props = withDefaults(
+  defineProps<{
+    component?: HTMLDivElement;
+    containerSelector?: string;
+    tableSelector?: string;
+  }>(),
+  {
+    containerSelector: '.srl-table__container',
+    tableSelector: 'table',
+  },
+);
 
-const component = ref<HTMLDivElement>()
-const table = ref<HTMLTableElement>()
-const container = ref<HTMLDivElement>()
+const component = ref<HTMLDivElement>();
+const classTarget = ref<HTMLElement>();
+const table = ref<HTMLTableElement>();
+const container = ref<HTMLDivElement>();
 
-watch(
-  props,
-  to => {
-    !to.component || init(to.component)
-  }
-)
+watch(props, (to) => {
+  !to.component || init(to.component);
+});
 
 function init(componentEl: HTMLDivElement | undefined) {
-  if (!componentEl) return
-  component.value = componentEl
-  table.value = componentEl.querySelector(props.tableSelector) as HTMLTableElement
-  container.value = componentEl.querySelector(props.containerSelector) as HTMLDivElement
-  updateClasses()
-  enableDragScroll()
-  window.addEventListener('resize', updateClasses)
+  if (!componentEl) return;
+  component.value = componentEl;
+  classTarget.value = componentEl.parentElement ?? componentEl;
+  componentEl.classList.remove(
+    'has-shadow',
+    'responsive-table',
+    'responsive-table-alternative',
+  );
+  table.value = componentEl.querySelector(
+    props.tableSelector,
+  ) as HTMLTableElement;
+  container.value = componentEl.querySelector(
+    props.containerSelector,
+  ) as HTMLDivElement;
+  updateClasses();
+  enableDragScroll();
+  window.addEventListener('resize', updateClasses);
 }
 
 defineExpose({
-  init
-})
+  init,
+});
 
 function hasHorizontalScrollbar(): boolean {
-  return !table.value || !container.value ?
-    false :
-    table.value?.clientWidth > container.value?.clientWidth
+  return !table.value || !container.value
+    ? false
+    : table.value?.clientWidth > container.value?.clientWidth;
 }
 
 function hasRowSpan() {
-  if (!table.value) return false
-  const tableCells = table.value.querySelectorAll('td[rowspan]')
-  return tableCells.length > 0
+  if (!table.value) return false;
+  const tableCells = table.value.querySelectorAll('td[rowspan]');
+  return tableCells.length > 0;
 }
 
 function updateClasses() {
-  const hasScroll = hasHorizontalScrollbar()
-  const hasRowspan = hasRowSpan()
+  const hasScroll = hasHorizontalScrollbar();
+  const hasRowspan = hasRowSpan();
+  const target = classTarget.value;
 
   if (hasScroll && !hasRowspan) {
-    component.value?.classList.add('has-shadow', 'responsive-table')
-    component.value?.classList.remove('responsive-table-alternative')
+    target?.classList.add('has-shadow', 'responsive-table');
+    target?.classList.remove('responsive-table-alternative');
   } else if (hasScroll && hasRowspan) {
-    component.value?.classList.add('responsive-table-alternative')
-    component.value?.classList.remove('has-shadow', 'responsive-table')
+    target?.classList.add('responsive-table-alternative');
+    target?.classList.remove('has-shadow', 'responsive-table');
   } else {
-    component.value?.classList.remove('has-shadow', 'responsive-table', 'responsive-table-alternative')
+    target?.classList.remove(
+      'has-shadow',
+      'responsive-table',
+      'responsive-table-alternative',
+    );
   }
 }
 
-function   enableDragScroll() {
+function enableDragScroll() {
   let isDragging: boolean = false;
   let startX: number = 0;
   let scrollLeft: number = 0;
@@ -100,5 +116,4 @@ function   enableDragScroll() {
 }
 </script>
 
-<template>
-</template>
+<template></template>
