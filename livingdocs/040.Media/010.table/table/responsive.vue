@@ -26,17 +26,22 @@ function init(componentEl: HTMLDivElement | undefined) {
   if (!componentEl) return;
   component.value = componentEl;
   classTarget.value = componentEl.parentElement ?? componentEl;
-  componentEl.classList.remove(
+  classTarget.value.classList.remove(
     'has-shadow',
     'responsive-table',
     'responsive-table-alternative',
+    'has-alternative-shadow-left',
+    'has-alternative-shadow-right',
   );
   table.value = componentEl.querySelector(
     props.tableSelector,
   ) as HTMLTableElement;
-  container.value = componentEl.querySelector(
+  const containerRoot = componentEl.querySelector(
     props.containerSelector,
   ) as HTMLDivElement;
+  container.value =
+    (containerRoot?.querySelector('.srl-table-container') as HTMLDivElement) ??
+    containerRoot;
   updateClasses();
   enableDragScroll();
   window.addEventListener('resize', updateClasses);
@@ -65,17 +70,52 @@ function updateClasses() {
 
   if (hasScroll && !hasRowspan) {
     target?.classList.add('has-shadow', 'responsive-table');
-    target?.classList.remove('responsive-table-alternative');
+    target?.classList.remove(
+      'responsive-table-alternative',
+      'has-alternative-shadow-left',
+      'has-alternative-shadow-right',
+    );
   } else if (hasScroll && hasRowspan) {
     target?.classList.add('responsive-table-alternative');
     target?.classList.remove('has-shadow', 'responsive-table');
+    updateAlternativeShadowClasses();
   } else {
     target?.classList.remove(
       'has-shadow',
       'responsive-table',
       'responsive-table-alternative',
+      'has-alternative-shadow-left',
+      'has-alternative-shadow-right',
     );
   }
+}
+
+function updateAlternativeShadowClasses() {
+  const target = classTarget.value;
+  const containerEl = container.value;
+
+  if (
+    !target ||
+    !containerEl ||
+    !target.classList.contains('responsive-table-alternative')
+  ) {
+    target?.classList.remove(
+      'has-alternative-shadow-left',
+      'has-alternative-shadow-right',
+    );
+    return;
+  }
+
+  const tolerance = 1;
+  const maxScrollLeft = containerEl.scrollWidth - containerEl.clientWidth;
+  target.classList.toggle(
+    'has-alternative-shadow-left',
+    containerEl.scrollLeft > tolerance,
+  );
+  target.classList.toggle(
+    'has-alternative-shadow-right',
+    containerEl.scrollLeft < maxScrollLeft - tolerance,
+  );
 }
 
 function enableDragScroll() {
@@ -84,6 +124,10 @@ function enableDragScroll() {
   let scrollLeft: number = 0;
 
   if (container.value) {
+    container.value.addEventListener('scroll', updateAlternativeShadowClasses, {
+      passive: true,
+    });
+
     container.value.addEventListener('mousedown', (e) => {
       if (container.value) {
         isDragging = true;

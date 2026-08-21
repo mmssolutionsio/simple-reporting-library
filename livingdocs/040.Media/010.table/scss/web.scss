@@ -13,6 +13,31 @@ table {
   position: relative;
 }
 
+.srl-table__container {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 3;
+    width: 24px;
+    pointer-events: none;
+  }
+
+  .has-alternative-shadow-left &::before {
+    left: var(--srl-container-padding, unset);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.1), transparent);
+  }
+
+  .has-alternative-shadow-right &::after {
+    right: var(--srl-container-padding, unset);
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.1), transparent);
+  }
+}
+
 .srl-table.responsive-table {
   th,
   td {
