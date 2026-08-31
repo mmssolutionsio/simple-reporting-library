@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "generatedAt": "",
+    "packageName": "@simple-reporting/base",
+    "packageVersion": "development",
+    "projectName": "SRL",
+    "stats": {
+      "scssFiles": 0,
+      "scssApi": 0,
+      "documentedScssApi": 0,
+      "publicScssApi": 0,
+      "documentedScssVariables": 0,
+      "publicScssVariables": 0,
+      "marginGroups": 0,
+      "components": 0,
+      "properties": 0,
+      "issues": 0
+    }
+  },
+  "guides": [],
+  "scss": {
+    "sources": [],
+    "files": [],
+    "api": [],
+    "variableGroups": [],
+    "marginGroups": []
+  },
+  "components": [],
+  "properties": [],
+  "changelog": {
+    "source": "github",
+    "status": "unavailable",
+    "releasesUrl": "https://github.com/mmssolutionsio/simple-reporting-library/releases",
+    "fetchedAt": "",
+    "latestVersion": "",
+    "releases": []
+  },
+  "issues": []
+}
