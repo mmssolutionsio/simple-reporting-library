@@ -5,7 +5,11 @@ import folders from '../scripts/folders.js';
 import { beaver } from '../scripts/beaver.js';
 import { packageName } from '../scripts/config.js';
 import prepare from '../scripts/prepare.js';
-import { updatePackageJson, updateLivingDocsJson, updateNsWowJson } from '../scripts/utils.js';
+import {
+  updatePackageJson,
+  updateLivingDocsJson,
+  updateNsWowJson,
+} from '../scripts/utils.js';
 import {
   map,
   mapLdd,
@@ -16,13 +20,18 @@ import {
 } from '../scripts/build.js';
 import chalk from 'chalk';
 import { vueComponents } from '../scripts/vue/components.js';
+import { generateDocs, isDocsSource } from '../scripts/docs/generateDocs.js';
 
 /**
  * Determine Font Awesome type (free or pro) based on the presence of the pro package in node_modules
  * @type {string}
  */
-let faType = 'free'
-if (existsSync(join(folders.root, 'node_modules', '@fortawesome', 'fontawesome-pro'))) {
+let faType = 'free';
+if (
+  existsSync(
+    join(folders.root, 'node_modules', '@fortawesome', 'fontawesome-pro'),
+  )
+) {
   faType = 'pro';
 }
 
@@ -39,15 +48,15 @@ function centerText(text) {
 function printPromptsMessage(messages) {
   console.log('');
   console.log(chalk.bgWhiteBright(centerText('')));
-  messages.forEach(m => {
+  messages.forEach((m) => {
     console.log(chalk.bgWhiteBright.black.bold(centerText(m)));
-  })
+  });
   console.log(chalk.bgWhiteBright(centerText('')));
   console.log('');
 }
 
 const data = {
-  version: null
+  version: null,
 };
 const srlConfig = readConfigJson();
 
@@ -105,7 +114,7 @@ function checkForUpdates() {
         `New ${packageName} version available.`,
         `Update: ${data.version} => ${latest}`,
         `Run: npm update -S ${packageName}`,
-      ])
+      ]);
     }
   } catch (e) {}
 }
@@ -118,10 +127,7 @@ async function startActions() {
 
   if (srlConfig && srlConfig.version !== data.version) {
     await prepare();
-    printPromptsMessage([
-      'Srl version changed',
-      'Trigger srl prepare',
-    ]);
+    printPromptsMessage(['Srl version changed', 'Trigger srl prepare']);
 
     /*
     printPromptsMessage([
@@ -139,8 +145,8 @@ async function startActions() {
   await beaver(0);
   await map();
   await mapJs();
+  await generateDocs();
 }
-
 
 /**
  * Timer to trigger live reload actions
@@ -153,11 +159,22 @@ function triggerAction(callback) {
   }, 200);
 }
 
+let docsTimer = null;
+function triggerDocsGeneration() {
+  docsTimer && clearTimeout(docsTimer);
+  docsTimer = setTimeout(async () => {
+    try {
+      await generateDocs();
+    } catch (error) {
+      console.error('Could not regenerate SRL documentation:', error);
+    }
+  }, 200);
+}
+
 function viteSrlPlugin() {
   return {
     name: 'vite-srl-plugin',
-    config(config) {
-
+    config(config, environment) {
       config.base = './';
 
       config.resolve = config.resolve || {};
@@ -172,10 +189,22 @@ function viteSrlPlugin() {
       config.resolve.alias['#utils'] = folders.srlUtils;
       config.resolve.alias['#imports'] = folders.srlImports;
       config.resolve.alias['#ld'] = folders.ld;
+      config.resolve.alias['#srl-docs'] =
+        environment.command === 'serve'
+          ? join(folders.srlComponents, 'Srl', 'Docs.vue')
+          : join(folders.srlRoot, 'docs', 'Disabled.vue');
       config.resolve.alias['assets'] = folders.srlAssets;
       config.resolve.alias['srl'] = folders.srlSystem;
-      config.resolve.alias['fa-source'] = join(folders.srlSystem, 'fa', `source-${faType}.scss`);
-      config.resolve.alias['fa-font'] = join(folders.srlSystem, 'fa', `font-${faType}.scss`);
+      config.resolve.alias['fa-source'] = join(
+        folders.srlSystem,
+        'fa',
+        `source-${faType}.scss`,
+      );
+      config.resolve.alias['fa-font'] = join(
+        folders.srlSystem,
+        'fa',
+        `font-${faType}.scss`,
+      );
       config.resolve.alias['vue'] = 'vue/dist/vue.esm-bundler.js';
     },
     async configResolved() {
@@ -183,6 +212,12 @@ function viteSrlPlugin() {
     },
     async configureServer(server) {
       const fontPath = join(folders.srlAssets, 'fonts');
+      server.watcher.add([
+        join(folders.packagePath, 'scss'),
+        join(folders.packagePath, 'livingdocs'),
+        join(folders.srlAssets, 'scss'),
+        folders.ld,
+      ]);
 
       server.watcher.on('change', async (path) => {
         if (path.endsWith('/package.json')) {
@@ -196,9 +231,15 @@ function viteSrlPlugin() {
           await generateUseSrlConfig();
           triggerAction(beaver);
         }
+        if (isDocsSource(path)) {
+          triggerDocsGeneration();
+        }
       });
 
       server.watcher.on('add', (path) => {
+        if (isDocsSource(path)) {
+          triggerDocsGeneration();
+        }
         if (
           path.endsWith('/general.scss') ||
           path.endsWith('/app.scss') ||
@@ -207,10 +248,7 @@ function viteSrlPlugin() {
           path.endsWith('/pdf.scss') ||
           path.endsWith('/word.scss') ||
           path.endsWith('/xbrl.scss') ||
-          (
-            path.startsWith(fontPath) &&
-            path.endsWith('.scss')
-          )
+          (path.startsWith(fontPath) && path.endsWith('.scss'))
         ) {
           triggerAction(mapScss);
         }
@@ -232,10 +270,7 @@ function viteSrlPlugin() {
           triggerAction(mapLdd);
         }
 
-        if (
-          path.includes('/src/components/') &&
-          path.endsWith('.vue')
-        ) {
+        if (path.includes('/src/components/') && path.endsWith('.vue')) {
           triggerAction(vueComponents);
         }
 
@@ -245,6 +280,9 @@ function viteSrlPlugin() {
       });
 
       server.watcher.on('unlink', (path) => {
+        if (isDocsSource(path)) {
+          triggerDocsGeneration();
+        }
         if (
           path.endsWith('/general.scss') ||
           path.endsWith('/app.scss') ||
@@ -252,11 +290,8 @@ function viteSrlPlugin() {
           path.endsWith('/editor.scss') ||
           path.endsWith('/pdf.scss') ||
           path.endsWith('/word.scss') ||
-          path.endsWith('/xbrl.scss')||
-          (
-            path.startsWith(fontPath) &&
-            path.endsWith('.scss')
-          )
+          path.endsWith('/xbrl.scss') ||
+          (path.startsWith(fontPath) && path.endsWith('.scss'))
         ) {
           triggerAction(mapScss);
         }
@@ -278,10 +313,7 @@ function viteSrlPlugin() {
           triggerAction(mapLdd);
         }
 
-        if (
-          path.includes('/src/components/') &&
-          path.endsWith('.vue')
-        ) {
+        if (path.includes('/src/components/') && path.endsWith('.vue')) {
           triggerAction(vueComponents);
         }
 

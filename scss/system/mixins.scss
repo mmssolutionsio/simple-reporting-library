@@ -1,9 +1,21 @@
 @use 'sass:map';
 @use 'variables';
 
+/// Collected root styles without a breakpoint condition.
+/// @type Map
+/// @access private
 $styles: ();
+/// Collected root styles for min-width breakpoint conditions.
+/// @type Map
+/// @access private
 $stylesUp: ();
+/// Collected root styles for max-width breakpoint conditions.
+/// @type Map
+/// @access private
 $stylesDown: ();
+/// Collected root styles for a single breakpoint range.
+/// @type Map
+/// @access private
 $stylesOnly: ();
 
 @mixin add-root-style($key, $value, $breakpoint: false, $mediaBehavior: false) {

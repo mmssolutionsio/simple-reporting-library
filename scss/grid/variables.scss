@@ -1,11 +1,25 @@
 @use '../system';
 
+/// Prefix used for generated SRL CSS class names.
+/// @type String
 $class-prefix: system.$class-prefix !default;
+/// Prefix used for generated SRL CSS custom property names.
+/// @type String
 $variable-prefix: system.$variable-prefix !default;
 
+/// Container widths and paddings keyed by breakpoint.
+/// @type Map
 $containers: () !default;
+/// Ordered map of SRL breakpoint names to their minimum widths.
+/// @type Map
 $breakpoints: () !default;
+/// Number of grid columns for each output or breakpoint.
+/// @type Map
 $columns: () !default;
+/// Grid column and row gaps keyed by breakpoint.
+/// @type Map
 $gutter: () !default;
 
+/// Column span used by grid-col when no explicit span is passed.
+/// @type Number
 $column-default-span: 4 !default;

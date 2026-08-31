@@ -1,6 +1,6 @@
-# mms-reporting-library
+# Simple Reporting Library
 
-Starter Package for nswow development
+Base package for SRL development
 
 ## Installation
 
@@ -18,6 +18,17 @@ Run dev server:
 
 > npm run dev
 
+The current SRL developer documentation is available at `/docs` while the dev
+server is running. It is generated from global SRL SCSS, project SCSS under
+`src/assets/scss`, and the installed Livingdocs components. The changelog is
+loaded from GitHub releases and cached locally for offline use.
+
+Generate or validate the documentation manually:
+
+> npm run docs:generate
+
+> npm run docs:check
+
 Build all required files.
 
 > npm run build
@@ -25,7 +36,7 @@ Build all required files.
 ## Important CLI commands
 
 | Command                     | Description                                                                    |
-|-----------------------------|--------------------------------------------------------------------------------|
+| --------------------------- | ------------------------------------------------------------------------------ |
 | `npm install`               | Installs all packages listed in `package.json`                                 |
 | `npm run dev`               | Starts the development environment including SCSS and JS watcher (Live Reload) |
 | `npm run build`             | Generates all CSS and JS files and ZIP packages in `.output`                   |
@@ -39,4 +50,3 @@ Build all required files.
 | `npx srl remove components` | Removes one or more components                                                 |
 | `npx srl add groups`        | Adds predefined groups and their components                                    |
 | `npx srl remove groups`     | Removes one or more groups                                                     |
-

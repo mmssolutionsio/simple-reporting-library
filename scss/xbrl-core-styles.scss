@@ -15,7 +15,13 @@ li {
   margin: 0;
 }
 
+/// Ordered breakpoint list used while flattening responsive XBRL styles.
+/// @type List
+/// @access private
 $breakpointsList: map.keys(variables.$breakpoints);
+/// Cached breakpoint count used by the XBRL style flattener.
+/// @type Number
+/// @access private
 $breakpointsListLength: list.length($breakpointsList);
 
 @at-root {

@@ -22,7 +22,13 @@
   @return $reversed;
 }
 
+/// Breakpoint keys in configured order for root-style generation.
+/// @type List
+/// @access private
 $bpList: breakpoints-keys(grid.$breakpoints);
+/// Breakpoint keys in reverse order for max-width root-style generation.
+/// @type List
+/// @access private
 $bpListReverse: breakpoints-keys-reverse(grid.$breakpoints);
 
 @mixin core-styles {

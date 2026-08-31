@@ -342,8 +342,8 @@ async function writeComponent(group, name) {
   const componentNameArray = name.split('.');
   let componentName = name;
   if (componentNameArray[1]) {
-    componentNameArray.shift()
-    componentName = componentNameArray.join(('.'));
+    componentNameArray.shift();
+    componentName = componentNameArray.join('.');
   }
 
   try {
@@ -409,6 +409,21 @@ async function writeComponent(group, name) {
       `,
     );
     await writeFileSync(join(folders.ld, group, name, `properties.json`), '{}');
+    await writeFileSync(
+      join(folders.ld, group, name, 'docs.md'),
+      `# ${componentName.charAt(0).toUpperCase()}${componentName.slice(1)}
+
+Describe the editorial purpose of this component.
+
+## Usage
+
+Describe when to use the component and add any accessibility constraints.
+
+## Build targets
+
+Document relevant differences between app, editor, PDF, Word and XBRL.
+`,
+    );
     await map();
     console.log(`Component ${group}/${name} created!`);
   }

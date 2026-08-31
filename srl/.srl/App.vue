@@ -36,34 +36,46 @@
  * to other components in the application.
  */
 import App from '@/App.vue';
-import { computed, onMounted, watch } from 'vue'
-import { useCssStyles } from '#composables'
-import { setMounted } from '#utils'
+import SrlDocs from '#srl-docs';
+import { computed, onMounted, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { useCssStyles } from '#composables';
+import { setMounted } from '#utils';
 
-const styleElement = document.createElement('style')
-document.head.appendChild(styleElement)
+const route = useRoute();
+const docsRoute = computed(() => {
+  return import.meta.env.DEV && route.name === 'srl-docs';
+});
 
-const styleContent = useCssStyles()
+const styleElement = document.createElement('style');
+document.head.appendChild(styleElement);
+
+const styleContent = useCssStyles();
 watch(
   styleContent.value,
   (newStyles) => {
-    styleElement.innerHTML = newStyles.join('')
+    styleElement.innerHTML = newStyles.join('');
   },
   { immediate: true },
 );
 
 const devToolsEnabled = computed(() => {
-  return import.meta.env.DEV && import.meta.env.VITE_DISABLE_SRL_DEVTOOLS !== 'true'
-})
+  return (
+    import.meta.env.DEV && import.meta.env.VITE_DISABLE_SRL_DEVTOOLS !== 'true'
+  );
+});
 
 onMounted(() => {
-  setMounted(true)
+  setMounted(true);
 });
 </script>
 
 <template>
-  <suspense>
-    <App />
-  </suspense>
-  <SrlDevTools v-if="devToolsEnabled" />
+  <SrlDocs v-if="docsRoute" />
+  <template v-else>
+    <suspense>
+      <App />
+    </suspense>
+    <SrlDevTools v-if="devToolsEnabled" />
+  </template>
 </template>

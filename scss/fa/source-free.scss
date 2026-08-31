@@ -7,7 +7,11 @@
 );
 @forward "@fortawesome/fontawesome-free/scss/variables";
 @forward "@fortawesome/fontawesome-free/scss/mixins";
+/// Active Font Awesome package variant.
+/// @type String
 $type: free;
+/// Default icon style selected by meta.icon.default-style.
+/// @type String
 $default-style: light;
 @if map.has-key(meta.$meta, icon, default-style) {
   $default-style: map.get(meta.$meta, icon, default-style);

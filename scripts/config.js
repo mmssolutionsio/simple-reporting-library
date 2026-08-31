@@ -1,4 +1,4 @@
-export const packageName = '@multivisio/nswow';
+export const packageName = '@simple-reporting/base';
 
 export const baseComponentsToInstall = [
   '010.Titles/010.title-h1',

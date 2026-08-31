@@ -1,9 +1,15 @@
 @use '../system';
 @use 'sass:map';
 
+/// Prefix used for generated SRL CSS class names.
+/// @type String
 $class-prefix: system.$class-prefix !default;
+/// Prefix used for generated SRL CSS custom property names.
+/// @type String
 $variable-prefix: system.$variable-prefix !default;
 
+/// Named typography definitions configured under typography.typography.
+/// @type Map
 $typography: () !default;
 
 @mixin add-typography($typo, $map) {

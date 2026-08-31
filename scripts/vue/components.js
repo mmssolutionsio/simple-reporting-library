@@ -22,7 +22,7 @@ function readVueDir(entryPath, prefix = '') {
 
         result[name] = {
           component: `${prefix}components/${path}`,
-          type: relative(folders.srlTypes, fullPath)
+          type: relative(folders.srlTypes, fullPath),
         };
       }
     }
@@ -40,61 +40,70 @@ export async function vueComponents() {
   const srlComponents = readVueDir(folders.srlRoot, '#');
 
   const components = [
-    `app.component('SrlDevTools', defineAsyncComponent(() => import('@multivisio/nswow/devTools/SrlDevTools.vue')));`,
-  ]
+    `app.component('SrlDevTools', defineAsyncComponent(() => import('@simple-reporting/base/devTools/SrlDevTools.vue')));`,
+  ];
   const types = [];
 
   for (const [name, info] of Object.entries(appComponents)) {
     components.push(
       `app.component('${name}', defineAsyncComponent(() => import('${info.component}')));`,
-    )
+    );
     types.push({
       name: name,
       type: `  type ${name} = typeof import('${info.type}')['default'];`,
-    })
+    });
   }
 
   for (const [name, info] of Object.entries(srlComponents)) {
-    const componentPath = appComponents[name] ? appComponents[name].component : info.component
-    const typePath = appComponents[name] ? appComponents[name].type : info.type
+    if (name === 'SrlDocs') continue;
+    const componentPath = appComponents[name]
+      ? appComponents[name].component
+      : info.component;
+    const typePath = appComponents[name] ? appComponents[name].type : info.type;
     if (!appComponents[name]) {
       components.push(
         `app.component('${name}', defineAsyncComponent(() => import('${componentPath}')));`,
-      )
+      );
       types.push({
         name: name,
         type: `  type ${name} = typeof import('${typePath}')['default'];`,
-      })
+      });
     }
   }
 
   types.push({
     name: 'SrlDevTools',
-    type: `  type SrlDevTools = typeof import('@multivisio/nswow/devTools/SrlDevTools.vue')['default'];`,
+    type: `  type SrlDevTools = typeof import('@simple-reporting/base/devTools/SrlDevTools.vue')['default'];`,
   });
 
-  writeFileSync(join(folders.srlPlugins, 'asyncSrlComponents.ts'),
-`import { defineAsyncComponent, type App } from 'vue';
+  writeFileSync(
+    join(folders.srlPlugins, 'asyncSrlComponents.ts'),
+    `import { defineAsyncComponent, type App } from 'vue';
 export default function asyncSrlComponents(app: App): void {
   ${components.join('\n  ')}
 }
-`, 'utf8');
+`,
+    'utf8',
+  );
 
-  const componentsInterface = types.map(t => {
-    return `  ${t.name}: ${t.name};`
-  })
+  const componentsInterface = types.map((t) => {
+    return `  ${t.name}: ${t.name};`;
+  });
 
-  writeFileSync(join(folders.srlTypes, 'components.d.ts'),
-`export {};
+  writeFileSync(
+    join(folders.srlTypes, 'components.d.ts'),
+    `export {};
 declare global {
-${types.map(t=>t.type).join("\n")}
+${types.map((t) => t.type).join('\n')}
 }
 
 interface _GlobalComponents {
-${componentsInterface.join("\n")}
+${componentsInterface.join('\n')}
 }
 declare module '@vue/runtime-core' {
   export interface GlobalComponents extends _GlobalComponents {}
 }
-`, 'utf8');
+`,
+    'utf8',
+  );
 }

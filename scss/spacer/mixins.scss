@@ -7,10 +7,18 @@
 @use '../grid';
 @use '../system';
 
+/// Sets margin on all sides using a configured spacer token.
+/// @param {String | Number} $spacer - Key from `spacer.spacer` in `srl.config.json`.
+/// @example scss
+///   @include srl.spacer-margin(200);
 @mixin margin($spacer) {
   margin: functions.get($spacer);
 }
 
+/// Sets both block-axis margins. Word output receives physical top and bottom properties.
+/// @param {String | Number} $spacer - Configured spacer token.
+/// @example scss
+///   @include srl.spacer-margin-block(400);
 @mixin margin-block($spacer) {
   @if system.$build == 'word' {
     margin-top: functions.get($spacer);
@@ -20,6 +28,10 @@
   }
 }
 
+/// Sets both inline-axis margins. Word output receives physical left and right properties.
+/// @param {String | Number} $spacer - Configured spacer token.
+/// @example scss
+///   @include srl.spacer-margin-inline(200);
 @mixin margin-inline($spacer) {
   @if system.$build == 'word' {
     margin-left: functions.get($spacer);
@@ -29,6 +41,10 @@
   }
 }
 
+/// Sets the logical block-start margin, with a `margin-top` fallback for Word.
+/// @param {String | Number} $spacer - Configured spacer token.
+/// @example scss
+///   @include srl.spacer-margin-top(800);
 @mixin margin-top($spacer) {
   @if system.$build == 'word' {
     margin-top: functions.get($spacer);
@@ -37,6 +53,10 @@
   }
 }
 
+/// Sets the logical inline-end margin, with a `margin-right` fallback for Word.
+/// @param {String | Number} $spacer - Configured spacer token.
+/// @example scss
+///   @include srl.spacer-margin-right(200);
 @mixin margin-right($spacer) {
   @if system.$build == 'word' {
     margin-right: functions.get($spacer);
@@ -45,6 +65,10 @@
   }
 }
 
+/// Sets the logical block-end margin, with a `margin-bottom` fallback for Word.
+/// @param {String | Number} $spacer - Configured spacer token.
+/// @example scss
+///   @include srl.spacer-margin-bottom(400);
 @mixin margin-bottom($spacer) {
   @if system.$build == 'word' {
     margin-bottom: functions.get($spacer);
@@ -53,6 +77,10 @@
   }
 }
 
+/// Sets the logical inline-start margin, with a `margin-left` fallback for Word.
+/// @param {String | Number} $spacer - Configured spacer token.
+/// @example scss
+///   @include srl.spacer-margin-left(200);
 @mixin margin-left($spacer) {
   @if system.$build == 'word' {
     margin-left: functions.get($spacer);
@@ -61,10 +89,18 @@
   }
 }
 
+/// Sets padding on all sides using a configured spacer token.
+/// @param {String | Number} $spacer - Configured spacer token.
+/// @example scss
+///   @include srl.spacer-padding(400);
 @mixin padding($spacer) {
   padding: functions.get($spacer);
 }
 
+/// Sets both block-axis paddings, including physical Word fallbacks.
+/// @param {String | Number} $spacer - Configured spacer token.
+/// @example scss
+///   @include srl.spacer-padding-block(400);
 @mixin padding-block($spacer) {
   @if system.$build == 'word' {
     padding-top: functions.get($spacer);
@@ -74,6 +110,10 @@
   }
 }
 
+/// Sets both inline-axis paddings, including physical Word fallbacks.
+/// @param {String | Number} $spacer - Configured spacer token.
+/// @example scss
+///   @include srl.spacer-padding-inline(400);
 @mixin padding-inline($spacer) {
   @if system.$build == 'word' {
     padding-left: functions.get($spacer);
@@ -83,6 +123,10 @@
   }
 }
 
+/// Sets logical block-start padding, with a `padding-top` fallback for Word.
+/// @param {String | Number} $spacer - Configured spacer token.
+/// @example scss
+///   @include srl.spacer-padding-top(200);
 @mixin padding-top($spacer) {
   @if system.$build == 'word' {
     padding-top: functions.get($spacer);
@@ -91,6 +135,10 @@
   }
 }
 
+/// Sets logical inline-end padding, with a `padding-right` fallback for Word.
+/// @param {String | Number} $spacer - Configured spacer token.
+/// @example scss
+///   @include srl.spacer-padding-right(200);
 @mixin padding-right($spacer) {
   @if system.$build == 'word' {
     padding-right: functions.get($spacer);
@@ -99,6 +147,10 @@
   }
 }
 
+/// Sets logical block-end padding, with a `padding-bottom` fallback for Word.
+/// @param {String | Number} $spacer - Configured spacer token.
+/// @example scss
+///   @include srl.spacer-padding-bottom(200);
 @mixin padding-bottom($spacer) {
   @if system.$build == 'word' {
     padding-bottom: functions.get($spacer);
@@ -107,6 +159,10 @@
   }
 }
 
+/// Sets logical inline-start padding, with a `padding-left` fallback for Word.
+/// @param {String | Number} $spacer - Configured spacer token.
+/// @example scss
+///   @include srl.spacer-padding-left(200);
 @mixin padding-left($spacer) {
   @if system.$build == 'word' {
     padding-left: functions.get($spacer);
@@ -115,14 +171,26 @@
   }
 }
 
+/// Sets grid or flex gap using a configured spacer token.
+/// @param {String | Number} $spacer - Configured spacer token.
+/// @example scss
+///   @include srl.spacer-gap(400);
 @mixin gap($spacer) {
   gap: functions.get($spacer);
 }
 
+/// Sets row gap using a configured spacer token.
+/// @param {String | Number} $spacer - Configured spacer token.
+/// @example scss
+///   @include srl.spacer-row-gap(400);
 @mixin row-gap($spacer) {
   row-gap: functions.get($spacer);
 }
 
+/// Sets column gap using a configured spacer token.
+/// @param {String | Number} $spacer - Configured spacer token.
+/// @example scss
+///   @include srl.spacer-column-gap(400);
 @mixin column-gap($spacer) {
   column-gap: functions.get($spacer);
 }
@@ -198,6 +266,19 @@
   @return '#{$selector}-#{$edge}';
 }
 
+/// Generates vertical spacing between adjacent Livingdocs components.
+/// Pass a margin-group name from `spacer.margins.group` or a custom map of
+/// `(from-selector, to-selector): spacer-token` rules. A named group expects
+/// the source component to carry `srl-margin-group-<name>` in its HTML. The
+/// generated selectors also account for SRL wrappers and PDF edge variants.
+/// @param {String | Map} $spacing-rules - Configured group name or custom selector-pair map.
+/// @example scss
+///   @include srl.spacer-component-margin(text);
+///
+///   $custom-margins: (
+///     ('.srl-paragraph', '.srl-list-group'): 200,
+///   );
+///   @include srl.spacer-component-margin($custom-margins);
 @mixin component-margin($spacing-rules) {
   @if meta.type-of($spacing-rules) != 'map' {
     $spacing-rules: _component-margin-rules($spacing-rules);
@@ -328,6 +409,8 @@
   }
 }
 
+/// Generates SRL spacer utility classes. Included by the SRL core styles.
+/// @access private
 @mixin core-styles {
   @at-root {
     @each $spacer, $spacerValue in variables.$spacer {

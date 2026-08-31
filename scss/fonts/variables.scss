@@ -1,8 +1,18 @@
 @use '../system';
 
+/// Prefix used for generated SRL CSS class names.
+/// @type String
 $class-prefix: system.$class-prefix !default;
+/// Prefix used for generated SRL CSS custom property names.
+/// @type String
 $variable-prefix: system.$variable-prefix !default;
 
+/// Base URL or relative path used when generating font-face source URLs.
+/// @type String
 $font-base-path: '' !default;
+/// Name of the font used when no explicit typography font is selected.
+/// @type String
 $default-font: '' !default;
+/// Font-family and font-face definitions configured under fonts.fonts.
+/// @type Map
 $fonts: () !default;

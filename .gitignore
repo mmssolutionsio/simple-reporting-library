@@ -4,4 +4,6 @@
 /test-data2/
 /test-project/
 /.npmrc
+/.srl/
+/dev/.srl/
 .DS_Store

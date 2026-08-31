@@ -1,14 +1,34 @@
+/// Active runtime environment such as development or production.
+/// @type String
 $environment: development !default;
+/// Active output target such as app, pdf, word, xbrl or ldd.
+/// @type String
 $build: development !default;
 
+/// Prefix used for generated SRL CSS custom property names.
+/// @type String
 $variable-prefix: 'srl-' !default;
+/// Prefix used for generated SRL CSS class names.
+/// @type String
 $class-prefix: 'srl-' !default;
 
+/// Pixel density used for physical-unit conversions.
+/// @type Number
 $dpi: 96 !default;
+/// Number of CSS pixels represented by one typographic point.
+/// @type Number
 $point: 0.75 !default;
+/// Root font size used when converting numeric values to rem.
+/// @type Number
 $root-size: 16 !default;
+/// Default CSS unit applied by system-size-unit.
+/// @type String
 $size-unit: 'rem' !default;
 
+/// System-level metadata passed from the SRL configuration.
+/// @type Map
 $meta: () !default;
 
+/// Initial CSS custom properties emitted on the root element.
+/// @type Map
 $root-styles: () !default;

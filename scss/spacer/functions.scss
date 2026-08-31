@@ -2,6 +2,11 @@
 @use 'sass:map';
 @use "../system";
 
+/// Returns the responsive CSS custom property for a configured spacer token.
+/// @param {String | Number} $spacer - Key from `spacer.spacer` in `srl.config.json`.
+/// @return {String} A `var(...)` reference that follows the active output and breakpoint.
+/// @example scss
+///   gap: srl.spacer-get(200);
 @function get($spacer) {
   @if not map.has-key(variables.$spacer, $spacer) {
     @error "Invalid column-gap "#{$spacer}" specified! Choose one of #{map.keys(variables.$spacer)}";

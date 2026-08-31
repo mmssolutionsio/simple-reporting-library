@@ -8,7 +8,11 @@
 @use "@fortawesome/fontawesome-pro/scss/mixins" as m;
 @forward "@fortawesome/fontawesome-pro/scss/variables";
 @forward "@fortawesome/fontawesome-pro/scss/mixins";
+/// Active Font Awesome package variant.
+/// @type String
 $type: pro;
+/// Default icon style selected by meta.icon.default-style.
+/// @type String
 $default-style: light;
 @if map.has-key(meta.$meta, icon, default-style) {
   $default-style: map.get(meta.$meta, icon, default-style);

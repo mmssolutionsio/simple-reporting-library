@@ -48,7 +48,7 @@ function mapValues(values) {
  * @returns {string} - The generated SCSS code.
  */
 function writeTypographyScss(typography) {
-  let r = [`@use "config";`, `@forward "@multivisio/nswow/scss/typography";`];
+  let r = [`@use "config";`, `@forward "@simple-reporting/base/scss/typography";`];
   if (typography) {
     if (typography.typography) {
       let o = [];
@@ -59,7 +59,7 @@ function writeTypographyScss(typography) {
         o.push(`}\n`);
       }
       if (o.length) {
-        r.push(`@use "@multivisio/nswow/scss/typography";\n`);
+        r.push(`@use "@simple-reporting/base/scss/typography";\n`);
         r.push(o.join(`\n`));
       }
     }
@@ -74,7 +74,7 @@ function writeTypographyScss(typography) {
  * @returns {string} - The SCSS code for importing and forwarding colors.
  */
 function writeColorsScss(colors) {
-  let r = [`@use "config";`, `@forward "@multivisio/nswow/scss/colors";`];
+  let r = [`@use "config";`, `@forward "@simple-reporting/base/scss/colors";`];
   if (colors) {
     if (colors.colors) {
       let o = [];
@@ -86,7 +86,7 @@ function writeColorsScss(colors) {
       }
 
       if (o.length) {
-        r.push(`@use "@multivisio/nswow/scss/colors";\n`);
+        r.push(`@use "@simple-reporting/base/scss/colors";\n`);
         r.push(o.join(`\n`));
       }
     }
@@ -265,7 +265,7 @@ async function beaver(verbose = 0) {
     if (typeof map[file] !== 'undefined') {
       const o = [];
       o.push(
-        `@use "@multivisio/nswow/scss/${file}/variables.scss" as ${file}Variables with (`,
+        `@use "@simple-reporting/base/scss/${file}/variables.scss" as ${file}Variables with (`,
       );
       let v = [];
       for (const variable in map[file]) {

@@ -968,23 +968,23 @@ async function mapScss() {
     const output = {
       app: [
         `"../../srl/config" as *`,
-        `"@multivisio/nswow/scss/init-root.scss" as *`,
+        `"@simple-reporting/base/scss/init-root.scss" as *`,
       ],
       ldd: [
         `"../../srl/config" as *`,
-        `"@multivisio/nswow/scss/init-root.scss" as *`,
+        `"@simple-reporting/base/scss/init-root.scss" as *`,
       ],
       pdf: [
         `"../../srl/config" as *`,
-        `"@multivisio/nswow/scss/init-root.scss" as *`,
+        `"@simple-reporting/base/scss/init-root.scss" as *`,
       ],
       word: [
         `"../../srl/config" as *`,
-        `"@multivisio/nswow/scss/init-root.scss" as *`,
+        `"@simple-reporting/base/scss/init-root.scss" as *`,
       ],
       xbrl: [
         `"../../srl/config" as *`,
-        `"@multivisio/nswow/scss/init-root.scss" as *`,
+        `"@simple-reporting/base/scss/init-root.scss" as *`,
       ],
     };
 
@@ -1129,32 +1129,32 @@ async function mapScss() {
       join(folders.srlImports, 'app.scss'),
       `@use ` +
       output.app.join(';\n@use ') +
-      `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
+      `;\n@use "@simple-reporting/base/scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'ldd.scss'),
       `@use ` +
       output.ldd.join(';\n@use ') +
-      `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
+      `;\n@use "@simple-reporting/base/scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'pdf.scss'),
       `@use ` +
       output.pdf.join(';\n@use ') +
-      `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
+      `;\n@use "@simple-reporting/base/scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'word.scss'),
       `@use ` +
       output.word.join(';\n@use ') +
-      `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
+      `;\n@use "@simple-reporting/base/scss/core-styles.scss" as *;\n`,
     );
 
     await writeFileSync(
       join(folders.srlImports, 'xbrl.scss'),
       `@use ` +
       output.xbrl.join(`;\n@use `) +
-      `;\n@use "@multivisio/nswow/scss/xbrl-core-styles.scss" as *;\n`,
+      `;\n@use "@simple-reporting/base/scss/xbrl-core-styles.scss" as *;\n`,
     );
 
     return true;

@@ -2,6 +2,9 @@
 @use "../system";
 @use "sass:map";
 
+/// Smallest configured breakpoint used while generating grid root styles.
+/// @type String | Null
+/// @access private
 $smallest-breakpoint: null;
 
 @each $breakpoint, $min-width in variables.$breakpoints {

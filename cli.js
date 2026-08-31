@@ -2,6 +2,7 @@
 
 import { Command } from 'commander';
 import { readFile } from 'fs/promises';
+import { resolve } from 'node:path';
 import {
   addComponents,
   removeComponents,
@@ -13,6 +14,7 @@ import {
 import { build, ddev, map, mapJs } from './scripts/build.js';
 import { beaver } from './scripts/beaver.js';
 import prepare from './scripts/prepare.js';
+import { generateDocs } from './scripts/docs/generateDocs.js';
 
 const packageJson = JSON.parse(
   await readFile(new URL('./package.json', import.meta.url)),
@@ -28,8 +30,39 @@ commander
   .version(packageJson.version);
 
 commander
+  .command('docs')
+  .description('Generate or validate the local SRL documentation')
+  .argument('[action]', 'generate or check', 'generate')
+  .option('-p, --project <path>', 'Project root to document')
+  .action(async (action, options) => {
+    if (!['generate', 'check'].includes(action)) {
+      console.error('Docs action must be "generate" or "check".');
+      process.exitCode = 1;
+      return;
+    }
+
+    const result = await generateDocs({
+      projectRoot: options.project ? resolve(options.project) : undefined,
+    });
+    const errors = result.data.issues.filter(
+      (issue) => issue.severity === 'error',
+    );
+    console.log(
+      `Documentation generated: ${result.data.meta.stats.scssFiles} SCSS files, ` +
+        `${result.data.meta.stats.components} components, ${result.data.meta.stats.properties} properties.`,
+    );
+
+    if (action === 'check' && errors.length) {
+      errors.forEach((issue) =>
+        console.error(`${issue.code}: ${issue.message}`),
+      );
+      process.exitCode = 1;
+    }
+  });
+
+commander
   .command('init')
-  .description('Install development environment for nswow')
+  .description('Install an SRL development environment')
   .argument('<folder>', 'Folder where to install the entrypoint')
   .action(init);
 
@@ -83,7 +116,7 @@ commander
   .option('-c, --customer <customer>', 'The customer to build for')
   .option(
     '-t, --target <targets>',
-    'Comma separated targets: app,pdf,word,xbrl,ldd (default: all)'
+    'Comma separated targets: app,pdf,word,xbrl,ldd (default: all)',
   )
   .action(async (version, options) => {
     await build(version, options);

@@ -8,9 +8,9 @@ on:
     types: [created]
 
 permissions:
-  id-token: write  # Required for OIDC
+  id-token: write # Required for OIDC
   contents: read
-  
+
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
@@ -21,5 +21,4 @@ jobs:
           node-version: 24
           registry-url: https://registry.npmjs.org/
       - run: npm ci
-      - run: node scripts/renamePackage.js
       - run: node scripts/doPublish.js -v ${{ github.ref_name }}

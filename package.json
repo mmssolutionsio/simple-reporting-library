@@ -1,5 +1,5 @@
 {
-  "name": "@multivisio/nswow",
+  "name": "@simple-reporting/base",
   "version": "1.0.55",
   "description": "Manage srl templates, build and publish",
   "repository": {
@@ -14,6 +14,9 @@
   },
   "type": "module",
   "scripts": {
+    "dev": "npm --prefix dev run dev",
+    "docs:generate": "node cli.js docs generate --project dev",
+    "docs:check": "node cli.js docs check --project dev",
     "lint": "prettier --check .",
     "lint:fix": "prettier --write .",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
