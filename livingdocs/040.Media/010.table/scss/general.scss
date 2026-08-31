@@ -131,6 +131,9 @@ table {
     /*
     Paddings
     */
+    &[class*='nolinebottom'] {
+      padding-inline: 0;
+    }
 
     /*
     Borders
