@@ -127,6 +127,9 @@ table {
     /*
     Paddings
     */
+    &.nolinebottom {
+      padding-inline: 0;
+    }
 
     /*
     Borders
