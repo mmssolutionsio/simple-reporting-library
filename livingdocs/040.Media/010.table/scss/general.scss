@@ -131,7 +131,7 @@ table {
     /*
     Paddings
     */
-    &[class*='nolinebottom'] {
+    &.nolinebottom {
       padding-inline: 0;
     }
 
