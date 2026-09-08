@@ -32,10 +32,6 @@ $table-border-bold: map.get(srl.$meta, table, border, bold);
 @include srl.spacer-component-margin(table);
 
 .srl-table__container {
-  overflow: auto;
-  scroll-snap-type: x mandatory;
-  position: relative;
-
   & > div {
     @extend %srl-grid-base;
 
