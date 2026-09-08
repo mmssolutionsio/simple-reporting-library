@@ -5,6 +5,11 @@
     width: 100%;
     @extend %srl-grid-reset;
   }
+
+  .srl-pdf-column-container__content > .srl-grid > & {
+    width: 100%;
+    @extend %srl-grid-reset;
+  }
 }
 
 .srl-grid__aside {
