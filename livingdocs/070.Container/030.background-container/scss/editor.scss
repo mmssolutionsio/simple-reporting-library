@@ -2,5 +2,5 @@
 @use 'web';
 
 .srl-background-container {
-  @include srl.helpers-editor-label('Background container');
+  @include srl.helpers-editor-label-icon();
 }
