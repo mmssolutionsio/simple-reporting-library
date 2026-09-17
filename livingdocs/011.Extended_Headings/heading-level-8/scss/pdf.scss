@@ -1,0 +1,9 @@
+@use "srl";
+
+[role="heading"][aria-level="8"] {
+   bookmark-level: 8;
+ }
+
+.srl-heading-level-8__text {
+  bookmark-label: content(text);
+}

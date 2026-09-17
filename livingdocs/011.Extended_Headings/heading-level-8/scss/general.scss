@@ -1,0 +1,5 @@
+@use "srl";
+
+.srl-heading-level-8 {
+  @include srl.typography-heading-level-8();
+}

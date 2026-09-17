@@ -310,6 +310,66 @@
         }
       },
       {
+        "name": "heading-level-7",
+        "font-family": "Inter",
+        "font-size": 16,
+        "line-height": 1.333,
+        "font-style": "normal",
+        "font-weight": 600,
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "9pt",
+            "line-height": 1.444
+          },
+          "up": {
+            "tablet-pt": {
+              "font-size": 18
+            }
+          }
+        }
+      },
+      {
+        "name": "heading-level-8",
+        "font-family": "Inter",
+        "font-size": 16,
+        "line-height": 1.333,
+        "font-style": "normal",
+        "font-weight": 600,
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "9pt",
+            "line-height": 1.444
+          },
+          "up": {
+            "tablet-pt": {
+              "font-size": 18
+            }
+          }
+        }
+      },
+      {
+        "name": "heading-level-9",
+        "font-family": "Inter",
+        "font-size": 16,
+        "line-height": 1.333,
+        "font-style": "normal",
+        "font-weight": 600,
+        "letter-spacing": 0,
+        "media": {
+          "print": {
+            "font-size": "9pt",
+            "line-height": 1.444
+          },
+          "up": {
+            "tablet-pt": {
+              "font-size": 18
+            }
+          }
+        }
+      },
+      {
         "name": "lead",
         "font-family": "Inter",
         "font-size": 26,
