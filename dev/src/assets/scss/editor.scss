@@ -35,6 +35,83 @@ span.srl-key-figure {
   background-color: $editor-background-color-srl;
 }
 
+.srl-article-root {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  [role="heading"][aria-level="7"],
+  [role="heading"][aria-level="8"],
+  [role="heading"][aria-level="9"] {
+    .srl-grid__inner {
+      position: relative;
+      padding-top: 26px;
+
+      &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        align-items: center;
+        width: max-content;
+        max-width: 100%;
+        min-height: 20px;
+        border: 1px solid #b2ddff;
+        border-radius: 999px;
+        background-color: #eff8ff;
+        color: #175cd3;
+        box-shadow: 0 1px 2px rgb(16 24 40 / 8%);
+        font-family: Inter, sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: 0;
+        padding: 3px 8px;
+        text-transform: uppercase;
+        text-box-trim: trim-both;
+      }
+    }
+  }
+
+  h1 .srl-grid__inner::before {
+    content: 'Title h1';
+  }
+
+  h2 .srl-grid__inner::before {
+    content: 'Title h2';
+  }
+
+  h3 .srl-grid__inner::before {
+    content: 'Title h3';
+  }
+
+  h4 .srl-grid__inner::before {
+    content: 'Title h4';
+  }
+
+  h5 .srl-grid__inner::before {
+    content: 'Title h5';
+  }
+
+  h6 .srl-grid__inner::before {
+    content: 'Title h6';
+  }
+
+  [role="heading"][aria-level="7"] .srl-grid__inner::before {
+    content: 'Heading 7';
+  }
+
+  [role="heading"][aria-level="8"] .srl-grid__inner::before {
+    content: 'Heading 8';
+  }
+
+  [role="heading"][aria-level="9"] .srl-grid__inner::before {
+    content: 'Heading 9';
+  }
+}
+
 // Set width of placeholder image to 100%
 img[src^="data:image/svg+xml"] {
   width: 100%
