@@ -142,6 +142,48 @@ table {
       );
     }
 
+    &[class*='lineall'] {
+      border-right: (
+        srl.system-root-style(srl-table-border-regular-width)
+        map.get($table-border-regular, style)
+        srl.colors-get(map.get($table-border-regular, color))
+      );
+      border-bottom: (
+        srl.system-root-style(srl-table-border-regular-width)
+        map.get($table-border-regular, style)
+        srl.colors-get(map.get($table-border-regular, color))
+      );
+
+      &:first-child {
+        border-left: (
+          srl.system-root-style(srl-table-border-regular-width)
+          map.get($table-border-regular, style)
+          srl.colors-get(map.get($table-border-regular, color))
+        );
+      }
+    }
+
+    &[class*='blineall'] {
+      border-right: (
+        srl.system-root-style(srl-table-border-bold-width)
+        map.get($table-border-bold, style)
+        srl.colors-get(map.get($table-border-bold, color))
+      );
+      border-bottom: (
+        srl.system-root-style(srl-table-border-bold-width)
+        map.get($table-border-bold, style)
+        srl.colors-get(map.get($table-border-bold, color))
+      );
+
+      &:first-child {
+        border-left: (
+          srl.system-root-style(srl-table-border-bold-width)
+          map.get($table-border-bold, style)
+          srl.colors-get(map.get($table-border-bold, color))
+        );
+      }
+    }
+
     &[class*='linetop'] {
       border-top: (
         srl.system-root-style(srl-table-border-regular-width)
@@ -242,6 +284,13 @@ table {
         srl.system-root-style(srl-table-border-regular-width)
           map.get($table-border-regular, style) transparent
       );
+    }
+
+    &.cut {
+      padding: 0;
+      &:not([class*='nocut']) {
+        border-color: transparent;
+      }
     }
 
     /*
