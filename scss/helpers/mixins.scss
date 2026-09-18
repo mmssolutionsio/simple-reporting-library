@@ -64,7 +64,7 @@
   }
 }
 
-@mixin editor-label-with-icon($text, $icon: up-down-left-right) {
+@mixin editor-label-with-icon($text, $icon: grip-dots-vertical) {
   @include editor-label($text);
 
   &:after {
@@ -89,12 +89,12 @@
   }
 }
 
-@mixin editor-label-icon($icon: up-down-left-right) {
+@mixin editor-label-icon($icon: grip-dots-vertical) {
   position: relative;
 
   &:after {
     @include fa.base();
-    @include fa.content($icon, light);
+    @include fa.content($icon);
     position: absolute;
     z-index: 10001;
     top: 0;
