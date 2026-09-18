@@ -289,7 +289,7 @@ table {
     &.cut {
       padding: 0;
       &:not([class*='nocut']) {
-        border-bottom-color: transparent;
+        border-color: transparent;
       }
     }
 
