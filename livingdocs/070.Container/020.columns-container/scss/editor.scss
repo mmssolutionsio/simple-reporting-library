@@ -6,5 +6,5 @@
   border-top: 1px solid #{srl.colors-primary-1000()};
   border-bottom: 1px solid #{srl.colors-primary-1000()};
 
-  @include srl.helpers-editor-label('Layout column container');
+  @include srl.helpers-editor-label-icon();
 }
