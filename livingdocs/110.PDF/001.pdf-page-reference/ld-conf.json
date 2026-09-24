@@ -1,6 +1,7 @@
 {
   "name": "pdf-page-reference",
   "label": "PDF page reference",
+  "description": "Reference to a full PDF page.",
   "properties": ["pdf-hide-page-margin-boxes"],
   "directives": {
     "nswow-pdf": {

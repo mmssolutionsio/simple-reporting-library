@@ -1,1 +1,14 @@
+@use "srl";
 @use "web";
+
+.srl-table__placeholder {
+  border-top: 1px solid #{srl.colors-primary-1000()};
+  border-bottom: 1px solid #{srl.colors-primary-1000()};
+  text-align: center;
+  @include srl.spacer-margin-block(1600);
+}
+
+.srl-table__placeholder-text {
+  @include srl.typography-editor-label-text();
+  @extend %srl-regular-width;
+}

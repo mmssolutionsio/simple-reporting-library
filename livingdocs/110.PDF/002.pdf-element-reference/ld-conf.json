@@ -1,6 +1,7 @@
 {
   "name": "pdf-element-reference",
   "label": "PDF element reference",
+  "description": "Reference to a partial area of a PDF.",
   "properties": [
     "pdf-spacer-before",
     "pdf-spacer-after"
