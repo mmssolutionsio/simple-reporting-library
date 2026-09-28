@@ -368,6 +368,98 @@ async function finalizeXbrl() {
 }
 
 /**
+ * Copies the files of a target folder (e.g. .output/pdf) directly into .output,
+ * so all files that have to be uploaded to nswow are in one place.
+ *
+ * @param {string} target - The name of the target folder in .output.
+ */
+function copyToOutputRoot(target) {
+  const targetDir = join(outputPath, target);
+  try {
+    statSync(targetDir);
+    cpSync(targetDir, outputPath, { recursive: true });
+    console.log(
+      `${target} files have been copied to ${relative(folders.root, outputPath)}`,
+    );
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+/**
+ * Builds the font styles from src/assets/fonts into .output/fonts.
+ * They are needed by the ldd and pdf builds.
+ *
+ * @returns {Promise<boolean>} - A Promise that resolves to true if the fonts are built or there are none, false otherwise.
+ */
+async function buildFonts() {
+  const fontFiles = await glob(
+    join(folders.srlAssets, 'fonts', '**', '*.scss'),
+    {
+      withFileTypes: true,
+    },
+  );
+
+  if (!fontFiles.length) {
+    return true;
+  }
+
+  console.log('\n\nBuild fonts');
+  buildVariables.system.environment = 'production';
+  buildVariables.system.build = 'editor';
+  buildVariables.system['size-unit'] = 'rem';
+
+  await checkFolders();
+
+  const importPath = join(folders.srlImports, 'fonts');
+  mkdirSync(importPath, { recursive: true });
+  const importFile = join(importPath, 'style.scss');
+
+  const importFonts = [];
+  fontFiles.forEach((f) => {
+    importFonts.push(`../../../${f.relativePosix()}`);
+  });
+  writeFileSync(
+    importFile,
+    `@use "` + importFonts.join('" as *;\n@use "') + `" as *;\n`,
+  );
+
+  try {
+    await viteBuild({
+      css: {
+        preprocessorOptions: {
+          scss: {
+            api: 'modern-compiler',
+          },
+        },
+      },
+      base: './',
+      build: {
+        outDir: join(folders.srlOutput, 'fonts'),
+        assetsInlineLimit: 0,
+        assetsDir: '',
+        rollupOptions: {
+          input: importFile,
+          output: {
+            assetFileNames: (assetInfo) => {
+              if (/css/.test(assetInfo.name)) {
+                return '[name][extname]';
+              }
+              return '[name]-[hash][extname]';
+            },
+          },
+        },
+      },
+      publicDir: false,
+    });
+    return true;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+}
+
+/**
  * Builds Living Documentation (LDD) for a project.
  *
  * @async
@@ -439,61 +531,15 @@ async function buildLdd(version) {
           }
         }
 
-        const fontFiles = await glob(
-          join(folders.srlAssets, 'fonts', '**', '*.scss'),
-          {
-            withFileTypes: true,
-          },
-        );
-
-        if (fontFiles.length) {
-          console.log('\n\nBuild Livingdocs fonts');
-
-          const importPath = join(folders.srlImports, 'fonts');
-          try {
-            await statSync(importPath);
-          } catch (e) {
-            await mkdirSync(importPath, { recursive: true });
-          }
-          const importFile = join(importPath, 'style.scss');
-
-          const importFonts = [];
-          fontFiles.forEach((f) => {
-            importFonts.push(`../../../${f.relativePosix()}`);
-          });
-          await writeFileSync(
-            importFile,
-            `@use "` + importFonts.join('" as *;\n@use "') + `" as *;\n`,
+        const fontsDir = join(folders.srlOutput, 'fonts');
+        try {
+          statSync(fontsDir);
+          const lddFontsDir = join(folders.srlOutput, 'ldd', 'fonts');
+          cpSync(fontsDir, lddFontsDir, { recursive: true });
+          console.log(
+            `Fonts folder has been copied to ${relative(folders.root, lddFontsDir)}`,
           );
-
-          await viteBuild({
-            css: {
-              preprocessorOptions: {
-                scss: {
-                  api: 'modern-compiler',
-                },
-              },
-            },
-            base: './',
-            build: {
-              outDir: join(folders.srlOutput, 'ldd', 'fonts'),
-              assetsInlineLimit: 0,
-              assetsDir: '',
-              rollupOptions: {
-                input: importFile,
-                output: {
-                  assetFileNames: (assetInfo) => {
-                    if (/css/.test(assetInfo.name)) {
-                      return '[name][extname]';
-                    }
-                    return '[name]-[hash][extname]';
-                  },
-                },
-              },
-            },
-            publicDir: false,
-          });
-        }
+        } catch (e) {}
 
         console.log('\n\nBuild Livingdocs design.json');
         await writeLivingDocsJson();
@@ -829,7 +875,13 @@ async function build(version, options = {}) {
 
 
 
-    await cleanOutput();
+    if (options.clean !== false) {
+      await cleanOutput();
+    }
+
+    if (has('pdf') || has('ldd')) {
+      await buildFonts();
+    }
 
     if (has('app')) {
       await buildApp();
@@ -837,10 +889,12 @@ async function build(version, options = {}) {
 
     if (has('pdf')) {
       await buildPdf();
+      copyToOutputRoot('pdf');
     }
 
     if (has('word')) {
       await buildWord();
+      copyToOutputRoot('word');
     }
 
     if (has('xbrl') || has('xhtml')) {
@@ -860,6 +914,7 @@ async function build(version, options = {}) {
 
     if (has('xbrl') || has('xhtml')) {
       await finalizeXbrl();
+      copyToOutputRoot('xbrl');
     }
 
     if (has('ldd')) {
@@ -968,23 +1023,23 @@ async function mapScss() {
     const output = {
       app: [
         `"../../srl/config" as *`,
-        `"@multivisio/nswow/scss/init-root.scss" as *`,
+        `"@simple-reporting/base/scss/init-root.scss" as *`,
       ],
       ldd: [
         `"../../srl/config" as *`,
-        `"@multivisio/nswow/scss/init-root.scss" as *`,
+        `"@simple-reporting/base/scss/init-root.scss" as *`,
       ],
       pdf: [
         `"../../srl/config" as *`,
-        `"@multivisio/nswow/scss/init-root.scss" as *`,
+        `"@simple-reporting/base/scss/init-root.scss" as *`,
       ],
       word: [
         `"../../srl/config" as *`,
-        `"@multivisio/nswow/scss/init-root.scss" as *`,
+        `"@simple-reporting/base/scss/init-root.scss" as *`,
       ],
       xbrl: [
         `"../../srl/config" as *`,
-        `"@multivisio/nswow/scss/init-root.scss" as *`,
+        `"@simple-reporting/base/scss/init-root.scss" as *`,
       ],
     };
 
@@ -1129,32 +1184,32 @@ async function mapScss() {
       join(folders.srlImports, 'app.scss'),
       `@use ` +
       output.app.join(';\n@use ') +
-      `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
+      `;\n@use "@simple-reporting/base/scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'ldd.scss'),
       `@use ` +
       output.ldd.join(';\n@use ') +
-      `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
+      `;\n@use "@simple-reporting/base/scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'pdf.scss'),
       `@use ` +
       output.pdf.join(';\n@use ') +
-      `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
+      `;\n@use "@simple-reporting/base/scss/core-styles.scss" as *;\n`,
     );
     await writeFileSync(
       join(folders.srlImports, 'word.scss'),
       `@use ` +
       output.word.join(';\n@use ') +
-      `;\n@use "@multivisio/nswow/scss/core-styles.scss" as *;\n`,
+      `;\n@use "@simple-reporting/base/scss/core-styles.scss" as *;\n`,
     );
 
     await writeFileSync(
       join(folders.srlImports, 'xbrl.scss'),
       `@use ` +
       output.xbrl.join(`;\n@use `) +
-      `;\n@use "@multivisio/nswow/scss/xbrl-core-styles.scss" as *;\n`,
+      `;\n@use "@simple-reporting/base/scss/xbrl-core-styles.scss" as *;\n`,
     );
 
     return true;

@@ -1,5 +1,5 @@
 {
-  "name": "@multivisio/nswow",
+  "name": "@simple-reporting/base",
   "version": "1.0.55",
   "description": "Manage srl templates, build and publish",
   "repository": {
