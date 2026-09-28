@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import VueDevTools from 'vite-plugin-vue-devtools'
-import viteSrlPlugin from '@multivisio/nswow/plugins/viteSrlPlugin.js'
+import viteSrlPlugin from '@simple-reporting/base/plugins/viteSrlPlugin.js'
 import { fileURLToPath, URL } from 'node:url'
 import svgLoader from 'vite-svg-loader'
 
