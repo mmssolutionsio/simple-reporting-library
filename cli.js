@@ -85,6 +85,7 @@ commander
     '-t, --target <targets>',
     'Comma separated targets: app,pdf,word,xbrl,ldd (default: all)'
   )
+  .option('--no-clean', 'Do not clean the output folder before building')
   .action(async (version, options) => {
     await build(version, options);
   });
