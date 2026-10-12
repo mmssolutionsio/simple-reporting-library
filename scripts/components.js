@@ -2,7 +2,8 @@ import { createRequire } from 'node:module';
 import { join } from 'node:path/posix';
 import { glob } from 'glob';
 import { copy } from 'fs-extra';
-import { rm, statSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
+import { statSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
+import { rm } from 'node:fs/promises';
 import { lddGroupNames } from './utils.js';
 import { map } from './build.js';
 import folders from './folders.js';
@@ -203,17 +204,14 @@ async function removeGroups() {
 
         prompt.run().then(async (remove) => {
           if (remove) {
-            oKeys.forEach(async (k) => {
-              await rm(
-                join(folders.ld, groups[k]),
-                { recursive: true, force: true },
-                (err) => {
-                  if (err) {
-                    console.error(err);
-                  }
-                },
-              );
-            });
+            await Promise.all(
+              oKeys.map((k) =>
+                rm(join(folders.ld, groups[k]), {
+                  recursive: true,
+                  force: true,
+                }),
+              ),
+            );
             await map();
             console.log('Groups removed!');
           }
@@ -280,17 +278,14 @@ async function removeComponents() {
 
         prompt.run().then(async (remove) => {
           if (remove) {
-            oKeys.forEach(async (k) => {
-              await rm(
-                join(folders.ld, livingdocs[k]),
-                { recursive: true, force: true },
-                (err) => {
-                  if (err) {
-                    console.error(err);
-                  }
-                },
-              );
-            });
+            await Promise.all(
+              oKeys.map((k) =>
+                rm(join(folders.ld, livingdocs[k]), {
+                  recursive: true,
+                  force: true,
+                }),
+              ),
+            );
             await map();
             console.log('Components removed!');
           }
@@ -350,15 +345,7 @@ async function writeComponent(group, name) {
     const stat = await statSync(join(folders.ld, group, name));
     console.error(`Component ${group}/${name} already exist!`);
   } catch (e) {
-    try {
-      await statSync(join(folders.ld, group));
-    } catch (e) {
-      await mkdirSync(join(folders.ld, group));
-      await mkdirSync(join(folders.ld, group));
-    }
-
-    await mkdirSync(join(folders.ld, group, name));
-    await mkdirSync(join(folders.ld, group, name, 'scss'));
+    mkdirSync(join(folders.ld, group, name, 'scss'), { recursive: true });
     await writeFileSync(
       join(folders.ld, group, name, `${componentName}.html`),
       `<p class="srl-grid srl-${componentName} srl-linkable">
