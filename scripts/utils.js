@@ -24,7 +24,7 @@ function lddGroupNames(name) {
     arrName.shift();
     name = arrName.join('.');
   }
-  return name.replace('_and_', ' / ').replace('_', ' ');
+  return name.replace('_and_', ' / ').replaceAll('_', ' ');
 }
 
 /**
