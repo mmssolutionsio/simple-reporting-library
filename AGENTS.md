@@ -20,6 +20,8 @@ There is no build step for the package itself. To exercise changes, use a consum
 
 Git workflow: branch from `main` as `feature/*`, commit there, and only push the branch when the work is done (never push without being asked). Do **not** create pull requests — merging and releasing are done manually by the maintainers.
 
+Bugs: whenever you find a bug in this repo (including incidental finds while working on something else), open a GitHub issue for it right away in `mmssolutionsio/simple-reporting-library` (`gh issue create`) without asking first — describe the bug, its location (`file:line`), how it shows, and a suggested fix if known.
+
 Releases: creating a GitHub release triggers `.github/workflows/npm-publish.yml`, which runs `scripts/doPublish.js -v <tag>`. `preparePublish.js` writes the version into `package.json` and the `dev/package.json` dependency, regenerates `scripts/**/*.d.ts` via the TypeScript compiler, then `npm publish` runs. Release tags must be plain `X.Y.Z` (no `v` prefix).
 
 ## Commands (consumer project, from README / `dev/package.json`)
