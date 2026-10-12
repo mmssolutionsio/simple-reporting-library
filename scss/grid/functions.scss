@@ -15,7 +15,7 @@
   @if not map.has-key(variables.$breakpoints, $breakpoint) {
     @error "Invalid breakpoint for container specified! Choose one of #{map.keys(variables.$breakpoints)}";
   }
-  @return system.root-style(#{variables.$variable-prefix}-breakpoint-#{$breakpoint});
+  @return system.root-style(#{variables.$variable-prefix}breakpoint-#{$breakpoint});
 }
 
 @function get-gutter-columns() {
