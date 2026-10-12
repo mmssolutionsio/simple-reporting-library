@@ -145,20 +145,20 @@ table {
     &[class*='lineall'] {
       border-right: (
         srl.system-root-style(srl-table-border-regular-width)
-        map.get($table-border-regular, style)
-        srl.colors-get(map.get($table-border-regular, color))
+          map.get($table-border-regular, style)
+          srl.colors-get(map.get($table-border-regular, color))
       );
       border-bottom: (
         srl.system-root-style(srl-table-border-regular-width)
-        map.get($table-border-regular, style)
-        srl.colors-get(map.get($table-border-regular, color))
+          map.get($table-border-regular, style)
+          srl.colors-get(map.get($table-border-regular, color))
       );
 
       &:first-child {
         border-left: (
           srl.system-root-style(srl-table-border-regular-width)
-          map.get($table-border-regular, style)
-          srl.colors-get(map.get($table-border-regular, color))
+            map.get($table-border-regular, style)
+            srl.colors-get(map.get($table-border-regular, color))
         );
       }
     }
@@ -166,20 +166,20 @@ table {
     &[class*='blineall'] {
       border-right: (
         srl.system-root-style(srl-table-border-bold-width)
-        map.get($table-border-bold, style)
-        srl.colors-get(map.get($table-border-bold, color))
+          map.get($table-border-bold, style)
+          srl.colors-get(map.get($table-border-bold, color))
       );
       border-bottom: (
         srl.system-root-style(srl-table-border-bold-width)
-        map.get($table-border-bold, style)
-        srl.colors-get(map.get($table-border-bold, color))
+          map.get($table-border-bold, style)
+          srl.colors-get(map.get($table-border-bold, color))
       );
 
       &:first-child {
         border-left: (
           srl.system-root-style(srl-table-border-bold-width)
-          map.get($table-border-bold, style)
-          srl.colors-get(map.get($table-border-bold, color))
+            map.get($table-border-bold, style)
+            srl.colors-get(map.get($table-border-bold, color))
         );
       }
     }
@@ -431,6 +431,29 @@ table {
           display: inline-block;
         }
       }
+    }
+  }
+
+  /*
+  lineall / blineall in the first row also draw the top border
+  (unless a top line class or .cut is set explicitly)
+  */
+  tr:first-child > th,
+  tr:first-child > td {
+    &[class*='lineall']:not([class*='linetop']):not(.cut) {
+      border-top: (
+        srl.system-root-style(srl-table-border-regular-width)
+          map.get($table-border-regular, style)
+          srl.colors-get(map.get($table-border-regular, color))
+      );
+    }
+
+    &[class*='blineall']:not([class*='linetop']):not(.cut) {
+      border-top: (
+        srl.system-root-style(srl-table-border-bold-width)
+          map.get($table-border-bold, style)
+          srl.colors-get(map.get($table-border-bold, color))
+      );
     }
   }
 }
