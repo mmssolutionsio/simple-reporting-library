@@ -117,6 +117,18 @@ img[src^="data:image/svg+xml"] {
   width: 100%
 }
 
+.srl-placeholder {
+  border-top: 1px solid #{srl.colors-primary-1000()};
+  border-bottom: 1px solid #{srl.colors-primary-1000()};
+  text-align: center;
+  @include srl.spacer-margin-block(1600);
+}
+
+.srl-placeholder__text {
+  @include srl.typography-editor-label-text();
+  @extend %srl-regular-width;
+}
+
 .srl-editor-component {
   @include srl.spacer-padding-block(200);
   @extend %srl-grid-base;
