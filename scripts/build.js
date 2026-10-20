@@ -1085,6 +1085,9 @@ async function mapScss() {
       output.word.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
     }
 
+    // Load shared editor styles before project and component overrides.
+    output.ldd.push('"@simple-reporting/base/scss/editor-core-styles.scss" as *');
+
     for (let x = 0; x < mainFiles.length; x++) {
       const alias = cleanupScssAlias(mainFiles[x].relativePosix());
       if (mainFiles[x].name === 'app.scss') {

@@ -40,3 +40,20 @@ Build all required files.
 | `npx srl add groups`        | Adds predefined groups and their components                                    |
 | `npx srl remove groups`     | Removes one or more groups                                                     |
 
+
+## Shared editor styles
+
+Shared editor styles live in `scss/editor-core-styles.scss` in this package.
+`mapScss()` automatically includes them in the Livingdocs (`ldd`) stylesheet,
+after the project's `general.scss` and before its `ldd.scss`, `editor.scss` and
+component styles. They are not included in app, PDF, Word or XBRL stylesheets.
+The shared styles use the project's SRL colors, typography and placeholders.
+
+Keep project-specific editor styles in `src/assets/scss/editor.scss`. These load
+after the shared editor styles and can override them at equal specificity.
+The project-specific `@use 'web';` import remains in that local file.
+
+When upgrading an existing project, remove duplicated shared rules from its
+local `editor.scss`, retaining intentional customizations and its imports. No
+manual import of the shared stylesheet is needed. Future shared changes arrive
+with package updates; rebuild and deploy the Livingdocs design to apply them.
