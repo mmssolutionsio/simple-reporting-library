@@ -994,6 +994,7 @@ async function mapIndexScss() {
     `@forward './colors' as colors-*;`,
     `@forward './typography' as typography-*;`,
     `@forward './helpers' as helpers-*;`,
+    `@forward './editor' as editor-*;`,
     `@forward './spacer' as spacer-*;`,
     `@forward "./button" as button-*;`,
     `@forward './meta';`,

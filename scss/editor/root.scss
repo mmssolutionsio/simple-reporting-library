@@ -1,0 +1,5 @@
+@use 'variables';
+@use '../system';
+
+// Reserved for editor-specific root styles, as in the other system modules.
+// Current editor styles reuse the existing color, spacer and typography tokens.
