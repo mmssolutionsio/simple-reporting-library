@@ -24,6 +24,7 @@
   box-shadow: none;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
+  display: inline;
 
   @if $icon != null {
     &::before {
