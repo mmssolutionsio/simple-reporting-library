@@ -129,6 +129,9 @@
 }
 
 @mixin core-styles {
+  .#{variables.$class-prefix}italic {
+    font-style: italic;
+  }
   .#{variables.$class-prefix}list-reset {
     @include list-reset;
   }

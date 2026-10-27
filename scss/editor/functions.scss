@@ -1,0 +1,19 @@
+@use 'sass:map';
+@use 'variables';
+@use '../colors';
+@use '../fa';
+
+@function color($role) {
+  @if not map.has-key(variables.$colors, $role) {
+    @error 'Invalid editor color role "#{$role}". Choose one of #{map.keys(variables.$colors)}.';
+  }
+  @return colors.get(map.get(variables.$colors, $role));
+}
+
+// Keep the same markers available with both Font Awesome Free and Pro.
+@function icon($preferred, $fallback) {
+  @if map.has-key(fa.$icons, $preferred) {
+    @return $preferred;
+  }
+  @return $fallback;
+}

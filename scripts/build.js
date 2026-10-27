@@ -994,6 +994,7 @@ async function mapIndexScss() {
     `@forward './colors' as colors-*;`,
     `@forward './typography' as typography-*;`,
     `@forward './helpers' as helpers-*;`,
+    `@forward './editor' as editor-*;`,
     `@forward './spacer' as spacer-*;`,
     `@forward "./button" as button-*;`,
     `@forward './meta';`,
@@ -1084,6 +1085,9 @@ async function mapScss() {
       output.pdf.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
       output.word.push(`"${relativePathToRoot}${f.relativePosix()}" as *`);
     }
+
+    // Load shared editor styles before project and component overrides.
+    output.ldd.push('"@simple-reporting/base/scss/editor-core-styles.scss" as *');
 
     for (let x = 0; x < mainFiles.length; x++) {
       const alias = cleanupScssAlias(mainFiles[x].relativePosix());

@@ -1,0 +1,248 @@
+@use 'variables';
+@use 'functions';
+@use '../spacer';
+@use '../typography';
+@use '../fa';
+@use '../colors';
+
+@mixin component-highlight {
+  /*
+    Overruling Livingdocs editor styles
+  */
+  .srl-article-root .doc-component-highlight {
+    outline: 1px solid functions.color('highlight');
+    border-radius: 0;
+  }
+}
+
+@mixin inline-marker($accent, $background, $icon: null) {
+  color: inherit;
+  background: $background;
+  border: 0;
+  padding: variables.$inline-marker-padding;
+  border-radius: variables.$inline-marker-radius;
+  box-shadow: none;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  display: inline;
+
+  @if $icon != null {
+    &::before {
+      @include fa.base;
+      @include fa.content($icon, solid);
+      display: inline-block;
+      width: 1em;
+      margin-inline: 0 0.3em;
+      color: $accent;
+      font-size: 0.72em;
+      vertical-align: 0.05em;
+      pointer-events: none;
+      user-select: none;
+    }
+  }
+}
+
+@mixin nowrap {
+  span.srl-nowrap {
+    --b: 1px; // Border thickness.
+    --c: #{functions.color('highlight')};
+    --w: 6px; // Corner length.
+    border: var(--b) solid #0000;
+    --_g: #0000 90deg, var(--c) 0;
+    --_p: var(--w) var(--w) border-box no-repeat;
+    background:
+      conic-gradient(from 90deg at top var(--b) left var(--b), var(--_g)) 0 0 /
+        var(--_p),
+      conic-gradient(from 180deg at top var(--b) right var(--b), var(--_g)) 100%
+        0 / var(--_p),
+      conic-gradient(from 0deg at bottom var(--b) left var(--b), var(--_g)) 0
+        100% / var(--_p),
+      conic-gradient(from -90deg at bottom var(--b) right var(--b), var(--_g))
+        100% 100% / var(--_p);
+  }
+}
+
+@mixin key-figure {
+  span.srl-key-figure {
+    @include inline-marker(
+      #6941c6,
+      #f4f3ff,
+      $icon: functions.icon('key-skeleton', 'key')
+    );
+  }
+}
+
+@mixin highlight {
+  span.srl-highlight {
+    color: colors.get('primary-1000');
+  }
+}
+
+@mixin temp-highlight {
+  span.srl-temp-highlight {
+    @include inline-marker(#854a0e, variables.$temp-highlight-color);
+  }
+}
+
+@mixin fact {
+  span.srl-fact {
+    @include inline-marker(#067647, #ecfdf3, $icon: database);
+  }
+}
+
+@mixin headings {
+  .srl-article-root {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    [role='heading'][aria-level='7'],
+    [role='heading'][aria-level='8'],
+    [role='heading'][aria-level='9'] {
+      .srl-grid__inner {
+        position: relative;
+        padding-top: 26px;
+
+        &::before {
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: block;
+          align-items: center;
+          width: max-content;
+          max-width: 100%;
+          min-height: 20px;
+          border: 1px solid #b2ddff;
+          border-radius: 999px;
+          background-color: #eff8ff;
+          color: #175cd3;
+          box-shadow: 0 1px 2px rgb(16 24 40 / 8%);
+          font-family: Inter, sans-serif;
+          font-size: 11px;
+          font-weight: 700;
+          line-height: 1;
+          letter-spacing: 0;
+          padding: 3px 8px;
+          text-transform: uppercase;
+          text-box-trim: trim-both;
+        }
+      }
+    }
+
+    h1 .srl-grid__inner::before {
+      content: 'Title h1';
+    }
+
+    h2 .srl-grid__inner::before {
+      content: 'Title h2';
+    }
+
+    h3 .srl-grid__inner::before {
+      content: 'Title h3';
+    }
+
+    h4 .srl-grid__inner::before {
+      content: 'Title h4';
+    }
+
+    h5 .srl-grid__inner::before {
+      content: 'Title h5';
+    }
+
+    h6 .srl-grid__inner::before {
+      content: 'Title h6';
+    }
+
+    [role='heading'][aria-level='7'] .srl-grid__inner::before {
+      content: 'Heading 7';
+    }
+
+    [role='heading'][aria-level='8'] .srl-grid__inner::before {
+      content: 'Heading 8';
+    }
+
+    [role='heading'][aria-level='9'] .srl-grid__inner::before {
+      content: 'Heading 9';
+    }
+  }
+}
+
+@mixin placeholders {
+  // Set width of placeholder image to 100%
+  img[src^='data:image/svg+xml'] {
+    width: 100%;
+  }
+
+  .srl-placeholder {
+    border-top: 1px solid #{functions.color('background')};
+    border-bottom: 1px solid #{functions.color('background')};
+    text-align: center;
+    @include spacer.margin-block(variables.$placeholder-spacing);
+  }
+
+  .srl-placeholder__text {
+    @include typography.get(variables.$label-typography);
+    @extend %srl-regular-width;
+  }
+}
+
+@mixin components {
+  .srl-editor-component {
+    @include spacer.padding-block(variables.$component-spacing);
+    @extend %srl-grid-base;
+
+    &.srl-pdf-pagebreak,
+    &.srl-pdf-columnbreak,
+    &.srl-anchor {
+      border-top: 1px solid #{functions.color('background')};
+      border-bottom: 1px solid #{functions.color('background')};
+    }
+
+    &.srl-pdf-publication-title,
+    &.srl-pdf-chapter-title {
+      border-bottom: 1px solid #{functions.color('background')};
+    }
+
+    .doc-editable.doc-no-placeholder:before {
+      display: none !important;
+    }
+  }
+
+  .srl-editor-component__text {
+    @extend %srl-regular-width;
+    display: flex;
+    flex-direction: column;
+
+    &:after {
+      order: -1;
+      display: block;
+      @include typography.get(variables.$label-typography);
+
+      .srl-anchor & {
+        content: 'Anchor:';
+      }
+
+      .srl-pdf-publication-title & {
+        content: 'PDF publication title:';
+      }
+
+      .srl-pdf-chapter-title & {
+        content: 'PDF chapter title:';
+      }
+    }
+  }
+}
+
+@mixin core-styles {
+  @include component-highlight;
+  @include temp-highlight;
+  @include nowrap;
+  @include key-figure;
+  @include highlight;
+  @include fact;
+  @include headings;
+  @include placeholders;
+  @include components;
+}

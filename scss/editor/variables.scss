@@ -1,0 +1,18 @@
+@use '../system';
+
+$variable-prefix: system.$variable-prefix !default;
+$class-prefix: system.$class-prefix !default;
+
+// Names of project color tokens, resolved when the styles are included.
+$colors: (
+  highlight: 'shade-200',
+  background: 'primary-1000',
+  text: 'white-1000',
+) !default;
+
+$temp-highlight-color: #fef7c3 !default;
+$inline-marker-padding: 0.1em 0.25em !default;
+$inline-marker-radius: 0.15em !default;
+$placeholder-spacing: 1600 !default;
+$component-spacing: 200 !default;
+$label-typography: 'editor-label-text' !default;

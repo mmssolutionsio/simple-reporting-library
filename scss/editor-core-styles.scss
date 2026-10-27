@@ -1,0 +1,6 @@
+// Load project configuration and shared placeholders before emitting editor CSS.
+@use 'srl';
+@use 'editor/root';
+@use 'editor';
+
+@include editor.core-styles;
