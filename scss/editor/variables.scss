@@ -7,12 +7,47 @@ $class-prefix: system.$class-prefix !default;
 $colors: (
   highlight: 'shade-200',
   background: 'primary-1000',
+  emphasis: 'primary-1000',
   text: 'white-1000',
+) !default;
+
+// Used when a project predates one of the editor color tokens above.
+$color-fallbacks: (
+  highlight: #d0d5dd,
+  background: #175cd3,
+  emphasis: #175cd3,
+  text: #fff,
 ) !default;
 
 $temp-highlight-color: #fef7c3 !default;
 $inline-marker-padding: 0.1em 0.25em !default;
 $inline-marker-radius: 0.15em !default;
 $placeholder-spacing: 1600 !default;
+$placeholder-spacing-fallback: 8rem !default;
 $component-spacing: 200 !default;
+$component-spacing-fallback: 1rem !default;
 $label-typography: 'editor-label-text' !default;
+$label-typography-fallbacks: (
+  font-family: (
+    Inter,
+    sans-serif,
+  ),
+  font-size: 0.875rem,
+  line-height: 1.5,
+  font-style: normal,
+  font-weight: 400,
+  letter-spacing: 0,
+) !default;
+$heading-label-typography: 'editor-heading-label-text' !default;
+$heading-label-typography-fallbacks: (
+  font-family: (
+    Inter,
+    sans-serif,
+  ),
+  font-size: 11px,
+  line-height: 1,
+  font-style: normal,
+  font-weight: 700,
+  letter-spacing: 0,
+  text-transform: uppercase,
+) !default;

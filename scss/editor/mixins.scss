@@ -1,9 +1,61 @@
 @use 'variables';
 @use 'functions';
-@use '../spacer';
-@use '../typography';
 @use '../fa';
-@use '../colors';
+@use '../grid';
+@use 'sass:map';
+
+@mixin typography($token, $fallbacks) {
+  font-family: var(
+    --#{variables.$variable-prefix}typo-#{$token}-font-family,
+    #{map.get($fallbacks, font-family)}
+  );
+  font-size: var(
+    --#{variables.$variable-prefix}typo-#{$token}-font-size,
+    #{map.get($fallbacks, font-size)}
+  );
+  line-height: var(
+    --#{variables.$variable-prefix}typo-#{$token}-line-height,
+    #{map.get($fallbacks, line-height)}
+  );
+  font-style: var(
+    --#{variables.$variable-prefix}typo-#{$token}-font-style,
+    #{map.get($fallbacks, font-style)}
+  );
+  font-weight: var(
+    --#{variables.$variable-prefix}typo-#{$token}-font-weight,
+    #{map.get($fallbacks, font-weight)}
+  );
+  letter-spacing: var(
+    --#{variables.$variable-prefix}typo-#{$token}-letter-spacing,
+    #{map.get($fallbacks, letter-spacing)}
+  );
+
+  @if map.has-key($fallbacks, text-transform) {
+    text-transform: var(
+      --#{variables.$variable-prefix}typo-#{$token}-text-transform,
+      #{map.get($fallbacks, text-transform)}
+    );
+  }
+}
+
+@mixin grid-base {
+  margin-left: auto;
+  margin-right: auto;
+  @include grid.container;
+  @include grid.row;
+}
+
+@mixin regular-width {
+  @include grid.col(4);
+  @include grid.col(4, phone-ls);
+  @include grid.col(8, tablet-pt);
+  @include grid.col(8, tablet-ls);
+  @include grid.offset(2, tablet-ls);
+  @include grid.col(6, desktop);
+  @include grid.offset(3, desktop);
+  @include grid.col(6, desktop-large);
+  @include grid.offset(3, desktop-large);
+}
 
 @mixin component-highlight {
   /*
@@ -43,7 +95,7 @@
 }
 
 @mixin nowrap {
-  span.srl-nowrap {
+  .srl-nowrap {
     --b: 1px; // Border thickness.
     --c: #{functions.color('highlight')};
     --w: 6px; // Corner length.
@@ -63,7 +115,7 @@
 }
 
 @mixin key-figure {
-  span.srl-key-figure {
+  .srl-key-figure {
     @include inline-marker(
       #6941c6,
       #f4f3ff,
@@ -73,19 +125,19 @@
 }
 
 @mixin highlight {
-  span.srl-highlight {
-    color: colors.get('primary-1000');
+  .srl-highlight {
+    color: functions.color('emphasis');
   }
 }
 
 @mixin temp-highlight {
-  span.srl-temp-highlight {
+  .srl-temp-highlight {
     @include inline-marker(#854a0e, variables.$temp-highlight-color);
   }
 }
 
 @mixin fact {
-  span.srl-fact {
+  .srl-fact {
     @include inline-marker(#067647, #ecfdf3, $icon: database);
   }
 }
@@ -119,13 +171,11 @@
           background-color: #eff8ff;
           color: #175cd3;
           box-shadow: 0 1px 2px rgb(16 24 40 / 8%);
-          font-family: Inter, sans-serif;
-          font-size: 11px;
-          font-weight: 700;
-          line-height: 1;
-          letter-spacing: 0;
+          @include typography(
+            variables.$heading-label-typography,
+            variables.$heading-label-typography-fallbacks
+          );
           padding: 3px 8px;
-          text-transform: uppercase;
           text-box-trim: trim-both;
         }
       }
@@ -179,19 +229,30 @@
     border-top: 1px solid #{functions.color('background')};
     border-bottom: 1px solid #{functions.color('background')};
     text-align: center;
-    @include spacer.margin-block(variables.$placeholder-spacing);
+    margin-block: functions.spacer(
+      variables.$placeholder-spacing,
+      variables.$placeholder-spacing-fallback
+    );
   }
 
   .srl-placeholder__text {
-    @include typography.get(variables.$label-typography);
-    @extend %srl-regular-width;
+    @include typography(
+      variables.$label-typography,
+      variables.$label-typography-fallbacks
+    );
+  }
+
+  .srl-placeholder__text:not(.srl-grid__inner) {
+    @include regular-width;
   }
 }
 
 @mixin components {
   .srl-editor-component {
-    @include spacer.padding-block(variables.$component-spacing);
-    @extend %srl-grid-base;
+    padding-block: functions.spacer(
+      variables.$component-spacing,
+      variables.$component-spacing-fallback
+    );
 
     &.srl-pdf-pagebreak,
     &.srl-pdf-columnbreak,
@@ -210,15 +271,21 @@
     }
   }
 
+  .srl-editor-component:not(.srl-grid) {
+    @include grid-base;
+  }
+
   .srl-editor-component__text {
-    @extend %srl-regular-width;
     display: flex;
     flex-direction: column;
 
     &:after {
       order: -1;
       display: block;
-      @include typography.get(variables.$label-typography);
+      @include typography(
+        variables.$label-typography,
+        variables.$label-typography-fallbacks
+      );
 
       .srl-anchor & {
         content: 'Anchor:';
@@ -232,6 +299,10 @@
         content: 'PDF chapter title:';
       }
     }
+  }
+
+  .srl-editor-component__text:not(.srl-grid__inner) {
+    @include regular-width;
   }
 }
 

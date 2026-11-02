@@ -51,12 +51,12 @@ The module follows the same structure as the other SCSS modules:
 
 - `index.scss` forwards variables, functions and mixins.
 - `variables.scss` defines configurable color tokens, spacing and label typography.
-- `functions.scss` resolves editor color roles to project colors.
+- `functions.scss` resolves editor color roles and spacing to CSS variables with
+  backwards-compatible fallback values.
 - `mixins.scss` provides separate mixins for component highlights, temporary
   highlights, nowrap markers, key figures, facts, headings, placeholders and helper
   components; `core-styles` includes all of them.
-- `root.scss` is reserved for editor root styles; currently existing project tokens
-  provide all required values.
+- `root.scss` is reserved for editor root styles.
 
 The generated `srl` module exposes these helpers with the `editor-` prefix,
 for example `srl.editor-color('highlight')`. Importing the module alone emits no
@@ -65,7 +65,12 @@ editor rules; the entry point handles the automatic inclusion below.
 `mapScss()` automatically includes them in the Livingdocs (`ldd`) stylesheet,
 after the project's `general.scss` and before its `ldd.scss`, `editor.scss` and
 component styles. They are not included in app, PDF, Word or XBRL stylesheets.
-The shared styles use the project's SRL colors, typography and placeholders.
+The shared styles use the project's SRL color, spacing and typography CSS
+variables when available. Built-in fallback values keep the editor stylesheet
+compilable for older projects that do not yet define tokens such as spacer
+`1600` or `editor-label-text`. The module does not extend project placeholders;
+instead it applies the SRL grid mixins directly to editor helper elements that do
+not already carry `.srl-grid` or `.srl-grid__inner`.
 
 Keep project-specific editor styles in `src/assets/scss/editor.scss`. These load
 after the shared editor styles and can override them at equal specificity.
