@@ -1,5 +1,6 @@
 {
   "name": "heading-level-8",
   "label": "Heading level 8",
-  "description": "Not semantically recommended."
+  "description": "Not semantically recommended.",
+  "properties": ["width-reduced", "pdf-spacer"]
 }
