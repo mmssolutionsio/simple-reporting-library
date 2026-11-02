@@ -38,23 +38,36 @@
   }
 }
 
+@function _has-grid-breakpoints() {
+  @return map.has-key(grid.$breakpoints, phone-pt) and
+    map.has-key(grid.$breakpoints, phone-ls) and
+    map.has-key(grid.$breakpoints, tablet-pt) and
+    map.has-key(grid.$breakpoints, tablet-ls) and
+    map.has-key(grid.$breakpoints, desktop) and
+    map.has-key(grid.$breakpoints, desktop-large);
+}
+
 @mixin grid-base {
-  margin-left: auto;
-  margin-right: auto;
-  @include grid.container;
-  @include grid.row;
+  @if _has-grid-breakpoints() {
+    margin-left: auto;
+    margin-right: auto;
+    @include grid.container;
+    @include grid.row;
+  }
 }
 
 @mixin regular-width {
-  @include grid.col(4);
-  @include grid.col(4, phone-ls);
-  @include grid.col(8, tablet-pt);
-  @include grid.col(8, tablet-ls);
-  @include grid.offset(2, tablet-ls);
-  @include grid.col(6, desktop);
-  @include grid.offset(3, desktop);
-  @include grid.col(6, desktop-large);
-  @include grid.offset(3, desktop-large);
+  @if _has-grid-breakpoints() {
+    @include grid.col(4);
+    @include grid.col(4, phone-ls);
+    @include grid.col(8, tablet-pt);
+    @include grid.col(8, tablet-ls);
+    @include grid.offset(2, tablet-ls);
+    @include grid.col(6, desktop);
+    @include grid.offset(3, desktop);
+    @include grid.col(6, desktop-large);
+    @include grid.offset(3, desktop-large);
+  }
 }
 
 @mixin component-highlight {

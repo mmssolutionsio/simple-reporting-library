@@ -70,7 +70,9 @@ variables when available. Built-in fallback values keep the editor stylesheet
 compilable for older projects that do not yet define tokens such as spacer
 `1600` or `editor-label-text`. The module does not extend project placeholders;
 instead it applies the SRL grid mixins directly to editor helper elements that do
-not already carry `.srl-grid` or `.srl-grid__inner`.
+not already carry `.srl-grid` or `.srl-grid__inner`, but only when the complete
+current SRL breakpoint set is available. Older projects with different or missing
+breakpoints receive no additional editor grid rules.
 
 Keep project-specific editor styles in `src/assets/scss/editor.scss`. These load
 after the shared editor styles and can override them at equal specificity.
