@@ -19,6 +19,31 @@ import { createLogger } from 'vite';
 const logger = createLogger();
 const require = createRequire(import.meta.url);
 
+/**
+ * Deterministic, locale-independent string comparison (by UTF-16 code units).
+ * readdirSync() and glob() return entries in filesystem-dependent order, which
+ * makes the generated livingdocs.config.json change between machines/runs.
+ * Zero-padded numeric prefixes (e.g. `010.Titles`) sort correctly with this.
+ * @param {string} a
+ * @param {string} b
+ * @returns {number}
+ */
+function compareNames(a, b) {
+  // normalize Windows separators so the order is identical on every OS
+  a = a.replaceAll('\\', '/');
+  b = b.replaceAll('\\', '/');
+  return a < b ? -1 : a > b ? 1 : 0;
+}
+
+/**
+ * Returns a sorted copy of a list of file / folder names or paths.
+ * @param {string[]} list
+ * @returns {string[]}
+ */
+function sorted(list) {
+  return [...list].sort(compareNames);
+}
+
 export async function mapLdd() {
   const lddJson = await readLivingDocsJson();
 
@@ -34,8 +59,8 @@ export async function mapLdd() {
  * @returns {Promise<void>}
  */
 async function mapProperties(lddJson) {
-  const propertiesFiles = await glob(
-    join(folders.ld, '**', 'properties.{json,js,ts}'),
+  const propertiesFiles = sorted(
+    await glob(join(folders.ld, '**', 'properties.{json,js,ts}')),
   );
   const mapProperties = {};
 
@@ -67,7 +92,7 @@ async function mapProperties(lddJson) {
  */
 async function mapGroups(lddJson) {
   const groupsPath = folders.ld;
-  const groups = readdirSync(groupsPath);
+  const groups = sorted(readdirSync(groupsPath));
 
   lddJson.groups = [];
 
@@ -89,7 +114,7 @@ async function mapGroups(lddJson) {
         rmSync(groupFolderPath);
       }
     } catch (error) {
-      logger.error(e);
+      logger.error(error);
       return false;
     }
   }
@@ -101,14 +126,16 @@ async function mapGroups(lddJson) {
  * @returns {string[]}
  */
 function getGroupComponents(groupFolderPath) {
-  const componentFolders = readdirSync(groupFolderPath);
+  const componentFolders = sorted(readdirSync(groupFolderPath));
   const components = [];
 
   for (let j = 0; j < componentFolders.length; j++) {
     const component = componentFolders[j];
 
     try {
-      const htmlPath = globSync(join(groupFolderPath, component, `*.html`));
+      const htmlPath = sorted(
+        globSync(join(groupFolderPath, component, `*.html`)),
+      );
       const ldConfPath = join(groupFolderPath, component, `ld-conf.json`);
 
       const htmlStat = statSync(htmlPath[0]);
@@ -127,7 +154,7 @@ function getGroupComponents(groupFolderPath) {
 
 async function mapComponents(lddJson) {
   const groupsPath = folders.ld;
-  const groups = readdirSync(groupsPath);
+  const groups = sorted(readdirSync(groupsPath));
 
   const lddComponents = [];
   const vueComponents = [];
@@ -136,12 +163,14 @@ async function mapComponents(lddJson) {
     const group = groups[groupIndex];
 
     const groupPath = join(groupsPath, group);
-    const components = readdirSync(groupPath);
+    const components = sorted(readdirSync(groupPath));
 
     components.forEach((component) => {
       // ldd static component
       try {
-        const htmlFile =  globSync(join(groupPath, component, '*.html'), { posix: true });
+        const htmlFile = sorted(
+          globSync(join(groupPath, component, '*.html'), { posix: true }),
+        );
         if (htmlFile.length) {
           const htmlPath = htmlFile[0];
           const ldConfPath = join(groupPath, component, `ld-conf.json`);
@@ -164,7 +193,9 @@ async function mapComponents(lddJson) {
 
       //   vue async component
       try {
-        const vueFiles = globSync(join(groupPath, component, '*.vue'), { posix: true });
+        const vueFiles = sorted(
+          globSync(join(groupPath, component, '*.vue'), { posix: true }),
+        );
         if (vueFiles.length) {
           vueFiles.forEach( c => {
             const vueFile = c.split('/').pop();
