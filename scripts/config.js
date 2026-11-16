@@ -44,6 +44,7 @@ export const baseComponentsToInstall = [
   '999.Properties/grid',
   '999.Properties/hide-quote-characters',
   '999.Properties/icon',
+  '999.Properties/invert-cover',
   '999.Properties/pdf-page-layouts',
   '999.Properties/pdf-spacer',
   '999.Properties/portrait-borders',

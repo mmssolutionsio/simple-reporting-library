@@ -25,6 +25,7 @@ import { mapLdd } from './ldd/mapLdd.js';
 import { LivingdocsDesignValidator } from './ldd/LivingdocsDesignValidator.js';
 import { camelCase } from './utils.js';
 import { stripMediaFromCssFile } from './css/stripMediaFromCss.js';
+import { writePdfOverlayPageRules } from './css/pdfOverlayPageRules.js';
 import { buildVariables } from './build/variables.js';
 import './dotenv.js';
 import { readJson } from 'fs-extra/esm';
@@ -742,6 +743,10 @@ async function buildPdfCustomer(customer) {
         }
       }
     } catch (e) {}
+
+    writePdfOverlayPageRules(lddPdfDir, cssReferences, customerTarget);
+    const overlayScript = join(customerName, 'custom.js');
+    if (!jsReferences.includes(overlayScript)) jsReferences.splice(1, 0, overlayScript);
 
     const pdfXmlStart = `<configuration xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n`;
     const pdfXmlEnd = `\n</configuration>`;

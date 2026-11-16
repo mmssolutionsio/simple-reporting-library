@@ -92,3 +92,23 @@ text color.
 Facts use `span.srl-fact`; enabling them in the toolbar is configured separately.
 Remove corresponding local demo/project marker styles when adopting these
 shared styles so they do not override future package updates.
+
+## PDF page rules
+
+The PDF entry imports its normal stylesheet and passes only compiled `@page`
+blocks to the page-reference color helper:
+
+```ts
+import '#imports/pdf.scss'
+import pdfPageRules from '#imports/pdf.scss?srl-page-rules'
+```
+
+The SRL Vite plugin extracts these blocks after SCSS compilation. The complete
+stylesheet remains in `pdf.css`; component styles, fonts and design tokens are
+not duplicated in `pdf.js`.
+
+Customer builds also extract page rules from `custom.css` and all additional
+CSS files registered from the customer's `public/` directory, in stylesheet
+load order. These small rule sets are prepended to the generated `custom.js`;
+no customer-specific imports are needed. Deploy the updated base `pdf.js` and
+rebuilt customer `custom.js` together when adopting this helper.
