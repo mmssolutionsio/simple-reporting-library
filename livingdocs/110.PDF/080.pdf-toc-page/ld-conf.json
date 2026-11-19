@@ -1,7 +1,10 @@
 {
   "name": "pdf-toc-page",
   "label": "ToC page",
-  "properties": ["pdf-hide-page-margin-boxes", "toc-page-type"],
+  "properties": [
+    "pdf-hide-page-margin-boxes",
+    "toc-page-type"
+  ],
   "directives": {
     "toc": {
       "allowedChildren": [
@@ -17,6 +20,12 @@
           "component": "pdf-toc-item"
         }
       ]
+    },
+    "background": {
+      "imageRatios": [
+        "a4"
+      ],
+      "allowOriginalRatio": false
     }
   }
 }

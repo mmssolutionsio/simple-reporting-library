@@ -1,0 +1,239 @@
+@use 'srl';
+@use 'sass:map';
+
+$columns: map.get(srl.$grid-columns, print);
+$gutter: srl.grid-get-gutter-column-gap();
+$flow-gap-token: map.get(srl.$spacer-margins, group, visual-media, all);
+@if $flow-gap-token == null {
+  $flow-gap-token: 800;
+}
+$flow-gap: srl.spacer-get($flow-gap-token);
+
+.srl-top-of-page,
+.srl-image--top-left-of-page,
+.srl-image--top-right-of-page {
+  float: -ro-top;
+}
+
+.srl-bottom-of-page,
+.srl-image--bottom-left-of-page,
+.srl-image--bottom-right-of-page {
+  float: -ro-bottom;
+}
+
+.srl-image.srl-pdf-image-float {
+  --srl-pdf-image-side-bleed: 0pt;
+  --srl-pdf-image-caption-size: var(
+    --srl-pdf-image-caption-width,
+    var(
+      --srl-pdf-image-span-caption-width,
+      calc(
+        (var(--srl-pdf-image-content-width) - (#{$columns - 1} * #{$gutter})) *
+          var(--srl-pdf-image-caption-columns, 2) / #{$columns} +
+          (var(--srl-pdf-image-caption-columns, 2) - 1) * #{$gutter}
+      )
+    )
+  );
+  display: flex;
+  flex-direction: column;
+  width: var(--srl-pdf-image-content-width, 100%);
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  break-inside: avoid;
+
+  &.srl-pdf-image-float--caption {
+    gap: var(--srl-pdf-image-caption-gap, #{srl.spacer-get(100)});
+  }
+
+  .srl-grid--media,
+  .srl-image__caption {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .srl-image__image-container,
+  .srl-image__caption-text {
+    width: var(--srl-pdf-image-selected-width);
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .srl-image__img {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .srl-image__image-container--mobile,
+  .srl-image__alt-text {
+    display: none;
+  }
+
+  &:not(.srl-pdf-image-float--caption) .srl-image__caption {
+    display: none;
+  }
+
+  &.srl-top-of-page,
+  &.srl-image--top-left-of-page,
+  &.srl-image--top-right-of-page {
+    margin-top: calc(-1 * var(--srl-pdf-image-top, 0pt));
+    // Sibling margins follow DOM order, not the visual order of page floats.
+    margin-bottom: var(--srl-pdf-image-flow-gap, #{$flow-gap});
+  }
+
+  &.srl-bottom-of-page,
+  &.srl-image--bottom-left-of-page,
+  &.srl-image--bottom-right-of-page {
+    margin-bottom: calc(-1 * var(--srl-pdf-image-bottom, 0pt));
+    margin-top: var(--srl-pdf-image-flow-gap, #{$flow-gap});
+  }
+
+  &.srl-bottom-of-page {
+    flex-direction: column-reverse;
+  }
+
+  &.srl-full-width.srl-top-of-page:not(.srl-pdf-image-float--span),
+  &.srl-full-width.srl-bottom-of-page:not(.srl-pdf-image-float--span) {
+    .srl-grid--media {
+      width: var(--srl-pdf-image-page-width);
+      margin-left: calc(-1 * var(--srl-pdf-image-left));
+      margin-right: calc(-1 * var(--srl-pdf-image-right));
+    }
+
+    .srl-image__image-container {
+      width: 100%;
+    }
+  }
+
+  &.srl-image--top-left-of-page,
+  &.srl-image--bottom-left-of-page,
+  &.srl-image--top-right-of-page,
+  &.srl-image--bottom-right-of-page {
+    flex-direction: row;
+    align-items: flex-start;
+    width: calc(
+      var(--srl-pdf-image-content-width) + var(--srl-pdf-image-side-bleed)
+    );
+    gap: 0;
+
+    .srl-grid--media {
+      flex: none;
+      width: calc(
+        var(--srl-pdf-image-selected-width) + var(--srl-pdf-image-side-bleed)
+      );
+    }
+
+    .srl-image__image-container {
+      width: 100%;
+    }
+
+    &.srl-pdf-image-float--caption {
+      gap: var(
+        --srl-pdf-image-caption-gap,
+        var(--srl-pdf-image-span-gap, #{$gutter})
+      );
+
+      .srl-grid--media {
+        max-width: calc(
+          100% - var(--srl-pdf-image-caption-size) - var(
+              --srl-pdf-image-caption-gap,
+              var(--srl-pdf-image-span-gap, #{$gutter})
+            )
+        );
+      }
+    }
+
+    .srl-image__caption {
+      flex: none;
+      width: var(--srl-pdf-image-caption-size);
+    }
+
+    .srl-image__caption-text {
+      width: 100%;
+    }
+  }
+
+  &.srl-image--top-left-of-page,
+  &.srl-image--bottom-left-of-page {
+    --srl-pdf-image-side-bleed: var(--srl-pdf-image-left, 0pt);
+    margin-left: calc(-1 * var(--srl-pdf-image-left, 0pt));
+  }
+
+  &.srl-image--top-right-of-page,
+  &.srl-image--bottom-right-of-page {
+    --srl-pdf-image-side-bleed: var(--srl-pdf-image-right, 0pt);
+    flex-direction: row-reverse;
+    margin-right: calc(-1 * var(--srl-pdf-image-right, 0pt));
+  }
+
+  &.srl-image--bottom-left-of-page,
+  &.srl-image--bottom-right-of-page {
+    align-items: flex-end;
+
+    .srl-image__caption {
+      align-self: flex-start;
+    }
+  }
+
+  &.srl-image--top-left-of-page,
+  &.srl-image--top-right-of-page {
+    .srl-image__caption {
+      align-self: flex-end;
+    }
+  }
+
+  // A span covering all text columns leaves no column for a side caption.
+  &.srl-pdf-image-float--stacked-caption {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+
+    &.srl-pdf-image-float--caption {
+      gap: var(--srl-pdf-image-caption-gap, #{srl.spacer-get(100)});
+    }
+
+    .srl-grid--media {
+      max-width: none;
+    }
+
+    &.srl-pdf-image-float--caption .srl-grid--media {
+      max-width: none;
+    }
+
+    .srl-image__caption {
+      width: var(--srl-pdf-image-span-caption-width);
+      align-self: flex-start;
+      margin-left: var(--srl-pdf-image-span-frame-left, 0pt);
+    }
+
+    &.srl-image--top-left-of-page,
+    &.srl-image--bottom-left-of-page {
+      .srl-image__caption {
+        margin-left: calc(
+          var(--srl-pdf-image-left) + var(--srl-pdf-image-span-frame-left, 0pt)
+        );
+      }
+    }
+
+    &.srl-image--top-right-of-page,
+    &.srl-image--bottom-right-of-page {
+      .srl-grid--media {
+        align-self: flex-end;
+      }
+    }
+
+    &.srl-image--bottom-left-of-page,
+    &.srl-image--bottom-right-of-page {
+      flex-direction: column-reverse;
+    }
+  }
+}

@@ -9,6 +9,16 @@
   "directives": {
     "nswow-pdf": {
       "service": "nswow-pdf"
+    },
+    "fallback-image": {
+      "imageRatios": [
+        "1:1",
+        "3:2",
+        "4:3",
+        "16:9",
+        "a4"
+      ],
+      "allowOriginalRatio": true
     }
   }
 }

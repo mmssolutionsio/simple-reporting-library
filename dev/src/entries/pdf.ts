@@ -5,6 +5,7 @@ import PDFNotes from 'srl/pdf/PDFNotes.ts'
 import PDFNestedContainers from 'srl/pdf/PDFNestedContainers.ts'
 import PDFSetPageNumbers from 'srl/pdf/PDFSetPageNumbers.ts'
 import PDFPageReferenceColors from 'srl/pdf/PDFPageReferenceColors.ts'
+import PDFImageFloats from 'srl/pdf/PDFImageFloats.ts'
 
 document.addEventListener('DOMContentLoaded', () => {
   const noteClass = '.srl-category-notes_group, .srl-category-notes_holding'
@@ -22,4 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 })
 
-window.addEventListener('load', () => PDFPageReferenceColors(pdfPageRules))
+window.addEventListener('load', () => {
+  PDFImageFloats(() => {
+    new PDFNestedContainers({ selector: '.srl-nested-container' })
+  })
+  PDFPageReferenceColors(pdfPageRules)
+})

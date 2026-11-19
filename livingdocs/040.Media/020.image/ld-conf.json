@@ -1,7 +1,12 @@
 {
   "name": "image",
   "label": "Image",
-  "properties": ["width-all", "pdf-spacer"],
+  "properties": [
+    "width-all",
+    "image-position-in-pdf",
+    "image-column-span-in-pdf",
+    "pdf-spacer"
+  ],
   "directives": {
     "show-alt-text": {
       "type": "toggle",

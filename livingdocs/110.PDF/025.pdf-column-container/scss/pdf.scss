@@ -4,6 +4,10 @@
   column-count: 2;
   column-gap: 5mm;
 
+  .srl-pdf-column-container.srl-pdf-columns-3 > .srl-grid__inner > & {
+    column-count: 3;
+  }
+
   .srl-columns-unbalanced & {
     column-fill: auto;
   }
