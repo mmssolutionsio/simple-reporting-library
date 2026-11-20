@@ -26,6 +26,7 @@ import { LivingdocsDesignValidator } from './ldd/LivingdocsDesignValidator.js';
 import { camelCase } from './utils.js';
 import { stripMediaFromCssFile } from './css/stripMediaFromCss.js';
 import { writePdfOverlayPageRules } from './css/pdfOverlayPageRules.js';
+import { customerXbrlBaseEntry } from './css/xbrlCustomerEntry.js';
 import { buildVariables } from './build/variables.js';
 import './dotenv.js';
 import { readJson } from 'fs-extra/esm';
@@ -609,7 +610,9 @@ async function buildPdfCustomer(customer) {
   try {
     const customerXbrlScssPath = join(customerDir, 'custom.scss');
     const customerXbrlTarget = join(lddXbrlDir, customerName);
-    const baseXbrlScssPath = join(folders.srlImports, 'xbrl.scss');
+    statSync(customerXbrlScssPath);
+    // Leaves out the project text fonts (e.g. Inter) when the customer brings its own.
+    const baseXbrlScssPath = customerXbrlBaseEntry(folders.srlImports, customerDir);
 
     const entries = [
       baseXbrlScssPath,
@@ -641,8 +644,8 @@ async function buildPdfCustomer(customer) {
     };
 
     try {
-      statSync(customerXbrlScssPath)
       await viteBuild(config);
+      await stripMediaFromCssFile(join(customerXbrlTarget, 'xbrl.css'));
     } catch (e) {
       console.error(e);
     }
@@ -913,12 +916,16 @@ async function build(version, options = {}) {
       new LivingdocsDesignValidator(livingdocsJson).IsDesignValid();
     }
 
+    // Finalize before the customer build copies .output/xbrl into .output/ldd/xbrl.
+    if (has('xbrl') || has('xhtml')) {
+      await finalizeXbrl();
+    }
+
     if (has('pdf') && options.customer) {
       await buildPdfCustomer(options.customer);
     }
 
     if (has('xbrl') || has('xhtml')) {
-      await finalizeXbrl();
       copyToOutputRoot('xbrl');
     }
 
