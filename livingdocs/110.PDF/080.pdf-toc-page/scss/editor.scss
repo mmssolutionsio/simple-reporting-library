@@ -9,6 +9,7 @@ $page-margin-left: srl.system-size-unit(map.get(srl.$meta, pdf, margin, left));
 
 .srl-pdf-toc-page {
   width: 595pt;
+  min-height: 842pt;
   margin-left: auto;
   margin-right: auto;
   border: 1px solid #{srl.colors-primary-1000()};

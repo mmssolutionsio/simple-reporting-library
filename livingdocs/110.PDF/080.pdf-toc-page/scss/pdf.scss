@@ -3,9 +3,29 @@
 
 .srl-pdf-toc-page {
   break-after: always;
+  // Use the image as the source for full-page decorations, not the content box.
+  background-size: 0 0;
+
+  &::before,
+  &::-ro-after-break {
+    content: '';
+    position: absolute;
+    -ro-position-origin: page -ro-page-box;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: inherit;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+  }
 }
 
 .srl-pdf-toc-page__inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-end;

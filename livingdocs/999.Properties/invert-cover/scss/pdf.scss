@@ -1,0 +1,21 @@
+@use "srl";
+
+@include srl.system-add-root-style(srl-typo-title-h1-pdf-font-color-base, srl.system-root-style(srl-typo-title-h1-pdf-font-color));
+@include srl.system-add-root-style(srl-typo-title-h2-pdf-font-color-base, srl.system-root-style(srl-typo-title-h2-pdf-font-color));
+
+.srl-pdf-cover {
+  &.srl-color-black-1000 {
+    --srl-typo-title-h1-pdf-font-color: #{srl.system-root-style(srl-color-black-1000, srl.system-root-style(srl-typo-title-h1-pdf-font-color-base))};
+    --srl-typo-title-h2-pdf-font-color: #{srl.system-root-style(srl-color-black-1000, srl.system-root-style(srl-typo-title-h2-pdf-font-color-base))};
+  }
+
+  &.srl-color-white-1000 {
+    --srl-typo-title-h1-pdf-font-color: #{srl.system-root-style(srl-color-white-1000, srl.system-root-style(srl-typo-title-h1-pdf-font-color-base))};
+    --srl-typo-title-h2-pdf-font-color: #{srl.system-root-style(srl-color-white-1000, srl.system-root-style(srl-typo-title-h2-pdf-font-color-base))};
+  }
+
+  &.srl-color-primary-1000 {
+    --srl-typo-title-h1-pdf-font-color: #{srl.system-root-style(srl-color-primary-1000, srl.system-root-style(srl-typo-title-h1-pdf-font-color-base))};
+    --srl-typo-title-h2-pdf-font-color: #{srl.system-root-style(srl-color-primary-1000, srl.system-root-style(srl-typo-title-h2-pdf-font-color-base))};
+  }
+}

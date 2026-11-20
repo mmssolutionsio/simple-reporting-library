@@ -2,10 +2,23 @@
   "name": "pdf-page-reference",
   "label": "PDF page reference",
   "description": "Reference to a full PDF page.",
-  "properties": ["pdf-hide-page-margin-boxes"],
+  "properties": [
+    "pdf-hide-page-margin-boxes",
+    "invert-cover"
+  ],
   "directives": {
     "nswow-pdf": {
       "service": "nswow-pdf"
+    },
+    "fallback-image": {
+      "imageRatios": [
+        "1:1",
+        "3:2",
+        "4:3",
+        "16:9",
+        "a4"
+      ],
+      "allowOriginalRatio": true
     }
   }
 }

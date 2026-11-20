@@ -1,0 +1,35 @@
+{
+  "image-position-in-pdf": {
+    "label": "Image position in PDF",
+    "type": "select",
+    "options": [
+      {
+        "caption": "Default"
+      },
+      {
+        "caption": "Top of the page",
+        "value": "srl-top-of-page"
+      },
+      {
+        "caption": "Bottom of the page",
+        "value": "srl-bottom-of-page"
+      },
+      {
+        "caption": "Top left of the page",
+        "value": "srl-image--top-left-of-page"
+      },
+      {
+        "caption": "Top right of the page",
+        "value": "srl-image--top-right-of-page"
+      },
+      {
+        "caption": "Bottom left of the page",
+        "value": "srl-image--bottom-left-of-page"
+      },
+      {
+        "caption": "Bottom right of the page",
+        "value": "srl-image--bottom-right-of-page"
+      }
+    ]
+  }
+}

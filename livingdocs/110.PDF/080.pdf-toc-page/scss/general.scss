@@ -6,3 +6,10 @@
 .srl-pdf-toc-page__title {
   @include srl.typography-toc-title();
 }
+
+.srl-pdf-toc-page {
+  background-image: var(--xlarge-url, none);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

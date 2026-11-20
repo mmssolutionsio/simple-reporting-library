@@ -1,0 +1,9 @@
+// Keep the stored color utility classes from changing the editor preview.
+.srl-pdf-cover,
+.srl-pdf-page {
+  &.srl-color-black-1000,
+  &.srl-color-white-1000,
+  &.srl-color-primary-1000 {
+    color: inherit;
+  }
+}

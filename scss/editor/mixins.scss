@@ -239,12 +239,23 @@
   }
 
   .srl-placeholder {
+    width: 100%;
+    box-sizing: border-box;
     border-top: 1px solid #{functions.color('background')};
     border-bottom: 1px solid #{functions.color('background')};
     text-align: center;
     margin-block: functions.spacer(
       variables.$placeholder-spacing,
       variables.$placeholder-spacing-fallback
+    );
+  }
+
+  .srl-placeholder,
+  .srl-grid .srl-placeholder.srl-grid {
+    // Nested grid resets must not remove the placeholder's own padding.
+    padding-block: functions.spacer(
+      variables.$placeholder-padding,
+      variables.$placeholder-padding-fallback
     );
   }
 
@@ -262,10 +273,12 @@
 
 @mixin components {
   .srl-editor-component {
-    padding-block: functions.spacer(
-      variables.$component-spacing,
-      variables.$component-spacing-fallback
-    );
+    &:where(:not(.srl-placeholder)) {
+      padding-block: functions.spacer(
+        variables.$component-spacing,
+        variables.$component-spacing-fallback
+      );
+    }
 
     &.srl-pdf-pagebreak,
     &.srl-pdf-columnbreak,

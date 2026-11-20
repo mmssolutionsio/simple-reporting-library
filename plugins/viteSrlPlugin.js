@@ -16,6 +16,7 @@ import {
 } from '../scripts/build.js';
 import chalk from 'chalk';
 import { vueComponents } from '../scripts/vue/components.js';
+import { pdfPageRulesHooks } from './vitePdfPageRulesPlugin.js';
 
 /**
  * Determine Font Awesome type (free or pro) based on the presence of the pro package in node_modules
@@ -156,6 +157,7 @@ function triggerAction(callback) {
 function viteSrlPlugin() {
   return {
     name: 'vite-srl-plugin',
+    ...pdfPageRulesHooks(),
     config(config) {
 
       config.base = './';

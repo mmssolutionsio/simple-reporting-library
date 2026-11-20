@@ -1,0 +1,12 @@
+{
+  "image-column-span-in-pdf": {
+    "label": "Image column span in PDF",
+    "type": "select",
+    "options": [
+      { "caption": "Default (image width)" },
+      { "caption": "1 text column", "value": "srl-pdf-image-span-1" },
+      { "caption": "2 text columns", "value": "srl-pdf-image-span-2" },
+      { "caption": "All text columns", "value": "srl-pdf-image-span-all" }
+    ]
+  }
+}

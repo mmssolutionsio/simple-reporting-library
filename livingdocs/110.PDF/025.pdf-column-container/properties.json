@@ -1,4 +1,17 @@
 {
+  "pdf-column-count": {
+    "label": "Number of columns",
+    "type": "select",
+    "options": [
+      {
+        "caption": "2 columns (default)"
+      },
+      {
+        "caption": "3 columns",
+        "value": "srl-pdf-columns-3"
+      }
+    ]
+  },
   "column-behaviour": {
     "label": "Column behaviour",
     "type": "select",

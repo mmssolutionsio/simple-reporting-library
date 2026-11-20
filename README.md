@@ -47,6 +47,10 @@ Shared editor styles live in the `scss/editor/` module. The entry point
 `scss/editor-core-styles.scss` loads the project configuration and placeholders
 and includes the module's `core-styles` mixin.
 
+Placeholders own their full width and vertical padding (`$placeholder-padding`,
+spacer `200` by default). `$placeholder-spacing` controls their outer margins.
+The additional `srl-editor-component` class is not required for placeholder padding.
+
 The module follows the same structure as the other SCSS modules:
 
 - `index.scss` forwards variables, functions and mixins.
@@ -92,3 +96,77 @@ text color.
 Facts use `span.srl-fact`; enabling them in the toolbar is configured separately.
 Remove corresponding local demo/project marker styles when adopting these
 shared styles so they do not override future package updates.
+
+## PDF page rules
+
+The PDF entry imports its normal stylesheet and passes only compiled `@page`
+blocks to the page-reference color helper:
+
+```ts
+import '#imports/pdf.scss'
+import pdfPageRules from '#imports/pdf.scss?srl-page-rules'
+```
+
+The SRL Vite plugin extracts these blocks after SCSS compilation. The complete
+stylesheet remains in `pdf.css`; component styles, fonts and design tokens are
+not duplicated in `pdf.js`.
+
+Customer builds also extract page rules from `custom.css` and all additional
+CSS files registered from the customer's `public/` directory, in stylesheet
+load order. These small rule sets are prepended to the generated `custom.js`;
+no customer-specific imports are needed. Deploy the updated base `pdf.js` and
+rebuilt customer `custom.js` together when adopting this helper.
+
+The PDF TOC page supports an optional `background` image with the existing `a4`
+portrait crop. PDFreactor repeats the image across every page of a split TOC,
+including the page margins, using page-fragment decorations. TOC content keeps
+its normal layout, and surrounding pages do not receive the image.
+
+Both PDF reference components support an optional `fallback-image` upload for
+web, Word, XHTML/XBRL and translate-plus output. The PDF include is removed from
+these channels; the image is removed from PDF output. Images can keep their
+original ratio or use one of the configured crops, including A4.
+
+The image component exposes the shared `image-position-in-pdf` property. Default
+keeps the existing layout. Top/Bottom use PDFreactor page floats, with the image
+touching the corresponding trim edge. The caption appears below a top image and
+above a bottom image. The four corner options extend the image to the respective
+horizontal trim edge and place the caption beside it, toward the page center.
+Upper corner captions align with the image's bottom edge; lower corner captions
+align with its top edge.
+
+`image-column-span-in-pdf` controls the width of a page float independently of
+its position: Default, one text column, two text columns, or all text columns.
+The helper reads the original flowing/fixed column container and its actual gap
+before lifting the image. Two columns in a three-column container therefore
+leave exactly one caption column. The image extends from that grid to the page
+edge. Spans covering all columns use a caption below top images or above bottom
+images. Without a multi-column context the existing image width is retained.
+The Default position remains in normal flow and does not apply this span option.
+
+The PDF column container exposes `pdf-column-count`: two columns by default,
+or three columns (`srl-pdf-columns-3`). The selected count applies only to that
+container's own content, so nested containers keep their independent selection.
+Balanced/unbalanced filling remains a separate option for either column count.
+
+The PDF entry calls `PDFImageFloats` in `load`, before page-reference colors.
+The helper lifts positioned images out of nested column containers, splitting
+their ancestor shells without duplicating content or IDs. Original image widths
+are measured before lifting. Actual page dimensions and margins are read from
+PDFreactor, including customer overlays and different page formats. Native floats
+reserve text space; this also works with two or three columns. Other output
+channels keep their existing image layout.
+Multiple images at the same edge stack in document order; only the outermost
+image extends into the page margin, preventing overlapping images.
+
+Corner caption widths default to two PDF grid columns. Customer overlays can set
+`--srl-pdf-image-caption-columns`, `--srl-pdf-image-caption-width` (an explicit
+length) and `--srl-pdf-image-caption-gap`. Without a caption, no caption width or
+gap is reserved. The `afterLift` callback lets the entry refresh nested-container
+margin markers before measuring the final pages.
+
+The float reserves space between the entire figure (including its caption) and
+the body text below top floats or above bottom floats. This defaults to the
+`spacer.margins.group.visual-media.all` token, falling back to spacer 800 when
+that group has no default. Customer overlays can override the distance with
+`--srl-pdf-image-flow-gap`, independently of the image-to-caption gap.
