@@ -24,3 +24,11 @@ li {
 @include index.typography-core-styles;
 @include index.spacer-core-styles;
 @include index.helpers-core-styles;
+
+@if variables.$build == pdf {
+  // PDFreactor preserves the first block's top margin after a forced break.
+  .srl-pdf-columnbreak + *,
+  .srl-pdf-pagebreak + * {
+    margin-top: 0 !important;
+  }
+}
