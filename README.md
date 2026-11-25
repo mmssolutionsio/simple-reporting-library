@@ -157,6 +157,20 @@ all-column widths in normal text flow. Wide and Full reserve a full row, and
 Wide occupies only two columns of that row in a three-column container. Full
 fills the column frame. Page-edge placement is controlled by the wrapper.
 
+**PDF reading order** on the PDF column container adds an optional
+column-by-column flow around one inline Wide image. It uses the standard
+layout to measure the image and the text frame, then feeds the paragraphs
+through five PDFreactor regions. The left and middle columns continue below
+the image, and the right column runs from top to bottom. The image and its
+caption keep their original position.
+
+The option is limited to a single rendered page with three populated columns,
+one inline Wide image, and paragraphs before and after it. PDFreactor keeps the
+standard flow if the container spans pages, the required columns or content
+are missing, or the trial layout overflows a region or shifts the image. A
+multi-page region flow would need to create continuation regions and handle
+pagination explicitly.
+
 The PDF entry calls `PDFImageFloats` in `load`, before page-reference colors.
 For a placement wrapper, it copies the source column count and gap and lifts
 the wrapper into page flow by splitting the ancestor shells. CSS lays out the

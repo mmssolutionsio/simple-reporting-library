@@ -43,3 +43,25 @@ $image-flow-gap: map.get(srl.$spacer-margins, group, visual-media, all) or 800;
     display: block;
   }
 }
+
+.srl-pdf-column-container__content.srl-pdf-column-flow-active {
+  position: relative;
+  column-count: auto !important;
+
+  .srl-pdf-column-flow-region,
+  .srl-pdf-column-flow-image {
+    position: absolute;
+  }
+
+  .srl-pdf-column-flow-source > .srl-paragraph .srl-grid__inner,
+  .srl-pdf-column-flow-image > .srl-image,
+  .srl-pdf-column-flow-image .srl-grid--media,
+  .srl-pdf-column-flow-image .srl-image__image-container,
+  .srl-pdf-column-flow-image .srl-image__img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+}

@@ -2,20 +2,27 @@ import { afterEach, expect, test } from '@jest/globals';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
 
-const { outputText } = ts.transpileModule(
-  readFileSync(
-    new URL('../../srl/srl/pdf/PDFImageFloats.ts', import.meta.url),
-    'utf8',
-  ),
-  {
-    compilerOptions: {
-      target: ts.ScriptTarget.ES2022,
-      module: ts.ModuleKind.ESNext,
+function transpile(file) {
+  return ts.transpileModule(
+    readFileSync(new URL('../../srl/srl/pdf/' + file, import.meta.url), 'utf8'),
+    {
+      compilerOptions: {
+        target: ts.ScriptTarget.ES2022,
+        module: ts.ModuleKind.ESNext,
+      },
     },
-  },
-);
+  ).outputText;
+}
+
+const moduleURL = (source) =>
+  'data:text/javascript;base64,' + Buffer.from(source).toString('base64');
 const { default: PDFImageFloats, columnSpanWidths } = await import(
-  'data:text/javascript;base64,' + Buffer.from(outputText).toString('base64')
+  moduleURL(
+    transpile('PDFImageFloats.ts').replace(
+      './PDFColumnReadingFlow.ts',
+      moduleURL(transpile('PDFColumnReadingFlow.ts')),
+    ),
+  )
 );
 const originalWindow = globalThis.window;
 const originalDocument = globalThis.document;
@@ -76,7 +83,10 @@ function fixture(count = 1) {
     },
   };
   globalThis.window = { ro: { layout } };
-  globalThis.document = { querySelectorAll: () => figures };
+  globalThis.document = {
+    querySelectorAll: (selector) =>
+      selector.includes('flow-around-image') ? [] : figures,
+  };
   return { figures, reads, writes };
 }
 

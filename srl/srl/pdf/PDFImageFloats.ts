@@ -1,4 +1,6 @@
-interface LayoutRect {
+import PDFColumnReadingFlow from './PDFColumnReadingFlow.ts';
+
+export interface LayoutRect {
   top: number;
   right: number;
   bottom: number;
@@ -7,12 +9,13 @@ interface LayoutRect {
   height: number;
 }
 
-interface ImageLayout {
+export interface ImageLayout {
   forceRelayout?(): void;
   getBoxDescriptions(element: Element): Array<{
     pageIndex: number;
     getBorderRect(unit: string): LayoutRect;
     getContentRect?(unit: string): LayoutRect;
+    getMarginRect(unit: string): LayoutRect;
   }>;
   getPageDescription(index: number): {
     getContentRect(unit: string): LayoutRect;
@@ -319,6 +322,11 @@ export default function PDFImageFloats(afterLift?: () => void): void {
   const layout = (window as Window & { ro?: { layout: ImageLayout } }).ro
     ?.layout;
   if (!layout) return;
+  positionImages(layout, afterLift);
+  PDFColumnReadingFlow(layout);
+}
+
+function positionImages(layout: ImageLayout, afterLift?: () => void): void {
   const placements = liftPlacementContainers();
   const figures = Array.from(
     document.querySelectorAll<HTMLElement>(selector),
