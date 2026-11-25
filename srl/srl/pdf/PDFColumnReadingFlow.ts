@@ -50,71 +50,100 @@ function tryReadingFlow(
 
   const frames = layout.getBoxDescriptions(content);
   const images = layout.getBoxDescriptions(image);
-  if (frames.length !== 1 || images.length !== 1) return;
-  const [frame] = frames;
+  if (!frames.length || images.length !== 1) return;
   const [imageBox] = images;
-  if (imageBox.pageIndex !== frame.pageIndex) return;
+  const imagePage = frames.findIndex(
+    (frame) => frame.pageIndex === imageBox.pageIndex,
+  );
+  if (
+    imagePage < 0 ||
+    frames.some(
+      (frame, index) => frame.pageIndex !== frames[0].pageIndex + index,
+    )
+  )
+    return;
 
   const style = window.getComputedStyle(content);
   if (Number(style.getPropertyValue('column-count')) !== 3) return;
   const gap = parseFloat(style.getPropertyValue('column-gap')) * 0.75;
-  const area = frame.getContentRect?.('pt') ?? frame.getBorderRect('pt');
+  const areas = frames.map(
+    (frame) => frame.getContentRect?.('pt') ?? frame.getBorderRect('pt'),
+  );
+  const area = areas[imagePage];
   const picture = imageBox.getBorderRect('pt');
   const columnWidth = (area.width - 2 * gap) / 3;
   const step = columnWidth + gap;
-  const renderedColumns = new Set<number>();
-  for (const paragraph of paragraphs) {
-    const boxes = layout.getBoxDescriptions(paragraph);
-    if (!boxes.length || boxes.some((box) => box.pageIndex !== frame.pageIndex))
-      return;
-    for (const box of boxes) {
-      const rect = box.getBorderRect('pt');
-      const offset = rect.left - area.left;
-      const column = Math.round(offset / step);
-      if (near(offset, column * step) && column >= 0 && column < 3)
-        renderedColumns.add(column);
-    }
-  }
   if (
     !Number.isFinite(columnWidth) ||
     columnWidth <= 0 ||
-    renderedColumns.size !== 3 ||
+    areas.some((frame) => frame.width <= 2 * gap || frame.height <= 0) ||
     !near(picture.left, area.left) ||
     !near(picture.width, 2 * columnWidth + gap)
   )
     return;
 
-  const aboveGap = Math.max(0, picture.top - imageBox.getMarginRect('pt').top);
-  const belowGap = Math.max(
-    0,
-    imageBox.getMarginRect('pt').bottom - picture.bottom,
-  );
+  const renderedColumns = new Set<number>();
+  for (const paragraph of paragraphs) {
+    const boxes = layout.getBoxDescriptions(paragraph);
+    if (!boxes.length) return;
+    for (const box of boxes) {
+      if (box.pageIndex !== imageBox.pageIndex) continue;
+      const offset = box.getBorderRect('pt').left - area.left;
+      const column = Math.round(offset / step);
+      if (near(offset, column * step) && column >= 0 && column < 3)
+        renderedColumns.add(column);
+    }
+  }
+  if (renderedColumns.size !== 3) return;
+
+  const imageMargins = imageBox.getMarginRect('pt');
+  const aboveGap = Math.max(0, picture.top - imageMargins.top);
+  const belowGap = Math.max(0, imageMargins.bottom - picture.bottom);
   const topHeight = picture.top - area.top - aboveGap / 2;
   const bottomY = picture.bottom - area.top + belowGap / 2;
-  // Reserve room for more text beside the picture by shortening the lower
-  // left and middle regions by two lines when the line height is available.
+  // The single-page layout keeps two lines of extra capacity in the right column.
   const lineHeight =
     parseFloat(
       window.getComputedStyle(paragraphs[0]).getPropertyValue('line-height'),
     ) * 0.75;
-  const bottomHeight =
-    area.height - bottomY - (Number.isFinite(lineHeight) ? 2 * lineHeight : 0);
+  const reserve =
+    frames.length === 1 && Number.isFinite(lineHeight) ? 2 * lineHeight : 0;
+  const bottomHeight = area.height - bottomY - reserve;
   if (topHeight <= 0 || bottomHeight <= 0) return;
 
   const source = document.createElement('div');
   source.className = 'srl-pdf-column-flow-source';
-  const regions = [
-    [0, 0, topHeight],
-    [0, bottomY, bottomHeight],
-    [step, 0, topHeight],
-    [step, bottomY, bottomHeight],
-    [2 * step, 0, area.height],
-  ].map(([x, y, height]) => {
-    const region = document.createElement('div');
-    region.className = 'srl-pdf-column-flow-region';
-    region.style.setProperty('-ro-flow-from', flowName);
-    setBox(region, x, y, columnWidth, height);
-    return region;
+  const pages = areas.map((page, index) => {
+    const width = (page.width - 2 * gap) / 3;
+    const stride = width + gap;
+    const geometry =
+      index === imagePage
+        ? [
+            [0, 0, topHeight],
+            [0, bottomY, bottomHeight],
+            [stride, 0, topHeight],
+            [stride, bottomY, bottomHeight],
+            [2 * stride, 0, page.height],
+          ]
+        : [0, 1, 2].map((column) => [column * stride, 0, page.height]);
+    const regions = geometry.map(([x, y, height]) => {
+      const region = document.createElement('div');
+      region.className = 'srl-pdf-column-flow-region';
+      region.style.setProperty('-ro-flow-from', flowName);
+      setBox(region, x, y, width, height);
+      return region;
+    });
+    const frame = index === 0 ? content : document.createElement('div');
+    if (index > 0) {
+      frame.className =
+        content.className +
+        ' ' +
+        activeClass +
+        ' srl-pdf-column-flow-continuation';
+      frame.style.height = points(page.height);
+      frame.append(...regions);
+    }
+    return { frame, regions, pageIndex: frames[index].pageIndex };
   });
   const pictureFrame = document.createElement('div');
   pictureFrame.className = 'srl-pdf-column-flow-image';
@@ -124,6 +153,8 @@ function tryReadingFlow(
   const originalStyles = [content, ...paragraphs].map(
     (element) => [element, element.getAttribute('style')] as const,
   );
+  const outerContainer = content.parentElement?.parentElement;
+  const pagedClass = 'srl-pdf-column-flow-paged';
   let applied = false;
   try {
     for (const paragraph of paragraphs) {
@@ -132,48 +163,100 @@ function tryReadingFlow(
     }
     pictureFrame.appendChild(image);
     content.classList.add(activeClass);
-    content.style.height = points(area.height);
-    content.append(source, ...regions, pictureFrame);
+    if (pages.length > 1) outerContainer?.classList.add(pagedClass);
+    content.style.height = points(areas[0].height);
+    content.append(source, ...pages[0].regions);
+    for (let index = 1; index < pages.length; index++)
+      pages[index - 1].frame.after(pages[index].frame);
+    pages[imagePage].frame.appendChild(pictureFrame);
     layout.forceRelayout?.();
 
-    const placed = layout.getBoxDescriptions(content);
-    const renderedImage = layout.getBoxDescriptions(image)[0];
-    const regionBoxes = regions.map(
-      (region) => layout.getBoxDescriptions(region)[0],
-    );
-    applied =
-      placed.length === 1 &&
-      placed[0].pageIndex === frame.pageIndex &&
-      renderedImage?.pageIndex === frame.pageIndex &&
-      near(renderedImage.getBorderRect('pt').top, picture.top) &&
-      near(renderedImage.getBorderRect('pt').left, picture.left) &&
-      near(renderedImage.getBorderRect('pt').bottom, picture.bottom) &&
-      regionBoxes.every((box) => box?.pageIndex === frame.pageIndex) &&
-      paragraphs.every((paragraph) => {
-        const boxes = layout.getBoxDescriptions(paragraph);
-        return (
-          boxes.length > 0 &&
-          boxes.every(
-            (box) =>
-              box.pageIndex === frame.pageIndex &&
-              regionBoxes.some((region) =>
-                contains(
-                  region.getContentRect?.('pt') ?? region.getBorderRect('pt'),
-                  box.getBorderRect('pt'),
-                ),
-              ),
+    const inspect = () => {
+      const renderedImage = layout.getBoxDescriptions(image)[0];
+      if (
+        renderedImage?.pageIndex !== imageBox.pageIndex ||
+        !near(renderedImage.getBorderRect('pt').top, picture.top) ||
+        !near(renderedImage.getBorderRect('pt').left, picture.left) ||
+        !near(renderedImage.getBorderRect('pt').bottom, picture.bottom) ||
+        !near(renderedImage.getBorderRect('pt').width, picture.width) ||
+        pages.some(({ frame, pageIndex }, index) => {
+          const boxes = layout.getBoxDescriptions(frame);
+          const rect =
+            boxes[0]?.getContentRect?.('pt') ?? boxes[0]?.getBorderRect('pt');
+          return (
+            boxes.length !== 1 ||
+            boxes[0].pageIndex !== pageIndex ||
+            !rect ||
+            !contains(areas[index], rect) ||
+            !contains(rect, areas[index])
+          );
+        })
+      )
+        return null;
+
+      const regionBoxes = pages.flatMap(({ regions, pageIndex }, page) =>
+        regions.map((region) => {
+          const boxes = layout.getBoxDescriptions(region);
+          if (boxes.length !== 1 || boxes[0].pageIndex !== pageIndex)
+            return null;
+          const rect =
+            boxes[0].getContentRect?.('pt') ?? boxes[0].getBorderRect('pt');
+          const area = areas[page];
+          if (
+            !contains(area, rect) ||
+            !near(rect.left, area.left + parseFloat(region.style.left)) ||
+            !near(rect.top, area.top + parseFloat(region.style.top)) ||
+            !near(rect.width, parseFloat(region.style.width)) ||
+            !near(rect.height, parseFloat(region.style.height))
           )
-        );
-      });
+            return null;
+          return { page, pageIndex, rect };
+        }),
+      );
+      if (regionBoxes.some((box) => !box)) return null;
+
+      let lastRegion = -1;
+      for (const paragraph of paragraphs) {
+        const boxes = layout.getBoxDescriptions(paragraph);
+        if (!boxes.length) return null;
+        for (const box of boxes) {
+          const rect = box.getBorderRect('pt');
+          const index = regionBoxes.findIndex(
+            (region) =>
+              region?.pageIndex === box.pageIndex &&
+              contains(region.rect, rect),
+          );
+          if (index < 0 || index < lastRegion) return null;
+          lastRegion = index;
+        }
+      }
+      return regionBoxes[lastRegion]?.page ?? null;
+    };
+
+    const lastTextPage = inspect();
+    if (lastTextPage === null) return;
+
+    // The open third column can accommodate more text than the standard flow.
+    // Remove unused trailing pages, then check the whole layout again.
+    const lastPage = Math.max(lastTextPage, imagePage);
+    if (lastPage < pages.length - 1) {
+      for (const page of pages.splice(lastPage + 1)) page.frame.remove();
+      layout.forceRelayout?.();
+      if (inspect() !== lastTextPage) return;
+    }
+    applied = true;
   } finally {
     if (!applied) {
-      for (const node of [source, ...regions, pictureFrame]) node.remove();
+      for (const page of pages.slice(1)) page.frame.remove();
+      for (const node of [source, ...pages[0].regions, pictureFrame])
+        node.remove();
       for (const node of originalNodes) content.appendChild(node);
       for (const [element, style] of originalStyles) {
         if (style === null) element.removeAttribute('style');
         else element.setAttribute('style', style);
       }
       content.classList.remove(activeClass);
+      outerContainer?.classList.remove(pagedClass);
       layout.forceRelayout?.();
     }
   }

@@ -44,9 +44,21 @@ $image-flow-gap: map.get(srl.$spacer-margins, group, visual-media, all) or 800;
   }
 }
 
+.srl-pdf-column-container.srl-pdf-column-flow-paged {
+  display: block;
+
+  > .srl-grid__inner {
+    margin-left: auto;
+  }
+}
+
 .srl-pdf-column-container__content.srl-pdf-column-flow-active {
   position: relative;
   column-count: auto !important;
+
+  &.srl-pdf-column-flow-continuation {
+    break-before: page;
+  }
 
   .srl-pdf-column-flow-region,
   .srl-pdf-column-flow-image {

@@ -164,12 +164,12 @@ through five PDFreactor regions. The left and middle columns continue below
 the image, and the right column runs from top to bottom. The image and its
 caption keep their original position.
 
-The option is limited to a single rendered page with three populated columns,
-one inline Wide image, and paragraphs before and after it. PDFreactor keeps the
-standard flow if the container spans pages, the required columns or content
-are missing, or the trial layout overflows a region or shifts the image. A
-multi-page region flow would need to create continuation regions and handle
-pagination explicitly.
+The option requires three populated columns on the image page, one inline Wide
+image, and paragraphs before and after it. It builds continuation regions from
+the page frames in the standard layout, then discards any unused trailing
+frames. The original layout is restored if the required columns or content are
+missing, a continuation frame shifts, or text overflows or leaves the region
+sequence.
 
 The PDF entry calls `PDFImageFloats` in `load`, before page-reference colors.
 For a placement wrapper, it copies the source column count and gap and lifts
