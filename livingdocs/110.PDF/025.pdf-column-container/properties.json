@@ -31,7 +31,7 @@
     "options": [
       { "caption": "Standard" },
       {
-        "caption": "Column by column around a wide image",
+        "caption": "Natural flow",
         "value": "srl-pdf-columns-flow-around-image"
       }
     ]
