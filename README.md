@@ -160,12 +160,12 @@ fills the column frame. Page-edge placement is controlled by the wrapper.
 **PDF reading order** on the PDF column container adds an optional
 column-by-column flow around one inline Wide image. It uses the standard
 layout to measure the image and the text frame, then feeds the paragraphs
-through five PDFreactor regions. The left and middle columns continue below
-the image, and the right column runs from top to bottom. The image and its
-caption keep their original position.
+through PDFreactor regions. In both two- and three-column containers, the first
+two columns continue below the image. An optional third column runs from top to
+bottom beside the image. The image and its caption keep their original position.
 
-The option requires three populated columns on the image page, one inline Wide
-image, and paragraphs before and after it. It builds continuation regions from
+The option requires two or three populated columns on the image page, one inline
+Wide image, and paragraphs before and after it. It builds continuation regions from
 the page frames in the standard layout, then discards any unused trailing
 frames. The original layout is restored if the required columns or content are
 missing, a continuation frame shifts, or text overflows or leaves the region

@@ -64,19 +64,21 @@ function tryReadingFlow(
     return;
 
   const style = window.getComputedStyle(content);
-  if (Number(style.getPropertyValue('column-count')) !== 3) return;
+  const count = Number(style.getPropertyValue('column-count'));
+  if (count !== 2 && count !== 3) return;
   const gap = parseFloat(style.getPropertyValue('column-gap')) * 0.75;
   const areas = frames.map(
     (frame) => frame.getContentRect?.('pt') ?? frame.getBorderRect('pt'),
   );
   const area = areas[imagePage];
   const picture = imageBox.getBorderRect('pt');
-  const columnWidth = (area.width - 2 * gap) / 3;
+  const gutters = (count - 1) * gap;
+  const columnWidth = (area.width - gutters) / count;
   const step = columnWidth + gap;
   if (
     !Number.isFinite(columnWidth) ||
     columnWidth <= 0 ||
-    areas.some((frame) => frame.width <= 2 * gap || frame.height <= 0) ||
+    areas.some((frame) => frame.width <= gutters || frame.height <= 0) ||
     !near(picture.left, area.left) ||
     !near(picture.width, 2 * columnWidth + gap)
   )
@@ -90,11 +92,11 @@ function tryReadingFlow(
       if (box.pageIndex !== imageBox.pageIndex) continue;
       const offset = box.getBorderRect('pt').left - area.left;
       const column = Math.round(offset / step);
-      if (near(offset, column * step) && column >= 0 && column < 3)
+      if (near(offset, column * step) && column >= 0 && column < count)
         renderedColumns.add(column);
     }
   }
-  if (renderedColumns.size !== 3) return;
+  if (renderedColumns.size !== count) return;
 
   const imageMargins = imageBox.getMarginRect('pt');
   const aboveGap = Math.max(0, picture.top - imageMargins.top);
@@ -107,25 +109,26 @@ function tryReadingFlow(
       window.getComputedStyle(paragraphs[0]).getPropertyValue('line-height'),
     ) * 0.75;
   const reserve =
-    frames.length === 1 && Number.isFinite(lineHeight) ? 2 * lineHeight : 0;
+    count === 3 && frames.length === 1 && Number.isFinite(lineHeight)
+      ? 2 * lineHeight
+      : 0;
   const bottomHeight = area.height - bottomY - reserve;
   if (topHeight <= 0 || bottomHeight <= 0) return;
 
   const source = document.createElement('div');
   source.className = 'srl-pdf-column-flow-source';
   const pages = areas.map((page, index) => {
-    const width = (page.width - 2 * gap) / 3;
+    const width = (page.width - gutters) / count;
     const stride = width + gap;
-    const geometry =
-      index === imagePage
-        ? [
-            [0, 0, topHeight],
-            [0, bottomY, bottomHeight],
-            [stride, 0, topHeight],
-            [stride, bottomY, bottomHeight],
-            [2 * stride, 0, page.height],
-          ]
-        : [0, 1, 2].map((column) => [column * stride, 0, page.height]);
+    const geometry = [];
+    for (let column = 0; column < count; column++) {
+      const x = column * stride;
+      if (index === imagePage && column < 2) {
+        geometry.push([x, 0, topHeight], [x, bottomY, bottomHeight]);
+      } else {
+        geometry.push([x, 0, page.height]);
+      }
+    }
     const regions = geometry.map(([x, y, height]) => {
       const region = document.createElement('div');
       region.className = 'srl-pdf-column-flow-region';
