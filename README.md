@@ -152,6 +152,11 @@ or three columns (`srl-pdf-columns-3`). The selected count applies only to that
 container's own content, so nested containers keep their independent selection.
 Balanced/unbalanced filling remains a separate option for either column count.
 
+Images directly inside a PDF column container use the same one-, two- and
+all-column widths in normal text flow. Wide and Full reserve a full row, and
+Wide occupies only two columns of that row in a three-column container. Full
+fills the column frame. Page-edge placement is controlled by the wrapper.
+
 The PDF entry calls `PDFImageFloats` in `load`, before page-reference colors.
 For a placement wrapper, it copies the source column count and gap and lifts
 the wrapper into page flow by splitting the ancestor shells. CSS lays out the

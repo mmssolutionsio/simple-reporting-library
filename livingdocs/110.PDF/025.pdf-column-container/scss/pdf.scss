@@ -1,15 +1,42 @@
 @use 'srl';
+@use 'sass:map';
+
+$image-flow-gap: map.get(srl.$spacer-margins, group, visual-media, all) or 800;
 
 .srl-pdf-column-container__content {
   column-count: 2;
-  column-gap: 5mm;
+  column-gap: var(--srl-pdf-column-gap, 5mm);
 
   .srl-pdf-column-container.srl-pdf-columns-3 > .srl-grid__inner > & {
     column-count: 3;
+
+    > .srl-image.srl-wide-width {
+      width: calc((200% - var(--srl-pdf-column-gap, 5mm)) / 3);
+    }
   }
 
   .srl-columns-unbalanced & {
     column-fill: auto;
+  }
+
+  > .srl-image.srl-wide-width,
+  > .srl-image.srl-full-width {
+    // PDFreactor reserves the entire row for a spanner. Size the image
+    // independently so a Wide image can use two of three columns.
+    column-span: all;
+    margin-bottom: srl.spacer-get($image-flow-gap);
+  }
+
+  > .srl-image.srl-full-width {
+    .srl-grid--media,
+    .srl-image__image-container,
+    .srl-image__img {
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 
   > * {
