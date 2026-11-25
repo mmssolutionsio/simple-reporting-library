@@ -130,7 +130,7 @@ original ratio or use one of the configured crops, including A4.
 The **PDF placement container** (`pdf-placement-container`) goes directly
 inside a PDF column container and holds one image. Add both container components
 to consumer designs that use this feature. **Page placement** on the wrapper
-selects the top, bottom, or one of the four corners of the page content area.
+selects the top, bottom, or one of the four corners of the page.
 With **In text flow**, or when the wrapper does not contain exactly one image,
 the contents remain in normal flow.
 
@@ -141,8 +141,9 @@ the contents remain in normal flow.
 | Full        | 2           | 3             |
 
 The table applies only to actively placed images in the nested container. The
-image and caption stay within the page content area. At a corner, the caption
-uses the remaining columns towards the centre. At the top or bottom, and for
+image reaches the top or bottom trim edge. At a corner, it also extends across
+the selected side margin, and the caption uses the remaining columns towards
+the centre. At the top or bottom, and for
 full-span corners, the caption sits below a top image or above a bottom image.
 The existing Width rules still apply to images outside the placement layout.
 
@@ -154,7 +155,8 @@ Balanced/unbalanced filling remains a separate option for either column count.
 The PDF entry calls `PDFImageFloats` in `load`, before page-reference colors.
 For a placement wrapper, it copies the source column count and gap and lifts
 the wrapper into page flow by splitting the ancestor shells. CSS lays out the
-image and caption. Native PDFreactor page floats reserve space for the wrapper.
+image and caption. Native PDFreactor page floats reserve space for the wrapper,
+and the placement helper reads its destination page margins for the trim offsets.
 
 The older image position and span controls are no longer offered on Image.
 The legacy PDF float path remains available for already rendered markup that

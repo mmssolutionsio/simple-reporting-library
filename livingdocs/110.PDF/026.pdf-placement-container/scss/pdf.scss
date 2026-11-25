@@ -20,11 +20,13 @@ $flow-gap: map.get(srl.$spacer-margins, group, visual-media, all) or 800;
 
   &.srl-pdf-placement--top {
     float: -ro-top;
+    margin-top: calc(-1 * var(--srl-pdf-placement-bleed-vertical, 0pt));
     margin-bottom: srl.spacer-get($flow-gap);
   }
 
   &.srl-pdf-placement--bottom {
     float: -ro-bottom;
+    margin-bottom: calc(-1 * var(--srl-pdf-placement-bleed-vertical, 0pt));
     margin-top: srl.spacer-get($flow-gap);
   }
 
@@ -67,6 +69,22 @@ $flow-gap: map.get(srl.$spacer-margins, group, visual-media, all) or 800;
       margin: 0;
       padding: 0;
     }
+  }
+
+  &.srl-pdf-placement--left > .srl-image > .srl-grid--media,
+  &.srl-pdf-placement--right > .srl-image > .srl-grid--media {
+    width: calc(
+      var(--srl-placement-image-width) +
+        var(--srl-pdf-placement-bleed-side, 0pt)
+    );
+  }
+
+  &.srl-pdf-placement--left > .srl-image > .srl-grid--media {
+    margin-left: calc(-1 * var(--srl-pdf-placement-bleed-side, 0pt));
+  }
+
+  &.srl-pdf-placement--right > .srl-image > .srl-grid--media {
+    margin-right: calc(-1 * var(--srl-pdf-placement-bleed-side, 0pt));
   }
 
   &.srl-pdf-placement--top > .srl-image > .srl-image__caption {
