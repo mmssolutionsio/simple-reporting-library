@@ -208,17 +208,79 @@ function outerLayoutContainer(figure: HTMLElement): Element | null {
   return container;
 }
 
+// CSS page floats stay in their source fragmentation context. Move the wrapper
+// to page flow and carry over the source column count and gap before splitting.
+function liftPlacementContainers(): boolean {
+  const placements = [];
+  for (const placement of document.querySelectorAll<HTMLElement>(
+    '.srl-pdf-placement-container.srl-pdf-placement--top, .srl-pdf-placement-container.srl-pdf-placement--bottom',
+  )) {
+    const columns = placement.parentElement;
+    const image = placement.firstElementChild;
+    if (
+      !columns?.matches('.srl-pdf-column-container__content') ||
+      !image?.matches('.srl-image') ||
+      placement.childElementCount !== 1
+    )
+      continue;
+    const style = window.getComputedStyle(columns);
+    const count = Number(style.getPropertyValue('column-count'));
+    if (count !== 2 && count !== 3) continue;
+    const span = image.classList.contains('srl-full-width')
+      ? count
+      : image.classList.contains('srl-wide-width')
+        ? 2
+        : 1;
+
+    placements.push({
+      placement,
+      count,
+      span,
+      gap: style.getPropertyValue('column-gap'),
+    });
+  }
+
+  let lifted = false;
+  for (const { placement, count, span, gap } of placements) {
+    const container = outerLayoutContainer(placement);
+    if (!container) continue;
+
+    placement.style.setProperty('--srl-pdf-placement-columns', String(count));
+    placement.style.setProperty('--srl-pdf-placement-span', String(span));
+    placement.style.setProperty('--srl-pdf-placement-gap', gap);
+    placement.classList.add('srl-pdf-placement-container--placed');
+    if (span === count)
+      placement.classList.add('srl-pdf-placement-container--full-span');
+
+    liftFigure(placement, container);
+    lifted = true;
+  }
+  return lifted;
+}
+
 /** Run synchronously in load, before helpers that depend on final page indices. */
 export default function PDFImageFloats(afterLift?: () => void): void {
   const layout = (window as Window & { ro?: { layout: ImageLayout } }).ro
     ?.layout;
   if (!layout) return;
+  const placementsLifted = liftPlacementContainers();
   const figures = Array.from(
     document.querySelectorAll<HTMLElement>(selector),
-  ).filter((figure) => !figure.classList.contains('srl-pdf-image-float'));
-  if (!figures.length) return;
+  ).filter(
+    (figure) =>
+      !figure.classList.contains('srl-pdf-image-float') &&
+      !figure.parentElement?.classList.contains(
+        'srl-pdf-placement-container--placed',
+      ),
+  );
+  if (!figures.length) {
+    if (placementsLifted) afterLift?.();
+    return;
+  }
 
-  // Read all original sizes before any DOM mutation triggers another layout.
+  if (placementsLifted) layout.forceRelayout?.();
+
+  // Read all legacy image sizes before lifting them.
   const snapshots = figures
     .map((figure) => {
       const media = figure.querySelector(
@@ -257,7 +319,10 @@ export default function PDFImageFloats(afterLift?: () => void): void {
       };
     })
     .filter((snapshot) => snapshot !== null);
-  if (!snapshots.length) return;
+  if (!snapshots.length) {
+    if (placementsLifted) afterLift?.();
+    return;
+  }
 
   for (const { figure, initial, columns } of snapshots) {
     const container = outerLayoutContainer(figure);

@@ -1,0 +1,113 @@
+@use 'srl';
+@use 'sass:map';
+
+$flow-gap: map.get(srl.$spacer-margins, group, visual-media, all) or 800;
+
+.srl-pdf-placement-container--placed {
+  --srl-placement-column: calc(
+    (
+        100% - (var(--srl-pdf-placement-columns) - 1) *
+          var(--srl-pdf-placement-gap)
+      ) /
+      var(--srl-pdf-placement-columns)
+  );
+  --srl-placement-image-width: calc(
+    var(--srl-placement-column) * var(--srl-pdf-placement-span) +
+      (var(--srl-pdf-placement-span) - 1) * var(--srl-pdf-placement-gap)
+  );
+
+  width: 100%;
+
+  &.srl-pdf-placement--top {
+    float: -ro-top;
+    margin-bottom: srl.spacer-get($flow-gap);
+  }
+
+  &.srl-pdf-placement--bottom {
+    float: -ro-bottom;
+    margin-top: srl.spacer-get($flow-gap);
+  }
+
+  > .srl-image {
+    display: flex;
+    float: none;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+
+    > .srl-grid--media,
+    > .srl-image__caption {
+      display: block;
+      width: var(--srl-placement-image-width);
+      max-width: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    > .srl-grid--media > .srl-image__image-container {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .srl-image__img {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .srl-image__caption-text {
+      display: block;
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  &.srl-pdf-placement--top > .srl-image > .srl-image__caption {
+    margin-top: srl.spacer-get(100);
+  }
+
+  &.srl-pdf-placement--bottom > .srl-image > .srl-image__caption {
+    order: -1;
+    margin-bottom: srl.spacer-get(100);
+  }
+
+  &:not(.srl-pdf-placement-container--full-span) {
+    &.srl-pdf-placement--left > .srl-image,
+    &.srl-pdf-placement--right > .srl-image {
+      align-items: flex-end;
+      gap: var(--srl-pdf-placement-gap);
+
+      > .srl-grid--media {
+        flex: 0 0 var(--srl-placement-image-width);
+      }
+
+      > .srl-image__caption {
+        flex: 1 1 auto;
+        min-width: 0;
+        width: auto;
+        margin: 0;
+        order: 0;
+      }
+    }
+
+    &.srl-pdf-placement--left > .srl-image {
+      flex-direction: row;
+    }
+
+    &.srl-pdf-placement--right > .srl-image {
+      flex-direction: row-reverse;
+    }
+
+    &.srl-pdf-placement--bottom.srl-pdf-placement--left > .srl-image,
+    &.srl-pdf-placement--bottom.srl-pdf-placement--right > .srl-image {
+      align-items: flex-start;
+    }
+  }
+}

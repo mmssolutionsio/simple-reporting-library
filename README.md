@@ -127,22 +127,24 @@ web, Word, XHTML/XBRL and translate-plus output. The PDF include is removed from
 these channels; the image is removed from PDF output. Images can keep their
 original ratio or use one of the configured crops, including A4.
 
-The image component exposes the shared `image-position-in-pdf` property. Default
-keeps the existing layout. Top/Bottom use PDFreactor page floats, with the image
-touching the corresponding trim edge. The caption appears below a top image and
-above a bottom image. The four corner options extend the image to the respective
-horizontal trim edge and place the caption beside it, toward the page center.
-Upper corner captions align with the image's bottom edge; lower corner captions
-align with its top edge.
+The **PDF placement container** (`pdf-placement-container`) goes directly
+inside a PDF column container and holds one image. Add both container components
+to consumer designs that use this feature. **Page placement** on the wrapper
+selects the top, bottom, or one of the four corners of the page content area.
+With **In text flow**, or when the wrapper does not contain exactly one image,
+the contents remain in normal flow.
 
-`image-column-span-in-pdf` controls the width of a page float independently of
-its position: Default, one text column, two text columns, or all text columns.
-The helper reads the original flowing/fixed column container and its actual gap
-before lifting the image. Two columns in a three-column container therefore
-leave exactly one caption column. The image extends from that grid to the page
-edge. Spans covering all columns use a caption below top images or above bottom
-images. Without a multi-column context the existing image width is retained.
-The Default position remains in normal flow and does not apply this span option.
+| Image Width | Two columns | Three columns |
+| ----------- | ----------- | ------------- |
+| Regular     | 1           | 1             |
+| Wide        | 2           | 2             |
+| Full        | 2           | 3             |
+
+The table applies only to actively placed images in the nested container. The
+image and caption stay within the page content area. At a corner, the caption
+uses the remaining columns towards the centre. At the top or bottom, and for
+full-span corners, the caption sits below a top image or above a bottom image.
+The existing Width rules still apply to images outside the placement layout.
 
 The PDF column container exposes `pdf-column-count`: two columns by default,
 or three columns (`srl-pdf-columns-3`). The selected count applies only to that
@@ -150,23 +152,12 @@ container's own content, so nested containers keep their independent selection.
 Balanced/unbalanced filling remains a separate option for either column count.
 
 The PDF entry calls `PDFImageFloats` in `load`, before page-reference colors.
-The helper lifts positioned images out of nested column containers, splitting
-their ancestor shells without duplicating content or IDs. Original image widths
-are measured before lifting. Actual page dimensions and margins are read from
-PDFreactor, including customer overlays and different page formats. Native floats
-reserve text space; this also works with two or three columns. Other output
-channels keep their existing image layout.
-Multiple images at the same edge stack in document order; only the outermost
-image extends into the page margin, preventing overlapping images.
+For a placement wrapper, it copies the source column count and gap and lifts
+the wrapper into page flow by splitting the ancestor shells. CSS lays out the
+image and caption. Native PDFreactor page floats reserve space for the wrapper.
 
-Corner caption widths default to two PDF grid columns. Customer overlays can set
-`--srl-pdf-image-caption-columns`, `--srl-pdf-image-caption-width` (an explicit
-length) and `--srl-pdf-image-caption-gap`. Without a caption, no caption width or
-gap is reserved. The `afterLift` callback lets the entry refresh nested-container
-margin markers before measuring the final pages.
-
-The float reserves space between the entire figure (including its caption) and
-the body text below top floats or above bottom floats. This defaults to the
-`spacer.margins.group.visual-media.all` token, falling back to spacer 800 when
-that group has no default. Customer overlays can override the distance with
-`--srl-pdf-image-flow-gap`, independently of the image-to-caption gap.
+The older image position and span controls are no longer offered on Image.
+The legacy PDF float path remains available for already rendered markup that
+uses the old classes and includes the legacy styles. Consumer projects with
+copied Livingdocs components must update their Image definition and include the
+new placement component when adopting this layout.
