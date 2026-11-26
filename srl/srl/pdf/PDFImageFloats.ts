@@ -1,4 +1,6 @@
-interface LayoutRect {
+import PDFColumnReadingFlow from './PDFColumnReadingFlow.ts';
+
+export interface LayoutRect {
   top: number;
   right: number;
   bottom: number;
@@ -7,12 +9,13 @@ interface LayoutRect {
   height: number;
 }
 
-interface ImageLayout {
+export interface ImageLayout {
   forceRelayout?(): void;
   getBoxDescriptions(element: Element): Array<{
     pageIndex: number;
     getBorderRect(unit: string): LayoutRect;
     getContentRect?(unit: string): LayoutRect;
+    getMarginRect(unit: string): LayoutRect;
   }>;
   getPageDescription(index: number): {
     getContentRect(unit: string): LayoutRect;
@@ -208,17 +211,143 @@ function outerLayoutContainer(figure: HTMLElement): Element | null {
   return container;
 }
 
+// CSS page floats stay in their source fragmentation context. Move the wrapper
+// to page flow and carry over the source column count and gap before splitting.
+function liftPlacementContainers(): HTMLElement[] {
+  const placements = [];
+  for (const placement of document.querySelectorAll<HTMLElement>(
+    '.srl-pdf-placement-container.srl-pdf-placement--top, .srl-pdf-placement-container.srl-pdf-placement--bottom',
+  )) {
+    const columns = placement.parentElement;
+    const image = placement.firstElementChild;
+    if (
+      !columns?.matches('.srl-pdf-column-container__content') ||
+      !image?.matches('.srl-image') ||
+      placement.childElementCount !== 1
+    )
+      continue;
+    const style = window.getComputedStyle(columns);
+    const count = Number(style.getPropertyValue('column-count'));
+    if (count !== 2 && count !== 3) continue;
+    const span = image.classList.contains('srl-full-width')
+      ? count
+      : image.classList.contains('srl-wide-width')
+        ? 2
+        : 1;
+
+    placements.push({
+      placement,
+      count,
+      span,
+      gap: style.getPropertyValue('column-gap'),
+    });
+  }
+
+  const lifted: HTMLElement[] = [];
+  for (const { placement, count, span, gap } of placements) {
+    const container = outerLayoutContainer(placement);
+    if (!container) continue;
+
+    placement.style.setProperty('--srl-pdf-placement-columns', String(count));
+    placement.style.setProperty('--srl-pdf-placement-span', String(span));
+    placement.style.setProperty('--srl-pdf-placement-gap', gap);
+    placement.classList.add('srl-pdf-placement-container--placed');
+    if (span === count)
+      placement.classList.add('srl-pdf-placement-container--full-span');
+
+    liftFigure(placement, container);
+    lifted.push(placement);
+  }
+  return lifted;
+}
+
+function setPlacementBleed(
+  placements: HTMLElement[],
+  layout: ImageLayout,
+): void {
+  if (!placements.length) return;
+
+  // Negative margins can let a float fit on a different page. Re-read its
+  // destination so landscape pages and asymmetric margins use their own trim.
+  for (let pass = 0; pass < 6; pass++) {
+    layout.forceRelayout?.();
+    const updates = placements.flatMap((placement) => {
+      const box = layout.getBoxDescriptions(placement)[0];
+      if (!box) return [];
+      const page = layout.getPageDescription(box.pageIndex);
+      const content = page.getContentRect('pt');
+      const trim = page.getTrimRect('pt');
+      const top = placement.classList.contains('srl-pdf-placement--top');
+      return [
+        {
+          placement,
+          pageIndex: box.pageIndex,
+          top,
+          vertical: top ? content.top - trim.top : trim.bottom - content.bottom,
+          side: placement.classList.contains('srl-pdf-placement--left')
+            ? content.left - trim.left
+            : placement.classList.contains('srl-pdf-placement--right')
+              ? trim.right - content.right
+              : 0,
+        },
+      ];
+    });
+
+    const outermost = new Map<string, HTMLElement>();
+    for (const { placement, pageIndex, top } of updates) {
+      const key = pageIndex + ':' + top;
+      if (!top || !outermost.has(key)) outermost.set(key, placement);
+    }
+
+    let changed = false;
+    for (const { placement, pageIndex, top, vertical, side } of updates) {
+      const outer = outermost.get(pageIndex + ':' + top) === placement;
+      for (const [edge, amount] of [
+        ['vertical', outer ? vertical : 0],
+        ['side', side],
+      ] as const) {
+        const property = '--srl-pdf-placement-bleed-' + edge;
+        const value = Math.max(0, amount) + 'pt';
+        if (placement.style.getPropertyValue(property) === value) continue;
+        placement.style.setProperty(property, value);
+        changed = true;
+      }
+    }
+    if (!changed) break;
+  }
+}
+
 /** Run synchronously in load, before helpers that depend on final page indices. */
 export default function PDFImageFloats(afterLift?: () => void): void {
   const layout = (window as Window & { ro?: { layout: ImageLayout } }).ro
     ?.layout;
   if (!layout) return;
+  positionImages(layout, afterLift);
+  PDFColumnReadingFlow(layout);
+}
+
+function positionImages(layout: ImageLayout, afterLift?: () => void): void {
+  const placements = liftPlacementContainers();
   const figures = Array.from(
     document.querySelectorAll<HTMLElement>(selector),
-  ).filter((figure) => !figure.classList.contains('srl-pdf-image-float'));
-  if (!figures.length) return;
+  ).filter(
+    (figure) =>
+      !figure.classList.contains('srl-pdf-image-float') &&
+      !figure.parentElement?.classList.contains(
+        'srl-pdf-placement-container--placed',
+      ),
+  );
+  if (!figures.length) {
+    if (placements.length) {
+      afterLift?.();
+      setPlacementBleed(placements, layout);
+    }
+    return;
+  }
 
-  // Read all original sizes before any DOM mutation triggers another layout.
+  if (placements.length) layout.forceRelayout?.();
+
+  // Read all legacy image sizes before lifting them.
   const snapshots = figures
     .map((figure) => {
       const media = figure.querySelector(
@@ -257,7 +386,13 @@ export default function PDFImageFloats(afterLift?: () => void): void {
       };
     })
     .filter((snapshot) => snapshot !== null);
-  if (!snapshots.length) return;
+  if (!snapshots.length) {
+    if (placements.length) {
+      afterLift?.();
+      setPlacementBleed(placements, layout);
+    }
+    return;
+  }
 
   for (const { figure, initial, columns } of snapshots) {
     const container = outerLayoutContainer(figure);
@@ -277,6 +412,7 @@ export default function PDFImageFloats(afterLift?: () => void): void {
     }
   }
   afterLift?.();
+  setPlacementBleed(placements, layout);
   layout.forceRelayout?.();
 
   // Relayout may move a float to a page with different margins or orientation.

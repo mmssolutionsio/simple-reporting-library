@@ -1,0 +1,14 @@
+@use 'srl';
+
+.srl-pdf-placement-container {
+  padding-block: srl.spacer-get(100);
+  border-block: 1px solid #{srl.colors-primary-1000()};
+
+  @include srl.helpers-editor-label-icon();
+
+  &:after {
+    left: auto;
+    right: 4px;
+    margin-left: 0;
+  }
+}

@@ -24,5 +24,16 @@
         "value": "srl-columns-unbalanced"
       }
     ]
+  },
+  "pdf-column-reading-order": {
+    "label": "PDF reading order",
+    "type": "select",
+    "options": [
+      { "caption": "Standard" },
+      {
+        "caption": "Natural flow",
+        "value": "srl-pdf-columns-flow-around-image"
+      }
+    ]
   }
 }

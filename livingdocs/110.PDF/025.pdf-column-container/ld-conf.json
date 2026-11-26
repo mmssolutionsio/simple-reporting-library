@@ -1,5 +1,10 @@
 {
   "name": "pdf-column-container",
   "label": "PDF column container",
-  "properties": ["pdf-column-count", "column-behaviour", "width-reduced"]
+  "properties": [
+    "pdf-column-count",
+    "column-behaviour",
+    "pdf-column-reading-order",
+    "width-reduced"
+  ]
 }

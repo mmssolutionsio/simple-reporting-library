@@ -1,0 +1,27 @@
+{
+  "pdf-page-placement": {
+    "label": "Page placement",
+    "type": "select",
+    "options": [
+      { "caption": "In text flow" },
+      { "caption": "Top", "value": "srl-pdf-placement--top" },
+      { "caption": "Bottom", "value": "srl-pdf-placement--bottom" },
+      {
+        "caption": "Top left",
+        "value": "srl-pdf-placement--top srl-pdf-placement--left"
+      },
+      {
+        "caption": "Top right",
+        "value": "srl-pdf-placement--top srl-pdf-placement--right"
+      },
+      {
+        "caption": "Bottom left",
+        "value": "srl-pdf-placement--bottom srl-pdf-placement--left"
+      },
+      {
+        "caption": "Bottom right",
+        "value": "srl-pdf-placement--bottom srl-pdf-placement--right"
+      }
+    ]
+  }
+}

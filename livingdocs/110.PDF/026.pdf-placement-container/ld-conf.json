@@ -1,0 +1,12 @@
+{
+  "name": "pdf-placement-container",
+  "label": "PDF placement container",
+  "allowedParents": ["pdf-column-container"],
+  "properties": ["pdf-page-placement"],
+  "directives": {
+    "placement-content": {
+      "allowedChildren": ["image"],
+      "defaultContent": [{ "component": "image" }]
+    }
+  }
+}
